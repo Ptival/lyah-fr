@@ -1,0 +1,282 @@
+Prelude
+=========
+
+Prêts, feu, partez !
+--------------------
+
+Bien, démarrons ! Si vous êtes le genre de personne horrible qui ne lit pas les
+introductions et que vous l'avez sautée, vous feriez peut-être bien de tout de
+même lire la dernière section de l'introduction, car elle explique ce dont vous
+avez besoin pour suivre ce didacticiel et comment l'on va charger des
+fonctions. La première chose qu'on va faire, c'est lancer un GHC interactif et
+appeler quelques fonctions pour se faire une première idée de Haskell. Ouvrez
+donc votre terminal et tapez `ghci`. Vous serez accueilli par un message
+semblable à celui-ci.
+
+> GHCi, version 6.8.2: http://www.haskell.org/ghc/  :? for help
+> Loading package base ... linking ... done.
+> Prelude>
+
+Bravo, vous êtes dans GHCI ! L'invite `Prelude>` peut devenir de plus en plus
+long lorsqu'on importera des choses dans la session, alors on va le remplacer
+par `ghci>`. Si vous voulez le même invite, tapez simplement `:set prompt
+"ghci> "`.
+
+Voici un peu d'arithmétique élémentaire.
+
+> ghci> 2 + 15
+> 17
+> ghci> 49 * 100
+> 4900
+> ghci> 1892 - 1472
+> 420
+> ghci> 5 / 2
+> 2.5
+> ghci>
+
+C'est plutôt simple. Nous pouvons également utiliser plusieurs opérateurs sur
+la même ligne, et les règles de précédence habituelles s'appliquent alors. On
+peut également utiliser des parenthèses pour rendre la précédence explicite, ou
+l'altérer.
+
+> ghci> (50 * 100) - 4999
+> 1
+> ghci> 50 * 100 - 4999
+> 1
+> ghci> 50 * (100 - 4999)
+> -244950
+
+Plutôt cool, non ? Ouais, je sais que c'est pas terrible, mais supportez-moi
+encore un peu. Attention, un écueil à éviter ici est la négation des nombres.
+Pour obtenir un nombre négatif, il est toujours mieux de l'entourer de
+parenthèses. Faire `5 * -3` vous causera les fureurs de GHCI, alors que `5 *
+(-3)` fonctionnera sans souci.
+
+L'algèbre booléenne est également simple. Comme vous le savez sûrement, `&&`
+représente un *et* booléen, `||` un *ou* booléen, et `not` retourne la négation
+de `True` et `False` (NdT: respectivement vrai et faux).
+
+> ghci> True && False
+> False
+> ghci> True && True
+> True
+> ghci> False || True
+> True
+> ghci> not False
+> True
+> ghci> not (True && True)
+> False
+
+Un test d'égalité s'écrit ainsi :
+
+> ghci> 5 == 5
+> True
+> ghci> 1 == 0
+> False
+> ghci> 5 /= 5
+> False
+> ghci> 5 /= 4
+> True
+> ghci> "hello" == "hello"
+> True
+
+Et que se passe-t-il si l'on fait `5 + "llama"` ou `5 == True` ? Eh bien, si on
+essaie le premier, on obtient un gros message d'erreur effrayant !
+
+> No instance for (Num [Char])
+>     arising from a use of `+' at <interactive>:1:0-9
+>     Possible fix: add an instance declaration for (Num [Char])
+>     In the expression: 5 + "llama"
+>     In the definition of `it': it = 5 + "llama"
+
+Beurk ! Ce que GHCI essaie de nous dire, c'est que `"llama"` n'est pas un
+nombre, et donc qu'il ne sait pas l'additioner à 5. Même si ce n'était pas
+`"llama"` mais `"four"` ou même `"4"`, Haskell ne considérerait pas cela comme
+un nombre. `+` attend comme opérandes à droite et à gauche des nombres. Si on
+essayait de faire `True == 5`, GHCI nous dirait que les types ne correspondent
+pas. Là où `+` ne fonctionne que sur ce qui est considéré comme un nombre, `==`
+marche sur n'importe quelles deux choses qui peuvent être comparées. Le piège,
+c'est qu'elles doivent être toutes les deux du même type de choses. On ne
+compare pas des pommes et des oranges. Nous nous intéresserons de plus près aux
+types plus tard. Notez : vous pouvez tout de même faire `5 + 4.0` car `5` est
+vicieux et peut se faire passer pour un entier ou pour un nombre à virgule
+flottante. `4.0` ne peut pas se faire passer pour un entier, donc c'est à `5`
+de s'adapter à lui.
+
+Vous ne le savez peut-être pas, mais nous venons d'utiliser des fonctions tout
+du long. Par exemple, `*` est une fonction qui prend deux nombres et les
+multiplie entre eux. Comme vous l'avez constaté, on l'appelle en le mettant en
+sandwich entre ces paramètres. C'est pour ça qu'on dit que c'est une fonction
+*infixe*. La plupart des fonctions qu'on n'utilise pas avec des nombres sont
+des fonctions *préfixes*. Intéressons-nous à celles-ci.
+
+Les fonctions sont généralement préfixes, donc à partir de maintenant, nous ne
+préciserons pas qu'une fonction est préfixe, on le supposera par défaut. Dans
+la plupart des langages impératifs, les fonctions sont appelées en écrivant le
+nom de la fonction, puis ses paramètres entre parenthèses, généralement séparés
+par des virgules. En Haskell, les fonctions sont appelées en écrivant le nom de
+la fonction, puis un espace, puis ses paramètres, séparés par des espaces. Par
+exemple, essayons d'appeler une des fonctions les plus ennuyantes d'Haskell.
+
+> ghci> succ 8
+> 9
+
+La fonction `succ` prend n'importe quoi qui a un successeur, et renvoie ce
+successeur. Comme vous pouvez le voir, on sépare le nom de la fonction du
+paramètre par un espace. Appeler une fonction avec plusieurs paramètres est
+aussi simple. Les fonctions `min` et `max` prennent deux choses qu'on peut
+ordonner (comme des nombres !). `min` retourne la plus petite, `max` la plus
+grande. Voyez vous-mêmes :
+
+> ghci> min 9 10
+> 9
+> ghci> min 3.4 3.2
+> 3.2
+> ghci> max 100 101
+> 101
+
+L'application de fonction (appeler une fonction en mettant un espace après puis
+ses paramètres) a la plus grande des précédences. Cela signifie pour nous que
+les deux déclarations suivantes sont équivalentes.
+
+> ghci> succ 9 + max 5 4 + 1
+> 16
+> ghci> (succ 9) + (max 5 4) + 1
+> 16
+
+Cependant, si nous voulions obtenir le successeur du produit des nombres 9 et
+10, on ne pourrait pas écrire `succ 9 * 10`, car cela chercherait le successeur
+de 9, et le multiplierait par 10. Donc 100. Nous devrions écrire `succ (9 *
+10)` pour obtenir 91.
+
+Si une fonction prend deux paramètres, on peut aussi l'appeler de façon infixe
+en l'entourant d'apostrophes renversées. Par exemple, la fonction `div` prend
+deux entiers et effectue leur division entière. Faire `div 92 10` retourne 9.
+Mais quand on l'appelle de cette façon, on peut se demander quel nombre est
+divisé par quel nombre. On peut donc l'écrire plutôt `92 \`div\` 10`, ce qui
+est tout de suite plus clair.
+
+Beaucoup de personnes venant de langages impératifs ont pour habitude de penser
+que les parenthèses indiquent l'application de fonctions. Par exemple, en C, on
+utilise des parenthèses pour appeler des fonctions comme `foo()`, `bar()1)` ou
+`baz(3, "haha")`. Comme nous l'avons vu, les espaces sont utilisés pour
+l'application de fonctions en Haskell. Donc, en Haskell, on écrirait `foo`,
+`bar 1` et `baz 3 "haha"`. Si vous voyez quelque chose comme `bar (bar 3)`,
+cela ne veut donc pas dire que `bar` est appelé avec les paramètres `bar` et
+`3`. Cela signifie qu'on appelle la fonction `bar` avec un paramètre `3` pour
+obtenir un nombre, et qu'on appelle `bar` à nouveau sur ce nombre. En C, cela
+serait `bar(bar(3))`.
+
+Les premières fonctions de bébé
+-------------------------------
+
+Dans la section précédente, nous avons eu un premier aperçu de l'appel de
+fonctions. Essayons maintenant de créer les nôtres ! Ouvrez votre éditeur de
+texte favori et entrez cette fonction qui prend un nombre et le multiplie par
+deux.
+
+> doubleMe x = x + x
+
+Les fonctions sont définies de la même façon qu'elles sont appelées. Le nom de
+la fonction est suivi de ses paramètres, séparés par des espaces. Mais lors de
+la définition d'une fonction, un `=` suivi de la définition de ce que la
+fonction fait suivent. Sauvez ceci en tant que `baby.hs` ou quoi que ce soit.
+À présent, naviguez jusquà l'endroit où vous l'avez sauvegardé, et lancez
+`ghci` d'ici. Une fois lancé, tapez `:l baby`. Maintenant que notre script est
+chargé, on peut jouer avec la fonction que l'on vient de définir.
+
+> ghci> :l baby
+> [1 of 1] Compiling Main             ( baby.hs, interpreted )
+> Ok, modules loaded: Main.
+> ghci> doubleMe 9
+> 18
+> ghci> doubleMe 8.3
+> 16.6
+
+Puisque `+` fonctionne sur des entiers aussi bien que sur des nombres à virgule
+flottante (tout ce que l'on peut considérer comme un nombre en fait), notre
+fonction fonctionne également sur n'importe quel nombre. Créons une fonction
+prenant deux nombres et les multipliant chacun par deux, puis les sommant
+ensemble.
+
+> doubleUs x y = x*2 + y*2
+
+Simple. Nous aurions également pu l'écrire `doubleUs x y = x + x + y + y`.
+Un test produit les résultats attendus (rappelez-vous bien d'ajouter cette
+fonction à la bin de `baby.hs`, de sauvegarder le fichier, et de faire `:l
+baby` dans GHCI).
+
+> ghci> doubleUs 4 9
+> 26
+> ghci> doubleUs 2.3 34.2
+> 73.0
+> ghci> doubleUs 28 88 + doubleMe 123
+> 478
+
+Comme attendu, vous pouvez appeler vos propres fonctions depuis les autres
+fonctions que vous aviez créées. Avec cela en tête, redéfinissons `doubleUs`
+ainsi :
+
+> doubleUs x y = doubleMe x + doubleMe y
+
+Ceci est un exemple simple d'un motif récurrent en Haskell. Créer des fonctions
+basiques, qui sont visiblement correctes, puis les combiner pour faire des
+fonctions plus complexes. De cette manière, on évite la répétition. Que se
+passerait-il si un mathématicien se rendait compte que 2 est en fait 3 et qu'il
+fallait changer votre programme ? Vous pourriez simplement rédéfinir `doubleMe`
+comme `x + x + x` et, puisque `doubleUs` appelle `doubleMe`, elle
+fonctionnerait automatiquement dans cet étrange nouveau monde où 2 est 3.
+
+Les fonctions en Haskell n'ont pas à être dans un ordre particulier, donc il
+n'importe pas que vous définissiez `doubleMe` puis `doubleUs` ou l'inverse.
+
+Maintenant, nous allons écrire une fonction qui multiplie un nombre par 2, mais
+seulement si ce nombre est inférieur ou égal à 100, parce que les nombres
+supérieurs à 100 sont déjà bien assez gros comme ça !
+
+> doubleSmallNumber x = if x > 100
+>                         then x
+>                         else x*2
+
+Ici, nous avons introduit la construction if de Haskell. Vous êtes probablement
+habitué aux constructions if des autres langages. La différence entre le if de
+Haskell et celui des autres langages, c'est qu'en Haskell, le else est
+obligatoire. Dans les langages impératifs, vous pouvez sauter quelques étapes
+si la condition n'est pas satisfaite, mais en Haskell, chaque expression doit
+renvoyer quelque chose.  Nous aurions aussi pu écrire ce if en une ligne mais
+je trouve cette version plus lisible. Un autre point à noter est que la
+construction if en Haskell est une expression. Une expression correspond
+simplement à tout bout de code retournant une valeur. `5` est une expression
+car elle retourne 5, `4 + 8` est une expression, `x + y` est une expression car
+elle retourne la somme de `x` et `y`. Puisque le else est obligatoire, une
+construction if retournera toujours quelque chose, c'est pourquoi c'est une
+expression. Si nous voulions ajouter 1 à chaque nombre produit dans la fonction
+précédente, nous aurions pu l'écrire ainsi.
+
+> doubleSmallNumber' x = (if x > 100 then x else x*2) + 1
+
+Si nous avions omis les parenthèses, nous aurions ajouté 1 seulement is `x`
+était plus grand que 100. Remarquez le `'` à la fin du nom de la fonction.
+Cette apostrophe n'a pas de signification spéciale en Haskell. C'est un
+caractère valide pour utiliser dans un nom de fonction. On utilise généralement
+`'` pour indiquer la version stricte d'une fonction (une version qui n'est pas
+paresseuse) ou pour la version légèrement modifiée d'une fonction ou d'une
+variable. Puisque `'` est un caractère valide dans le nom d'une fonction, on
+peut écrire.
+
+> conanO'Brien = "It's a-me, Conan O'Brien!"
+
+Il y a deux choses à noter ici. La première, c'est que dans le nom de la
+fonction, nous n'avons pas mis de majuscule au prénom de Conan. C'est parce que
+les fonctions ne peuvent pas commencer par une majuscule. Nous verrons pourquoi
+un peu plus tard. La seconde chose, c'est que la fonction ne prend aucun
+paramètre. Lorsqu'une fonction ne prend pas de paramètre, on dit généralement
+que c'est une *définition* (ou un *nom*). Puisqu'on ne peut pas changer ce que
+les noms (et les fonctions) signifient une fois qu'on les a définis,
+`conanO'Brien` et la chaîne `"It's a-me, Conan O'Brien!"` peuvent être utilisés
+de manière interchangeable.
+
+Une introduction aux listes
+---------------------------
+
+
