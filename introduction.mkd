@@ -1,0 +1,145 @@
+Introduction
+============
+
+À propos de ce didacticiel
+--------------------------
+
+Bienvenue dans **Apprenez-vous Haskell pour le meilleur**! Si vous lisez ceci,
+il est possible que vous vouliez apprendre Haskell. Vous êtes au bon endroit,
+mais discutons un peu de ce didacticiel avant tout.
+
+J'ai décidé d'écrire ce didacticiel parce que je voulais consolider ma propre
+connaissance d'Haskell, et parce que je pensais pouvoir aider les débutants à
+l'apprendre selon mon point de vue. Il y a plusieurs didacticiels traitant de
+Haskell qui traînent sur Internet. Quand je débutais en Haskell, je n'ai pas
+appris que d'une seule source. Ma méthode d'apprentissage consistait à lire
+plusieurs didacticiels et articles, car chacun d'eux expliquait d'une manière
+un peu différente de l'autre. En confrontant plusieurs ressources, j'ai pu
+assembler les pièces du puzzle et tout s'est mis à sa place. Ceci est un essai
+afin de produire une ressource de plus afin d'apprendre Haskell, de sorte que
+vous ayez plus de chance d'en trouver une que vous appréciez.
+
+Ce didacticiel vise les personnes ayant de l'expérience dans un langage de
+programmation impérative (C, C++, Java, Python, ...) mais qui n'ont jamais
+programmé dans un langage de programmation fonctionnel auparavant (Haskell, ML,
+OCaml, ...). Bien que je me doute que même sans vraie expérience en
+programmation, un chouette type comme vous pourra suivre et apprendre Haskell.
+
+Le canal #haskell sur le réseau freenode est un bon endroit pour poser des
+questions si vous êtes bloqué. (NdT: Le canal #haskell.fr du même réseau vous
+permettra de poser vos questions en français.) Les gens y sont extrêmement
+gentils, patients et compréhensifs envers les débutants.
+
+J'ai échoué dans mon apprentissage de Haskell à peu près deux fois avant
+d'arriver à le saisir, car cela me semblait trop bizarre et je ne comprenais
+pas. Mais alors, j'ai eu le déclic, et après avoir passé cet obstacle initial,
+le reste est venu plutôt facilement. Ce que j'essaie de vous dire : Haskell
+est génial, et si vous êtes intéressés par la programmation, vous devriez
+l'apprendre même si cela semble bizarre au début. Apprendre Haskell est très
+similaire à l'apprentissage de la programmation la première fois - c'est fun !
+Ca vous force à penser différemment, ce qui nous amène à la section suivante...
+
+Donc, qu'est-ce que Haskell ?
+-----------------------------
+
+Haskell est un **langage de programmation purement fonctionnelle**. Dans les
+langages impératifs, vous effectuez des choses en donnant à l'ordinateur une
+séquence de tâches, et iles les exécute. Lors de cette exécution, il peut
+changer d'état. Par exemple, vous affectez à une variable `a` la valeur 5, puis
+vous faites quelque chose, puis lui affectez une autre valeur. Vous avez des
+structures de contrôle de flot pour répéter des actions plusieurs fois. Dans un
+langage de programmation purement fonctionnelle, vous n'indiquez pas à
+l'ordinateur quoi faire, mais plutôt ce que les choses *sont*. La factorielle
+d'un nombre est le produit de tous les nombres de 1 à celui-ci, la somme d'une
+liste de nombres est égale au premier de ceux-ci additioné à la somme des
+autres, etc. Vous exprimez ceci sous la forme de fonctions. Également, vous
+n'affectez pas une valeur à une variable, puis une autre valeur plus tard. Si
+vous dites que `a` est égal à 5, vous ne pouvez pas dire qu'il est égal à autre
+chose plus tard, car vous venez de dire qu'il était égal à 5. Quoi, vous êtes
+un menteur ? Donc, dans les langages purement fonctionnels, une fonction n'a
+pas d'effets de bord. La seule chose qu'une fonction puisse faire, c'est
+calculer quelque chose et retourner le résultat. Au départ, cela semble plutôt
+limitant, mais il s'avère que ça a de très intéressantes conséquences : si une
+fonction est appelée deux fois, avec les mêmes paramètres, alors il est garanti
+qu'elle renverra le même résultat. On appelle ceci la transparence
+référentielle, et cela permet non seulement au compilateur de raisonner à
+propos du comportement du programme, mais également à vous de déduire
+facilement (et même de prouver) qu'une fonction est correcte, puis de
+construire des fonctions plus complexes en collant des simples fonctions l'une
+à l'autre.
+
+Haskell est **paresseux**. Cela signifie qu'à moins de lui demander
+explicitement, Haskell n'exécutera pas les fonctions et ne calculera pas les
+choses tant qu'il n'est pas forcé de nous montrer les résultats. Cela va bien
+de paire avec la transparence référentielle et permet de penser ses programmes
+comme des **transformations sur des données**. Cela permet aussi des choses
+cool comme des structures de données infinies. Supposons que vous ayez une
+liste de nombres immuable `xs = [1, 2, 3, 4, 5, 6, 7, 8]` et une fonction
+`doubleMe` qui multiplie chaque élément par 2 et retourne la nouvelle liste.
+Si nous voulions multiplier notre liste par 8 dans un langage impératif en
+faisant `doubleMe(doubleMe(doubleMe(xs)))`, il traverserait probablement la
+liste une fois, ferait une copie, et la retournerait. Puis, il traverserait
+cette liste encore deux fois et retournerait le résultat. Dans un langage
+paresseux, appeler `doubleMe` sur une liste sans la forcer à s'afficher résulte
+en gros à ce que le programme vous dise "Ouais ouais, je le ferai plus tard !".
+Mais dès que vous voulez voir le résultat, le premier `doubleMe` dit au
+deuxième qu'il a besoin du résultat, maintenant ! Le deuxième le dit à son tour
+au troisième, et le troisième, avec réticence, renvoie un 1 doublé, qui est
+donc un 2. Le deuxième reçoit cela, et renvoie un 4 au premier. Le premier voit
+cela, et vous répond que le premier élément est un 8. Ainsi, la liste n'est
+traversée qu'une fois, et seulement quand vous en avez vraiment besoin. De
+cette façon, lorsque vous voulez quelque chose d'un langage paresseux, vous
+pouvez juste prendre les données initiales, et efficacement les transformer
+de toutes les façons possibles jusqu'à arriver à vos fins.
+
+Haskell est **typé statiquement**. Lorsque vous compilez votre programme, le
+compilateur sait quel bout de code est un nombre, lequel est une chaîne de
+caractères, etc. Cela veut dire que beaucoup d'erreurs potentielles sont
+détectées à la compilation. Si vous essayez de sommer un nombre et une chaîne
+de caractères, le compilateur vous criera dessus. Haskell utilise un système
+de types très bon qui bénéficie de l'**inférence de types**. Cela signifie que
+vous n'avez pas à marquer explicitement chaque bout de code avec un type, car
+le système de types peut intelligemment comprendre beaucoup de choses. Si vous
+dites `a = 5 + 4`, pas besoin d'indiquer à Haskell que `a` est un nombre, il
+peut s'en rendre compte tout seul. L'inférence de types permet également à
+votre code d'être plus général. Si une fonction que vous faites prend deux
+paramètres et les somme l'un à l'autre, et que vous ne précisez rien sur leur
+type, la fonction marchera sur n'importe quelle paire de paramètres qui se
+comportent comme des nombres.
+
+Haskell est **élégant et concis**. Grâce à son usage de concepts de haut
+niveau, les programmes Haskell sont généralement plus courts que leurs
+équivalents impératifs. Et des programmes plus courts sont plus simples à
+maintenir et ont moins de bogues.
+
+Haskell a été créé par des **personnes très intelligentes** (ayant un PhD). Le
+travail sur Haskell a débuté en 1987 lorsqu'un comité de chercheurs s'est
+rassemblé pour concevoir un langage révolutionnaire. En 2003, le rapport
+Haskell fut publié, et définit une version stable du langage.
+
+Ce dont vous avez besoin avant de plonger
+-----------------------------------------
+
+Un éditeur de texte, et un compilateur Haskell. Vous avez probablement déjà un
+éditeur de texte favori, donc ne perdons pas de temps avec ça. Pour les besoins
+de ce didacticiel, nous utiliserons GHC, le compilateur Haskell le plus
+utilisé. Le meilleur moyen de démarrer est de télécharger [la plate-forme
+Haskell](http://hackage.haskell.org/platform/), qui contient simplement un
+Haskell prêt à tourner.
+
+GHC peut prendre un script Haskell (généralement avec l'extension .hs) et le
+compiler, mais il a aussi un mode interactif qui permet d'interagir
+interactivement avec les scripts. Interactivement. Vous pouvez appeler des
+fonctions depuis les scripts que vous chargez, et les résultats seront
+immédiatement affichés. Pour apprendre, c'est beaucoup plus simple et rapide
+que de compiler chaque fois que vous faites une modification, et ensuite
+relancer le programme depuis votre terminal. Le mode interactif est invoqué en
+tapant `ghci` dans votre terminal. Si vous avez défini des fonctions dans un
+fichier, par exemple `myfunctions.hs`, vous pouvez les charger en tapant `:l
+myfunctions`, puis jouer avec, à condition que `myfunctions.hs` soit dans le
+dossier d'où `ghci` a été invoqué. Si vous modifiez le script .hs, tapez
+juste `:l myfunctions` à nouveau, ou encore `:r`, qui est équivalent puisqu'il
+recharge le script courant. Ma procédure habituelle quand je joue avec des
+choses est de définir des fonctions dans a.hs, de les charger, et de bidouiller
+avec, puis de retourner changer le .hs, recharger, etc. C'est aussi ce qu'on va
+faire à présent.
