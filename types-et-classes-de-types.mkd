@@ -1,0 +1,408 @@
+Types et classes de types
+=========================
+
+Faites confiance aux types
+--------------------------
+
+Nous avons mentionné auparavant qu'Haskell avait un système de types statique.
+Le type de chaque expression est connu à la compilation, ce qui mène à un code
+plus sûr. Si vous écrivez un programme dans lequel vous tentez de diviser un
+booléen par un nombre, cela ne compilera même pas. C'est pour le mieux, car il
+vaut mieux trouver ces erreurs à la compilation qu'obtenir un programme qui
+plante. En Haskell, tout a un type, donc le compilateur peut raisonner
+sur votre programme avant même de le compiler.
+
+Au contraire de Java ou Pascal, Haskell a de l'inférence des types. Si nous
+écrivons un nombre, nous n'avons pas à dire à Haskell que c'est un nombre. Il
+peut l'inférer de lui-même, donc pas besoin de lui écrire explicitement les
+types des fonctions et des expressions pour arriver à faire quoi que ce soit.
+Nous avons vu une partie des bases de Haskell en ne regardant les types que
+très superficiellement. Cependant, comprendre le système de types est une part
+très importante de l'apprentissage d'Haskell.
+
+Un type est une sorte d'étiquette que chaque expression porte. Il nous indique
+à quelle catégorie de choses cette expression appartient. L'expression `True`
+est un booléen, "hello" est une chaîne de caractères, etc.
+
+Utilisons à présent GHCI pour examiner le types de quelques expressions. On le
+fera à l'aide de la commande `:t` qui, suivie d'une expression valide, nous
+indique son type. Essayons.
+
+> ghci> :t 'a'
+> 'a' :: Char
+> ghci> :t True
+> True :: Bool
+> ghci> :t "HELLO!"
+> "HELLO!" :: [Char]
+> ghci> :t (True, 'a')
+> (True, 'a') :: (Bool, Char)
+> ghci> :t 4 == 5
+> 4 == 5 :: Bool
+
+Ici on voit que faire `:t` sur une expression affiche l'expression, suivie de
+`::` et de son type. `::` se lit "a pour type". Les types explicites sont
+toujours notés avec une initiale en majuscule. `'a'`, semblerait-il, a pour
+type `Char`. On en conclue rapidement que cela signifie *caractère*. `True` est
+de type `Bool`. C'est logique. Mais, et ça ? Examiner `"HELLO!"` renvoie un
+`[Char]`. Les crochets indiquent une liste. Nous lisons donc cela *liste de
+caractères*. Contrairement aux listes, chaque longueur de tuple a son propre
+type. Ainsi, l'expression `(True, 'a')` a pour type `(Bool, Char)`, alors que
+l'expression `('a', 'b', 'c')` aurait pour type `(Char, Char, Char)`. `4 == 5`
+renverra toujours `False`, son type est `Bool`.
+
+Les fonctions aussi ont des types. Quand on écrit nos propres fonctions, on
+peut vouloir leur donner des déclarations de type explicites. C'est
+généralement considéré comme une bonne pratique, sauf quand on écrit des
+fonctions courtes. À présent, nous donnerons aux fonctions que nous déclarerons
+des déclarations de type. Vous souvenez-vous de la compréhension de liste que
+nous avions écrite, qui filtre une chaîne de caractères pour ne garder que ceux
+en majuscule ? Voici sa déclaration de type.
+
+> removeNonUppercase :: [Char] -> [Char]
+> removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
+
+`removeNonUppercase` est de type `[Char] -> [Char]`, ce qui signifie qu'elle
+transforme une chaîne de caractère en une chaîne de caractère. Parce qu'elle
+prend une chaîne de caractère en paramètre, et en retourne une en résultat. Le
+type `[Char]` est synonyme de `String`, donc il est plus clair d'écrire
+`removeNonUppercase :: String -> String`. Nous n'avons pas eu à donner à cette
+fonction de déclaration de type car le compilateur pouvait inférer lui-même que
+la fonction allait de chaîne de caractères à chaîne de caractères, mais on l'a
+quand même fait. Mais comment écrire le type d'une fonction qui prend plusieurs
+paramètres ? Voici une simple fonction qui prend trois entiers et les somme.
+
+> addThree :: Int -> Int -> Int -> Int
+> addThree x y z = x + y + z
+
+Les paramètres sont séparés par des `->` et il n'y a pas de distinction entre
+les paramètres et le type retourné. Le type retourné est le dernier élément de
+la déclaration, et les paramètres sont les trois premiers. Plus tard, nous
+verrons pourquoi ils sont séparés par des `->` plutôt que d'être distingués
+plus explicitement, par exemple sous une forme ressemblant à `Int, Int, Int ->
+Int` ou de ce genre.
+
+Si vous voulez donnez une déclaration de type à une fonction, mais n'êtes pas
+certain du type, vous pouvez toujours ne pas l'écrire, puis le demander à
+l'aide de `:t`. Les fonctions sont également des expressions, donc `:t`
+fonctionne dessus sans souci.
+
+Voici un survol des types usuels.
+
+`Int` désigne les entiers. `7` peut être un entier, mais `7.2` ne peut pas.
+`Int` est borné, ce qui signifie qu'il existe une valeur minimale et une valeur
+maximale. Habituellement, sur des machines 32-bits, le plus grand `Int` est
+2147483647 et le plus petit -2147483648.
+
+`Integer` désigne... euh, aussi les entiers. La différence, c'est qu'il n'est
+pas borné, donc il peut être utilisé pour représenter des nombres énormes. Je
+veux dire, vraiment énormes. `Int` est cependant plus efficace.
+
+> factorial :: Integer -> Integer
+> factorial n = product [1..n]
+
+> ghci> factorial 50
+> 30414093201713378043612608166064768844377641568960512000000000000
+
+`Float` est un nombre réel à virgule flottante en simple précision.
+
+> circumference :: Float -> Float  
+> circumference r = 2 * pi * r  
+
+> ghci> circumference 4.0  
+> 25.132742  
+
+`Double` est un nombre réel à virgule flottante en double précision !
+
+> circumference' :: Double -> Double  
+> circumference' r = 2 * pi * r  
+
+> ghci> circumference' 4.0  
+> 25.132741228718345  
+
+`Bool` est un type booléen. Il ne peut prendre que deux valeurs : `True` et
+`False`.
+
+`Char` représente un caractère. Il est dénoté par des apostrophes. Une liste de
+caractères est une chaîne de caractères.
+
+Les tuples sont des types mais dépendent de la taille et du type de leurs
+composantes, donc il existe théoriquement une infinité de types de tuples, ce
+qui fait trop pour être contenu dans ce didacticiel. Remarquez que le tuple
+vide `()` est aussi un type, qui ne contient qu'une seule valeur : `()`.
+
+Variables de type
+-----------------
+
+Quel est le type de `head` d'après vous ? Puisque `head` prend une liste de
+n'importe quel type et retourne son premier élément, qu'est-ce que ça peut bien
+être ? Regardons !
+
+> ghci> :t head  
+> head :: [a] -> a  
+
+Hmmm ! C'est quoi ce `a` ? Un type ? Rappelez-vous, nous avions dit que les
+types doivent commencer par une majuscule, donc ça ne peut pas être exactement
+un type. Puisqu'il commence par une minuscule, c'est une **variable de type**.
+Cela signifie que `a` peut être de n'importe quel type. C'est très proche des
+types génériques dans d'autres langages, seulement en Haskell c'est encore plus
+puissant puisque cela nous permet d'écrire des fonctions très générales tant
+qu'elles n'utilisent pas les spécificités d'un type particulier. Des fonctions
+ayant des variables de type sont dites **fonctions polymorphiques**. La
+déclaration de type de `head` indique qu'elle prend une liste de n'importe quel
+type, et retourne un élément de ce type.
+
+Bien que les variables de type puissent avoir des noms plus longs qu'un
+caractère, généralement on les note a, b, c, d...
+
+Vous souvenez-vous de `fst` ? Elle retourne la première composante d'une paire.
+Regardons son type.
+
+> ghci> :t fst  
+> fst :: (a, b) -> a  
+
+On voit que `fst` prend un tuple qui contient deux types et retourne un élément
+du même type que celui de la première composante de la paire. C'est pourquoi on
+peut utiliser `fst` sur une paire qui contient n'importe quels deux types.
+Notez que, le fait que `a` et `b` soient deux variables de type différentes
+n'implique pas que les types doivent être différents. Cela indique juste que la
+première composante et la valeur retournée ont le même type.
+
+Classes de types 101
+-------------------
+
+Une classe de types est une sorte d'interface qui définit un comportement. Si un
+type appartient à une classe de types, cela signifie qu'il supporte et
+implémente le comportement décrit par la classe. Beaucoup de gens venant de la
+programmation orientée objet se méprennent à penser que les classes de types
+sont comme des classes de langages orientés objet. Ce n'est pas le cas. Vous
+pouvez plutôt les penser comme des sortes d'interfaces Java, mais en mieux.
+
+Quelle est la signature de type de `==` ?
+
+> ghci> :t (==)  
+> (==) :: (Eq a) => a -> a -> Bool  
+
+Note : l'opérateur d'égalité, `==` est une fonction. De même pour `+`, `*`,
+`-`, `/` et quasiment tous les opérateurs. Si une fonction ne contient que des
+caractères spéciaux, elle est considérée infixe par défaut. Si nous voulons
+examiner son type, la passer à une autre fonction, ou l'appeler de façon
+préfixe, nous devons l'entourer de parenthèses.
+
+Intéressant. Nous voyons quelque chose de nouveau ici, le symbole `=>`. Tout ce
+qui se situe avant le `=>` est appelé une **contrainte de classe**. On peut
+lire la déclaration de type précédente ainsi : la fonction d'égalité prend deux
+valeurs du même type et retourne un `Bool`. Le type de ces valeurs doit être
+member de la classe `Eq` (ceci est la contrainte de classe).
+
+La classe de types `Eq` offre une interface pour tester l'égalité. Tout type
+pour lequel tester l'égalité de deux valeurs a du sens devrait être membre de
+la classe de types `Eq`. Tous les types standards de Haskell à l'exception d'IO
+(le type qui permet de faire des entrées-sorties) et des fonctions font partie
+de la classe de types `Eq`.
+
+La fonction `elem` a pour type `(Eq a) => a -> [a] -> Bool` car elle utilise
+`==` sur les éléments de la liste pour vérifier si la valeur qu'on cherche est
+dedans.
+
+Quelques classes de types de base :
+
+`Eq` est utilisé pour les types qui supportent un test d'égalité. Ses membres
+doivent implémenter les fonctions `==` ou `/=` dans leur définition. Donc, si
+une fonction a une contrainte de classe `Eq` pour une variable de type, c'est
+que quelque part dans la fonction, elle utilise `==` ou `/=`. Tous les types
+mentionnés précédemment à l'exception des fonctions sont membres de `Eq`, donc
+ils peuvent être testés égaux.
+
+> ghci> 5 == 5  
+> True  
+> ghci> 5 /= 5  
+> False  
+> ghci> 'a' == 'a'  
+> True  
+> ghci> "Ho Ho" == "Ho Ho"  
+> True  
+> ghci> 3.432 == 3.432  
+> True  
+
+`Ord` est pour les types qui peuvent être ordonnés.
+
+> ghci> :t (>)  
+> (>) :: (Ord a) => a -> a -> Bool  
+
+Tous les types que nous avons couverts jusqu'ici sont membres d'`Ord`. `Ord`
+comprend toutes les fonctions usuelles de comparaison, comme `>`, `<`, `>=` et
+`<=`. La fonction `compare` prend deux membres d'`Ord` ayant le même type et
+retourne un ordre. `Ordering` est son type, et les valeurs peuvent être `GT`,
+`LT` ou `EQ`, respectivement pour *plus grand*, *plus petit* et *égal*.
+
+Pour être membre d'`Ord`, un type doit d'abord être membre du club prestigieux
+et exclusif `Eq`.
+
+> ghci> "Abrakadabra" < "Zebra"  
+> True  
+> ghci> "Abrakadabra" `compare` "Zebra"  
+> LT  
+> ghci> 5 >= 2  
+> True  
+> ghci> 5 `compare` 3  
+> GT  
+
+Les membres de `Show` peuvent être représentés par une chaîne de caractères.
+Tous les types couverts jusqu'ici sont membres de `Show`. La fonction la plus
+utilisée en rapport avec la classe `Show` est `show`. Elle prend une valeur
+d'un type membre de la classe `Show` et nous la représente sous la forme d'une
+chaîne de caractères.
+
+> ghci> show 3  
+> "3"  
+> ghci> show 5.334  
+> "5.334"  
+> ghci> show True  
+> "True"  
+
+`Read` est en quelque sorte l'opposé de `Show`. La fonction `read` prend une
+chaîne de caractères, et retourne une valeur d'un type membre de `Read`.
+
+> ghci> read "True" || False  
+> True  
+> ghci> read "8.2" + 3.8  
+> 12.0  
+> ghci> read "5" - 2  
+> 3  
+> ghci> read "[1,2,3,4]" ++ [3]  
+> [1,2,3,4,3]  
+
+Jusqu'ici tout va bien. Encore une fois, tous les types couverts jusqu'ici sont
+dans cette classe de types. Mais que se passe-t-il si l'on écrit juste `read
+"4"` ?
+
+> ghci> read "4"  
+> <interactive>:1:0:  
+>     Ambiguous type variable `a' in the constraint:  
+>       `Read a' arising from a use of `read' at <interactive>:1:0-7  
+>     Probable fix: add a type signature that fixes these type variable(s)  
+
+GHCI nous dit qu'il ne sait pas ce qu'on attend en retour. Remarquez comme,
+dans les exemples précédents de `read`, on faisait toujours quelque chose du
+résultat. Ainsi, GHCI pouvait inférer le type de résultat attendu de `read`. Si
+nous l'utilisions comme un booléen, il savait qu'il fallait retourner un
+`Bool`. Mais maintenant, il sait seulement qu'on attend un type de la classe
+`Read`, mais il ne sait pas lequel. Regardons la signature de type de `read`.
+
+> ghci> :t read  
+> read :: (Read a) => String -> a  
+
+Vous voyez ? Il retourne un type membre de `Read` mais si on n'essaie pas de
+l'utiliser ensuite, il n'a aucun moyen de savoir de quel type il s'agit. Pour
+remédier à cela, on peut utiliser des **annotations de type** explicites. Les
+annotations de type sont un moyen d'exprimer explicitement le type qu'une
+expression doit avoir. On le fait en ajoutant `::` à la fin de l'expression et
+en spécifiant un type. Observez :
+
+> ghci> read "5" :: Int  
+> 5  
+> ghci> read "5" :: Float  
+> 5.0  
+> ghci> (read "5" :: Float) * 4  
+> 20.0  
+> ghci> read "[1,2,3,4]" :: [Int]  
+> [1,2,3,4]  
+> ghci> read "(3, 'a')" :: (Int, Char)  
+> (3, 'a')  
+
+La plupart des expressions sont telles que le compilateur peut inférer leur
+type tout seul. Mais parfois, le compilateur ne sait pas s'il doit plutôt
+retourner une valeur de type `Int` ou `Float` pour une expression comme `read
+"5"`. Pour voir le type, Haskell devrait évaluer `read "5"`. Mais puisqu'il est
+statiquement typé, il doit connaître les types avant de compiler le code (ou,
+dans le cas de GHCI, de l'évaluer). Donc nous devons dire à Haskell : "Hé,
+cette expression devrait avoir ce type, au cas où tu ne saurais pas !".
+
+Les membres d'`Enum` sont des types ordonnés séquentiellement - on peut les
+énumérer. L'avantage de la classe de types `Enum` est qu'on peut l'utiliser
+ses types dans les progressions. Elle définit aussi un successeur et un
+prédécesseur, qu'on peut obtenir à l'aide des fonctions `succ` et `pred`. Les
+types membres de cette classe sont : `()`, `Bool`, `Char`, `Ordering`, `Int`,
+`Integer`, `Float` et `Double`.
+
+> ghci> ['a'..'e']  
+> "abcde"  
+> ghci> [LT .. GT]  
+> [LT,EQ,GT]  
+> ghci> [3 .. 5]  
+> [3,4,5]  
+> ghci> succ 'B'  
+> 'C'  
+
+Les membres de `Bounded` ont une borne supérieure et inférieure.
+
+> ghci> minBound :: Int  
+> -2147483648  
+> ghci> maxBound :: Char  
+> '\1114111'  
+> ghci> maxBound :: Bool  
+> True  
+> ghci> minBound :: Bool  
+> False  
+
+`minBound` et `maxBound` sont intéressantes car elles ont pour type `(Bounded
+a) => a`. D'une certaine façon, ce sont des constantes polymorphiques.
+
+Tous les tuples sont membres de `Bounded` si leurs composantes le sont
+également.
+
+> ghci> maxBound :: (Bool, Int, Char)  
+> (True,2147483647,'\1114111')  
+
+`Num` est la classe des types numériques. Ses membres ont pour propriété de
+pouvoir se comporter comme des nombres. Examinons le type d'un nombre.
+
+> ghci> :t 20  
+> 20 :: (Num t) => t  
+
+Il semblerait que tous les nombres soient aussi des constantes polymorphiques.
+Ils peuvent se faire passer pour tout membre de la classe `Num`.
+
+> ghci> 20 :: Int  
+> 20  
+> ghci> 20 :: Integer  
+> 20  
+> ghci> 20 :: Float  
+> 20.0  
+> ghci> 20 :: Double  
+> 20.0  
+
+Ce sont tous des types membres de `Num`. Si on examine le type de `*`, on verra
+qu'elle accepte des nombres.
+
+> ghci> :t (*)  
+> (*) :: (Num a) => a -> a -> a  
+
+Elle prend deux nombres du même type, et retourne un nombre de ce type. C'est
+pourquoi `(5 :: Int) * (6 :: Integer)` donnera une erreur de typage, alors que
+`5 * (6 :: Integer)` fonctionnera et produira un `Integer` car `5` peut se
+faire passer pour un `Integer` ou un `Int`.
+
+Pour être dans `Num`, un type doit déjà être ami avec `Show` et `Eq`.
+
+`Integral` est aussi une classe de types numériques. `Num` inclue tous les
+nombres, autant réels qu'entiers, `Integral` ne contient que des entiers. `Int`
+et `Integer` sont membres de cette classe.
+
+`Floating` inclue seulement des nombres à virgule flottante, donc `Float` et
+`Double`.
+
+Une fonction très utile pour manipuler des nombres est `fromIntegral`. Sa
+déclaration de type est `fromIntegral :: (Num b, Integral a) => a -> b`. De
+cette signature, on voit qu'elle prend un entier et le transforme en un nombre
+plus général. C'est utile lorsque vous voulez utiliser des entiers et des
+nombres à virgule flottante ensemble proprement. Par exemple, `length` a pour
+déclaration de type `length :: [a] -> Int` au lieu d'avoir le type plus
+général `(Num b) => length :: [a] -> b`. Ainsi, si l'on essaie d'obtenir la
+taille d'une liste, et de l'ajouter à `3.2`, on aura une erreur puisqu'on
+essaie d'ajouter un `Int` à un nombre à virgule flottante. Pour éviter ceci,
+on fait `fromIntegral (length [1,2,3,4]) + 3.2` et tout fonctionne.
+
+Remarquez que `fromIntegral` a plusieurs contraintes de classe dans sa
+signature. C'est tout à fait valide, et comme vous voyez, les contraintes sont
+séparées par des virgules dans les parenthèses.
