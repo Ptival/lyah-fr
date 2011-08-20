@@ -17,7 +17,7 @@ semblable à celui-ci.
 > Loading package base ... linking ... done.
 > Prelude>
 
-Bravo, vous êtes dans GHCI ! L'invite `Prelude>` peut devenir de plus en plus
+Bravo, vous êtes dans GHCi ! L'invite `Prelude>` peut devenir de plus en plus
 long lorsqu'on importera des choses dans la session, alors on va le remplacer
 par `ghci>`. Si vous voulez le même invite, tapez simplement `:set prompt
 "ghci> "`.
@@ -49,7 +49,7 @@ l'altérer.
 Plutôt cool, non ? Ouais, je sais que c'est pas terrible, mais supportez-moi
 encore un peu. Attention, un écueil à éviter ici est la négation des nombres.
 Pour obtenir un nombre négatif, il est toujours mieux de l'entourer de
-parenthèses. Faire `5 * -3` vous causera les fureurs de GHCI, alors que `5 *
+parenthèses. Faire `5 * -3` vous causera les fureurs de GHCi, alors que `5 *
 (-3)` fonctionnera sans souci.
 
 L'algèbre booléenne est également simple. Comme vous le savez sûrement, `&&`
@@ -89,11 +89,11 @@ essaie le premier, on obtient un gros message d'erreur effrayant !
 >     In the expression: 5 + "llama"
 >     In the definition of `it': it = 5 + "llama"
 
-Beurk ! Ce que GHCI essaie de nous dire, c'est que `"llama"` n'est pas un
+Beurk ! Ce que GHCi essaie de nous dire, c'est que `"llama"` n'est pas un
 nombre, et donc qu'il ne sait pas l'additioner à 5. Même si ce n'était pas
 `"llama"` mais `"four"` ou même `"4"`, Haskell ne considérerait pas cela comme
 un nombre. `+` attend comme opérandes à droite et à gauche des nombres. Si on
-essayait de faire `True == 5`, GHCI nous dirait que les types ne correspondent
+essayait de faire `True == 5`, GHCi nous dirait que les types ne correspondent
 pas. Là où `+` ne fonctionne que sur ce qui est considéré comme un nombre, `==`
 marche sur n'importe quelles deux choses qui peuvent être comparées. Le piège,
 c'est qu'elles doivent être toutes les deux du même type de choses. On ne
@@ -204,7 +204,7 @@ ensemble.
 Simple. Nous aurions également pu l'écrire `doubleUs x y = x + x + y + y`.
 Un test produit les résultats attendus (rappelez-vous bien d'ajouter cette
 fonction à la bin de `baby.hs`, de sauvegarder le fichier, et de faire `:l
-baby` dans GHCI).
+baby` dans GHCi).
 
 > ghci> doubleUs 4 9
 > 26
@@ -292,7 +292,7 @@ une liste d'entiers, une liste de caractères, mais jamais une liste qui a à la
 fois des entiers et des caractères. Place à une liste !
 
 Note : Nous utilisons le mot-clé `let` pour définir un nom directement dans
-GHCI. Écrire `let a = 1` dans GHCI est équivalent à écrire `a = 1` dans un
+GHCi. Écrire `let a = 1` dans GHCi est équivalent à écrire `a = 1` dans un
 script puis charger ce script.
 
 > ghci> let lostNumbers = [4,8,15,16,23,42]
@@ -726,7 +726,7 @@ nombres. Supprimons tous les nombres impairs sans aplatir la liste.
 > [[2,2,4],[2,4,6,8],[2,4,2,6,2,6]]
 
 Vous pouvez écrire les compréhensions de listes sur plusieurs lignes. Donc, en
-dehors de GHCI, il vaut mieux les découper sur plusieurs lignes, surtout si
+dehors de GHCi, il vaut mieux les découper sur plusieurs lignes, surtout si
 elles sont imbriquées.
 
 Tuples
@@ -843,7 +843,7 @@ dont les côtés sont inférieurs ou égaux à 10 :
 > ghci> let triangles = [ (a,b,c) | c <- [1..10], b <- [1..10], a <- [1..10] ]
 
 On pioche simplement dans trois listes et notre fonction de sortie combine les
-trois valeurs en triplets. Si vous évaluez en le tapant `triangles`, dans GHCI,
+trois valeurs en triplets. Si vous évaluez en le tapant `triangles`, dans GHCi,
 vous obtiendrez tous les triangles possibles dont les côtés sont inférieurs ou
 égaux à 10. Ensuite, ajoutons une condition, que ceux-ci soient rectangles. On
 va également exploiter le fait que b est plus petit que l'hypoténuse et que le

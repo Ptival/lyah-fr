@@ -24,7 +24,7 @@ Un type est une sorte d'étiquette que chaque expression porte. Il nous indique
 à quelle catégorie de choses cette expression appartient. L'expression `True`
 est un booléen, "hello" est une chaîne de caractères, etc.
 
-Utilisons à présent GHCI pour examiner le types de quelques expressions. On le
+Utilisons à présent GHCi pour examiner le types de quelques expressions. On le
 fera à l'aide de la commande `:t` qui, suivie d'une expression valide, nous
 indique son type. Essayons.
 
@@ -282,9 +282,9 @@ dans cette classe de types. Mais que se passe-t-il si l'on écrit juste `read
 >       `Read a' arising from a use of `read' at <interactive>:1:0-7  
 >     Probable fix: add a type signature that fixes these type variable(s)  
 
-GHCI nous dit qu'il ne sait pas ce qu'on attend en retour. Remarquez comme,
+GHCi nous dit qu'il ne sait pas ce qu'on attend en retour. Remarquez comme,
 dans les exemples précédents de `read`, on faisait toujours quelque chose du
-résultat. Ainsi, GHCI pouvait inférer le type de résultat attendu de `read`. Si
+résultat. Ainsi, GHCi pouvait inférer le type de résultat attendu de `read`. Si
 nous l'utilisions comme un booléen, il savait qu'il fallait retourner un
 `Bool`. Mais maintenant, il sait seulement qu'on attend un type de la classe
 `Read`, mais il ne sait pas lequel. Regardons la signature de type de `read`.
@@ -315,7 +315,7 @@ type tout seul. Mais parfois, le compilateur ne sait pas s'il doit plutôt
 retourner une valeur de type `Int` ou `Float` pour une expression comme `read
 "5"`. Pour voir le type, Haskell devrait évaluer `read "5"`. Mais puisqu'il est
 statiquement typé, il doit connaître les types avant de compiler le code (ou,
-dans le cas de GHCI, de l'évaluer). Donc nous devons dire à Haskell : "Hé,
+dans le cas de GHCi, de l'évaluer). Donc nous devons dire à Haskell : "Hé,
 cette expression devrait avoir ce type, au cas où tu ne saurais pas !".
 
 Les membres d'`Enum` sont des types ordonnés séquentiellement - on peut les
