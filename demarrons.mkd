@@ -201,8 +201,8 @@ ensemble.
 
 > doubleUs x y = x*2 + y*2
 
-Simple. Nous aurions également pu l'écrire `doubleUs x y = x + x + y + y`.
-Un test produit les résultats attendus (rappelez-vous bien d'ajouter cette
+Simple. Nous aurions également pu l'écrire `doubleUs x y = x + x + y + y`.  Un
+test produit les résultats attendus (rappelez-vous bien d'ajouter cette
 fonction à la bin de `baby.hs`, de sauvegarder le fichier, et de faire `:l
 baby` dans GHCi).
 
@@ -287,9 +287,9 @@ bases des listes, des chaînes de caractères (qui sont en fait des listes) et
 des listes en compréhension.
 
 En Haskell, les listes sont des structures de données **homogènes**. Elles
-contiennent plusieurs éléments du même type. Cela signifie qu'on peut avoir
-une liste d'entiers, une liste de caractères, mais jamais une liste qui a à la
-fois des entiers et des caractères. Place à une liste !
+contiennent plusieurs éléments du même type. Cela signifie qu'on peut avoir une
+liste d'entiers, une liste de caractères, mais jamais une liste qui a à la fois
+des entiers et des caractères. Place à une liste !
 
 Note : Nous utilisons le mot-clé `let` pour définir un nom directement dans
 GHCi. Écrire `let a = 1` dans GHCi est équivalent à écrire `a = 1` dans un
@@ -320,14 +320,13 @@ réalisé à l'aide de l'opérateur `++`.
 > "woot"
 
 Attention lors de l'utilisation répétée de l'opérateur `++` sur de longues
-chaînes. Lorsque vous accollez deux listes (et même si vous accolez une
-liste singleton à une autre liste, par exemple : `[1, 2, 3] ++ [4]`), en
-interne, Haskell doit parcourir la liste de gauche en entier. Ceci ne pose pas
-de problème tant que les listes restent de taille raisonnable. Mais accoller
-une liste à la fin d'une liste qui contient cinquante millions d'éléments
-risque de prendre du temps. Cependant, placer quelque chose au début d'une
-liste en utilisant l'opérateur `:` (aussi appelé l'opérateur cons) est
-instantané.
+chaînes. Lorsque vous accollez deux listes (et même si vous accolez une liste
+singleton à une autre liste, par exemple : `[1, 2, 3] ++ [4]`), en interne,
+Haskell doit parcourir la liste de gauche en entier. Ceci ne pose pas de
+problème tant que les listes restent de taille raisonnable. Mais accoller une
+liste à la fin d'une liste qui contient cinquante millions d'éléments risque de
+prendre du temps. Cependant, placer quelque chose au début d'une liste en
+utilisant l'opérateur `:` (aussi appelé l'opérateur cons) est instantané.
 
 > ghci> 'A':" SMALL CAT"
 > "A SMALL CAT"
@@ -421,7 +420,7 @@ queue.
 
 En imaginant une liste comme un monstre, voilà ce que ça donne.
 
-
+TODO
 
 Mais que se passe-t-il si l'on essaie de prendre la tête d'une liste vide ?
 
@@ -480,8 +479,8 @@ demandé du début de la liste.
 > ghci> drop 100 [1,2,3,4]
 > []
 
-`maximum` prend une liste de choses qui peuvent être ordonnées et retourne
-le plus grand d'entre eux.
+`maximum` prend une liste de choses qui peuvent être ordonnées et retourne le
+plus grand d'entre eux.
 
 `minimum` retourne le plus petit.
 
@@ -516,18 +515,18 @@ verrons d'autres [plus tard](TODO).
 Les progressions du Texas
 -------------------------
 
-(NdT : en anglais, les progressions sont appelées "ranges", et le titre fait
+(NDT : en anglais, les progressions sont appelées "ranges", et le titre fait
 donc une référence aux "texas rangers")
 
 Que faire si l'on veut la liste des nombres de 1 à 20 ? Bien sûr, on pourrait
 les taper un par un, mais ce n'est pas une solution pour des gentlemen qui
 demandent l'excellence de leurs langages de programmation. Nous utiliserons
-plutôt des progressions. Les progressions sont un moyen de créer des listes
-qui sont des suites arithmétiques d'éléments qui peuvent être énumérés. Les
-nombres peuvent être énumérés. Un, deux, trois, quatre, etc. Les caractères
-peuvent aussi être énumérés. L'alphabet est une énumération des caractères de A
-à Z. Les noms ne peuvent pas être énumérés. Qu'est-ce qui suit "John" ? Je ne
-sais pas.
+plutôt des progressions. Les progressions sont un moyen de créer des listes qui
+sont des suites arithmétiques d'éléments qui peuvent être énumérés. Les nombres
+peuvent être énumérés. Un, deux, trois, quatre, etc. Les caractères peuvent
+aussi être énumérés. L'alphabet est une énumération des caractères de A à Z.
+Les noms ne peuvent pas être énumérés. Qu'est-ce qui suit "John" ? Je ne sais
+pas.
 
 Pour créer une liste contenant tous les entiers naturels de 1 à 20, on écrit
 `[1..20]`. C'est équivalent à `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
@@ -626,10 +625,10 @@ pairs pour l'instant. La liste de compréhension adéquate serait `[x*2 | x <-
 > [2,4,6,8,10,12,14,16,18,20]
 
 Comme vous pouvez le voir, nous obtenons le résultat attendu. Ajoutons à
-présent une condition (ou un prédicat) à cette compréhension. Les prédicats
-se placent après les liaisons, et sont séparés de ceux-ci par une virgule.
-Disons que l'on cherche les éléments qui, une fois doublés, sont plus grands ou
-égaux à 12.
+présent une condition (ou un prédicat) à cette compréhension. Les prédicats se
+placent après les liaisons, et sont séparés de ceux-ci par une virgule.  Disons
+que l'on cherche les éléments qui, une fois doublés, sont plus grands ou égaux
+à 12.
 
 > ghci> [x*2 | x <- [1..10], x*2 >= 12]
 > [12,14,16,18,20]
@@ -641,12 +640,12 @@ de la division par 7 est 3 ? Facile.
 > [52,59,66,73,80,87,94]
 
 Succès ! Notez que nettoyer une liste à l'aide de prédicats s'appelle aussi le
-**filtrage**. Nous avons pris une liste de nombres et l'avons filtrée en
-accord avec le prédicat. Un autre exemple. Disons qu'on veut une compréhension
-qui remplace chaque nombre impair plus grand que 10 par `"BANG!"` et chaque
-nombre impair plus petit que 10 par `"BOOM!"`. Si un nombre est pair, on le
-rejette de la liste. Pour plus de facilité, on va placer cette compréhension
-dans une fonction, pour pouvoir la réutiliser facilement.
+**filtrage**. Nous avons pris une liste de nombres et l'avons filtrée en accord
+avec le prédicat. Un autre exemple. Disons qu'on veut une compréhension qui
+remplace chaque nombre impair plus grand que 10 par `"BANG!"` et chaque nombre
+impair plus petit que 10 par `"BOOM!"`. Si un nombre est pair, on le rejette de
+la liste. Pour plus de facilité, on va placer cette compréhension dans une
+fonction, pour pouvoir la réutiliser facilement.
 
 > boomBangs xs = [ if x < 10 then "BOOM!" else "BANG!" | x <- xs, odd x]
 
@@ -716,9 +715,9 @@ Testons :
 > "ILIKEFROGS"
 
 Le prédicat ici fait tout le travail. Il indique que le caractère est inclus
-dans la nouvelle liste uniquement s'il appartient à la liste `['A'..'Z']`.
-Il est possible d'imbriquer les compréhensions si vous opérez sur des listes
-qui contiennent des listes. Soit une liste qui contient plusieurs listes de
+dans la nouvelle liste uniquement s'il appartient à la liste `['A'..'Z']`.  Il
+est possible d'imbriquer les compréhensions si vous opérez sur des listes qui
+contiennent des listes. Soit une liste qui contient plusieurs listes de
 nombres. Supprimons tous les nombres impairs sans aplatir la liste.
 
 > ghci> let xxs = [[1,3,5,2,3,1,2,4,5],[1,2,3,4,5,6,7,8,9],[1,2,4,2,1,6,3,1,3,2,3,6]]
@@ -777,13 +776,13 @@ contenir des listes.
 Utilisez des tuples lorsque vous savez à l'avance combien de composantes une
 donnée doit avoir. Les tuples sont beaucoup plus rigides car chaque taille de
 tuple a son propre type, donc on ne peut pas écrire une fonction générique pour
-ajouter un élément à un tuple - il faudrait écrire une fonction pour ajouter
-à une paire, une fonction pour ajouter à un triplet, un fonction pour ajouter à
+ajouter un élément à un tuple - il faudrait écrire une fonction pour ajouter à
+une paire, une fonction pour ajouter à un triplet, un fonction pour ajouter à
 un quadruplet, etc.
 
 Bien qu'il y ait des listes singleton, il n'existe pas de tuple singleton. Ca
-n'a pas beaucoup de sens si vous y réfléchissez. Un tuple singleton
-serait seulement la valeur qu'il contient, et n'aurait donc pas d'intérêt.
+n'a pas beaucoup de sens si vous y réfléchissez. Un tuple singleton serait
+seulement la valeur qu'il contient, et n'aurait donc pas d'intérêt.
 
 Comme les listes, les tuples peuvent être comparés entre eux si leurs
 composantes peuvent être comparées. Seulement, vous ne pouvez pas comparer des

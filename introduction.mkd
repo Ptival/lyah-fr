@@ -4,9 +4,9 @@ Introduction
 À propos de ce didacticiel
 --------------------------
 
-Bienvenue dans **Apprenez Haskell pour le meilleur** ! Si vous lisez ceci,
-il est possible que vous vouliez apprendre Haskell. Vous êtes au bon endroit,
-mais discutons un peu de ce didacticiel avant tout.
+Bienvenue dans **Apprenez Haskell pour le meilleur** ! Si vous lisez ceci, il
+est possible que vous vouliez apprendre Haskell. Vous êtes au bon endroit, mais
+discutons un peu de ce didacticiel avant tout.
 
 J'ai décidé d'écrire ce didacticiel parce que je voulais consolider ma propre
 connaissance d'Haskell, et parce que je pensais pouvoir aider les débutants à
@@ -33,8 +33,8 @@ gentils, patients et compréhensifs envers les débutants.
 J'ai échoué dans mon apprentissage de Haskell à peu près deux fois avant
 d'arriver à le saisir, car cela me semblait trop bizarre et je ne comprenais
 pas. Mais alors, j'ai eu le déclic, et après avoir passé cet obstacle initial,
-le reste est venu plutôt facilement. Ce que j'essaie de vous dire : Haskell
-est génial, et si vous êtes intéressés par la programmation, vous devriez
+le reste est venu plutôt facilement. Ce que j'essaie de vous dire : Haskell est
+génial, et si vous êtes intéressés par la programmation, vous devriez
 l'apprendre même si cela semble bizarre au début. Apprendre Haskell est très
 similaire à l'apprentissage de la programmation la première fois - c'est fun !
 Ca vous force à penser différemment, ce qui nous amène à la section suivante...
@@ -71,7 +71,7 @@ construire des fonctions plus complexes en collant des simples fonctions l'une
 Haskell est **paresseux**. Cela signifie qu'à moins de lui demander
 explicitement, Haskell n'exécutera pas les fonctions et ne calculera pas les
 choses tant qu'il n'est pas forcé de nous montrer les résultats. Cela va bien
-de paire avec la transparence référentielle et permet de penser ses programmes
+de pair avec la transparence référentielle et permet de penser ses programmes
 comme des **transformations sur des données**. Cela permet aussi des choses
 cool comme des structures de données infinies. Supposons que vous ayez une
 liste de nombres immuable `xs = [1, 2, 3, 4, 5, 6, 7, 8]` et une fonction
@@ -89,15 +89,15 @@ donc un 2. Le deuxième reçoit cela, et renvoie un 4 au premier. Le premier voi
 cela, et vous répond que le premier élément est un 8. Ainsi, la liste n'est
 traversée qu'une fois, et seulement quand vous en avez vraiment besoin. De
 cette façon, lorsque vous voulez quelque chose d'un langage paresseux, vous
-pouvez juste prendre les données initiales, et efficacement les transformer
-de toutes les façons possibles jusqu'à arriver à vos fins.
+pouvez juste prendre les données initiales, et efficacement les transformer de
+toutes les façons possibles jusqu'à arriver à vos fins.
 
 Haskell est **typé statiquement**. Lorsque vous compilez votre programme, le
 compilateur sait quel bout de code est un nombre, lequel est une chaîne de
 caractères, etc. Cela veut dire que beaucoup d'erreurs potentielles sont
 détectées à la compilation. Si vous essayez de sommer un nombre et une chaîne
-de caractères, le compilateur vous criera dessus. Haskell utilise un système
-de types très bon qui bénéficie de l'**inférence de types**. Cela signifie que
+de caractères, le compilateur vous criera dessus. Haskell utilise un système de
+types très bon qui bénéficie de l'**inférence de types**. Cela signifie que
 vous n'avez pas à marquer explicitement chaque bout de code avec un type, car
 le système de types peut intelligemment comprendre beaucoup de choses. Si vous
 dites `a = 5 + 4`, pas besoin d'indiquer à Haskell que `a` est un nombre, il
@@ -137,8 +137,8 @@ relancer le programme depuis votre terminal. Le mode interactif est invoqué en
 tapant `ghci` dans votre terminal. Si vous avez défini des fonctions dans un
 fichier, par exemple `myfunctions.hs`, vous pouvez les charger en tapant `:l
 myfunctions`, puis jouer avec, à condition que `myfunctions.hs` soit dans le
-dossier d'où `ghci` a été invoqué. Si vous modifiez le script .hs, tapez
-juste `:l myfunctions` à nouveau, ou encore `:r`, qui est équivalent puisqu'il
+dossier d'où `ghci` a été invoqué. Si vous modifiez le script .hs, tapez juste
+`:l myfunctions` à nouveau, ou encore `:r`, qui est équivalent puisqu'il
 recharge le script courant. Ma procédure habituelle quand je joue avec des
 choses est de définir des fonctions dans a.hs, de les charger, et de bidouiller
 avec, puis de retourner changer le .hs, recharger, etc. C'est aussi ce qu'on va

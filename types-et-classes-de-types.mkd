@@ -9,8 +9,8 @@ Le type de chaque expression est connu à la compilation, ce qui mène à un cod
 plus sûr. Si vous écrivez un programme dans lequel vous tentez de diviser un
 booléen par un nombre, cela ne compilera même pas. C'est pour le mieux, car il
 vaut mieux trouver ces erreurs à la compilation qu'obtenir un programme qui
-plante. En Haskell, tout a un type, donc le compilateur peut raisonner
-sur votre programme avant même de le compiler.
+plante. En Haskell, tout a un type, donc le compilateur peut raisonner sur
+votre programme avant même de le compiler.
 
 Au contraire de Java ou Pascal, Haskell a de l'inférence des types. Si nous
 écrivons un nombre, nous n'avons pas à dire à Haskell que c'est un nombre. Il
@@ -170,8 +170,8 @@ première composante et la valeur retournée ont le même type.
 Classes de types 101
 -------------------
 
-Une classe de types est une sorte d'interface qui définit un comportement. Si un
-type appartient à une classe de types, cela signifie qu'il supporte et
+Une classe de types est une sorte d'interface qui définit un comportement. Si
+un type appartient à une classe de types, cela signifie qu'il supporte et
 implémente le comportement décrit par la classe. Beaucoup de gens venant de la
 programmation orientée objet se méprennent à penser que les classes de types
 sont comme des classes de langages orientés objet. Ce n'est pas le cas. Vous
@@ -319,8 +319,8 @@ dans le cas de GHCi, de l'évaluer). Donc nous devons dire à Haskell : "Hé,
 cette expression devrait avoir ce type, au cas où tu ne saurais pas !".
 
 Les membres d'`Enum` sont des types ordonnés séquentiellement - on peut les
-énumérer. L'avantage de la classe de types `Enum` est qu'on peut l'utiliser
-ses types dans les progressions. Elle définit aussi un successeur et un
+énumérer. L'avantage de la classe de types `Enum` est qu'on peut l'utiliser ses
+types dans les progressions. Elle définit aussi un successeur et un
 prédécesseur, qu'on peut obtenir à l'aide des fonctions `succ` et `pred`. Les
 types membres de cette classe sont : `()`, `Bool`, `Char`, `Ordering`, `Int`,
 `Integer`, `Float` et `Double`.
@@ -397,11 +397,11 @@ déclaration de type est `fromIntegral :: (Num b, Integral a) => a -> b`. De
 cette signature, on voit qu'elle prend un entier et le transforme en un nombre
 plus général. C'est utile lorsque vous voulez utiliser des entiers et des
 nombres à virgule flottante ensemble proprement. Par exemple, `length` a pour
-déclaration de type `length :: [a] -> Int` au lieu d'avoir le type plus
-général `(Num b) => length :: [a] -> b`. Ainsi, si l'on essaie d'obtenir la
-taille d'une liste, et de l'ajouter à `3.2`, on aura une erreur puisqu'on
-essaie d'ajouter un `Int` à un nombre à virgule flottante. Pour éviter ceci,
-on fait `fromIntegral (length [1,2,3,4]) + 3.2` et tout fonctionne.
+déclaration de type `length :: [a] -> Int` au lieu d'avoir le type plus général
+`(Num b) => length :: [a] -> b`. Ainsi, si l'on essaie d'obtenir la taille
+d'une liste, et de l'ajouter à `3.2`, on aura une erreur puisqu'on essaie
+d'ajouter un `Int` à un nombre à virgule flottante. Pour éviter ceci, on fait
+`fromIntegral (length [1,2,3,4]) + 3.2` et tout fonctionne.
 
 Remarquez que `fromIntegral` a plusieurs contraintes de classe dans sa
 signature. C'est tout à fait valide, et comme vous voyez, les contraintes sont
