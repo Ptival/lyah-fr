@@ -51,7 +51,7 @@ structures de contrôle de flot pour répéter des actions plusieurs fois. Dans 
 langage de programmation purement fonctionnelle, vous n'indiquez pas à
 l'ordinateur quoi faire, mais plutôt ce que les choses *sont*. La factorielle
 d'un nombre est le produit de tous les nombres de 1 à celui-ci, la somme d'une
-liste de nombres est égale au premier de ceux-ci additioné à la somme des
+liste de nombres est égale au premier de ceux-ci additionné à la somme des
 autres, etc. Vous exprimez ceci sous la forme de fonctions. Également, vous
 n'affectez pas une valeur à une variable, puis une autre valeur plus tard. Si
 vous dites que `a` est égal à 5, vous ne pouvez pas dire qu'il est égal à autre

@@ -90,7 +90,7 @@ essaie le premier, on obtient un gros message d'erreur effrayant !
 >     In the definition of `it': it = 5 + "llama"
 
 Beurk ! Ce que GHCi essaie de nous dire, c'est que `"llama"` n'est pas un
-nombre, et donc qu'il ne sait pas l'additioner à 5. Même si ce n'était pas
+nombre, et donc qu'il ne sait pas l'additionner à 5. Même si ce n'était pas
 `"llama"` mais `"four"` ou même `"4"`, Haskell ne considérerait pas cela comme
 un nombre. `+` attend comme opérandes à droite et à gauche des nombres. Si on
 essayait de faire `True == 5`, GHCi nous dirait que les types ne correspondent
