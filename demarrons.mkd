@@ -255,14 +255,14 @@ précédente, nous aurions pu l'écrire ainsi.
 
 > doubleSmallNumber' x = (if x > 100 then x else x*2) + 1
 
-Si nous avions omis les parenthèses, nous aurions ajouté 1 seulement is `x`
+Si nous avions omis les parenthèses, nous aurions ajouté 1 seulement si `x`
 était plus grand que 100. Remarquez le `'` à la fin du nom de la fonction.
 Cette apostrophe n'a pas de signification spéciale en Haskell. C'est un
-caractère valide pour utiliser dans un nom de fonction. On utilise généralement
+caractère valide à utiliser dans un nom de fonction. On utilise généralement
 `'` pour indiquer la version stricte d'une fonction (une version qui n'est pas
 paresseuse) ou pour la version légèrement modifiée d'une fonction ou d'une
 variable. Puisque `'` est un caractère valide dans le nom d'une fonction, on
-peut écrire.
+peut écrire :
 
 > conanO'Brien = "It's a-me, Conan O'Brien!"
 
@@ -320,10 +320,10 @@ réalisé à l'aide de l'opérateur `++`.
 > "woot"
 
 Attention lors de l'utilisation répétée de l'opérateur `++` sur de longues
-chaînes. Lorsque vous accollez deux listes (et même si vous accolez une liste
+chaînes. Lorsque vous accolez deux listes (et même si vous accolez une liste
 singleton à une autre liste, par exemple : `[1, 2, 3] ++ [4]`), en interne,
 Haskell doit parcourir la liste de gauche en entier. Ceci ne pose pas de
-problème tant que les listes restent de taille raisonnable. Mais accoller une
+problème tant que les listes restent de taille raisonnable. Mais accoler une
 liste à la fin d'une liste qui contient cinquante millions d'éléments risque de
 prendre du temps. Cependant, placer quelque chose au début d'une liste en
 utilisant l'opérateur `:` (aussi appelé l'opérateur cons) est instantané.
@@ -374,7 +374,7 @@ listes qui contiennent des listes...
 Plusieurs listes à l'intérieur d'une liste peuvent avoir des longueurs
 différentes, mais elles ne peuvent pas être de types différents. Tout comme
 l'on ne peut pas avoir une liste contenant quelques caractères et quelques
-nombres, on ne peut peut pas avoir de liste qui contient quelques listes de
+nombres, on ne peut pas avoir de liste qui contient quelques listes de
 caractères et quelques listes de nombres.
 
 Les listes peuvent être comparées si ce qu'elles contiennent peut être comparé.
