@@ -1,0 +1,607 @@
+Syntaxe des fonctions
+=====================
+
+Filtrage par motif
+------------------
+
+Ce chapitre couvrira certaines des constructions syntaxiques cool d'Haskell, et
+l'on va commencer par le filtrage par motif. Le filtrage par motif consiste à
+spécifier des motifs auxquels une donnée doit se conformer, puis vérifier si
+c'est le cas en déconstruisant la donnée selon ces motifs.
+
+Lorsque vous définissez des fonctions, vous pouvez définir des corps de
+fonction séparés pour différents motifs. Cela amène à un code très clair et
+lisible. Vous pouvez filtrer par motif tout type de donnée - des nombres, des
+caractères, des listes, des tuples, etc. Créons une fonction triviale qui
+vérifie si le nombre fourni est sept ou non.
+
+> lucky :: (Integral a) => a -> String
+> lucky 7 = "LUCKY NUMBER SEVEN!"
+> lucky x = "Sorry, you're out of luck, pal!"
+
+Lorsque vous appelez `lucky`, les motifs seront vérifiés de haut en bas, et
+lorsque le paramètre se conforme à un motif, le corps de fonction correspondant
+sera utilisé. Ici, le seul moyen pour un nombre de correspondre au premier
+motif est pour lui d'être le nombre 7. Si ce n'est pas le cas, on passe au
+second motif, qui accepte tout paramètre et l'attache au nom `x`. Cette
+fonction aurait pu être implémentée à l'aide d'une construction *if*. Mais, si
+l'on voulait que la fonction énonce les nombres entre 1 et 5, et déclare
+`"Not between 1 and 5"` pour tout autre nombre ? Sans filtrage par motif, nous
+devrions utiliser un arbre de constructions *if then else* plutôt alambiqué.
+Cependant, avec le filtrage :
+
+> sayMe :: (Integral a) => a -> String
+> sayMe 1 = "One!"
+> sayMe 2 = "Two!"
+> sayMe 3 = "Three!"
+> sayMe 4 = "Four!"
+> sayMe 5 = "Five!"
+> sayMe x = "Not between 1 and 5"
+
+Remarquez que si nous avions mis le dernier motif (celui qui attrape tout) tout
+en haut, la fonction répondrait toujours `"Not between 1 and 5"`, car le motif
+attraperait tous les nombres, et ils n'auraient pas l'opportunité d'être testés
+contre les autres motifs.
+
+Rappelez-vous de la fonction factorielle qu'on avait implémenté auparavant.
+Nous l'avions défini pour un nombre `n` comme `product [1..n]`. On peut
+également la définir de manière *récursive*, comme en mathématiques. On
+commence par dire que la factorielle de 0 est 1. Puis, on dit que la
+factorielle d'un entier positif est égale au produit de cet entier et de la
+factorielle de son prédécesseur. En Haskell :
+
+> factorial :: (Integral a) => a -> a
+> factorial 0 = 1
+> factorial n = n * factorial (n - 1)
+
+C'est la première fois qu'on définit une fonction récursivement. La récursion
+est importante en Haskell, et nous y reviendrons plus en détail. Rapidement, ce
+qui se passe si l'on demande la factorielle de 3. Il essaie de calculer `3 *
+factorial 2`. La factorielle de 2 est `2 * factorial 1`, donc on a `3 * (2 *
+factorial 1)`. `factorial 1` vaut `1 * factorial 0`, donc on a `3 * (2 * (1 *
+factorial 0))`. Ici est l'astuce, on a défini factorielle de 0 comme 1, et
+puisque ce motif vient avant celui qui accepte tout, cela retourne 1. Le
+résultat final est donc équivalent à `3 * (2 * (1 * 1))`. Si nous avions placé
+le second motif au dessus du premier, il attraperait tous les nombres, y
+compris 0, et le calcul ne terminerait jamais. C'est pourquoi l'ordre est
+important dans la spécification des motifs, et il est toujours préférable de
+préciser les motifs les plus spécifiques en premier, et les plus généraux
+ensuite.
+
+Le filtrage par motif peut aussi échouer. Si l'on définit une fonction :
+
+> charName :: Char -> String
+> charName 'a' = "Albert"
+> charName 'b' = "Broseph"
+> charName 'c' = "Cecil"
+
+et qu'on essaie de l'appeler avec une entrée inattendur, voilà ce qui arrive :
+
+> ghci> charName 'a'
+> "Albert"
+> ghci> charName 'b'
+> "Broseph"
+> ghci> charName 'h'
+> "*** Exception: tut.hs:(53,0)-(55,21): Non-exhaustive patterns in function charName
+
+Il se plaint que les motifs ne soient pas exhaustifs, et il a raison. Lorsqu'on
+utilise des motifs, il faut toujours penser à inclure un motif qui attrape le
+reste de façon à ce que le programme ne plante pas sur une entrée inattendue.
+
+Le filtrage de motifs s'utilise aussi sur les tuples. Comment écrire une
+fonction qui prendre deux vecteurs en 2D (sous forme de paire) et les somme ?
+Pour sommer les deux vecteurs, on somme séparément les composantes en x et les
+composantes en y. Voilà ce que nous aurions fait sans filtrage par motif :
+
+> addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)
+> addVectors a b = (fst a + fst b, snd a + snd b)
+
+Bon, ça marche, mais il y a une meilleure façon de faire. Utilisons le filtrage
+par motifs.
+
+> addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)
+> addVectors (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)
+
+Et voilà ! Beaucoup mieux. Remarquez que ceci est déjà un motif attrape-tout.
+Le type de `addVectors` (dans les deux cas) est `addVectors :: (Num a) => (a,
+a) -> (a, a) - > (a, a)`, donc nous sommes certains d'avoir deux paires en
+paramètres.
+
+`fst` et `snd` extraient les composantes d'une paire. Mais pour des triplets ?
+Eh bien, il n'y a pas de fonction fournie pour faire ça. On peut tout de même
+l'écrire nous même.
+
+> first :: (a, b, c) -> a
+> first (x, _, _) = x
+>
+> second :: (a, b, c) -> b
+> second (_, y, _) = y
+>
+> third :: (a, b, c) -> c
+> third (_, _, z) = z
+
+Le `_` signifie la même chose que dans les listes en compréhension. Il signifie
+qu'on se fiche complètement de ce que cette partie est, donc on met juste un
+`_`.
+
+Ce qui me fait penser, vous pouver aussi utiliser des motifs dans les listes en
+compréhension. Voyez par vous-même :
+
+> ghci> let xs = [(1,3), (4,3), (2,4), (5,3), (5,6), (3,1)]
+> ghci> [a+b | (a,b) <- xs]
+> [4,7,6,8,11,4]
+
+Si un filtrage échoue, ça passera simplement au prochain élément.
+
+Les listes peuvent elles-même être utilisées pour le filtrage. Vous pouvez
+filtrer la liste vide `[]`, ou un motif incluant `:` et la liste vide. Puisque
+`[1, 2, 3]` est juste du sucre syntaxique pour `1:2:3:[]`, vous pouvez utiliser
+ce premier. Un motif de la forme `x:xs` attachera la tête à `x` et le reste à
+`xs`, même s'il n'y a qu'un seul élément, auquel cas `xs` sera la liste vide.
+
+Note : Le motif `x:xs` est très utilisé, particulièrement dans les fonctions
+récursives. Mais les motifs qui ont un `:` ne peuvent valider que des listes
+de longueur 1 ou plus.
+
+Si vous désirez lier, mettons, les trois premiers éléments à trois variables,
+et le reste de la liste à une autre variable, vous pouvez utiliser un motif
+comme `x:y:z:xs`. Il ne validera que des listes qui ont trois éléments ou plus.
+
+Maintenant que l'on sait utiliser le filtrage par motifs sur des listes,
+implémentons notre fonction `head`.
+
+> head' :: [a] -> a
+> head' [] = error "Can't call head on an empty list, dummy!"
+> head' (x:_) = x
+
+Vérifions :
+
+> ghci> head' [4,5,6]
+> 4
+> ghci> head' "Hello"
+> 'H'
+
+Cool ! Remarquez, si l'on souhaite lier plusieurs variables (même si l'une
+d'entre elles est `_` et ne lie pas vraiment), il faut les mettre entre
+parenthèses. Remarquez aussi la fonction `error` qu'on a utilisée. Elle prend
+une chaîne de caractères et génère une erreur à l'exécution, en utilisant cette
+chaîne pour indiquer quel genre d'erreur s'est produit. Elle fait planter le
+programme, donc il ne faut pas trop l'utiliser. Mais appeler `head` sur une
+liste vide n'a pas vraiment de sens.
+
+Créons une fonction triviale qui nous dit quelques éléments d'une liste en
+anglais.
+
+> tell :: (Show a) => [a] -> String
+> tell [] = "The list is empty"
+> tell (x:[]) = "The list has one element: " ++ show x
+> tell (x:y:[]) = "The list has two elements: " ++ show x ++ " and " ++ show y
+> tell (x:y:_) = "This list is long. The first two elements are: " ++ show x ++ " and " ++ show y
+
+Cette fonction est sûre car elle prend soin de la liste vide, d'une liste
+singleton, d'une liste à deux éléments, et d'une liste à plus de deux éléments.
+Remarquez que `(x:[])` et `(x:y:[])` pourraient être réécrits respectivement
+`[x]` et `[x, y]` (ceci étant du sucre syntaxique, on n'a plus besoin des
+parenthèses). On ne peut pas réécrire `(x:y:_)` de manière analogue car le
+motif attrape toutes les listes de taille supérieure à 2.
+
+Nous avons déjà implémenté `length` à l'aide d'une liste en compréhension.
+Utilisons à présent du filtrage par motif et de la récursion :
+
+> length' :: (Num b) => [a] -> b
+> length' [] = 0
+> length' (_:xs) = 1 + length' xs
+
+C'est très similaire à la fonction factorielle écrite plus tôt. D'abord, on
+définit le résultat d'une entrée particulière - la liste vide. On parle de
+cas de base. Puis dans le second motif, on démonte une liste en séparant sa
+tête et sa queue. On dit alors que la longueur est 1 plus la longueur de la
+queue. On utilise `_` pour filtrer la tête car on se fiche de sa valeur.
+Remarquez aussi qu'on a pris soin de tous les cas possibles. Le premier motif
+accepte une liste vide, le second accepte toute liste non vide.
+
+Voyons ce qui se passe lorsqu'on appelle `length'` sur `"ham"`. D'abord, on
+vérifie si c'est une liste vide. Ce n'est pas le cas, on descend au second
+motif. Le second motif est validé, et la longueur à calculer est `1 + length'
+"am"`, car on a cassé la liste entre tête et queue, et jeté la tête. Ok. La
+`length'` de `"am"` est, similairement, `1 + length' "m"`. Donc, pour
+l'instant, nous avons `1 + (1 + length' "m")`. `length' "m"` vaut `1 + length'
+""` (qu'on peut aussi écrire `1 + length' []`). Et nous avons défini `length'
+[]` comme `0`. Donc, au final on a `1 + (1 + (1 + 0))`.
+
+Implémentons `sum`. On sait que la somme d'une liste vide est 0. On l'écrit
+comme un motif. Ensuite, on sait que la somme d'une liste est égale à la tête
+plus la somme du reste. Cela donne :
+
+> sum' :: (Num a) => [a] -> a
+> sum' [] = 0
+> sum' (x:xs) = x + sum' xs
+
+Il y a aussi quelque chose qu'on appelle des motifs nommés. C'est une manière
+pratique de détruire quelque chose selon un motif tout en gardant une référence
+à la chose entière. Vous pouvez utiliser un `@` devant le motif à cet effet.
+Par exemple, le motif `xs@(x:y:ys)`. Ce motif acceptera exactement les mêmes
+choses que `x:y:ys`, mais vous pourrez facilement désigner la liste complète
+via `xs` au lieu de réécrire `x:y:ys` dans le corps de la fonction. Exemple
+simple :
+
+> capital :: String -> String
+> capital "" = "Empty string, whoops!"
+> capital all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]
+
+> ghci> capital "Dracula"
+> "The first letter of Dracula is D"
+
+Normalement, on utilise des motifs nommés pour éviter de se répéter quand on
+filtre un gros motif mais qu'on a besoin de la chose entière à nouveau dans le
+corps de la fonction.
+
+Autre chose - vous ne pouvez pas utiliser `++` dans les motifs. Si vous essayez
+de filtrer `(xs ++ ys)`, qu'est-ce qui irait dans la première ou dans la
+seconde liste ? Ca n'a pas trop de sens. Cela aurait du sens de filtrer contre
+`(xs ++ [x, y, z])` ou juste `(xs ++ [x])`, mais par nature des listes, cela
+est impossible.
+
+Gardes, gardes !
+----------------
+
+Alors que les motifs sont un moyen de vérifier qu'une valeur se conforme à une
+forme et de la déconstruire, les gardes permettent de vérifier si des
+propriétés d'une valeur (ou de plusieurs d'entre elles) sont vraies ou fausses.
+Ca ressemble étrangement à ce que fait une structure *if*, et c'est en fait très
+similaire. Le truc, c'est que les gardes sont plus lisibles lors de multiples
+conditions, et elles fonctionnent très bien en combinaison avec les motifs.
+
+Plutôt que d'expliquer leur syntaxe, plongeons plutôt dans le bain et créons
+une fonction avec des gardes. Nous allons faire une fonction qui vous classe en
+fonction de votre
+[IMC](http://fr.wikipedia.org/wiki/Indice_de_masse_corporelle) (indice de masse
+corporelle, BMI en anglais pour body mass index). Si votre IMC est inférieur à
+18.5, vous êtes considéré en sous-poids. S'il est entre 18.5 et 25, c'est
+normal. 25 à 30 correspond à un surpoids, et plus de 30 à de l'obésité. Voici
+la fonction (pour l'instant, elle ne va pas calculer l'indice, juste prendre un
+indice et vous donner votre classification).
+
+> bmiTell :: (RealFloat a) => a -> String
+> bmiTell bmi
+>     | bmi <= 18.5 = "You're underweight, you emo, you!"
+>     | bmi <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"
+>     | bmi <= 30.0 = "You're fat! Lose some weight, fatty!"
+>     | otherwise   = "You're a whale, congratulations!"
+
+Les gardes sont indiquées par des barres verticales à la suite d'une fonction
+et de ses paramètres. Elles sont généralement indentées un peu à droite et
+alignées. Une garde est simplement une expression booléenne. Si elle est
+évaluée à `True`, le corps de la fonction correspondant est utilisé. Si elle
+s'évalue à `False`, la vérification prend la prochaine garde, etc. Si on
+appelle cette fonction avec `24.3`, elle va d'abord vérifier si c'est plus
+grand ou égal à `18.5`. Puisque ce n'est pas le cas, elle passe à la prochaine
+garde. La vérification est effectuée avec la deuxième garde, et puisque 24.3
+est inférieur à 25.0, la second chaîne est retournée.
+
+Cela rappelle fortement les grands arbres de *if else* dans les langages
+impératifs, seulement c'est beaucoup mieux et plus lisible. Alors que les
+grands arbres de *if else* sont généralement boudés, parfois un problème est
+défini de telle sorte que l'on ne peut pas vraiment les éviter. Les gardes sont
+une alternative à cela.
+
+Très souvent, la dernière garde est `otherwise`. `otherwise` est simplement
+définie comme `otherwise = True` et attrape donc tout. C'est très similaire aux
+motifs, sauf qu'eux vérifient que l'entrée satisfait un motif alors que les
+gardes vérifient des conditions booléennes. Si toutes les gardes d'une fonction
+sont évaluées à `False` (donc, qu'on a pas fourni de garde `otherwise` qui vaut
+toujours `True`), l'évaluation passe au **motif** suivant. C'est ainsi que les
+motifs et les gardes s'entendent bien. Si aucune combinaison de gardes et de
+motifs n'est satisfaite, une erreur est levée.
+
+Bien sûr, on peut utiliser les gardes sur des fonctions qui prennent autant de
+paramètres que l'on souhaite. Plutôt que de calculer son IMC avant d'appeler la
+fonction, modifions-là pour qu'elle prenne notre taille et notre masse et le
+calcule pour nous.
+
+> bmiTell :: (RealFloat a) => a -> a -> String
+> bmiTell weight height
+>     | weight / height ^ 2 <= 18.5 = "You're underweight, you emo, you!"
+>     | weight / height ^ 2 <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"
+>     | weight / height ^ 2 <= 30.0 = "You're fat! Lose some weight, fatty!"
+>     | otherwise                 = "You're a whale, congratulations!"
+
+Voyons si je suis gros...
+
+> ghci> bmiTell 85 1.90
+> "You're supposedly normal. Pffft, I bet you're ugly!"
+
+Youpi ! Je ne suis pas gros ! Mais Haskell vient de me traiter de moche. Peu
+importe !
+
+Notez qu'il n'y a pas de `=` après les paramètres et avant les gardes.
+Beaucoup de débutants font des erreurs de syntaxe en le mettant ici.
+
+Un autre exemple simple : implémentons notre propre fonction `max`. Si vous
+vous souvenez, elle prend deux choses comparables et retourne la plus grande
+d'entre elles.
+
+> max' :: (Ord a) => a -> a -> a
+> max' a b
+>     | a > b     = a
+>     | otherwise = b
+
+Vous pouvez aussi écrire les gardes sur la même ligne, bien que je le
+déconseille car c'est moins lisible, même pour des fonctions courtes. À titre
+d'exemple, on aurait pu écrire :
+
+> max' :: (Ord a) => a -> a -> a
+> max' a b | a > b = a | otherwise = b
+
+Erf ! Pas très lisible tout ça ! Passons : implémentons notre propre `compare`
+à l'aide de gardes.
+
+> myCompare :: (Ord a) => a -> a -> Ordering
+> a `myCompare` b
+>     | a > b     = GT
+>     | a == b    = EQ
+>     | otherwise = LT
+
+> ghci> 3 `myCompare` 2
+> GT
+
+Note : Non seulement pouvons-nous appeler des fonctions de manière infixe avec
+des apostrophes renversées, on peut également les définir de cette manière.
+Parfois, c'est plus simple à lire comme ça.
+
+Où !?
+-----
+
+Dans la section précédente, nous définissions le calculateur d'IMC ainsi :
+
+> bmiTell :: (RealFloat a) => a -> a -> String
+> bmiTell weight height
+>     | weight / height ^ 2 <= 18.5 = "You're underweight, you emo, you!"
+>     | weight / height ^ 2 <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"
+>     | weight / height ^ 2 <= 30.0 = "You're fat! Lose some weight, fatty!"
+>     | otherwise                   = "You're a whale, congratulations!"
+
+Remarquez-vous comme on se répète trois fois ? On se répète, trois fois. Se
+répéter (trois fois) lorsqu'on programme est aussi désirable que de se prendre
+un coup de pied à la figure. Plutôt que de répéter la même expression trois
+fois, il serait idéal de la calculer une fois, de lier le résultat à un nom, et
+d'utiliser ce nom partout en lieu et place de l'expression. Eh bien, on peut
+modifier la fonction ainsi :
+
+> bmiTell :: (RealFloat a) => a -> a -> String
+> bmiTell weight height
+>     | bmi <= 18.5 = "You're underweight, you emo, you!"
+>     | bmi <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"
+>     | bmi <= 30.0 = "You're fat! Lose some weight, fatty!"
+>     | otherwise   = "You're a whale, congratulations!"
+>     where bmi = weight / height ^ 2
+
+Le mot-clé `where` est placé après les gardes (qu'on indente généralement
+autant que les gardes) et est suivi de plusieurs définitions de noms ou de
+fonctions. Ces noms sont visibles à travers toutes les gardes, ce qui nous
+donne l'avantage de ne pas avoir à nous répéter. Si on décide de calculer l'IMC
+différemment, il suffit de changer la formule à un endroit. Cela facilite aussi
+la lisibilité en donnant des noms aux choses, et peut rendre votre programme
+plus rapide puisque la variable `bmi` est ici calculée une unique fois. On
+pourrait faire un peu plus de zèle et écrire :
+
+> bmiTell :: (RealFloat a) => a -> a -> String
+> bmiTell weight height
+>     | bmi <= skinny = "You're underweight, you emo, you!"
+>     | bmi <= normal = "You're supposedly normal. Pffft, I bet you're ugly!"
+>     | bmi <= fat    = "You're fat! Lose some weight, fatty!"
+>     | otherwise     = "You're a whale, congratulations!"
+>     where bmi = weight / height ^ 2
+>           skinny = 18.5
+>           normal = 25.0
+>           fat = 30.0
+
+Les noms qu'on définit dans la section *where* d'une fonction ne sont visibles
+que pour cette fonction, donc on a pas à se préoccuper de polluer l'espace de
+nommage d'autres fonctions. Remarquez que tous les noms sont alignés sur une
+même colonne. Si ce n'était pas le cas, Haskell serait confus car il ne saurait
+pas vraiment s'ils font partie du même bloc de définitions.
+
+Les liaisons créés dans des clauses *where* ne sont pas partagés par les corps de
+différentes fonctions. Si vous voulez que plusieurs fonctions aient accès au
+même nom, il faut le définir globalement.
+
+Vous pouvez aussi utiliser les liaisons *where* pour du **filtrage par motif**
+! On aurait pu réécrire la section *where* précédente comme :
+
+> ...
+> where bmi = weight / height ^ 2
+>       (skinny, normal, fat) = (18.5, 25.0, 30.0)
+
+Créons une autre fonction triviale qui prend un prénom, un nom, et renvoie les
+initiales.
+
+> initials :: String -> String -> String
+> initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
+>     where (f:_) = firstname
+>           (l:_) = lastname
+
+Bon, on aurait pu faire le filtrage par motif directement dans les paramètres
+de la fonction (c'était plus court et plus clair à vrai dire), mais c'est juste
+histoire de montrer qu'on peut aussi le faire dans les liaisons du *where*.
+
+Comme nous avions défini des constantes dans les blocs *where*, on peut
+également y définir des fonctions. Pour continuer sur le thème de la
+programmation saine, créons une fonction qui prend une liste de paires
+masse-taille et retourne une liste d'IMC.
+
+> calcBmis :: (RealFloat a) => [(a, a)] -> [a]
+> calcBmis xs = [bmi w h | (w, h) <- xs]
+>     where bmi weight height = weight / height ^ 2
+
+Et c'est tout ! La raison pour laquelle nous avons introduit `bmi` en tant que
+fonction ici est qu'il y a plus d'un IMC à calculer. Il faut examiner toute la
+liste, et calculer un IMC différent pour chaque paire.
+
+Les liaisons *where* peuvent aussi être imbriquées. C'est un idiome habituel de
+créer une fonction et de définir des fonctions auxiliaires dans sa clause
+*where* et de définir des fonctions auxiliaires à ces fonctions auxiliaires
+dans leur clause *where*.
+
+Let it be
+---------
+
+Les liaisons *let* sont très similaires aux liaisons *where*. Les liaisons
+*where* sont une construction syntaxique permettant de lier des variables en
+fin de fonction, visibles depuis toute la fonction, y compris les gardes. Les
+liaisons *let* vous permettent de lier à des variables n'importe où, et sont
+elles-mêmes des expressions, mais très locales, donc elles ne sont pas visibles
+à travers les gardes. Comme toutes les constructions Haskell qui lient des
+valeurs à des noms, elles supportent le filtrage par motif. Voyons plutôt en
+action ! Voici comment l'on définit une fonction qui nous donne la surface d'un
+cylindre à partir de sa hauteur et de son rayon :
+
+> cylinder :: (RealFloat a) => a -> a -> a
+> cylinder r h =
+>     let sideArea = 2 * pi * r * h
+>         topArea = pi * r ^2
+>     in  sideArea + 2 * topArea
+
+La liaison est de la forme `let <bindings> in <expression>`. Les noms que vous
+définissez dans *let* sont accessibles dans l'expression qui suit le *in*.
+
+La différence, c'est que les liaisons *let* sont elles-mêmes des expressions.
+Là où les liaisons *where* sont seulement des constructions syntaxiques. Vous
+vous souvenez que nous avions vu qu'une construction *if* était une expression,
+et que par conséquent vous pouviez l'utiliser n'importe où ?
+
+> ghci> [if 5 > 3 then "Woo" else "Boo", if 'a' > 'b' then "Foo" else "Bar"]
+> ["Woo", "Bar"]
+> ghci> 4 * (if 10 > 5 then 10 else 0) + 2
+> 42
+
+Il en va de même des liaisons *let*.
+
+> ghci> 4 * (let a = 9 in a + 1) + 2
+> 42
+
+On peut aussi introduire des fonctions à visibilité locale :
+
+> ghci> [let square x = x * x in (square 5, square 3, square 2)]
+> [(25,9,4)]
+
+Pour définir plusieurs liaisons sur la même ligne, on ne peut évidemment pas
+les aligner sur la même colonne. On peut donc utiliser des points-virgule comme
+séparateurs.
+
+> ghci> (let a = 100; b = 200; c = 300 in a*b*c, let foo="Hey "; bar = "there!" in foo ++ bar)
+> (6000000,"Hey there!")
+
+Le point-virgule situé après la dernière liaison n'est pas nécessaire, mais
+peut être écrit à votre convenance. Comme on l'a vu, vous pouvez utiliser du
+filtrage par motif. C'est très utile pour démanteler rapidement un tuple en ses
+composantes et donner un nom à chacune d'elles :
+
+> ghci> (let (a,b,c) = (1,2,3) in a+b+c) * 100
+> 600
+
+Vous pouvez aussi mettre des liaisons *let* dans une liste en compréhension.
+Réécrivons l'exemple précédent du calcul de l'IMC sur des listes de paires
+masse-taille, en plaçant un *let* dans une liste en compréhension plutôt que
+d'utiliser un *where*.
+
+> calcBmis :: (RealFloat a) => [(a, a)] -> [a]
+> calcBmis xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2]
+
+Nous incluons un *let* dans une liste en compréhension comme un prédicat,
+seulement qu'il ne filtre pas la liste, mais lie des noms. Les noms définis
+dans le *let* dans la compréhension sont visible de la fonction de retour (
+celle qui est avant le `|`) et de tous les prédicats et sections qui viennent
+après la liaison. On pourrait faire une fonction qui ne retourne que les IMC
+des personnes obèses :
+
+> calcBmis :: (RealFloat a) => [(a, a)] -> [a]
+> calcBmis xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2, bmi >= 25.0]
+
+On ne peut pas utiliser `bmi` dans la partie `(w, h) <- xs` car elle est
+définie avant la liaison `let`.
+
+Nous avons omis la partie *in* de la liaisons *let* lorsqu'on l'utilisait dans
+des listes en compréhension, parce que la visibilité des noms est déjà
+prédéfinie ici. Cependant, on pourrait placer une liaison *let* dans un
+prédicat afin que les noms définis ne soient visible que du prédicat. La partie
+*in* peut aussi être omise lorsqu'on définit des fonctions et des constantes
+directement dans GHCi. Dans ce cas, les noms sont visibles de toute la session
+interactive.
+
+> ghci> let zoot x y z = x * y + z
+> ghci> zoot 3 9 2
+> 29
+> ghci> let boot x y z = x * y + z in boot 3 4 2
+> 14
+> ghci> boot
+> <interactive>:1:0: Not in scope: `boot'
+
+Si les liaisons *let* sont cool, pourquoi ne pas les utiliser tout le temps, au
+lieu d'avoir recours à des liaisons *where*, vous vous demander ? Eh bien,
+puisque les liaisons *let* sont des expressions très locales dans leur
+visibilité, on ne peut pas les utiliser à travers les gardes. Certaines
+personnes préfèrent également que les liaisons *where* se situent après les
+fonctions qui s'en servent. De cette manière, le corps de la fonction est plus
+proche de son nom, de sa déclaration de type, et le tout est plus lisible.
+
+Expressions case
+----------------
+
+Beaucoup de langages impératifs (C, C++, Java, etc.) ont une syntaxe *case*, et
+si vous avez déjà programmé dans ceux-ci, vous savez probablement de quoi il
+s'agit. Il s'agit donc de prendre une variable, et d'exécuter un code
+spécifique en fonction de sa valeur, et éventuellement d'avoir un bloc
+attrape-tout si la variable a une valeur pour laquelle aucun cas n'est écrit.
+
+Haskell prend ce concept, et l'améliore. Comme le nom l'indique, les
+expressions *case* sont, eh bien, des expressions, comme les expressions *if
+else* et les liaisons *let*. Non seulement on peut évaluer ces expressions
+selon plusieurs cas possibles de la valeur d'une variable, mais on peut aussi
+faire du filtrage par motif. Hmmm, prendre une variable, la filtrer par motif,
+évaluer des morceaux de code en fonction de sa valeur, est-ce qu'on aurait pas
+déjà fait ça auparavant ? Bien sûr, le filtrage par motif des paramètres d'une
+définition de fonction ! Eh bien, il s'agit en fait seulement d'un sucre
+syntacique pour les expressions *case*. Ainsi, ces deux bouts de code sont
+parfaitement interchangeables :
+
+> head' :: [a] -> a
+> head' [] = error "No head for empty lists!"
+> head' (x:_) = x
+
+> head' :: [a] -> a
+> head' xs = case xs of [] -> error "No head for empty lists!"
+>                       (x:_) -> x
+
+Comme vous pouvez le voir, la syntaxe des expressions *case* est plutôt simple
+:
+
+> case expression of pattern -> result
+>                    pattern -> result
+>                    pattern -> result
+>                    ...
+
+`expression` est testée contre les motifs. L'action de filtrage est comme
+attendue : le premier motif qui correspond est utilisé. Si l'on parcourt toute
+l'expression *case* sans trouver de motif validé, une erreur d'exécution a
+lieu.
+
+Alors que le filtrage par motif sur les paramètres d'une fonction ne peut se
+faire que dans la définition, les expressions *case* peuvent être utilisées à
+peu près partout. Par exemple :
+
+> describeList :: [a] -> String
+> describeList xs = "The list is " ++ case xs of [] -> "empty."
+>                                                [x] -> "a singleton list."
+>                                                xs -> "a longer list."
+
+Elles sont utiles pour faire du filtrage par motif sur des choses en plein
+milieu d'une expression. Du fait que le filtrage par motif dans les définitions
+de fonction est seulement du sucre syntaxique pour des expressions *case*, on
+aurait aussi pu définir :
+
+> describeList :: [a] -> String
+> describeList xs = "The list is " ++ what xs
+>     where what [] = "empty."
+>           what [x] = "a singleton list."
+>           what xs = "a longer list."
