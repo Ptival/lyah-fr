@@ -4,7 +4,7 @@ Introduction
 À propos de ce didacticiel
 --------------------------
 
-Bienvenue dans **Apprenez-vous Haskell pour le meilleur**! Si vous lisez ceci,
+Bienvenue dans **Apprenez Haskell pour le meilleur** ! Si vous lisez ceci,
 il est possible que vous vouliez apprendre Haskell. Vous êtes au bon endroit,
 mais discutons un peu de ce didacticiel avant tout.
 
