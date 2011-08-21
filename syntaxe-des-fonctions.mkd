@@ -362,9 +362,9 @@ Dans la section précédente, nous définissions le calculateur d'IMC ainsi :
 >     | otherwise                   = "You're a whale, congratulations!"
 
 Remarquez-vous comme on se répète trois fois ? On se répète, trois fois. Se
-répéter (trois fois) lorsqu'on programme est aussi désirable que de se prendre
-un coup de pied à la figure. Plutôt que de répéter la même expression trois
-fois, il serait idéal de la calculer une fois, de lier le résultat à un nom, et
+répéter (trois fois) lorsqu'on programme est aussi souhaitable qu'un coup de
+pied dans la tronche. Plutôt que de répéter la même expression trois fois, il
+serait idéal de la calculer une fois, de lier le résultat à un nom, et
 d'utiliser ce nom partout en lieu et place de l'expression. Eh bien, on peut
 modifier la fonction ainsi :
 
@@ -427,7 +427,7 @@ histoire de montrer qu'on peut aussi le faire dans les liaisons du *where*.
 
 Comme nous avions défini des constantes dans les blocs *where*, on peut
 également y définir des fonctions. Pour continuer sur le thème de la
-programmation saine, créons une fonction qui prend une liste de paires
+programmation diététique, créons une fonction qui prend une liste de paires
 masse-taille et retourne une liste d'IMC.
 
 > calcBmis :: (RealFloat a) => [(a, a)] -> [a]
