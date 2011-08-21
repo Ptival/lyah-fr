@@ -124,7 +124,7 @@ Le `_` signifie la même chose que dans les listes en compréhension. Il signifi
 qu'on se fiche complètement de ce que cette partie est, donc on met juste un
 `_`.
 
-Ce qui me fait penser, vous pouver aussi utiliser des motifs dans les listes en
+Ce qui me fait penser, vous pouvez aussi utiliser des motifs dans les listes en
 compréhension. Voyez par vous-même :
 
 > ghci> let xs = [(1,3), (4,3), (2,4), (5,3), (5,6), (3,1)]
@@ -193,11 +193,11 @@ Utilisons à présent du filtrage par motif et de la récursivité :
 > length' (_:xs) = 1 + length' xs
 
 C'est très similaire à la fonction factorielle écrite plus tôt. D'abord, on
-définit le résultat d'une entrée particulière - la liste vide. On parle de
-cas de base. Puis dans le second motif, on démonte une liste en séparant sa
-tête et sa queue. On dit alors que la longueur est 1 plus la longueur de la
+définit le résultat d'une entrée particulière - la liste vide. On parle de cas
+de base. Puis dans le second motif, on démonte une liste en séparant sa tête et
+sa queue. On dit alors que la longueur est égale à 1 plus la longueur de la
 queue. On utilise `_` pour filtrer la tête car on se fiche de sa valeur.
-Remarquez aussi qu'on a pris soin de tous les cas possibles. Le premier motif
+Remarquez aussi qu'on a pris en compte tous les cas possibles. Le premier motif
 accepte une liste vide, le second accepte toute liste non vide.
 
 Voyons ce qui se passe lorsqu'on appelle `length'` sur `"ham"`. D'abord, on
@@ -238,7 +238,7 @@ corps de la fonction.
 
 Autre chose - vous ne pouvez pas utiliser `++` dans les motifs. Si vous essayez
 de filtrer `(xs ++ ys)`, qu'est-ce qui irait dans la première ou dans la
-seconde liste ? Ca n'a pas trop de sens. Cela aurait du sens de filtrer contre
+seconde liste ? Ça n'a pas trop de sens. Cela aurait du sens de filtrer contre
 `(xs ++ [x, y, z])` ou juste `(xs ++ [x])`, mais par nature des listes, cela
 est impossible.
 
@@ -248,7 +248,7 @@ Gardes, gardes !
 Alors que les motifs sont un moyen de vérifier qu'une valeur se conforme à une
 forme et de la déconstruire, les gardes permettent de vérifier si des
 propriétés d'une valeur (ou de plusieurs d'entre elles) sont vraies ou fausses.
-Ca ressemble étrangement à ce que fait une structure *if*, et c'est en fait très
+Ça ressemble étrangement à ce que fait une structure *if*, et c'est en fait très
 similaire. Le truc, c'est que les gardes sont plus lisibles lors de multiples
 conditions, et elles fonctionnent très bien en combinaison avec les motifs.
 
@@ -397,13 +397,13 @@ pourrait faire un peu plus de zèle et écrire :
 >           fat = 30.0
 
 Les noms qu'on définit dans la section *where* d'une fonction ne sont visibles
-que pour cette fonction, donc on a pas à se préoccuper de polluer l'espace de
+que pour cette fonction, donc on n'a pas à se préoccuper de polluer l'espace de
 nommage d'autres fonctions. Remarquez que tous les noms sont alignés sur une
 même colonne. Si ce n'était pas le cas, Haskell serait confus car il ne saurait
 pas vraiment s'ils font partie du même bloc de définitions.
 
-Les liaisons créés dans des clauses *where* ne sont pas partagés par les corps de
-différentes fonctions. Si vous voulez que plusieurs fonctions aient accès au
+Les liaisons créés dans des clauses *where* ne sont pas partagées par les corps
+de différentes fonctions. Si vous voulez que plusieurs fonctions aient accès au
 même nom, il faut le définir globalement.
 
 Vous pouvez aussi utiliser les liaisons *where* pour du **filtrage par motif**
@@ -486,8 +486,8 @@ On peut aussi introduire des fonctions à visibilité locale :
 > [(25,9,4)]
 
 Pour définir plusieurs liaisons sur la même ligne, on ne peut évidemment pas
-les aligner sur la même colonne. On peut donc utiliser des points-virgule comme
-séparateurs.
+les aligner sur la même colonne. On peut donc utiliser des points-virgules
+comme séparateurs.
 
 > ghci> (let a = 100; b = 200; c = 300 in a*b*c, let foo="Hey "; bar = "there!" in foo ++ bar)
 > (6000000,"Hey there!")
@@ -521,13 +521,13 @@ des personnes obèses :
 On ne peut pas utiliser `bmi` dans la partie `(w, h) <- xs` car elle est
 définie avant la liaison `let`.
 
-Nous avons omis la partie *in* de la liaisons *let* lorsqu'on l'utilisait dans
+Nous avons omis la partie *in* de la liaison *let* lorsqu'on l'utilisait dans
 des listes en compréhension, parce que la visibilité des noms est déjà
 prédéfinie ici. Cependant, on pourrait placer une liaison *let* dans un
-prédicat afin que les noms définis ne soient visibles que du prédicat. La partie
-*in* peut aussi être omise lorsqu'on définit des fonctions et des constantes
-directement dans GHCi. Dans ce cas, les noms sont visibles de toute la session
-interactive.
+prédicat afin que les noms définis ne soient visibles que du prédicat. La
+partie *in* peut aussi être omise lorsqu'on définit des fonctions et des
+constantes directement dans GHCi. Dans ce cas, les noms sont visibles de toute
+la session interactive.
 
 > ghci> let zoot x y z = x * y + z
 > ghci> zoot 3 9 2
@@ -538,7 +538,7 @@ interactive.
 > <interactive>:1:0: Not in scope: `boot'
 
 Si les liaisons *let* sont cool, pourquoi ne pas les utiliser tout le temps, au
-lieu d'avoir recours à des liaisons *where*, vous vous demander ? Eh bien,
+lieu d'avoir recours à des liaisons *where*, vous vous demandez ? Eh bien,
 puisque les liaisons *let* sont des expressions très locales dans leur
 visibilité, on ne peut pas les utiliser à travers les gardes. Certaines
 personnes préfèrent également que les liaisons *where* se situent après les
@@ -559,10 +559,10 @@ expressions *case* sont, eh bien, des expressions, comme les expressions *if
 else* et les liaisons *let*. Non seulement on peut évaluer ces expressions
 selon plusieurs cas possibles de la valeur d'une variable, mais on peut aussi
 faire du filtrage par motif. Hmmm, prendre une variable, la filtrer par motif,
-évaluer des morceaux de code en fonction de sa valeur, est-ce qu'on aurait pas
-déjà fait ça auparavant ? Bien sûr, le filtrage par motif des paramètres d'une
-définition de fonction ! Eh bien, il s'agit en fait seulement d'un sucre
-syntacique pour les expressions *case*. Ainsi, ces deux bouts de code sont
+évaluer des morceaux de code en fonction de sa valeur, est-ce qu'on n'aurait
+pas déjà fait ça auparavant ? Bien sûr, le filtrage par motif des paramètres
+d'une définition de fonction ! Eh bien, il s'agit en fait seulement d'un sucre
+syntaxique pour les expressions *case*. Ainsi, ces deux bouts de code sont
 parfaitement interchangeables :
 
 > head' :: [a] -> a
