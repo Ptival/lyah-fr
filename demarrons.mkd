@@ -512,21 +512,19 @@ car c'est plus simple à lire.
 C'était un premier tour des fonctions qui opérent sur des listes. Nous en
 verrons d'autres [plus tard](TODO).
 
-Les progressions du Texas
--------------------------
-
-(NDT : en anglais, les progressions sont appelées "ranges", et le titre fait
-donc une référence aux "texas rangers")
+Texas ranges
+------------
 
 Que faire si l'on veut la liste des nombres de 1 à 20 ? Bien sûr, on pourrait
 les taper un par un, mais ce n'est pas une solution pour des gentlemen qui
 demandent l'excellence de leurs langages de programmation. Nous utiliserons
-plutôt des progressions. Les progressions sont un moyen de créer des listes qui
-sont des suites arithmétiques d'éléments qui peuvent être énumérés. Les nombres
-peuvent être énumérés. Un, deux, trois, quatre, etc. Les caractères peuvent
-aussi être énumérés. L'alphabet est une énumération des caractères de A à Z.
-Les noms ne peuvent pas être énumérés. Qu'est-ce qui suit "John" ? Je ne sais
-pas.
+plutôt des progressions (NDT : qui sont appelées "ranges" en anglais, d'où le
+titre de cette section). Les progressions sont un moyen de créer des listes qui
+sont des suites arithmétiques d'éléments qui peuvent être énumérés.  Les
+nombres peuvent être énumérés. Un, deux, trois, quatre, etc. Les caractères
+peuvent aussi être énumérés. L'alphabet est une énumération des caractères de A
+à Z.  Les noms ne peuvent pas être énumérés. Qu'est-ce qui suit "John" ? Je ne
+sais pas.
 
 Pour créer une liste contenant tous les entiers naturels de 1 à 20, on écrit
 `[1..20]`. C'est équivalent à `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,

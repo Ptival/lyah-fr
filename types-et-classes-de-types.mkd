@@ -62,7 +62,7 @@ en majuscule ? Voici sa déclaration de type :
 > removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
 
 `removeNonUppercase` est de type `[Char] -> [Char]`, ce qui signifie qu'elle
-transforme une chaîne de caractères en une chaîne de caractère. Parce qu'elle
+transforme une chaîne de caractères en une chaîne de caractères. Parce qu'elle
 prend une chaîne de caractères en paramètre, et en retourne une en résultat. Le
 type `[Char]` est synonyme de `String`, donc il est plus clair d'écrire
 `removeNonUppercase :: String -> String`. Nous n'avons pas eu à donner à cette
