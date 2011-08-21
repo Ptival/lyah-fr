@@ -479,10 +479,10 @@ demandé du début de la liste.
 > ghci> drop 100 [1,2,3,4]
 > []
 
-`maximum` prend une liste de choses qui peuvent être ordonnées et retourne le
-plus grand d'entre eux.
+`maximum` prend une liste de choses qui peuvent être ordonnées et retourne la
+plus grand d'entre elles.
 
-`minimum` retourne le plus petit.
+`minimum` retourne la plus petite.
 
 > ghci> minimum [8,4,2,1,5,6]
 > 1
@@ -491,7 +491,7 @@ plus grand d'entre eux.
 
 `sum` prend une liste de nombres et retourne leur somme.
 
-`product` prends une liste de nombres et retourne leur produit.
+`product` prend une liste de nombres et retourne leur produit.
 
 > ghci> sum [5,2,1,6,3,2,5,7]
 > 31
@@ -552,7 +552,7 @@ Il suffit juste de séparer les deux premiers éléments par une virgule, puis d
 spécifier la borne supérieure. Bien que plutôt intelligentes, les progressions
 ne sont pas aussi intelligentes que ce que certaines personnes attendent. Vous
 ne pouvez pas écrire `[1, 2, 4, 8, 16..100]` en espérant obtenir les puissances
-de 2. Premièrement, parce qu'on ne peux spécifier qu'un pas. Secondement, parce
+de 2. Premièrement, parce qu'on ne peut spécifier qu'un pas. Secondement, parce
 que certaines progressions non arithmétiques sont ambigües lorsqu'on ne les
 énonce que pas leurs premiers éléments.
 
@@ -671,7 +671,7 @@ que l'on fournit. Une liste produite par une compréhension qui pioche dans deux
 listes de longueur 4 aura donc pour longueur 16, si tant est qu'on ne filtre
 pas d'élément. Si l'on a deux listes, `[2, 5, 10]` et `[8, 10, 11]`, et qu'on
 veut les produits possibles des combinaisons de deux nombres de chacune de ces
-listes, voilà ce qu'on écrit.
+listes, voilà ce qu'on écrit :
 
 > ghci> [ x*y | x <- [2,5,10], y <- [8,10,11]]
 > [16,20,22,40,50,55,80,100,110]
@@ -744,7 +744,7 @@ Une autre différence clé est qu'ils n'ont pas à être homogènes. Contraireme
 une liste, un tuple peut contenir une combinaison de différents types.
 
 Demandez-vous comment on représenterait un vecteur bidimensionnel en Haskell.
-Une possibilité serait d'utiliser une liste. Ca marcherait en partie. Que faire
+Une possibilité serait d'utiliser une liste. Ça marcherait en partie. Que faire
 si l'on voulait mettre quelques vecteurs dans une liste pour représenter les
 points d'une forme du plan ? On pourrait faire `[[1, 2], [8, 11], [4, 5]]`. Le
 problème de cette méthode est que l'on pourrait également faire `[[1, 2], [8,
@@ -780,7 +780,7 @@ ajouter un élément à un tuple - il faudrait écrire une fonction pour ajouter
 une paire, une fonction pour ajouter à un triplet, un fonction pour ajouter à
 un quadruplet, etc.
 
-Bien qu'il y ait des listes singleton, il n'existe pas de tuple singleton. Ca
+Bien qu'il y ait des listes singleton, il n'existe pas de tuple singleton. Ça
 n'a pas beaucoup de sens si vous y réfléchissez. Un tuple singleton serait
 seulement la valeur qu'il contient, et n'aurait donc pas d'intérêt.
 
@@ -857,6 +857,6 @@ en disant que l'on veut ceux dont le périmètre est 24.
 > ghci> rightTriangles'
 > [(6,8,10)]
 
-Et voilà note réponse ! C'est un schéma courant en programmation fonctionnelle.
-Vous prenez un ensemble de solutions, et vous appliquez des transformations sur
-ces solutions et les filtrez jusqu'à obtenir les bonnes.
+Et voilà notre réponse ! C'est un schéma courant en programmation
+fonctionnelle. Vous prenez un ensemble de solutions, et vous appliquez des
+transformations sur ces solutions et les filtrez jusqu'à obtenir les bonnes.

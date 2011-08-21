@@ -24,7 +24,7 @@ Un type est une sorte d'étiquette que chaque expression porte. Il nous indique
 à quelle catégorie de choses cette expression appartient. L'expression `True`
 est un booléen, "hello" est une chaîne de caractères, etc.
 
-Utilisons à présent GHCi pour examiner le types de quelques expressions. On le
+Utilisons à présent GHCi pour examiner le type de quelques expressions. On le
 fera à l'aide de la commande `:t` qui, suivie d'une expression valide, nous
 indique son type. Essayons.
 
@@ -56,20 +56,20 @@ généralement considéré comme une bonne pratique, sauf quand on écrit des
 fonctions courtes. À présent, nous donnerons aux fonctions que nous déclarerons
 des déclarations de type. Vous souvenez-vous de la compréhension de liste que
 nous avions écrite, qui filtre une chaîne de caractères pour ne garder que ceux
-en majuscule ? Voici sa déclaration de type.
+en majuscule ? Voici sa déclaration de type :
 
 > removeNonUppercase :: [Char] -> [Char]
 > removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
 
 `removeNonUppercase` est de type `[Char] -> [Char]`, ce qui signifie qu'elle
-transforme une chaîne de caractère en une chaîne de caractère. Parce qu'elle
-prend une chaîne de caractère en paramètre, et en retourne une en résultat. Le
+transforme une chaîne de caractères en une chaîne de caractère. Parce qu'elle
+prend une chaîne de caractères en paramètre, et en retourne une en résultat. Le
 type `[Char]` est synonyme de `String`, donc il est plus clair d'écrire
 `removeNonUppercase :: String -> String`. Nous n'avons pas eu à donner à cette
 fonction de déclaration de type car le compilateur pouvait inférer lui-même que
 la fonction allait de chaîne de caractères à chaîne de caractères, mais on l'a
 quand même fait. Mais comment écrire le type d'une fonction qui prend plusieurs
-paramètres ? Voici une simple fonction qui prend trois entiers et les somme.
+paramètres ? Voici une simple fonction qui prend trois entiers et les somme :
 
 > addThree :: Int -> Int -> Int -> Int
 > addThree x y z = x + y + z
@@ -81,7 +81,7 @@ verrons pourquoi ils sont séparés par des `->` plutôt que d'être distingués
 plus explicitement, par exemple sous une forme ressemblant à `Int, Int, Int ->
 Int` ou de ce genre.
 
-Si vous voulez donnez une déclaration de type à une fonction, mais n'êtes pas
+Si vous voulez donner une déclaration de type à une fonction, mais n'êtes pas
 certain du type, vous pouvez toujours ne pas l'écrire, puis le demander à
 l'aide de `:t`. Les fonctions sont également des expressions, donc `:t`
 fonctionne dessus sans souci.
@@ -105,19 +105,19 @@ veux dire, vraiment énormes. `Int` est cependant plus efficace.
 
 `Float` est un nombre réel à virgule flottante en simple précision.
 
-> circumference :: Float -> Float  
-> circumference r = 2 * pi * r  
+> circumference :: Float -> Float
+> circumference r = 2 * pi * r
 
-> ghci> circumference 4.0  
-> 25.132742  
+> ghci> circumference 4.0
+> 25.132742
 
 `Double` est un nombre réel à virgule flottante en double précision !
 
-> circumference' :: Double -> Double  
-> circumference' r = 2 * pi * r  
+> circumference' :: Double -> Double
+> circumference' r = 2 * pi * r
 
-> ghci> circumference' 4.0  
-> 25.132741228718345  
+> ghci> circumference' 4.0
+> 25.132741228718345
 
 `Bool` est un type booléen. Il ne peut prendre que deux valeurs : `True` et
 `False`.
@@ -137,8 +137,8 @@ Quel est le type de `head` d'après vous ? Puisque `head` prend une liste de
 n'importe quel type et retourne son premier élément, qu'est-ce que ça peut bien
 être ? Regardons !
 
-> ghci> :t head  
-> head :: [a] -> a  
+> ghci> :t head
+> head :: [a] -> a
 
 Hmmm ! C'est quoi ce `a` ? Un type ? Rappelez-vous, nous avions dit que les
 types doivent commencer par une majuscule, donc ça ne peut pas être exactement
@@ -157,8 +157,8 @@ caractère, généralement on les note a, b, c, d...
 Vous souvenez-vous de `fst` ? Elle retourne la première composante d'une paire.
 Regardons son type.
 
-> ghci> :t fst  
-> fst :: (a, b) -> a  
+> ghci> :t fst
+> fst :: (a, b) -> a
 
 On voit que `fst` prend un tuple qui contient deux types et retourne un élément
 du même type que celui de la première composante de la paire. C'est pourquoi on
@@ -179,8 +179,8 @@ pouvez plutôt les penser comme des sortes d'interfaces Java, mais en mieux.
 
 Quelle est la signature de type de `==` ?
 
-> ghci> :t (==)  
-> (==) :: (Eq a) => a -> a -> Bool  
+> ghci> :t (==)
+> (==) :: (Eq a) => a -> a -> Bool
 
 Note : l'opérateur d'égalité, `==` est une fonction. De même pour `+`, `*`,
 `-`, `/` et quasiment tous les opérateurs. Si une fonction ne contient que des
@@ -192,7 +192,7 @@ Intéressant. Nous voyons quelque chose de nouveau ici, le symbole `=>`. Tout ce
 qui se situe avant le `=>` est appelé une **contrainte de classe**. On peut
 lire la déclaration de type précédente ainsi : la fonction d'égalité prend deux
 valeurs du même type et retourne un `Bool`. Le type de ces valeurs doit être
-member de la classe `Eq` (ceci est la contrainte de classe).
+membre de la classe `Eq` (ceci est la contrainte de classe).
 
 La classe de types `Eq` offre une interface pour tester l'égalité. Tout type
 pour lequel tester l'égalité de deux valeurs a du sens devrait être membre de
@@ -213,21 +213,21 @@ que quelque part dans la fonction, elle utilise `==` ou `/=`. Tous les types
 mentionnés précédemment à l'exception des fonctions sont membres de `Eq`, donc
 ils peuvent être testés égaux.
 
-> ghci> 5 == 5  
-> True  
-> ghci> 5 /= 5  
-> False  
-> ghci> 'a' == 'a'  
-> True  
-> ghci> "Ho Ho" == "Ho Ho"  
-> True  
-> ghci> 3.432 == 3.432  
-> True  
+> ghci> 5 == 5
+> True
+> ghci> 5 /= 5
+> False
+> ghci> 'a' == 'a'
+> True
+> ghci> "Ho Ho" == "Ho Ho"
+> True
+> ghci> 3.432 == 3.432
+> True
 
 `Ord` est pour les types qui peuvent être ordonnés.
 
-> ghci> :t (>)  
-> (>) :: (Ord a) => a -> a -> Bool  
+> ghci> :t (>)
+> (>) :: (Ord a) => a -> a -> Bool
 
 Tous les types que nous avons couverts jusqu'ici sont membres d'`Ord`. `Ord`
 comprend toutes les fonctions usuelles de comparaison, comme `>`, `<`, `>=` et
@@ -238,14 +238,14 @@ retourne un ordre. `Ordering` est son type, et les valeurs peuvent être `GT`,
 Pour être membre d'`Ord`, un type doit d'abord être membre du club prestigieux
 et exclusif `Eq`.
 
-> ghci> "Abrakadabra" < "Zebra"  
-> True  
-> ghci> "Abrakadabra" `compare` "Zebra"  
-> LT  
-> ghci> 5 >= 2  
-> True  
-> ghci> 5 `compare` 3  
-> GT  
+> ghci> "Abrakadabra" < "Zebra"
+> True
+> ghci> "Abrakadabra" `compare` "Zebra"
+> LT
+> ghci> 5 >= 2
+> True
+> ghci> 5 `compare` 3
+> GT
 
 Les membres de `Show` peuvent être représentés par une chaîne de caractères.
 Tous les types couverts jusqu'ici sont membres de `Show`. La fonction la plus
@@ -253,34 +253,34 @@ utilisée en rapport avec la classe `Show` est `show`. Elle prend une valeur
 d'un type membre de la classe `Show` et nous la représente sous la forme d'une
 chaîne de caractères.
 
-> ghci> show 3  
-> "3"  
-> ghci> show 5.334  
-> "5.334"  
-> ghci> show True  
-> "True"  
+> ghci> show 3
+> "3"
+> ghci> show 5.334
+> "5.334"
+> ghci> show True
+> "True"
 
 `Read` est en quelque sorte l'opposé de `Show`. La fonction `read` prend une
 chaîne de caractères, et retourne une valeur d'un type membre de `Read`.
 
-> ghci> read "True" || False  
-> True  
-> ghci> read "8.2" + 3.8  
-> 12.0  
-> ghci> read "5" - 2  
-> 3  
-> ghci> read "[1,2,3,4]" ++ [3]  
-> [1,2,3,4,3]  
+> ghci> read "True" || False
+> True
+> ghci> read "8.2" + 3.8
+> 12.0
+> ghci> read "5" - 2
+> 3
+> ghci> read "[1,2,3,4]" ++ [3]
+> [1,2,3,4,3]
 
 Jusqu'ici tout va bien. Encore une fois, tous les types couverts jusqu'ici sont
 dans cette classe de types. Mais que se passe-t-il si l'on écrit juste `read
 "4"` ?
 
-> ghci> read "4"  
-> <interactive>:1:0:  
->     Ambiguous type variable `a' in the constraint:  
->       `Read a' arising from a use of `read' at <interactive>:1:0-7  
->     Probable fix: add a type signature that fixes these type variable(s)  
+> ghci> read "4"
+> <interactive>:1:0:
+>     Ambiguous type variable `a' in the constraint:
+>       `Read a' arising from a use of `read' at <interactive>:1:0-7
+>     Probable fix: add a type signature that fixes these type variable(s)
 
 GHCi nous dit qu'il ne sait pas ce qu'on attend en retour. Remarquez comme,
 dans les exemples précédents de `read`, on faisait toujours quelque chose du
@@ -289,8 +289,8 @@ nous l'utilisions comme un booléen, il savait qu'il fallait retourner un
 `Bool`. Mais maintenant, il sait seulement qu'on attend un type de la classe
 `Read`, mais il ne sait pas lequel. Regardons la signature de type de `read`.
 
-> ghci> :t read  
-> read :: (Read a) => String -> a  
+> ghci> :t read
+> read :: (Read a) => String -> a
 
 Vous voyez ? Il retourne un type membre de `Read` mais si on n'essaie pas de
 l'utiliser ensuite, il n'a aucun moyen de savoir de quel type il s'agit. Pour
@@ -299,16 +299,16 @@ annotations de type sont un moyen d'exprimer explicitement le type qu'une
 expression doit avoir. On le fait en ajoutant `::` à la fin de l'expression et
 en spécifiant un type. Observez :
 
-> ghci> read "5" :: Int  
-> 5  
-> ghci> read "5" :: Float  
-> 5.0  
-> ghci> (read "5" :: Float) * 4  
-> 20.0  
-> ghci> read "[1,2,3,4]" :: [Int]  
-> [1,2,3,4]  
-> ghci> read "(3, 'a')" :: (Int, Char)  
-> (3, 'a')  
+> ghci> read "5" :: Int
+> 5
+> ghci> read "5" :: Float
+> 5.0
+> ghci> (read "5" :: Float) * 4
+> 20.0
+> ghci> read "[1,2,3,4]" :: [Int]
+> [1,2,3,4]
+> ghci> read "(3, 'a')" :: (Int, Char)
+> (3, 'a')
 
 La plupart des expressions sont telles que le compilateur peut inférer leur
 type tout seul. Mais parfois, le compilateur ne sait pas s'il doit plutôt
@@ -325,25 +325,25 @@ prédécesseur, qu'on peut obtenir à l'aide des fonctions `succ` et `pred`. Les
 types membres de cette classe sont : `()`, `Bool`, `Char`, `Ordering`, `Int`,
 `Integer`, `Float` et `Double`.
 
-> ghci> ['a'..'e']  
-> "abcde"  
-> ghci> [LT .. GT]  
-> [LT,EQ,GT]  
-> ghci> [3 .. 5]  
-> [3,4,5]  
-> ghci> succ 'B'  
-> 'C'  
+> ghci> ['a'..'e']
+> "abcde"
+> ghci> [LT .. GT]
+> [LT,EQ,GT]
+> ghci> [3 .. 5]
+> [3,4,5]
+> ghci> succ 'B'
+> 'C'
 
 Les membres de `Bounded` ont une borne supérieure et inférieure.
 
-> ghci> minBound :: Int  
-> -2147483648  
-> ghci> maxBound :: Char  
-> '\1114111'  
-> ghci> maxBound :: Bool  
-> True  
-> ghci> minBound :: Bool  
-> False  
+> ghci> minBound :: Int
+> -2147483648
+> ghci> maxBound :: Char
+> '\1114111'
+> ghci> maxBound :: Bool
+> True
+> ghci> minBound :: Bool
+> False
 
 `minBound` et `maxBound` sont intéressantes car elles ont pour type `(Bounded
 a) => a`. D'une certaine façon, ce sont des constantes polymorphiques.
@@ -351,32 +351,32 @@ a) => a`. D'une certaine façon, ce sont des constantes polymorphiques.
 Tous les tuples sont membres de `Bounded` si leurs composantes le sont
 également.
 
-> ghci> maxBound :: (Bool, Int, Char)  
-> (True,2147483647,'\1114111')  
+> ghci> maxBound :: (Bool, Int, Char)
+> (True,2147483647,'\1114111')
 
 `Num` est la classe des types numériques. Ses membres ont pour propriété de
 pouvoir se comporter comme des nombres. Examinons le type d'un nombre.
 
-> ghci> :t 20  
-> 20 :: (Num t) => t  
+> ghci> :t 20
+> 20 :: (Num t) => t
 
 Il semblerait que tous les nombres soient aussi des constantes polymorphiques.
 Ils peuvent se faire passer pour tout membre de la classe `Num`.
 
-> ghci> 20 :: Int  
-> 20  
-> ghci> 20 :: Integer  
-> 20  
-> ghci> 20 :: Float  
-> 20.0  
-> ghci> 20 :: Double  
-> 20.0  
+> ghci> 20 :: Int
+> 20
+> ghci> 20 :: Integer
+> 20
+> ghci> 20 :: Float
+> 20.0
+> ghci> 20 :: Double
+> 20.0
 
 Ce sont tous des types membres de `Num`. Si on examine le type de `*`, on verra
 qu'elle accepte des nombres.
 
-> ghci> :t (*)  
-> (*) :: (Num a) => a -> a -> a  
+> ghci> :t (*)
+> (*) :: (Num a) => a -> a -> a
 
 Elle prend deux nombres du même type, et retourne un nombre de ce type. C'est
 pourquoi `(5 :: Int) * (6 :: Integer)` donnera une erreur de typage, alors que
