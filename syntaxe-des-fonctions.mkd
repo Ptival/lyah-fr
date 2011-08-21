@@ -43,7 +43,7 @@ en haut, la fonction répondrait toujours `"Not between 1 and 5"`, car le motif
 attraperait tous les nombres, et ils n'auraient pas l'opportunité d'être testés
 contre les autres motifs.
 
-Rappelez-vous de la fonction factorielle qu'on avait implémenté auparavant.
+Rappelez-vous de la fonction factorielle qu'on avait implémentée auparavant.
 Nous l'avions défini pour un nombre `n` comme `product [1..n]`. On peut
 également la définir de manière *récursive*, comme en mathématiques. On
 commence par dire que la factorielle de 0 est 1. Puis, on dit que la
@@ -54,7 +54,7 @@ factorielle de son prédécesseur. En Haskell :
 > factorial 0 = 1
 > factorial n = n * factorial (n - 1)
 
-C'est la première fois qu'on définit une fonction récursivement. La récursion
+C'est la première fois qu'on définit une fonction récursivement. La récursivité
 est importante en Haskell, et nous y reviendrons plus en détail. Rapidement, ce
 qui se passe si l'on demande la factorielle de 3. Il essaie de calculer `3 *
 factorial 2`. La factorielle de 2 est `2 * factorial 1`, donc on a `3 * (2 *
@@ -75,7 +75,7 @@ Le filtrage par motif peut aussi échouer. Si l'on définit une fonction :
 > charName 'b' = "Broseph"
 > charName 'c' = "Cecil"
 
-et qu'on essaie de l'appeler avec une entrée inattendur, voilà ce qui arrive :
+et qu'on essaie de l'appeler avec une entrée inattendue, voilà ce qui arrive :
 
 > ghci> charName 'a'
 > "Albert"
@@ -89,7 +89,7 @@ utilise des motifs, il faut toujours penser à inclure un motif qui attrape le
 reste de façon à ce que le programme ne plante pas sur une entrée inattendue.
 
 Le filtrage de motifs s'utilise aussi sur les tuples. Comment écrire une
-fonction qui prendre deux vecteurs en 2D (sous forme de paire) et les somme ?
+fonction qui prend deux vecteurs en 2D (sous forme de paire) et les somme ?
 Pour sommer les deux vecteurs, on somme séparément les composantes en x et les
 composantes en y. Voilà ce que nous aurions fait sans filtrage par motif :
 
@@ -186,7 +186,7 @@ parenthèses). On ne peut pas réécrire `(x:y:_)` de manière analogue car le
 motif attrape toutes les listes de taille supérieure à 2.
 
 Nous avons déjà implémenté `length` à l'aide d'une liste en compréhension.
-Utilisons à présent du filtrage par motif et de la récursion :
+Utilisons à présent du filtrage par motif et de la récursivité :
 
 > length' :: (Num b) => [a] -> b
 > length' [] = 0

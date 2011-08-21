@@ -22,7 +22,7 @@ F(n-1) + F(n-2)*. Ainsi, *F(3)* est *F(2) + F(1)*, qui est *(F(1) + F(0)) +
 F(1)*. Puisque l'on vient d'atteindre des nombres tous définis
 non-récursivement, on peut déclarer que *F(3)* vaut 2. Un ou plusieurs éléments
 définis non-récursivement dans une définition récursive sont appelés les **cas
-de base** de récursion, et sont importants afin d'assurer que la fonction
+de base** de récursivité, et sont importants afin d'assurer que la fonction
 récursive termine. Sans eux, si *F(0)* et *F(1)* n'avaient pas été définis
 ainsi, on n'obtiendrait jamais de solution car on atteindrait 0, et on
 continuerait à décroître. Au bout d'un moment, on dirait que *F(-2000)* est
@@ -103,11 +103,11 @@ son premier élément et du maximum de la queue.
 Un peu plus de fonctions récursives
 -----------------------------------
 
-Maintenant que l'on sait penser en termes de récursion, essayons d'implémenter
-quelques fonctions récursives. D'abord, nous allons implémenter `replicate`.
-`replicate` prend un `Int` et un élément, et retourne une liste qui a plusieurs
-fois cet élément. Par exemple, `replicate 3 5` retourne `[5, 5, 5]`.
-Réfléchissons au cas de base. À mon avis, le cas de base correspond à des
+Maintenant que l'on sait penser en termes de récursivité, essayons
+d'implémenter quelques fonctions récursives. D'abord, nous allons implémenter
+`replicate`.  `replicate` prend un `Int` et un élément, et retourne une liste
+qui a plusieurs fois cet élément. Par exemple, `replicate 3 5` retourne `[5, 5,
+5]`.  Réfléchissons au cas de base. À mon avis, le cas de base correspond à des
 valeurs inférieures ou égales à 0. Si l'on essaie de répliquer quelque chose
 zéro fois, on devrai renvoyer une liste vide. Et pareil pour des nombres
 négatifs, sinon ça ne veut pas dire grand chose.
@@ -163,7 +163,7 @@ queue, la liste renversée est égal à la queue renversée, avec la tête à la
 
 Et voilà !
 
-Puisqu'Haskell supporte des listes infinies, notre récursion n'a pas vraiment
+Puisqu'Haskell supporte des listes infinies, notre récursivité n'a pas vraiment
 besoin de cas de base. S'il n'en a pas, il va soit continuer à s'agiter sur un
 calcul à l'infini, ou produire une structure de donnée infinie, comme une liste
 infinie. La chose bien à propos des listes infinies, c'est qu'on peut les
@@ -283,7 +283,7 @@ représente l'application de quicksort.
 Penser récursif
 ---------------
 
-Nous avons fait pas mal de récursion et, comme vous l'avez probablement
+Nous avons fait pas mal de récursivité et, comme vous l'avez probablement
 remarqué, il y a un motif sous-jacent. Généralement, vous définissez des cas de
 base, et ensuite une fonction qui fait quelque chose avec certains éléments et
 rappelle cette fonction sur le reste. Peu importe que ce soit une liste, un

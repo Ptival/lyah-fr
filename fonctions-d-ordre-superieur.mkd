@@ -570,7 +570,7 @@ passée à une autre comme paramètre.
 Haskell plie mais ne rompt pas
 ------------------------------
 
-À l'époque où nous faisions de la récursion, nous avions repéré un thème
+À l'époque où nous faisions de la récursivité, nous avions repéré un thème
 récurrent dans nos fonctions récursives qui opéraient sur des listes. Nous
 introduisions un motif `x:xs` et nous faisions quelque chose avec la tête et
 quelque chose avec la queue. Il s'avère que c'est un motif très commun, donc il
@@ -594,7 +594,7 @@ produit un nouvel accumulateur, et la fonction est à nouveau appelée sur cette
 valeur et le prochain élément de la liste, etc.
 
 Implémentons `sum` à nouveau, mais cette fois, utilisons un *fold* plutôt
-qu'une récursion explicite.
+qu'une récursivité explicite.
 
 > sum' :: (Num a) => [a] -> a
 > sum' xs = foldl (\acc x -> acc + x) 0 xs
