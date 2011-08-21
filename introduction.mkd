@@ -1,25 +1,25 @@
 Introduction
 ============
 
-À propos de ce didacticiel
---------------------------
+À propos de ce tutoriel
+-----------------------
 
 Bienvenue dans **Apprenez Haskell pour le meilleur** ! Si vous lisez ceci, il
 est possible que vous vouliez apprendre Haskell. Vous êtes au bon endroit, mais
-discutons un peu de ce didacticiel avant tout.
+discutons un peu de ce tutoriel avant tout.
 
-J'ai décidé d'écrire ce didacticiel parce que je voulais consolider ma propre
+J'ai décidé d'écrire ce tutoriel parce que je voulais consolider ma propre
 connaissance d'Haskell, et parce que je pensais pouvoir aider les débutants à
-l'apprendre selon mon point de vue. Il y a plusieurs didacticiels traitant de
+l'apprendre selon mon point de vue. Il y a plusieurs tutoriels traitant de
 Haskell qui traînent sur Internet. Quand je débutais en Haskell, je n'ai pas
 appris que d'une seule source. Ma méthode d'apprentissage consistait à lire
-plusieurs didacticiels et articles, car chacun d'eux expliquait d'une manière
-un peu différente de l'autre. En confrontant plusieurs ressources, j'ai pu
+plusieurs tutoriels et articles, car chacun d'eux expliquait d'une manière un
+peu différente de l'autre. En confrontant plusieurs ressources, j'ai pu
 assembler les pièces du puzzle et tout s'est mis à sa place. Ceci est un essai
 afin de produire une ressource de plus afin d'apprendre Haskell, de sorte que
 vous ayez plus de chance d'en trouver une que vous appréciez.
 
-Ce didacticiel vise les personnes ayant de l'expérience dans un langage de
+Ce tutoriel vise les personnes ayant de l'expérience dans un langage de
 programmation impérative (C, C++, Java, Python, …) mais qui n'ont jamais
 programmé dans un langage de programmation fonctionnel auparavant (Haskell, ML,
 OCaml, …). Bien que je me doute que même sans vraie expérience en
@@ -122,8 +122,8 @@ Ce dont vous avez besoin avant de plonger
 
 Un éditeur de texte, et un compilateur Haskell. Vous avez probablement déjà un
 éditeur de texte favori, donc ne perdons pas de temps avec ça. Pour les besoins
-de ce didacticiel, nous utiliserons GHC, le compilateur Haskell le plus
-utilisé. Le meilleur moyen de démarrer est de télécharger [la plate-forme
+de ce tutoriel, nous utiliserons GHC, le compilateur Haskell le plus utilisé.
+Le meilleur moyen de démarrer est de télécharger [la plate-forme
 Haskell](http://hackage.haskell.org/platform/), qui contient simplement un
 Haskell prêt à tourner.
 

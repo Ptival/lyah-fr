@@ -7,11 +7,11 @@ Prêts, feu, partez !
 Bien, démarrons ! Si vous êtes le genre de personne horrible qui ne lit pas les
 introductions et que vous l'avez sautée, vous feriez peut-être bien de tout de
 même lire la dernière section de l'introduction, car elle explique ce dont vous
-avez besoin pour suivre ce didacticiel et comment l'on va charger des
-fonctions. La première chose qu'on va faire, c'est lancer un GHC interactif et
-appeler quelques fonctions pour se faire une première idée de Haskell. Ouvrez
-donc votre terminal et tapez `ghci`. Vous serez accueilli par un message
-semblable à celui-ci.
+avez besoin pour suivre ce tutoriel et comment l'on va charger des fonctions.
+La première chose qu'on va faire, c'est lancer un GHC interactif et appeler
+quelques fonctions pour se faire une première idée de Haskell. Ouvrez donc
+votre terminal et tapez `ghci`. Vous serez accueilli par un message semblable à
+celui-ci.
 
 > GHCi, version 6.8.2: http://www.haskell.org/ghc/  :? for help
 > Loading package base ... linking ... done.
@@ -480,7 +480,7 @@ demandé du début de la liste.
 > []
 
 `maximum` prend une liste de choses qui peuvent être ordonnées et retourne la
-plus grand d'entre elles.
+plus grande d'entre elles.
 
 `minimum` retourne la plus petite.
 

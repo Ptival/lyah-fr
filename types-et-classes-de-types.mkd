@@ -127,8 +127,8 @@ caractères est une chaîne de caractères.
 
 Les tuples sont des types mais dépendent de la taille et du type de leurs
 composantes, donc il existe théoriquement une infinité de types de tuples, ce
-qui fait trop pour être contenu dans ce didacticiel. Remarquez que le tuple
-vide `()` est aussi un type, qui ne contient qu'une seule valeur : `()`.
+qui fait trop pour être contenu dans ce tutoriel. Remarquez que le tuple vide
+`()` est aussi un type, qui ne contient qu'une seule valeur : `()`.
 
 Variables de type
 -----------------
