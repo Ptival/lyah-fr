@@ -510,7 +510,7 @@ d'utiliser un *where*.
 
 Nous incluons un *let* dans une liste en compréhension comme un prédicat,
 seulement qu'il ne filtre pas la liste, mais lie des noms. Les noms définis
-dans le *let* dans la compréhension sont visible de la fonction de retour (
+dans le *let* dans la compréhension sont visibles de la fonction de retour (
 celle qui est avant le `|`) et de tous les prédicats et sections qui viennent
 après la liaison. On pourrait faire une fonction qui ne retourne que les IMC
 des personnes obèses :
@@ -524,7 +524,7 @@ définie avant la liaison `let`.
 Nous avons omis la partie *in* de la liaisons *let* lorsqu'on l'utilisait dans
 des listes en compréhension, parce que la visibilité des noms est déjà
 prédéfinie ici. Cependant, on pourrait placer une liaison *let* dans un
-prédicat afin que les noms définis ne soient visible que du prédicat. La partie
+prédicat afin que les noms définis ne soient visibles que du prédicat. La partie
 *in* peut aussi être omise lorsqu'on définit des fonctions et des constantes
 directement dans GHCi. Dans ce cas, les noms sont visibles de toute la session
 interactive.
