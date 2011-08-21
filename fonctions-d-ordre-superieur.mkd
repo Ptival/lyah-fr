@@ -496,7 +496,7 @@ Lambdas
 Les lambda expressions sont simplement des fonctions anonymes utilisées
 lorsqu'on a besoin d'une fonction à usage unique. Normalement, on crée une
 lambda uniquement pour la passer à une fonction d'ordre supérieur. Pour créer
-une lambda, on écrit un `&#92;` (parce que ça ressemble à la lettre grecque
+une lambda, on écrit un `\` (parce que ça ressemble à la lettre grecque
 lambda si vous le fixez assez longtemps des yeux) puis les paramètres, séparés
 par des espaces. Après cela vient un `->` puis le corps de la fonction. On
 l'entoure généralement de parenthèses, autrement elle s'étend autant que
