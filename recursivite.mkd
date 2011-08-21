@@ -152,7 +152,7 @@ avec `x` en tête et une liste qui prend `n-1` éléments dans le reste pour
 queue. Essayez de prendre une feuille de papier pour écrire les étapes de
 l'évaluation de `take 3 [4, 3, 2, 1]`.
 
-`reverse` renverse une liste. Pensez au cas de base. Quel est-il ? Allons...
+`reverse` renverse une liste. Pensez au cas de base. Quel est-il ? Allons…
 c'est la liste vide ! Une liste vide renversée est la liste vide elle-même. Ok.
 Et le reste ? Eh bien, on peut dire que si l'on coupe une liste en tête et
 queue, la liste renversée est égal à la queue renversée, avec la tête à la fin.
@@ -234,7 +234,7 @@ a placé tous les éléments plus grands que la tête, après les avoir aussi
 triés"**. Remarquez comme on a dis deux fois *trier* dans la définition, donc
 il y aura probablement deux appels récursifs ! Remarquez aussi qu'on a utilisé
 le verbe être pour définir l'algorithme, et pas une suite de *faire ceci, puis
-faire cela, ensuite faire ceci ...* C'est la beauté de la programmation
+faire cela, ensuite faire ceci…* C'est la beauté de la programmation
 fonctionnelle ! Comment allons nous filtrer d'une liste les éléments plus
 petits que sa tête, et ceux plus grands ? Avec des listes en compréhension.
 Bon, plongeons.
@@ -290,7 +290,7 @@ rappelle cette fonction sur le reste. Peu importe que ce soit une liste, un
 arbre ou un autre structure de données. Une somme est le premier élément, plus
 la somme du reste de la liste. Un produit est le premier élément, multiplié par
 le produit du reste de la liste. La longueur est un, plus la longueur du reste
-de la liste. Et cætera, et cætera...
+de la liste. Et cætera, et cætera…
 
 Bien sûr, il y a aussi les cas de base. Généralement, le cas de base est un
 scénario pour lequel un appel récursif n'a plus de sens. Pour des listes, le

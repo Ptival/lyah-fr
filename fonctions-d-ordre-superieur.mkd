@@ -480,7 +480,7 @@ alors qu'elle en attend deux retourne une fonction qui attend encore un
 paramètre. Si l'on mappe `*` sur `[0..]`, on obtient en retour une liste de
 fonctions qui attendent chacune un paramètre, donc `(Num a) [a -> a]`. `map (*)
 [0..]` produit une liste comme celle qu'on obtiendrait en écrivant `[(0*),
-(1*), (2*), (3*), (4*), (5*), ...]`.
+(1*), (2*), (3*), (4*), (5*), …]`.
 
 > ghci> let listOfFuns = map (*) [0..]
 > ghci> (listOfFuns !! 4) 5
@@ -651,8 +651,8 @@ ne vient pas de trouver l'élément. S'il était `True`, on le laisse aussi.
 Le pli à droite, `foldr` travaille de manière analogue au plis à gauche, mais
 l'accumulateur consomme les valeurs en partant de la droite. Aussi, la fonction
 binaire du pli gauche prend l'accumulateur en premier paramètre, et la valeur
-courante en second (`\acc x -> ...`), celle du pli droit prend la valeur
-courante en premier et l'accumulateur en second (`\x acc -> ...`). C'est assez
+courante en second (`\acc x -> …`), celle du pli droit prend la valeur
+courante en premier et l'accumulateur en second (`\x acc -> …`). C'est assez
 logique que le pli à droite ait l'accumulateur à droite, vu qu'il plie depuis
 la droite.
 

@@ -20,9 +20,9 @@ afin de produire une ressource de plus afin d'apprendre Haskell, de sorte que
 vous ayez plus de chance d'en trouver une que vous appréciez.
 
 Ce didacticiel vise les personnes ayant de l'expérience dans un langage de
-programmation impérative (C, C++, Java, Python, ...) mais qui n'ont jamais
+programmation impérative (C, C++, Java, Python, …) mais qui n'ont jamais
 programmé dans un langage de programmation fonctionnel auparavant (Haskell, ML,
-OCaml, ...). Bien que je me doute que même sans vraie expérience en
+OCaml, …). Bien que je me doute que même sans vraie expérience en
 programmation, un chouette type comme vous pourra suivre et apprendre Haskell.
 
 Le canal #haskell sur le réseau freenode est un bon endroit pour poser des
@@ -37,7 +37,7 @@ le reste est venu plutôt facilement. Ce que j'essaie de vous dire : Haskell est
 génial, et si vous êtes intéressés par la programmation, vous devriez
 l'apprendre même si cela semble bizarre au début. Apprendre Haskell est très
 similaire à l'apprentissage de la programmation la première fois - c'est fun !
-Ca vous force à penser différemment, ce qui nous amène à la section suivante...
+Ca vous force à penser différemment, ce qui nous amène à la section suivante…
 
 Donc, qu'est-ce que Haskell ?
 -----------------------------

@@ -359,7 +359,7 @@ Mais si vous essayez d'obtenir le sixième élément d'une liste qui n'en a que
 quatre, vous obtiendrez une erreur, soyez donc vigilant !
 
 Les listes peuvent aussi contenir des listes. Elles peuvent même contenir des
-listes qui contiennent des listes...
+listes qui contiennent des listes…
 
 > ghci> let b = [[1,2,3,4],[5,3,3,3],[1,2,2,3,4],[1,2,3]]
 > ghci> b
@@ -683,7 +683,7 @@ seulement les produits supérieurs à 50 ?
 > [55,80,100,110]
 
 Pourquoi pas une compréhension qui combine une liste d'adjectifs et une liste
-de noms... pour provoquer une hilarité épique.
+de noms… pour provoquer une hilarité épique.
 
 > ghci> let nouns = ["hobo","frog","pope"]
 > ghci> let adjectives = ["lazy","grouchy","scheming"]

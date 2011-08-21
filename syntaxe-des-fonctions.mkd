@@ -306,7 +306,7 @@ calcule pour nous.
 >     | weight / height ^ 2 <= 30.0 = "You're fat! Lose some weight, fatty!"
 >     | otherwise                 = "You're a whale, congratulations!"
 
-Voyons si je suis gros...
+Voyons si je suis gros…
 
 > ghci> bmiTell 85 1.90
 > "You're supposedly normal. Pffft, I bet you're ugly!"
@@ -409,7 +409,7 @@ même nom, il faut le définir globalement.
 Vous pouvez aussi utiliser les liaisons *where* pour du **filtrage par motif**
 ! On aurait pu réécrire la section *where* précédente comme :
 
-> ...
+> …
 > where bmi = weight / height ^ 2
 >       (skinny, normal, fat) = (18.5, 25.0, 30.0)
 
@@ -579,7 +579,7 @@ Comme vous pouvez le voir, la syntaxe des expressions *case* est plutôt simple
 > case expression of pattern -> result
 >                    pattern -> result
 >                    pattern -> result
->                    ...
+>                    …
 
 `expression` est testée contre les motifs. L'action de filtrage est comme
 attendue : le premier motif qui correspond est utilisé. Si l'on parcourt toute
