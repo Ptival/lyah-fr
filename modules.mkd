@@ -1,0 +1,1098 @@
+Modules
+=======
+
+Charger des modules
+-------------------
+
+Un module Haskell est une collection de fonctions, types et classes de types en
+rapport les uns avec les autres. Un programme Haskell est une collection de
+modules où le module principal charge les autres modules et utilise les
+fonctions qu'ils définissent. Séparer son code dans plusieurs modules a
+plusieurs avantages. Si un module est assez générique, les fonctions qu'il
+exporte peuvent être utilisées dans une multitude de programmes. Si votre
+propre code est séparé dans des modules assez indépendants (on dit qu'ils ont
+un couplage faible), vous pourrez les réutiliser plus tard. Cela rend la
+programmation plus facile à gérer en séparant des entités avec des buts précis.
+
+La bibliothèque standard Haskell est coupée en modules, chacun d'eux contenant
+des fonctions et des types qui sont reliés et servent un but partagé. Il y a un
+module de manipulation de listes, un module de programmation concurrente, un
+module pour les nombres complexes, etc. Toutes les fonctions, types et classes
+de types que nous avons utilisés jusqu'à présent faisaient partie du module
+`Prelude`, qui est importé par défaut. Dans ce chapitre, on va explorer
+quelques modules utiles et les fonctions qu'ils contiennent. Mais d'abord,
+voyons comment importer un module.
+
+La syntaxe d'import de modules dans un script Haskell est `import <module
+name>`. Cela doit être fait avant de définir des fonctions, donc généralement,
+les imports sont faits en début de fichier. Un script peut bien sûr importer
+plusieurs modules. Écrivez simplement une ligne d'import par module. Importons
+le module `Data.List`, qui a un paquet de fonctions utiles pour travailler sur
+des listes, et utilisons une des fonctions que le module exporte afin de savoir
+combien d'éléments unique une liste comporte.
+
+> import Data.List
+>
+> numUniques :: (Eq a) => [a] -> Int
+> numUniques = length . nub
+
+Quand vous écrivez `import Data.List`, toutes les fonctions que `Data.List`
+exporte deviennent disponibles dans votre espace de nommage global, donc vous
+pouvez les appeler de n'importe où dans le script. `nub` est une fonction
+définie dans `Data.List` qui prend une liste et supprime les éléments en
+double. Composer `length` et `nub` en faisant `length . nub` produit une
+fonction équivalente à `\xs -> length (nub xs)`.
+
+Vous pouvez aussi importer des fonctions d'un module dans l'espace de nommage
+global de GHCi. Si vous êtes dans GHCi, et que vous désirez appeler des
+fonctions exportées par `Data.List`, faites :
+
+> ghci> :m + Data.List
+
+Pour charger plusieurs modules, pas besoin de taper `:m +` plusieurs fois, vous
+pouvez en charger plusieurs à la fois.
+
+> ghci> :m + Data.List Data.Map Data.Set
+
+Cependant, en chargeant un script qui importe des modules, vous n'avez même pas
+besoin d'utilise `:m +` pour accéder à ces modules.
+
+Si vous n'avez besoin que de quelques fonctions d'un module, vous pouvez
+importer sélectivement juste ces fonctions. Si nous ne voulions que `nub` et
+`sort` de `Data.List`, on ferait :
+
+> import Data.List (nub, sort)
+
+Vous pouvez aussi choisir d'importer toutes les fonctions d'un module, sauf
+certaines. C'est souvent utile quand plusieurs modules exportent des fonctions
+qui ont le même nom et que vous voulez vous débarasser de celles qui ne vous
+concernent pas. Mettons qu'on ait défini une fonction `nub` et qu'on veuille
+importer toutes les fonctions de `Data.List` à part `nub` :
+
+> import Data.List hiding (nub)
+
+Un autre moyen de gérer les collisions de noms est d'utiliser les imports
+qualifiés. Le module `Data.Map`, qui offre une structure de donnée pour trouver
+des valeurs grâce à une clé, exporte un paquet de fonctions qui ont les mêmes
+noms que celles du `Prelude`, comme `filter` ou `null`. Donc, quand on importe
+`Data.Map` et qu'on appelle `filter`, Haskell ne sait pas de laquelle on parle.
+Voici comment on résout cela :
+
+> import qualified Data.Map
+
+Cela nous force à écrire `Data.Map.filter` pour désigner la fonction `filter`
+de `Data.Map`, alors que `filter` tout court correpond à la fonction du
+`Prelude` que'on connaît et qu'on aime tous. Mais écrire `Data.Map` devant
+chaque fonction du module est un peu fastidieux. C'est pourquoi on peut
+renommer les imports qualifiés :
+
+> import qualified Data.Map as M
+
+Maintenant, pour parler de la fonction `filter` de `Data.Map`, on peut utiliser
+`M.filter`.
+
+Utilisez [cette référence très
+pratique](http://www.haskell.org/ghc/docs/latest/html/libraries/) pour savoir
+quels modules font partie de la bibliothèque standard. Un bon moyen d'apprendre
+des choses sur Haskell est de se balader dans cette référence et d'explorer des
+modules et leurs fonctions. Pour chaque module, le code source Haskell est
+disponible. Lire le code source de certains modules est un très bon moyen
+d'apprendre Haskell et de se faire une idée solide de ce dont il s'agit.
+
+Pour trouver des fonctions et savoir dans quel module elles résident, utilisez
+[Hoogle](http://haskell.org/hoogle/). C'est un moteur de recherche pour Haskell
+génial, vous pouvez chercher quelque chose par son nom, par le nom de son
+module, ou même par son type !
+
+Data.List
+---------
+
+Le module `Data.List` s'occupe des listes, évidemment. Il contient des
+fonctions très pratiques. Nous en avons déjà croisées quelques unes (comme
+`map` et `filter`) parce que le module `Prelude` exporte quelques fonctions de
+`Data.List` par commodité. Vous n'avez pas besoin d'importer `Data.List` de
+manière qualifiée, il n'a de collision avec aucun nom du `Prelude`, à part
+évidemment les fonctions que le `Prelude` lui avait empruntées.
+Intéressons-nous à d'autres fonctions que nous n'avions pas encore vues.
+
+`intersperse` prend un élément et une liste, et place cet élément entre chaque
+paire d'éléments de la liste. Démonstration :
+
+> ghci> intersperse '.' "MONKEY"
+> "M.O.N.K.E.Y"
+> ghci> intersperse 0 [1,2,3,4,5,6]
+> [1,0,2,0,3,0,4,0,5,0,6]
+
+`intercalate` prend une liste de listes et une liste. Elle insère cette dernière
+entre toutes les listes de la première, et aplatit le résultat.
+
+> ghci> intercalate " " ["hey","there","guys"]
+> "hey there guys"
+> ghci> intercalate [0,0,0] [[1,2,3],[4,5,6],[7,8,9]]
+> [1,2,3,0,0,0,4,5,6,0,0,0,7,8,9]
+
+`transpose` transpose une liste de listes. Si vous pensez à une liste de listes
+comme à une matrice bidimensionnelle, les colonnes deviennent des lignes et
+vice versa.
+
+> ghci> transpose [[1,2,3],[4,5,6],[7,8,9]]
+> [[1,4,7],[2,5,8],[3,6,9]]
+> ghci> transpose ["hey","there","guys"]
+> ["htg","ehu","yey","rs","e"]
+
+Mettons qu'on ait les polynômes *3x² + 5x + 9*, *10x + 9* et *8x³ + 5x² + x -
+1*, et que l'on souhaite les additionner. On peut utiliser les listes `[0, 3,
+5, 9]`, `[10, 0, 0, 9]` et `[8, 5, 1, -1]` pour les représenter en Haskell.
+Maintenant, pour les sommer, il suffit de faire :
+
+> ghci> map sum $ transpose [[0,3,5,9],[10,0,0,9],[8,5,1,-1]]
+> [18,8,6,17]
+
+Lorsqu'on transpose ces trois listes, les puissances de 3 se retrouvent dans la
+première ligne, les puissances de 2 dans la deuxième, et ainsi de suite. Mapper
+`sum` sur cette liste produit le résultat désiré.
+
+`foldl'` et `foldl1'` sont des versions strictes de leur équivalents paresseux.
+Si vous faites des plis paresseux sur des listes très grandes, vous pouvez
+souvent avoir des erreurs de débordement de pile. Le coupable est la nature
+paresseuse des plis, la valeur de l'accumulateur n'étant pas réellement mise à
+jour pendant la phase de pli. Ce qui se passe en réalité, c'est que
+l'accumulateur fait en quelque sorte la promesse qu'il se rappellera comment
+calculer la valeur quand on la lui demandera (NDT : un glaçon, traduction
+arbitraire de *thunk*). Cela a lieu pour chaque accumulateur intermédiaire, et
+tous les glaçons sont empilés sur votre pile, et finissent par la déborder.
+Les plis stricts ne sont pas de vils paresseux, et calculent les valeurs
+intermédiaires en route au lieu de remplir votre pile de glaçons.  Donc, si
+jamais vous rencontrez des problèmes de débordement de pile en faisant des plis
+paresseux, essayez d'utiliser plutôt les versions strictes.
+
+`concat` aplatit une liste de listes en une liste simple.
+
+> ghci> concat ["foo","bar","car"]
+> "foobarcar"
+> ghci> concat [[3,4,5],[2,3,4],[2,1,1]]
+> [3,4,5,2,3,4,2,1,1]
+
+Elle enlèvera seulement un niveau d'imbrication. Si vous voulez complètement
+aplatir la liste `[[[2,3],[3,4,5],[2]],[[2,3],[3,4]]]`, qui est une liste de
+listes de listes, vous devrez la concaténer deux fois.
+
+`concatMap` équivaut à d'abord mapper une fonction, puis concaténer la liste à
+l'aide de `concat`.
+
+> ghci> concatMap (replicate 4) [1..3]
+> [1,1,1,1,2,2,2,2,3,3,3,3]
+
+`and` prend une liste de valeurs booléennes et retourne `True` seulement si
+toutes les valeurs de la liste sont `True`.
+
+> ghci> and $ map (>4) [5,6,7,8]
+> True
+> ghci> and $ map (==4) [4,4,4,3,4]
+> False
+
+`or` est comme `and`, mais retourne `True` si n'importe laquelle des valeurs
+booléennes est `True`.
+
+> ghci> or $ map (==4) [2,3,4,5,6,1]
+> True
+> ghci> or $ map (>4) [1,2,3]
+> False
+
+`any` et `all` prennent un prédicat et vérifient respectivement si l'un ou tous
+les éléments d'une liste satisfont ce prédicat. On les utilise généralement
+en lieu et place d'un mappage du prédicat sur la liste suivi de `and` ou `or`.
+
+> ghci> any (==4) [2,3,5,6,1,4]
+> True
+> ghci> all (>4) [6,9,10]
+> True
+> ghci> all (`elem` ['A'..'Z']) "HEYGUYSwhatsup"
+> False
+> ghci> any (`elem` ['A'..'Z']) "HEYGUYSwhatsup"
+> True
+
+`iterate` prend une fonction et une valeur initiale. Elle applique la fonction
+à la valeur, puis applique la fonction au résultat, puis applique la fonction
+au résultat à nouveau, etc. Elle retourne tous ces résultats sous la forme
+d'une liste infinie.
+
+> ghci> take 10 $ iterate (*2) 1
+> [1,2,4,8,16,32,64,128,256,512]
+> ghci> take 3 $ iterate (++ "haha") "haha"
+> ["haha","hahahaha","hahahahahaha"]
+
+`splitAt` prend un nombre et une liste. Ensuite, elle coupe la liste au nombre
+d'éléments spécifié, retournant chaque bout dans une paire.
+
+> ghci> splitAt 3 "heyman"
+> ("hey","man")
+> ghci> splitAt 100 "heyman"
+> ("heyman","")
+> ghci> splitAt (-3) "heyman"
+> ("","heyman")
+> ghci> let (a,b) = splitAt 3 "foobar" in b ++ a
+> "barfoo"
+
+`takeWhile` est très utile. Elle prend des éléments de la liste tant que le
+prédicat est satisfait, et s'arrête dès qu'un élément l'invalide. C'est très
+utile.
+
+> ghci> takeWhile (>3) [6,5,4,3,2,1,2,3,4,5,4,3,2,1]
+> [6,5,4]
+> ghci> takeWhile (/=' ') "This is a sentence"
+> "This"
+
+Si l'on cherchait la somme de toutes les puissances de 3 inférieures à 10000,
+on ne pourrait pas mapper `(^3)` à `[1..]`, puis appliquer un filtre et sommer
+le résultat, parce que `filter` ne termine pas sur des listes infinies. Vous
+savez peut-être que les éléments sont croissants, mais Haskell ne le sait pas.
+Vous pouvez donc faire ça :
+
+> ghci> sum $ takeWhile (<10000) $ map (^3) [1..]
+> 53361
+
+On applique `(^3)` à une liste infinie, et on coupe dès que ça dépasse 10000.
+Il ne reste plus qu'à sommer aisément.
+
+`dropWhile` est similaire, mais elle jette les éléments tant que le prédicat
+est vrai. Une fois que le prédicat est invalidé, elle retourne ce qui reste de
+la liste. Très utile et adorable fonction !
+
+> ghci> dropWhile (/=' ') "This is a sentence"
+> " is a sentence"
+> ghci> dropWhile (<3) [1,2,2,2,3,4,5,4,3,2,1]
+> [3,4,5,4,3,2,1]
+
+Imaginons qu'on ait une liste des valeurs d'un stock par date. La liste est
+composée de tuples dont la première composante est la valeur du stock, la
+deuxième est l'année, la troisième le mois, la quatrième le jour. On désire
+savoir quand est-ce que la valeur du stock a dépassé 1000 $ pour la première
+fois !
+
+> ghci> let stock = [(994.4,2008,9,1),(995.2,2008,9,2),(999.2,2008,9,3),(1001.4,2008,9,4),(998.3,2008,9,5)]
+> ghci> head (dropWhile (\(val,y,m,d) -> val < 1000) stock)
+>     (1001.4,2008,9,4)
+
+`span` est un peu comme `takeWhile`, mais retourne une paire de listes. La
+première liste contient tout ce que contiendrait la liste retournée par
+`takeWhile` appelée avec le même prédicat et la même liste. La seconde liste
+correspond à ce qui aurait été laissé.
+
+> ghci> let (fw, rest) = span (/=' ') "This is a sentence" in "First word:" ++ fw ++ ", the rest:" ++ rest
+> "First word: This, the rest: is a sentence"
+
+Alors que `span` s'étend sur la liste tant que la prédicat est vrai, `break` la
+coupe dès qu'il devient vrai. Ainsi, `break p` est équivalent à `span (not .
+p)`.
+
+> ghci> break (==4) [1,2,3,4,5,6,7]
+> ([1,2,3],[4,5,6,7])
+> ghci> span (/=4) [1,2,3,4,5,6,7]
+> ([1,2,3],[4,5,6,7])
+
+Dans le tuple retourné par `break`, la seconde liste débute avec le premier
+élément ayant satisfait le prédicat.
+
+`sort` trie une liste. Le type des éléments de la liste doit être membre de la
+classe de types `Ord`, parce si l'on ne peut pas ordonner les éléments, eh bien
+on ne peut pas les trier.
+
+> ghci> sort [8,5,3,2,1,6,4,2]
+> [1,2,2,3,4,5,6,8]
+> ghci> sort "This will be sorted soon"
+> "    Tbdeehiillnooorssstw"
+
+`group` prend une liste et groupe les éléments adjacents en sous-listes s'ils
+sont égaux.
+
+> ghci> group [1,1,1,1,2,2,2,2,3,3,2,2,2,5,6,7]
+> [[1,1,1,1],[2,2,2,2],[3,3],[2,2,2],[5],[6],[7]]
+
+Si l'on trie une liste avant de la groupe, on peut connaître le compte de
+chaque élément.
+
+> ghci> map (\l@(x:xs) -> (x,length l)) . group . sort $ [1,1,1,1,2,2,2,2,3,3,2,2,2,5,6,7]
+> [(1,4),(2,7),(3,2),(5,1),(6,1),(7,1)]
+
+`inits` et `tails` sont comme `init` et `tail`, mais appliquent ces fonctions
+récursivement tant que faire se peut. Observez :
+
+> ghci> inits "w00t"
+> ["","w","w0","w00","w00t"]
+> ghci> tails "w00t"
+> ["w00t","00t","0t","t",""]
+> ghci> let w = "w00t" in zip (inits w) (tails w)
+> [("","w00t"),("w","00t"),("w0","0t"),("w00","t"),("w00t","")]
+
+Utilisons un pli pour implémenter la recherche d'une liste dans une sous-liste.
+
+> search :: (Eq a) => [a] -> [a] -> Bool
+> search needle haystack =
+>     let nlen = length needle
+>     in  foldl (\acc x -> if take nlen x == needle then True else acc) False (tails haystack)
+
+D'abord, on appelle `tails` avec la liste qu'on cherche. Puis on parcourt
+chaque queue retournée pour voir si elle commence par ce qu'on cherche.
+
+On vient de faire une fonction qui se comporte comme `isInfixOf`. `isInfixOf`
+cherche une sous-liste dans une liste et retourne `True` si la sous-liste qu'on
+cherche apparaît quelque part dans la liste cible.
+
+> ghci> "cat" `isInfixOf` "im a cat burglar"
+> True
+> ghci> "Cat" `isInfixOf` "im a cat burglar"
+> False
+> ghci> "cats" `isInfixOf` "im a cat burglar"
+> False
+
+`isPrefixOf` et `isSuffixOf` cherchent une sous-liste respectivement au début
+et à la fin d'une liste.
+
+> ghci> "hey" `isPrefixOf` "hey there!"
+> True
+> ghci> "hey" `isPrefixOf` "oh hey there!"
+> False
+> ghci> "there!" `isSuffixOf` "oh hey there!"
+> True
+> ghci> "there!" `isSuffixOf` "oh hey there"
+> False
+
+`elem` et `notElem` cherchent si un élément appartient ou n'appartient pas à
+une liste.
+
+`partition` prend une liste et un prédicat, et retourne une paire de listes.
+La première liste contient tous les éléments qui satisfont le prédicat, la
+second tous les autres.
+
+> ghci> partition (`elem` ['A'..'Z']) "BOBsidneyMORGANeddy"
+> ("BOBMORGAN","sidneyeddy")
+> ghci> partition (>3) [1,3,5,6,3,2,1,0,3,7]
+> ([5,6,7],[1,3,3,2,1,0,3])
+
+Il est important de saisir la différence avec `span` et `break` :
+
+> ghci> span (`elem` ['A'..'Z']) "BOBsidneyMORGANeddy"
+> ("BOB","sidneyMORGANeddy")
+
+Alors que `span` et `break` s'arrêtent dès qu'ils rencontrent le premier
+élément qui ne satisfait pas ou qui satisfait le prédicat, `partition` traverse
+toute la liste et la découpe conformément au prédicat.
+
+`find` prend une liste et un prédicat et retourne le premier élément de la
+liste satisfaisant le prédicat. Mais il retourne ce prédicat encapsulé dans une
+valeur de type `Maybe`. Nous couvrirons les types de données algébriques plus
+en profondeur dans le prochain chapitre, mais pour l'instant, voilà ce que vous
+avez besoin de savoir : un valeur `Maybe` peut soit être `Just something`, soit
+`Nothing`. Tout comme une liste peut être soit la liste vide, soit une liste
+avec des éléments, un valeur `Maybe` peut contenir soit aucun, soit un élement.
+Et comme le type d'une liste d'entiers est par exemple `[Int]`, le type d'un
+éventuel entier est `Maybe Int`. Bon, faisons un tour de `find` :
+
+> ghci> find (>4) [1,2,3,4,5,6]
+> Just 5
+> ghci> find (>9) [1,2,3,4,5,6]
+> Nothing
+> ghci> :t find
+> find :: (a -> Bool) -> [a] -> Maybe a
+
+Prêtez attention au type de `find`. Elle retourne un `Maybe a`. C'est un peu
+comme s'il y avait un `[a]`, seulement qu'une valeur de type `Maybe` ne peut
+contenir qu'un ou zéro élément, alors qu'une liste peut en contenir zéro, un ou
+plus.
+
+Vous vous souvenez quand nous cherchions la première fois que notre stock
+dépassait 1000 $ ? On avait fait `head (dropWhile (\(val,y,m,d) -> val < 1000)
+stock)`. Rappelez-vous que `head` n'est pas sûre. Que se serait-il passé si le
+stock n'avait jamais dépassé 1000 $ ? Notre application de `dropWhile` aurait
+retourné la list evide, et essayer de prendre sa tête aurait été une erreur.
+Cependant, si l'on réécrivait cela `find (\(val,y,m,d) -> val > 1000) stock`,
+on serait beaucoup plus tranquille. Si notre stock ne dépassait jamais 1000 $
+(donc, aucun élément ne satisfait le prédicat), on récupérerait `Nothing`. Mais
+s'il y avait une réponse correcte dans la liste, on récupérerait, mettons,
+`Just (1001.4, 2008, 9, 4)`.
+
+`elemIndex` est un peu comme `elem`, mais ne retourne pas une valeur booléenne.
+Elle retourne éventuellement l'indice de l'élément qu'on cherche. Si cet
+élément n'est pas dans la liste, elle retourne `Nothing`.
+
+> ghci> :t elemIndex
+> elemIndex :: (Eq a) => a -> [a] -> Maybe Int
+> ghci> 4 `elemIndex` [1,2,3,4,5,6]
+> Just 3
+> ghci> 10 `elemIndex` [1,2,3,4,5,6]
+> Nothing
+
+`elemIndices` est comme `elemIndex`, seulement qu'elle retourne une liste
+d'indices dans le cas où l'élément que l'on cherche apparaîtrait plusieurs fois
+dans la liste. Puisqu'on utilise des listes pour représenter les indices, on
+n'a pas besoin d'un type `Maybe`, il suffit de représenter un échec comme une
+liste vide, qui sera donc très synonyme de `Nothing`.
+
+> ghci> ' ' `elemIndices` "Where are the spaces?"
+> [5,9,13]
+
+`findIndex` est comme `find`, mais retourne éventuellement l'indice du premier
+élément qui satisfait le prédicat. `findIndices` retourne les indices de tous
+les éléments qui satisfont le prédicat sous forme d'une liste.
+
+> ghci> findIndex (==4) [5,3,2,1,6,4]
+> Just 5
+> ghci> findIndex (==7) [5,3,2,1,6,4]
+> Nothing
+> ghci> findIndices (`elem` ['A'..'Z']) "Where Are The Caps?"
+> [0,6,10,14]
+
+Nous avons déjà couvert `zip` et `zipWith`. Nous avions vu qu'elles zippent
+ensemble deux listes, soit sous la forme d'un tuple, soit en appliquant une
+fonction binaire (c'est-à-dire qui prend deux paramètres). Mais comment zipper
+ensemble trois listes ? Ou zipper trois listes à l'aide d'une fonction qui
+attend trois paramètres ? Pour cela, il existe `zip3`, `zip4`, etc. et
+`zipWith3`, `zipWith4`, etc. Ces variantes existent jusqu'à 7. Bien que ça ait
+l'air un peu arbitraire et ad-hoc, ça s'avère plutôt suffisant, car vous ne
+voudrez sûrement jamais zipper ensemble 8 listes. Il existe un moyen astucieux
+de zipper ensemble une infinité de listes, mais nous ne sommes pas assez avancé
+pour couvrir ça maintenant.
+
+> ghci> zipWith3 (\x y z -> x + y + z) [1,2,3] [4,5,2,2] [2,2,3]
+> [7,9,8]
+> ghci> zip4 [2,3,3] [2,2,2] [5,5,3] [2,2,2]
+> [(2,2,5,2),(3,2,5,2),(3,2,3,2)]
+
+Comme un zip normal, des listes plus longues que la plus courte des listes
+zippées seront coupées.
+
+`lines` est une fonction très utile pour traiter des fichiers ou une entrée.
+Elle prend une chaîne de caractères et retourne une liste des différentes
+lignes.
+
+> ghci> lines "first line\nsecond line\nthird line"
+> ["first line","second line","third line"]
+
+`'\n'` est le caractère UNIX pour aller à la ligne. L'antislash a une
+signification spéciale dans les caractères et les chaînes de caractères.
+
+`unlines` est la fonction inverse de `lines`. Elle prend une liste de chaînes
+de caractères et les joint ensemble avec des `'\n'`.
+
+> ghci> unlines ["first line", "second line", "third line"]
+> "first line\nsecond line\nthird line\n"
+
+`words` et `unwords` servent à séparer une ligne de texte en plusieurs mots, ou
+à joindre une liste de mots en un texte. Très pratique.
+
+> ghci> words "hey these are the words in this sentence"
+> ["hey","these","are","the","words","in","this","sentence"]
+> ghci> words "hey these           are    the words in this\nsentence"
+> ["hey","these","are","the","words","in","this","sentence"]
+> ghci> unwords ["hey","there","mate"]
+> "hey there mate"
+
+Nous avons déjà mentionné `nub`. Elle prend une liste et retire les éléments en
+double, retournant une liste où chaque élément est aussi unique qu'un flocon de
+neige ! Le nom de la fonction est un peu bizarre. Il s'avère que "nub" désigne
+l'essence, le cœur de quelque chose. À mon avis, ils devraient plutôt utiliser
+des vrais noms pour les fonctions, pas des mots de vieilles personnes.
+
+> ghci> nub [1,2,3,4,3,2,1,2,3,4,3,2,1]
+> [1,2,3,4]
+> ghci> nub "Lots of words and stuff"
+> "Lots fwrdanu"
+
+`delete` prend un élément, une liste, et supprime la première occurence de cet
+élément dans la liste.
+
+> ghci> delete 'h' "hey there ghang!"
+> "ey there ghang!"
+> ghci> delete 'h' . delete 'h' $ "hey there ghang!"
+> "ey tere ghang!"
+> ghci> delete 'h' . delete 'h' . delete 'h' $ "hey there ghang!"
+> "ey tere gang!"
+
+` \\ ` est la fonction de différence sur les listes. Elle se comporte comme la
+différence ensembliste. Pour chaque élément de la liste de droite, elle
+supprime un élément correspondant dans la liste de gauche.
+
+> ghci> [1..10] \\ [2,5,9]
+> [1,3,4,6,7,8,10]
+> ghci> "Im a big baby" \\ "big"
+> "Im a  baby"
+
+Faire `[1..10] \\ [2, 5, 9]` est comme faire `delete 2 . delete 5 . delete 9 $
+[1..10]`.
+
+`union` se comporte aussi comme une fonction sur les ensembles. Elle retourne
+l'union de deux listes. En gros, elle parcourt toute la liste de droite et
+ajoute les éléments en queue de celle de gauche s'ils n'y sont pas déjà.
+Attention, elle supprime les doublons dans la liste de droite !
+
+> ghci> "hey man" `union` "man what's up"
+> "hey manwt'sup"
+> ghci> [1..7] `union` [5..10]
+> [1,2,3,4,5,6,7,8,9,10]
+
+`intersect` fonctionne comme l'intersection ensembliste. Elle ne retourne que
+les éléments apparaissant dans les deux listes.
+
+> ghci> [1..7] `intersect` [5..10]
+> [5,6,7]
+
+`insert` prend un élément et une liste d'éléments qui peuvent être triés et
+insère l'élément à la dernière position où il reste inférieur au prochain
+élément. `insert` va parcourir la liste jusqu'à trouver un élément plus grand
+que celui passé en paramètre, et va alors insérer ce dernier devant l'autre.
+
+> ghci> insert 4 [3,5,1,2,8,2]
+> [3,4,5,1,2,8,2]
+> ghci> insert 4 [1,3,4,4,1]
+> [1,3,4,4,4,1]
+
+Le `4` est inséré juste après le `3` et juste avant le `5` dans le premier
+exemple, et entre le `3` et le `4` dans le second.
+
+Propriété intéressante : si l'on utilise `insert` pour insérer dans une liste
+triée, la liste reste triée.
+
+> ghci> insert 4 [1,2,3,5,6,7]
+> [1,2,3,4,5,6,7]
+> ghci> insert 'g' $ ['a'..'f'] ++ ['h'..'z']
+> "abcdefghijklmnopqrstuvwxyz"
+> ghci> insert 3 [1,2,4,3,2,1]
+> [1,2,3,4,3,2,1]
+
+Ce que `length`, `take`, `drop`, `splitAt`, `!!` et `replicate` ont de commun,
+c'est qu'elles prennent ou retournent un `Int`, alors qu'elles pourraient être
+plus générales en utilisant plutôt un type member des classes `Integral` ou
+`Num` (en fonction de la fonction). Elles ne le font pas pour des raisons
+historiques. Réparer cela détruirait certainement beaucoup de code existant.
+C'est pourquoi `Data.List` contient les équivalents plus génériques, nommés
+`genericLength`, `genericTake`, `genericDrop`, `genericSplitAt`, `genericIndex`
+et `genericReplicate`. Par exemple, `length` a pour signature `length :: [a] ->
+Int`. Si l'on essaie de récupérer la moyenne d'une liste en faisant `let xs =
+[1..6] in sum xs / length xs`, on obtient une erreur de type, parce que `/` ne
+fonctionne pas sur les `Int`. `genericLength`, au contraire, a pour signature
+`genericLength :: (Num a) => [b] -> a`. Puisqu'un `Num` peut se faire passer
+pour un nombre à virgule flottante, trouver la moyenne en faisant `let xs =
+[1..6] in sum xs / genericLength xs` marchera.
+
+Les fonctions `nub`, `delete`, `union`, `intersect` et `group` ont toute un
+équivalent plus général, respectivement `nubBy`, `deleteBy`, `unionBy`,
+`intersectBy` et `groupBy`. La difference entre les deux, c'est que les
+premières utilisent `==` pour tester l'égalité, alors que les versions en *By*
+prennent en paramètre une fonction utilisé pour tester l'égalité. `group` est
+donc équivalente à `groupBy (==)`.
+
+Par exemple, mettons qu'on a une liste qui décrit les valeurs d'une fonction à
+chaque seconde, et on voudrait la segmenter entre les valeurs positives et les
+valeurs négatives. Un `group` normal ne regrouperait que les valeurs adjacentes
+égales entre elles. On voudrait les grouper en fonction de leur signe. C'est là
+que `groupBy` entre en jeu ! La fonction d'égalité des fonctions en *By* doit
+prendre deux éléments de même type et retourne `True` si elle les considère
+égales selon ses propres critères.
+
+> ghci> let values = [-4.3, -2.4, -1.2, 0.4, 2.3, 5.9, 10.5, 29.1, 5.3, -2.4, -14.5, 2.9, 2.3]
+> ghci> groupBy (\x y -> (x > 0) == (y > 0)) values
+> [[-4.3,-2.4,-1.2],[0.4,2.3,5.9,10.5,29.1,5.3],[-2.4,-14.5],[2.9,2.3]]
+
+On voit ici clairement quelles sections sont positives et négatives. La
+fonction d'égalité fournie prend deux éléments et retourne `True` seulement
+s'ils sont tous les deux positifs ou tous les deux négatifs. Elle pourrait
+aussi être écrite `\x y -> (x > 0) && (y > 0) || (x <= 0) && (y <= 0)`, bien
+que je trouve la première version plus lisible. Une manière encore plus claire
+d'écrire les fonction d'égalité pour les fonctions en *By* consiste à importer
+`on` depuis `Data.Function`. `on` est définie ainsi :
+
+> on :: (b -> b -> c) -> (a -> b) -> a -> a -> c
+> f `on` g = \x y -> f (g x) (g y)
+
+Ainsi, faire `(==) \`on\` (> 0)` retourne une fonction d'égalité qui ressemble
+à `\x y -> (x > 0) == (y > 0)`. `on` est très utilisée avec les fonctions *By*
+parce qu'avec elle, on peut faire :
+
+> ghci> groupBy ((==) `on` (> 0)) values
+> [[-4.3,-2.4,-1.2],[0.4,2.3,5.9,10.5,29.1,5.3],[-2.4,-14.5],[2.9,2.3]]
+
+Super lisible, non ? Vous pouvez le lire tout haut : groupe ceci par égalité
+sur le fait que les éléments soient plus grands que zéro.
+
+De façon similaire, les fonctions `sort`, `insert`, `maximum` et `minimum` ont
+aussi un équivalent plus général. Les fonctions comme `groupBy` prenaient une
+fonction pour déterminer si deux éléments étaient égaux. `sortBy`, `insertBy`,
+`maximumBy` et `minimumBy` prennent une fonction pour déterminer si un élément
+est plus petit, plus grand ou égal l'autre. La signature de `sortBy` est
+`sortBy :: (a -> a -> Ordering) -> [a] -> [a]`. Si vous vous souvenez bien, le
+type `Ordering` peut prendre pour valeurs `LT`, `EQ` ou `GT`. `sort` est
+équivalent à `sortBy compare`, car `compare` prend juste deux éléments dont le
+type est membre de la classe `Ord` et retourne leur relation d'ordre.
+
+Les listes peuvent être comparées, mais lorsqu'elles le sont, elles sont
+comparées lexicographiquement. Et si l'on avait une liste de listes et que l'on
+souhaitait la trier non pas par rapport au contenu des listes internes, mais
+plutôt de leur longueur ? Vous l'avez peut-être déjà deviné, on utilisera la
+fonction `sortBy`.
+
+> ghci> let xs = [[5,4,5,4,4],[1,2,3],[3,5,4,3],[],[2],[2,2]]
+> ghci> sortBy (compare `on` length) xs
+> [[],[2],[2,2],[1,2,3],[3,5,4,3],[5,4,5,4,4]]
+
+Génial ! `compare \`on\` length`… man, on dirait presque de l'anglais naturel !
+Si vous n'êtes pas certain de ce que fait `on` ici, `compare \`on\` length` est
+équivalent à `\x y -> length x \`compare\` length y`. Quand vous utilisez des
+fonctions en *By* qui attendent une fonction d'égalité, vous ferez souvent
+`(==) \`on\` something`, et quand vous utilisez des fonctions en *By* qui
+attendent une fonction de comparaison, vous ferez souvent `compare \`on\`
+length`.
+
+Data.Char
+---------
+
+Le module `Data.Char` fait ce que son nom indique. Il exporte des fonctions qui
+agissent sur des caractères. Et qui servent aussi pour filtrer ou mapper sur
+des chaînes de caractères, puisque ce ne sont que des listes de caractères.
+
+`Data.Char` exporte tout un tas de prédicats sur les caractères. C'est-à-dire,
+des fonctions qui prennent un caractère et nous indiquent s'il satisfait une
+condition. Les voici :
+
+`isControl` vérifie si c'est un caractère de contrôle (NDT : caractères non
+affichables du sous-ensemble Latin-1 d'Unicode).
+
+`isSpace` vérifie si c'est un caractère d'espacement. Cela inclue les espaces,
+les tabulations, les nouvelles lignes, etc.
+
+`isLower` vérifie si le caractère est minuscule.
+
+`isUpper` vérifier si le caractère est majuscule.
+
+`isAlpha` vérifie si le caractère est une lettre.
+
+`isAlphaNum` vérifie si le caractère est une lettre ou un chiffre.
+
+`isPrint` vérifie si le caractère est affichable. Les caractères de contrôle,
+par exemple, ne le sont pas.
+
+`isDigit` vérifie si le caractère est un chiffre.
+
+`isOctDigit` vérifie si le caractère est un chiffre octal.
+
+`isHexDigit` vérifie si le caractère est un chiffre hexadécimal.
+
+`isLetter` vérifie si le caractère est une lettre.
+
+`isMark` vérifie les caractères Unicode de marques. Ce sont des caractères qui
+se combinent au précédent pour créer des caractères accentués. Utile pour nous
+français.
+
+`isNumber` vérifie si un caractère est numérique.
+
+`isPunctuation` vérifie si le caractère est un caractère de ponctuation.
+
+`isSymbol` vérifie si le caractère est un symbole mathématique ou monétaire.
+
+`isSeparator` vérifie les espaces et séparateurs Unicode.
+
+`isAscii` vérifie si un caractère fait partie des 128 premiers caractères
+Unicode.
+
+`isLatin1` vérifie si le code fait partie des 256 premiers caractères Unicode.
+
+`isAsciiUpper` vérifie si c'est un caractère ASCII majuscule.
+
+`isAsciiLower` vérifie si c'est un caractère ASCII minuscule.
+
+Tous ces prédicats ont pour signature `Char -> Bool`. La plupart du temps, vous
+les utiliserez pour filtrer des chaînes de caractères. Par exemple, disons
+qu'on écrive un programme qui prend un nom d'utilisateur, et que ce nom doit
+être composé seulement de caractères alphanumériques. On peut utiliser la
+fonction `all` de `Data.List` en combinaison avec les prédicats de `Data.Char`
+pour vérifier la validité du nom de l'utilisateur.
+
+> ghci> all isAlphaNum "bobby283"
+> True
+> ghci> all isAlphaNum "eddy the fish!"
+> False
+
+Cool ! Au cas où vous auriez oublié, `all` prend un prédicat et retourne `True`
+seulement si tous les éléments de la liste valident ce prédicat.
+
+On peut aussi utiliser `isSpace` pour simuler la fonction `words` de
+`Data.List`.
+
+> ghci> words "hey guys its me"
+> ["hey","guys","its","me"]
+> ghci> groupBy ((==) `on` isSpace) "hey guys its me"
+> ["hey"," ","guys"," ","its"," ","me"]
+> ghci>
+
+Hmmm... ça marche à peu près comme `words`, mais il nous reste les éléments qui
+ne contiennent que des espaces. Que devrions-nous faire ? Je sais, filtrons ces
+importuns !
+
+> ghci> filter (not . any isSpace) . groupBy ((==) `on` isSpace) $ "hey guys its me"
+> ["hey","guys","its","me"]
+
+Ah !
+
+Le module `Data.Char` exporte également un type de donnée similaire à
+`Ordering`. `Ordering` peut prendre pour valeur `LT`, `EQ` ou `GT`. C'est une
+sorte d'énumération. Cela décrit les éventualités du résultat d'une
+comparaison. Le type `GeneralCategory` est aussi une énumération. Il décrit les
+différentes catégories auxquelles un caractère peut appartenir. La fonction
+principale retournant la catégorie d'un caractère est `generalCategory`. Son
+type est `generalCategory :: Char -> GeneralCategory`. Il y a environ 31
+catégories, donc on ne va pas les lister ici, mais jouons un peu avec la
+fonction.
+
+> ghci> generalCategory ' '
+> Space
+> ghci> generalCategory 'A'
+> UppercaseLetter
+> ghci> generalCategory 'a'
+> LowercaseLetter
+> ghci> generalCategory '.'
+> OtherPunctuation
+> ghci> generalCategory '9'
+> DecimalNumber
+> ghci> map generalCategory " \t\nA9?|"
+> [Space,Control,Control,UppercaseLetter,DecimalNumber,OtherPunctuation,MathSymbol]
+
+Puisque le type `GeneralCategory` est membre de la classe `Eq`, on peut aussi
+écrire des choses comme `generalCategory c == Space`.
+
+`toUpper` convertit un caractère minuscule en majuscule. Les espaces, nombres
+et autres restent inchangés.
+
+`toLower` convertit un caractère majuscule en minuscule.
+
+`toTitle` convertit un caractère en casse de titre. Pour la plupart des
+caractères, la casse de titre est majuscule.
+
+`digitToInt` convertit un caractère en un `Int`. Pour réussir, le caractère
+doit être dans les intervalles `'0'..'9'`, `'a'..'f'` ou `'A'..'F'`.
+
+> ghci> map digitToInt "34538"
+> [3,4,5,3,8]
+> ghci> map digitToInt "FF85AB"
+> [15,15,8,5,10,11]
+
+`intToDigit` est la fonction inverse de `digitToInt`. Elle prend un `Int`
+compris dans `0..15` et le convertit en caractère minuscule.
+
+> ghci> intToDigit 15
+> 'f'
+> ghci> intToDigit 5
+> '5'
+
+Les fonctions `ord` et `chr` convertissent un caractère vers sa valeur
+numérique et vice versa.
+
+> ghci> ord 'a'
+> 97
+> ghci> chr 97
+> 'a'
+> ghci> map ord "abcdefgh"
+> [97,98,99,100,101,102,103,104]
+
+La différence entre les valeurs `ord` de deux caractères correspond à leur
+espacement dans la table Unicode.
+
+Le chiffre de César est une méthode primitive d'encodage de messages à base de
+décalage de chaque caractère d'un nombre fixé de positions, par rapport à
+l'alphabet. On peut facilement créer un chiffre de César nous-mêmes, sans se
+restreindre à l'alphabet.
+
+> encode :: Int -> String -> String
+> encode shift msg =
+>     let ords = map ord msg
+>         shifted = map (+ shift) ords
+>     in  map chr shifted
+
+Ici, on convertit d'abord la chaîne de caractères en une liste de nombres.
+Puis, on ajoute le décalage à chacun des nombres, avant de reconvertir cette
+liste de nombres en caractères. Si vous êtes un cowboy de la composition, vous
+pouvez écrire le corps de cette fonction comme `map (chr . (+ shift) . ord)
+msg`. Essayons d'encoder quelques messages.
+
+> ghci> encode 3 "Heeeeey"
+> "Khhhhh|"
+> ghci> encode 4 "Heeeeey"
+> "Liiiii}"
+> ghci> encode 1 "abcd"
+> "bcde"
+> ghci> encode 5 "Marry Christmas! Ho ho ho!"
+> "Rfww~%Hmwnxyrfx&%Mt%mt%mt&"
+
+C'est effectivement encodé. Décoder ces messages revient simplement à décaler
+les nombres d'autant dans le sens contraire.
+
+> decode :: Int -> String -> String
+> decode shift msg = encode (negate shift) msg
+
+> ghci> encode 3 "Im a little teapot"
+> "Lp#d#olwwoh#whdsrw"
+> ghci> decode 3 "Lp#d#olwwoh#whdsrw"
+> "Im a little teapot"
+> ghci> decode 5 . encode 5 $ "This is a sentence"
+> "This is a sentence"
+
+Data.Map
+--------
+
+Les listes associatives (ou dictionnaires) sont des listes utilisées pour
+stocker des paires clé-valeur, où l'ordre n'est pas important. Par exemple, on
+peut utiliser une liste associative pour stocker des numéros de téléphone, où
+les numéros de téléphone seraient les valeurs, et les noms des personnes les
+clés. On se fiche de l'ordre dans lequel c'est rangé, on souhaite seulement
+pouvoir récupérer le bon numéro de téléphone pour une personne donnée.
+
+La façon la plus évidente de représenter des listes associatives en Haskell est
+sous forme de listes de paires. La première composante de la paire serait la
+clé, la seconde serait la valeur. Voici un exemple de liste associative de
+numéros de téléphone :
+
+> phoneBook =
+>     [("betty","555-2938")
+>     ,("bonnie","452-2928")
+>     ,("patsy","493-2928")
+>     ,("lucille","205-2928")
+>     ,("wendy","939-8282")
+>     ,("penny","853-2492")
+>     ]
+
+Malgré cette indentation bizarre, c'est bien une liste de paires de chaînes de
+caractères. L'opération la plus courante associée aux listes associatives est
+la recherche d'une valeur par sa clé. Créons une fonction qui trouve une valeur
+à partir d'une clé.
+
+> findKey :: (Eq k) => k -> [(k,v)] -> v
+> findKey key xs = snd . head . filter (\(k,v) -> key == k) $ xs
+
+Plutôt simple. La fonction prend une clé, une liste, filtre la liste de façon à
+ce que seules les clés correspondantes ne restent, prend la première paire
+clé-valeur, et en retourne la valeur. Mais que se passe-t-il si la clé que l'on
+cherche n'est pas dans la liste ? Hmmm. Ici, si la clé n'est pas dans la liste,
+on va essayer de prendre la tête d'une liste vide, ce qui génère une erreur à
+l'exécution. On ne devrait pas laisser notre programme planter si facilement,
+utilisons donc un type de données `Maybe`. Si l'on ne trouve pas la clé, on
+retourne `Nothing`. Si l'on trouve quelque chose, on retourne `Just something`,
+où *something* sera la valeur correspondant à la clé.
+
+> findKey :: (Eq k) => k -> [(k,v)] -> Maybe v
+> findKey key [] = Nothing
+> findKey key ((k,v):xs) = if key == k
+>                             then Just v
+>                             else findKey key xs
+
+Regardez la déclaration de type. Elle prend une clé qui dispose d'un test
+d'égalité, une liste associative, et retourne éventuellement une valeur. Ça a
+l'air correct.
+
+Ceci est un cas d'école de fonction récursive opérant sur une liste. Cas de
+base, découpage de la liste en queue et tête, appels récursifs, c'est tout ce
+qu'il se passe. C'est le motif classique du pli, implémentons-le donc comme un
+pli.
+
+> findKey :: (Eq k) => k -> [(k,v)] -> Maybe v
+> findKey key = foldr (\(k,v) acc -> if key == k then Just v else acc) Nothing
+
+Note : il est généralement mieux d'utiliser des plis pour effectuer de la
+récursivité standard sur les listes plutôt que d'écrire explicitement la
+récursivité, car c'est plus simple à lire et identifier. Tout le monde connaît
+les plis et savent les identifier lorsqu'ils voient un appel à `foldr`, mais ça
+leur prendre plus de temps de déchiffrer une récursivité explicite.
+
+> ghci> findKey "penny" phoneBook
+> Just "853-2492"
+> ghci> findKey "betty" phoneBook
+> Just "555-2938"
+> ghci> findKey "wilma" phoneBook
+> Nothing
+
+Ça fonctionne comme un charme ! Si on a le numéro de téléphone de cette fille,
+on récupère `Just` le numéro, sinon, on récupère `Nothing`.
+
+On vient juste d'implémenter la fonction `lookup` de `Data.List`. Si l'on veut
+trouver la valeur correspondant à une clé, on doit traverser la liste jusqu'à
+ce qu'on le trouve. Le module `Data.Map` offre des listes associatives qui sont
+beaucoup plus rapides (car elles sont implémentées à l'aide d'arbres) et
+fournit également un paquet de fonctions utiles. À partir de maintenant, nous
+dirons qu'on travaille sur des maps plutôt que des listes associatives.
+
+`Data.Map` exporte des fonctions qui collisionnent avec le `Prelude` et
+`Data.List`, donc on l'importe qualifié.
+
+> import qualified Data.Map as Map
+
+Placez cette ligne dans un script et chargez-le dans GHCi.
+
+Allons à présent voir ce que `Data.Map` a en magasin pour nous ! Voilà la liste
+des fonctions.
+
+`fromList` prend une liste associative (sous forme de liste) et retourne une
+map avec les mêmes associations.
+
+> ghci> Map.fromList [("betty","555-2938"),("bonnie","452-2928"),("lucille","205-2928")]
+> fromList [("betty","555-2938"),("bonnie","452-2928"),("lucille","205-2928")]
+> ghci> Map.fromList [(1,2),(3,4),(3,2),(5,5)]
+> fromList [(1,2),(3,2),(5,5)]
+
+S'il y a des clés en doublon dans la liste original, les doublons sont ignorés.
+Voici la signature de type de `fromList` :
+
+> Map.fromList :: (Ord k) => [(k, v)] -> Map.Map k v
+
+Elle indique qu'elle prend une liste de paires `k` et `v` et retourne une map
+qui mappe des clés de type `k` sur des valeurs de type `v`. Remarquez que
+lorsqu'on faisait des listes associatives sous forme de liste, on avait juste
+besoin de l'égalité sur les clés (leur type appartenait à `Eq`), mais à présent
+elles doivent être ordonnables. C'est une contrainte essentielle pour le module
+`Data.Map`. Il a besoin de pouvoir ordonner les clés afin de les arranger en
+arbre.
+
+Vous devriez toujours utiliser `Data.Map` pour associer des clés-valeurs, à
+moins que vous ayez des clés qui ne sont pas membre d'`Ord`.
+
+`empty` représente une map vide. Elle ne prend pas d'argument, et retourne une
+map vide.
+
+> ghci> Map.empty
+> fromList []
+
+`insert` prends une clé, une valeur et une map, et retourne une nouvelle map
+identique à l'ancienne, avec en plus la nouvelle clé-valeur insérée.
+
+> ghci> Map.empty
+> fromList []
+> ghci> Map.insert 3 100 Map.empty
+> fromList [(3,100)]
+> ghci> Map.insert 5 600 (Map.insert 4 200 ( Map.insert 3 100  Map.empty))
+> fromList [(3,100),(4,200),(5,600)]
+> ghci> Map.insert 5 600 . Map.insert 4 200 . Map.insert 3 100 $ Map.empty
+> fromList [(3,100),(4,200),(5,600)]
+
+On peut implémenter notre propre `fromList` en utilisant la map vide, `insert`
+et un pli. Observez :
+
+> fromList' :: (Ord k) => [(k,v)] -> Map.Map k v
+> fromList' = foldr (\(k,v) acc -> Map.insert k v acc) Map.empty
+
+C'est un pli plutôt simple. On commence avec la map vide, et on la plie depuis
+la droite, en insérant les paires clé-valeur dans l'accumulateur tout du long.
+
+`null` vérifie si une map est vide.
+
+> ghci> Map.null Map.empty
+> True
+> ghci> Map.null $ Map.fromList [(2,3),(5,5)]
+> False
+
+`size` retourne la taille d'une map.
+
+> ghci> Map.size Map.empty
+> 0
+> ghci> Map.size $ Map.fromList [(2,4),(3,3),(4,2),(5,4),(6,4)]
+> 5
+
+`singleton` prend une clé et une valeur, et crée une map qui contient
+uniquement cette association.
+
+> ghci> Map.singleton 3 9
+> fromList [(3,9)]
+> ghci> Map.insert 5 9 $ Map.singleton 3 9
+> fromList [(3,9),(5,9)]
+
+`lookup` fonction comme `lookup` de `Data.List`, mais opère sur des maps. Elle
+retourne `Just something` si elle trouve quelque chose, `Nothing` sinon.
+
+`member` est un prédicat qui prend une clé, une map, et indique si la clé est
+dans la map.
+
+> ghci> Map.member 3 $ Map.fromList [(3,6),(4,3),(6,9)]
+> True
+> ghci> Map.member 3 $ Map.fromList [(2,5),(4,5)]
+> False
+
+`map` et `filter` fonctionnent comme leur équivalent.
+
+> ghci> Map.map (*100) $ Map.fromList [(1,1),(2,4),(3,9)]
+> fromList [(1,100),(2,400),(3,900)]
+> ghci> Map.filter isUpper $ Map.fromList [(1,'a'),(2,'A'),(3,'b'),(4,'B')]
+> fromList [(2,'A'),(4,'B')]
+
+`toList` est l'inverse de `fromList`.
+
+> ghci> Map.toList . Map.insert 9 2 $ Map.singleton 4 3
+> [(4,3),(9,2)]
+
+`keys` et `elems` retournent des listes de clés et de valeurs respectivement.
+`keys` est l'équivalent de `map fst . Map.toList`, et `elems` l'équivalent de
+`map snd . Map.toList`.
+
+`fromListWith` est une cool petite fonction. Elle agit un peu comme `fromList`,
+mais elle ne jette pas les clés en double, et utilise une fonction passée en
+paramètre pour décider quoi faire d'elles. Disons qu'une fille peut avoir
+plusieurs numéros de téléphone, et qu'on a une liste associative comme celle-ci
+:
+
+> phoneBook =
+>     [("betty","555-2938")
+>     ,("betty","342-2492")
+>     ,("bonnie","452-2928")
+>     ,("patsy","493-2928")
+>     ,("patsy","943-2929")
+>     ,("patsy","827-9162")
+>     ,("lucille","205-2928")
+>     ,("wendy","939-8282")
+>     ,("penny","853-2492")
+>     ,("penny","555-2111")
+>     ]
+
+Maintenant, si on utilise seulement `fromList` pour transformer cela en map, on
+va perdre quelques numéros ! Voilà ce qu'on va faire :
+
+> phoneBookToMap :: (Ord k) => [(k, String)] -> Map.Map k String
+> phoneBookToMap xs = Map.fromListWith (\number1 number2 -> number1 ++ ", " ++ number2) xs
+
+> ghci> Map.lookup "patsy" $ phoneBookToMap phoneBook
+> "827-9162, 943-2929, 493-2928"
+> ghci> Map.lookup "wendy" $ phoneBookToMap phoneBook
+> "939-8282"
+> ghci> Map.lookup "betty" $ phoneBookToMap phoneBook
+> "342-2492, 555-2938"
+
+Si une clé en double est trouvée, la fonction qu'on passe est utilisée pour
+combiner les valeurs en une nouvelle valeur. On aurait aussi pu transformer
+toutes les valeurs de la liste en listes singleton, puis utiliser `(++)` comme
+combinateur.
+
+> phoneBookToMap :: (Ord k) => [(k, a)] -> Map.Map k [a]
+> phoneBookToMap xs = Map.fromListWith (++) $ map (\(k,v) -> (k,[v])) xs
+
+> ghci> Map.lookup "patsy" $ phoneBookToMap phoneBook
+> ["827-9162","943-2929","493-2928"]
+
+Plutôt chic ! Un autre cas d'utilisation est celui où l'on veut créer une map à
+partir d'une liste d'association, et lors d'un doublon, l'on souhaite conserver
+la plus grande des valeurs par exemple.
+
+> ghci> Map.fromListWith max [(2,3),(2,5),(2,100),(3,29),(3,22),(3,11),(4,22),(4,15)]
+> fromList [(2,100),(3,29),(4,22)]
+
+On pourrait tout aussi bien choisir d'additionner des valeurs de même clé.
+
+> ghci> Map.fromListWith (+) [(2,3),(2,5),(2,100),(3,29),(3,22),(3,11),(4,22),(4,15)]
+> fromList [(2,108),(3,62),(4,37)]
+
+`insertWith` est à `insert` ce que `fromListWith` est à `fromList`. Elle insère
+une paire clé-valeur dans la map, et si la map contient déjà cette clé, utilise
+la fonction passée afin de déterminer quoi faire.
+
+> ghci> Map.insertWith (+) 3 100 $ Map.fromList [(3,4),(5,103),(6,339)]  
+> fromList [(3,104),(5,103),(6,339)]  
+
+Ce n'était qu'un aperçu de `Data.Map`. Vous pouvez voir la liste complète des
+fonctions dans la
+[documentaiton](http://www.haskell.org/ghc/docs/latest/html/libraries/containers/Data-Map.html).
+
+Data.Set
+--------
