@@ -64,15 +64,15 @@ Comme vous le voyez, le filtrage par motif va bien de pair avec la récursivité
 ! La plupart des langages impératifs ne proposent pas de filtrage de motif,
 donc vous êtes obligé d'utiliser plein de *if else* pour tester les cas de
 base. Ici, on les met simplement dans des motifs. La première condition dit :
-si la liste est vide, plante ! Raisonnable, quel est le maximum d'une liste
-vide ? Je ne sais pas. Le deuxième motif est aussi un cas de base. Il dit que
-pour une liste singleton, il suffit de retourner son unique élément.
+si la liste est vide, plante ! Raisonnable, après tout quel est le maximum
+d'une liste vide ? Je ne sais pas. Le deuxième motif est aussi un cas de base.
+Il dit que pour une liste singleton, il suffit de retourner son unique élément.
 
 Maintenant, le troisième motif est là où se passe l'action. On utilise du
-filtrage de motif pour séparer la tête de la liste de sa queue. C'est un
-idiome usuel pour faire de la récursivité sur des listes, donc habituez-vous.
-On utilise une liaison *where* pour définir `maxTail` comme le maximum du reste
-de la liste. Ensuite, on vérifie si la tête est plus grande que le maximum du
+filtrage de motif pour séparer la tête et la queue de la liste. C'est un idiome
+usuel pour faire de la récursivité sur des listes, donc habituez-vous.  On
+utilise une liaison *where* pour définir `maxTail` comme le maximum du reste de
+la liste. Ensuite, on vérifie si la tête est plus grande que le maximum du
 reste de la liste. Si c'est le cas, la tête est retournée. Sinon, le maximum du
 reste de la liste est retourné.
 
@@ -87,7 +87,7 @@ C'est un cas de base, on retourne donc `1`. Enfin ! En remontant d'une étape,
 présent que le maximum de `[5, 1]` est `5`. Une étape plus haut, nous
 comparions `2` au maximum de `[5, 1]`, qui est `5`, et on choisit donc `5`.
 
-Une manière encore plus claire d'écrire cette fonction est d'utilise `max`. Si
+Une manière encore plus claire d'écrire cette fonction est d'utiliser `max`. Si
 vous vous souvenez, `max` est une fonction qui prend deux nombres et retourne
 le plus grand d'entre eux. Ici, nous pourrions réécrire `maximum'` en utilisant
 `max` :
@@ -120,7 +120,7 @@ négatifs, sinon ça ne veut pas dire grand chose.
 Nous avons utilisé des gardes ici plutôt que des motifs car on teste une
 condition booléenne. Si `n` est plus petit que 0, retourner la liste vide.
 Sinon, retourner une liste qui a `x` comme premier élément, et ensuite `x`
-répliqué n-1 fois pour la queue. À force, the partie en `(n-1)` va amener notre
+répliqué n-1 fois pour la queue. À force, la partie en `(n-1)` va amener notre
 fonction à atteindre son cas de base.
 
 Note : `Num` n'est pas une sous-classe d'`Ord`. Cela signifie qu'un nombre n'a
@@ -128,11 +128,12 @@ pas forcément besoin d'être ordonnable. C'est pourquoi on doit spécifier à l
 fois `Num` et `Ord` en contraintes de classe pour pouvoir faire à la fois des
 additions, des soustractions et des comparaisons.
 
-Maintenant, implémentons `take`. Elle prend un certain d'éléments d'une liste.
-Par exemple, `take 3 [5, 4, 3, 2, 1]` retourne `[5, 4, 3]`. Si on essaie de
-prendre 0 ou moins éléments d'une liste, on récupère une liste vide. Également,
-si l'ont essaie de prendre quoi que ce soit d'une liste vide, on récupère une
-liste vide. Remarquez que ce sont nos deux cas de base. Écrivons tout cela :
+Maintenant, implémentons `take`. Elle prend un certain nombre d'éléments d'une
+liste.  Par exemple, `take 3 [5, 4, 3, 2, 1]` retourne `[5, 4, 3]`. Si on
+essaie de prendre 0 ou moins éléments d'une liste, on récupère une liste vide.
+Également, si l'ont essaie de prendre quoi que ce soit d'une liste vide, on
+récupère une liste vide. Remarquez que ce sont nos deux cas de base. Écrivons
+tout cela :
 
 > take' :: (Num i, Ord i) => i -> [a] -> [a]
 > take' n _
@@ -155,7 +156,8 @@ l'évaluation de `take 3 [4, 3, 2, 1]`.
 `reverse` renverse une liste. Pensez au cas de base. Quel est-il ? Allons…
 c'est la liste vide ! Une liste vide renversée est la liste vide elle-même. Ok.
 Et le reste ? Eh bien, on peut dire que si l'on coupe une liste en tête et
-queue, la liste renversée est égal à la queue renversée, avec la tête à la fin.
+queue, la liste renversée est égale à la queue renversée, avec la tête à la
+fin.
 
 > reverse' :: [a] -> [a]
 > reverse' [] = []
@@ -164,11 +166,11 @@ queue, la liste renversée est égal à la queue renversée, avec la tête à la
 Et voilà !
 
 Puisqu'Haskell supporte des listes infinies, notre récursivité n'a pas vraiment
-besoin de cas de base. S'il n'en a pas, il va soit continuer à s'agiter sur un
-calcul à l'infini, ou produire une structure de donnée infinie, comme une liste
-infinie. La chose bien à propos des listes infinies, c'est qu'on peut les
-couper où on veut. `repeat` prend un élément et retourne une liste infinie qui
-a cet élément uniquement. Une implémentation récursive est très simple,
+besoin de cas de base. Si elle n'en a pas, elle va soit continuer à s'agiter
+sur un calcul à l'infini, ou produire une structure de donnée infinie, comme
+une liste infinie. La chose bien à propos des listes infinies, c'est qu'on peut
+les couper où on veut. `repeat` prend un élément et retourne une liste infinie
+qui a cet élément uniquement. Une implémentation récursive est très simple,
 regardez.
 
 > repeat' :: a -> [a]
@@ -228,10 +230,10 @@ que tout le monde le fait déjà pour montrer comme Haskell est élégant.
 Donc, la signature de type sera `quicksort :: (Ord a) => [a] -> [a]`. Pas de
 surprise ici. Le cas de base ? La liste vide, bien sûr. Une liste vide triée
 est une liste vide. Maintenant, voilà l'algorithme : **une liste triée est une
-liste pour laquelle on a pris toutes les valeurs plus petites que la tête,
-qu'on les a triés, et placés à l'avant, puis on a mis la tête, et à la suite on
-a placé tous les éléments plus grands que la tête, après les avoir aussi
-triés"**. Remarquez comme on a dis deux fois *trier* dans la définition, donc
+liste pour laquelle on a pris tous les éléments plus petits que la tête, qu'on
+les a triés, et placés à l'avant, puis on a mis la tête, et à la suite on a
+placé tous les éléments plus grands que la tête, après les avoir aussi
+triés"**. Remarquez comme on a dit deux fois *trier* dans la définition, donc
 il y aura probablement deux appels récursifs ! Remarquez aussi qu'on a utilisé
 le verbe être pour définir l'algorithme, et pas une suite de *faire ceci, puis
 faire cela, ensuite faire ceci…* C'est la beauté de la programmation
@@ -287,9 +289,9 @@ Nous avons fait pas mal de récursivité et, comme vous l'avez probablement
 remarqué, il y a un motif sous-jacent. Généralement, vous définissez des cas de
 base, et ensuite une fonction qui fait quelque chose avec certains éléments et
 rappelle cette fonction sur le reste. Peu importe que ce soit une liste, un
-arbre ou un autre structure de données. Une somme est le premier élément, plus
+arbre ou une autre structure de données. Une somme est le premier élément, plus
 la somme du reste de la liste. Un produit est le premier élément, multiplié par
-le produit du reste de la liste. La longueur est un, plus la longueur du reste
+le produit du reste de la liste. La longueur est 1, plus la longueur du reste
 de la liste. Et cætera, et cætera…
 
 Bien sûr, il y a aussi les cas de base. Généralement, le cas de base est un
@@ -298,7 +300,7 @@ plus souvent c'est la liste vide. Si vous traitez des arbres, ce sera
 généralement une feuille, i.e. un noeud qui n'a pas d'enfants.
 
 C'est la même chose pour traiter des nombres récursivement. Généralement, on a
-un nombre et une fonction appliqué à une modification de ce nombre. La
+un nombre et une fonction appliquée à une modification de ce nombre. La
 factorielle vue plus tôt était le produit d'un nombre et de la factorielle de
 ce nombre moins un. Une telle application récursive n'a pas de sens pour zéro,
 parce que les factorielles sont seulement définies pour les entiers positifs.
@@ -309,8 +311,8 @@ nombre. Lorsqu'on somme des listes, on définit la somme de la liste vide comme
 la liste vide et l'élément neutre est la liste vide également, car si vous
 rajoutez une liste vide à une autre liste, vous récupérez cette dernière.
 
-Donc, lorsque vous essayez de penser de manière récursive à un problème à
-résoudre, essayez de vous demander quand est-ce qu'une solution récursive ne
+Donc, lorsque vous essayez de penser à une solution récursive pour un problème
+à résoudre, essayez de vous demander quand est-ce qu'une solution récursive ne
 conviendra pas et d'utiliser cela comme cas de base. Pensez aux éléments
 neutres et demandez-vous si vous aurez à déconstruire les paramètres de la
 fonction (par exemple, les listes sont généralement séparées en tête et queue
