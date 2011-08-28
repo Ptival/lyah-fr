@@ -18,7 +18,7 @@ Eh bien, grâce à un détail astucieux ! Toutes nos fonctions qui acceptaient
 *plusieurs paramètres* jusqu'à présent étaient des **fonctions curryfiées**.
 Qu'est-ce que cela signifie ? Vous comprendrez mieux avec un exemple. Prenons
 cette bonne vieille fonction `max`. Elle a l'air de prendre deux paramètres, et
-de retourner le plus grand des deux. Faire `max 4 5` créer une fonction qui
+de retourner le plus grand des deux. Faire `max 4 5` crée une fonction qui
 prend un paramètre, et retourne soit `4`, soit ce paramètre. On applique alors
 cette fonction à la valeur `5` pour produire le résultat attendu. On ne dirait
 pas comme ça, mais c'est en fait assez cool. Les deux appels suivants sont
@@ -40,7 +40,7 @@ fonction sont séparés par des flèches.
 En quoi cela nous aide-t-il ? Pour faire simple, si on appelle une fonction
 avec trop peu de paramètres, on obtient une fonction **appliquée
 partiellement**, c'est à dire une fonction qui prend autant de paramètres qu'on
-en a oublié. Utiliser l'application partielle (appeler une fonction avec trop
+en a oubliés. Utiliser l'application partielle (appeler une fonction avec trop
 peu de paramètres) est un moyen grâcieux de créer des fonctions à la volée et
 de les passer à d'autres fonctions pour qu'elle les complète avec d'autres
 données.
@@ -57,9 +57,9 @@ Ensuite, `5` est appliqué à cette nouvelle fonction, ce qui crée une fonction
 qui prend un paramètre et le multiplie par 15. `9` est appliqué à cette
 dernière et le résultat est un truc comme 135. Rappelez-vous que le type de
 cette fonction peut être écrit comme `multThree :: (Num a) => a -> (a -> (a ->
-a))`. La chose avant le `->` est l'unique paramètre de la fonction, et la chose
+a))`. La chose avant `->` est l'unique paramètre de la fonction, et la chose
 après est son unique type retourné. Donc, notre fonction prend un `a` et
-retourne une fonction qui a pour type `(Num a) => a -> (a -> a)`. De façon
+retourne une fonction qui a pour type `(Num a) => a -> (a -> a)`.  De façon
 similaire, cette fonction prend un `a` et retourne une fonction qui a pour type
 `(Num a) => a -> a`. Et cette fonction, prend un `a` et retourne un `a`.
 Regardez ça :
@@ -71,9 +71,9 @@ Regardez ça :
 > ghci> multWithEighteen 10
 > 180
 
-En appelant des fonctions avec trop peu de paramètres, pour dire, on crée de
-nouvelles fonctions à la volée. Comment créer une fonction qui prend un nombre,
-et le compare à `100` ? Comme ça :
+En appelant des fonctions avec trop peu de paramètres, en quelque sorte, on
+crée de nouvelles fonctions à la volée. Comment créer une fonction qui prend un
+nombre, et le compare à `100` ? Comme ça :
 
 > compareWithHundred :: (Num a, Ord a) => a -> Ordering
 > compareWithHundred x = compare 100 x
@@ -98,7 +98,7 @@ l'application partielle, c'est très important !
 
 Les fonctions infixes peuvent aussi être appliquées partiellement à l'aide de
 sections. Sectionner une fonction infixe revient à l'entourer de parenthèses et
-à lui fournir un paramètre sur l'un de ses côtés. Cela créer une fonction qui
+à lui fournir un paramètre sur l'un de ses côtés. Cela crée une fonction qui
 attend l'autre paramètre et l'applique du côté où il lui manquait une opérande.
 Une fonction insultante de trivialité :
 
@@ -159,10 +159,10 @@ peut très bien être de type `Int -> Int` ou `String -> String` ou quoi que ce
 soit. Mais alors, le second paramètre doit être du type correspondant.
 
 Note : à partir de maintenant, nous dirons qu'une fonction prend plusieurs
-paramètres malgré le fait qu'elles ne prennent en réalité qu'un paramètre et
-retournent des fonctions appliquées partiellement jusqu'à finalement arriver à
-une valeur solide. Donc, pour simplifier, on dira que `a -> a -> a` prend deux
-paramètres, bien qu'on sache ce qui se trame en réalité sous la couverture.
+paramètres malgré le fait qu'elle ne prend en réalité qu'un paramètre et
+retourne une fonction appliquée partiellement jusqu'à finalement arriver à une
+valeur solide. Donc, pour simplifier, on dira que `a -> a -> a` prend deux
+paramètres, bien que l'on sache ce qui se trame en réalité sous la couverture.
 
 Le corps de la fonction est plutôt simple. On utilise le paramètre `f` comme
 une fonction, on applique cette fonction à `x` en les séparant par un espace,
@@ -180,9 +180,9 @@ fonction :
 > ghci> applyTwice (3:) [1]
 > [3,3,1]
 
-L'application partielle de fonction est évidemment géniale et trè utile. Si
+L'application partielle de fonction est évidemment géniale et très utile. Si
 notre fonction a besoin d'une fonction qui prend un paramètre, on peut lui
-passer une autre fonction qu'on aura partiellement appliquée jusqu'à ce qu'il
+passer une autre fonction, qu'on aura partiellement appliquée jusqu'à ce qu'il
 ne lui manque plus qu'un paramètre.
 
 Maintenant, nous allons profiter de la programmation d'ordre supérieur pour
@@ -198,7 +198,7 @@ implémentation :
 
 Regardez la déclaration de type. Le premier paramètre est une fonction qui
 attend deux choses pour en produire une troisième. Elles n'ont pas à avoir le
-même type, mais elles peuvent tout de même. Les deuxième et troisième
+même type, mais elles le peuvent tout de même. Les deuxième et troisième
 paramètres sont des listes. Le résultat est aussi une liste. La première liste
 est une liste de `a`, parce que la fonction de jointure attend un `a` en
 premier argument. La deuxième doit être une liste de `b` parce que la fonction
@@ -214,8 +214,8 @@ base sont les mêmes, seulement il y a un argument de plus, la fonction de
 jointure, mais puisqu'on ne va pas s'en servir ici, on met juste un `_`. Le
 corps de la fonction pour le dernier motif est également similaire à `zip`,
 seulement à la place de faire `(x, y)`, elle fait `f x y`. Une même fonction
-d'ordre supérieur peut être utilisée pour une multitude de différente tâches si
-elle est assez générale. Voici une petite démonstration de toutes les
+d'ordre supérieur peut être utilisée pour une multitude de différentes tâches
+si elle est assez générale. Voici une petite démonstration de toutes les
 différentes choses que `zipWith'` peut faire :
 
 > ghci> zipWith' (+) [4,2,5,6] [2,6,2,3]
@@ -229,20 +229,20 @@ différentes choses que `zipWith'` peut faire :
 > ghci> zipWith' (zipWith' (*)) [[1,2,3],[3,5,6],[2,3,4]] [[3,2,2],[3,4,5],[5,4,3]]
 > [[3,4,6],[9,20,30],[10,12,12]]
 
-Comme vous le voyez, une même fonction d'ordre supérieur peut être utilisé très
-flexiblement à plusieurs usages. La programmation impérative utilise
+Comme vous le voyez, une même fonction d'ordre supérieur peut être utilisée
+très flexiblement à plusieurs usages. La programmation impérative utilise
 généralement des trucs comme des boucles *for*, des boucles *while*, des
 affectations de variables, des vérifications de l'état courant, etc. pour
-arriver à un comportement, puis l'encapsulent dans une interface, comme une
+arriver à un comportement, puis l'encapsule dans une interface, comme une
 fonction. La programmation fonctionnelle utilise des fonctions d'ordre
 supérieur pour abstraire des motifs récurrents, comme examiner deux listes
 paire à paire et faire quelque chose avec ces paires, ou récupérer un ensemble
 de solutions et éliminer celles qui ne vous intéressent pas.
 
 Nous allons encore implémenter une fonction de la bibliothèque standard,
-`flip`. Elle prend une fonction et retourne une fonction qui est comme notre
-fonction, mais donc les deux premiers arguments ont échangé leur place. On peut
-l'implémenter ainsi :
+`flip`. Elle prend une fonction et retourne une fonction qui est comme la
+fonction initiale, mais dont les deux premiers arguments ont échangé leur
+place. On peut l'implémenter ainsi :
 
 > flip' :: (a -> b -> c) -> (b -> a -> c)
 > flip' f = g
@@ -261,7 +261,7 @@ simplement.
 > flip' :: (a -> b -> c) -> b -> a -> c
 > flip' f y x = f x y
 
-Ici, on profite du fait que les fonctions sont curryfiées. Quand on appelle
+Ici, on profite du fait que les fonctions soient curryfiées. Quand on appelle
 `flip' f` sans les paramètres `y` et `x`, elle retourne une `f` qui prend ces
 deux paramètres et appelle l'originale avec les arguments dans l'ordre inverse.
  Bien que les fonctions retournées ainsi sont généralement passées à d'autres
@@ -289,7 +289,7 @@ La signature dit qu'elle prend une fonction de `a` vers `b`, une liste de `a`,
 et retourne une liste de `b`. Il est intéressant de voir que rien qu'en
 regardant la signature d'une fonction, vous pouvez parfois dire exactement ce
 qu'elle fait. `map` est une de ces fonctions d'ordre supérieur extrèmement
-utile qui peut être utilisé de milliers de façons différentes. La voici en
+utile qui peut être utilisée de milliers de façons différentes. La voici en
 action :
 
 > ghci> map (+3) [1,5,3,1,6]
@@ -306,7 +306,7 @@ action :
 Vous avez probablement remarqué que chacun de ces exemples aurait pu être
 réalisé à l'aide de listes en compréhension. `map (+3) [1, 5, 3, 1, 6]` est
 équivalent à `[x+3 | x <- [1, 5, 3, 1, 6]]`. Cependant, utiliser `map` est
-bien plus lisible dans certains cas ou vous ne faites qu'appliquer une fonction
+bien plus lisible dans certains cas où vous ne faites qu'appliquer une fonction
 à chaque élément de la liste, surtout quand vous mappez un map auquel cas les
 crochets s'entassent de manière déplaisante.
 
@@ -338,12 +338,12 @@ liste. Sinon, il reste dehors. Quelques exemples d'utilisation :
 > "GAYBALLS"
 
 Tout ceci pourrait aussi être fait à base de listes en compréhension avec des
-prédicats. Il n'y a pas de règle pour quand utiliser `map` et `filter` plutôt
-que des listes en compréhension, vous devez juste décider de ce qui est plus
-lisible en fonction du code et du contexte. L'équivalent pour `filter` de
-l'application de plusieurs prédicats dans une liste en compréhension est soit
-en filtrant plusieurs fois d'affilée, soit en fusionnant des prédicats à l'aide
-de `&&`.
+prédicats. Il n'y a pas de règle privilégiant l'utilisation de `map` et
+`filter` à celle des listes en compréhension, vous devez juste décider de ce
+qui est plus lisible en fonction du code et du contexte. L'équivalent pour
+`filter` de l'application de plusieurs prédicats dans une liste en
+compréhension est soit en filtrant plusieurs fois d'affilée, soit en fusionnant
+des prédicats à l'aide de `&&`.
 
 Vous souvenez-vous de la fonction quicksort du [chapitre précédent](TODO) ?
 Nous avions utilisé des listes en compréhension pour filtrer les éléments plus
@@ -356,9 +356,9 @@ petits que le pivot. On peut faire de même avec `filter` :
 >         biggerSorted = quicksort (filter (>x) xs)
 >     in  smallerSorted ++ [x] ++ biggerSorted
 
-Mapper et filtrer sont le marteau et le clou de la boîte à outil de tout
+Mapper et filtrer sont le marteau et le clou de la boîte à outils de tout
 programmeur fonctionnel. Bon, il importe peut que vous utilisiez plutôt `map`
-et `filter` que des listes en compréhension. Souvenez-vous comme nous avions
+et `filter` que des listes en compréhension. Souvenez-vous comment nous avions
 résolu le problème de trouver les triangles rectangles avec un certain
 périmètre. En programmation impérative, nous aurions imbriqué trois boucles,
 dans lequelles nous aurions testé si la combinaison courante correspondait à un
@@ -371,65 +371,66 @@ satisfont votre recherche. Et grâce à la paresse d'Haskell, même si vous mapp
 et filtrez sur une liste plusieurs fois, la liste ne sera traversée qu'une
 seule fois.
 
-Trouvons le **plus grand entier inférieur à 100000 qui soit divisible par
-3829**. Pour cela, filtrons un ensemble de solutions pour lesquelles on sait
-que le résultat s'y trouve.
+Trouvons le **plus grand entier inférieur à 100 000 qui soit divisible par 3
+829**. Pour cela, filtrons un ensemble de solutions pour lesquelles on sait que
+le résultat s'y trouve.
 
 > largestDivisible :: (Integral a) => a
 > largestDivisible = head (filter p [100000,99999..])
 >     where p x = x `mod` 3829 == 0
 
-On crée d'abord une liste de tous les entiers inférieurs à 100000 en
+On crée d'abord une liste de tous les entiers inférieurs à 100 000 en
 décroissant.  Puis, on la filtre par un prédicat, et puisque les nombres sont
 en ordre décroissant, le plus grand d'entre eux sera simplement le premier
-élément de la liste filtrée. On a même pas eu besoin d'une liste finie pour
-démarrer. Encore un signe de la paresse en action. Puisqu'on utilise que la
-tête de la liste filtrée, peu importe qu'elle soit finie ou infinie.
+élément de la liste filtrée. On n'a même pas eu besoin d'une liste finie pour
+démarrer. Encore un signe de la paresse en action. Puisque l'on n'utilise que
+la tête de la liste filtrée, peu importe qu'elle soit finie ou infinie.
 L'évaluation s'arrête dès que la première solution est trouvée.
 
-Maintenant, trouvons la **somme de tous les carrés impairs inférieurs à
-10000**. Mais d'abord, puisqu'on va l'utiliser dans la solution, introduisons
-la fonction `takeWhile`. Elle prend un prédicat et une liste et parcourt cette
-liste depuis le début et retourne tous les éléments tant que le prédicat reste
-vrai. Dès qu'un élément ne satisfait plus le prédicat, elle s'arrête. Si l'on
-voulait le premier mot d'une chaîne comme `"elephants know how to party"`, on
-pourrait faire `takeWhile (/=' ') "elephants know how to party"` et cela
-retournerait `"elephants"`. Ok. La somme des carrés impairs inférieurs à 10000.
-D'abord, on va commencer par mapper `(^2)` sur la liste infinie `[1..]`.
-Ensuite, on va filtrer pour garder les nombres impairs. Puis, on prendra des
-éléments de cette liste tant qu'ils restent inférieurs à 10 000. Enfin, on va
-sommer cette liste. On n'a même pas besoin d'une fonction pour ça, une ligne
-dans GHCi suffit :
+Maintenant, trouvons la **somme de tous les carrés impairs inférieurs à 10
+000**. Mais d'abord, puisqu'on va l'utiliser dans la solution, introduisons la
+fonction `takeWhile`. Elle prend un prédicat et une liste, et parcourt cette
+liste depuis le début en retournant tous les éléments tant que le prédicat
+reste vrai. Dès qu'un élément ne satisfait plus le prédicat, elle s'arrête. Si
+l'on voulait le premier mot d'une chaîne comme `"elephants know how to party"`,
+on pourrait faire `takeWhile (/=' ') "elephants know how to party"` et cela
+retournerait `"elephants"`. Ok. La somme des carrés impairs inférieurs à dix
+mille.  D'abord, on va commencer par mapper `(^2)` sur la liste infinie
+`[1..]`.  Ensuite, on va filtrer pour garder les nombres impairs. Puis, on
+prendra des éléments de cette liste tant qu'ils restent inférieurs à 10 000.
+Enfin, on va sommer cette liste. On n'a même pas besoin d'une fonction pour ça,
+une ligne dans GHCi suffit :
 
 > ghci> sum (takeWhile (<10000) (filter odd (map (^2) [1..])))
 > 166650
 
 Génial ! On commence avec une donnée initiale (la liste infinie de tous les
 entiers naturels) et on mappe par dessus, puis on filtre et on coupe jusqu'à
-avoir ce que l'on désire, et on somme le tout. On aurait pu écrire à base de
-listes en compréhension :
+avoir ce que l'on désire, et on somme le tout. On aurait pu écrire ceci à
+l'aide de listes en compréhension :
 
 > ghci> sum (takeWhile (<10000) [n^2 | n <- [1..], odd (n^2)])
 > 166650
 
-C'est une question de goût à savoir lequel vous préférez. Encore une fois, la
-paresse d'Haskell rend ceci possible. On peut mapper et filtrer une liste
-infinie, puisqu'il ne va pas mapper et filtrer directement, il délaiera ces
-actions. C'est seulement quand on demande à Haskell de nous montrer la somme
-que la fonction `sum` dit à la fonction `takeWhile` qu'elle a besoin de cette
-liste de nombre. `takeWhile` force le filtrage et le mappage, en demandant des
-nombres un par un tant qu'il n'en croise pas un plus grand que 10000.
+C'est une question de goût, à vous de choisir la forme que vous préférez.
+Encore une fois, la paresse d'Haskell rend ceci possible. On peut mapper et
+filtrer une liste infinie, puisqu'il ne va pas mapper et filtrer directement,
+il retardera ces actions. C'est seulement quand on demande à Haskell de nous
+montrer la somme que la fonction `sum` dit à la fonction `takeWhile` qu'elle a
+besoin de cette liste de nombre. `takeWhile` force le filtrage et le mappage,
+en demandant des nombres un par un tant qu'il n'en croise pas un plus grand que
+10000.
 
 Pour notre prochain problème, on va se confronter aux suites de Collatz. On
 prend un entier naturel. Si cet entier est pair, on le divise par deux. S'il
-est impair, on le multiplie par 3 et on ajoute 1 à ça. On prend ce nombre, et
-on recommence, ce qui produit un nouveau nombre, et ainsi de suite. On obtient
+est impair, on le multiplie par 3 puis on ajoute 1. On prend ce nombre, et on
+recommence, ce qui produit un nouveau nombre, et ainsi de suite. On obtient
 donc une chaîne de nombres. On pense que, quel que soit le nombre de départ, la
 chaîne termine, avec pour valeur 1. Si on prend 13, on obtient la suite : *13,
 40, 20, 10, 5, 16, 8, 4, 2, 1*. 13 fois 3 plus 1 vaut 40. 40 divisé par 2 vaut
 20, etc. On voit que la chaîne contient 10 termes.
 
-Maintenant on cherche à savior : **pour tout nombre de départ compris entre 1
+Maintenant on cherche à savoir : **pour tout nombre de départ compris entre 1
 et 100, combien de chaînes ont une longueur supérieure à 15 ?** D'abord, on va
 écrire une fonction qui produit ces chaînes :
 
@@ -449,7 +450,7 @@ récursive assez simple.
 > ghci> chain 30
 > [30,15,46,23,70,35,106,53,160,80,40,20,10,5,16,8,4,2,1]
 
-Yay ! Ca a l'air de marcher correctement. À présent, la fonction qui nous donne
+Yay ! Ça a l'air de marcher correctement. À présent, la fonction qui nous donne
 notre réponse :
 
 > ngChains :: Int
@@ -475,8 +476,8 @@ Pour l'instant, on a seulement mappé des fonctions qui attendent un paramètre
 sur des listes, comme `map (*2) [0..]` pour obtenir des listes de type `(Num a)
 => [a]`, mais on peut aussi faire `map (*) [0..]` sans problème. Ce qui se
 passe ici, c'est que le nombre dans la liste s'applique à la fonction `*`, qui
-a pour type `(Num a) => a -> a -> a`. Appliquer une fonction à un paramètre
-alors qu'elle en attend deux retourne une fonction qui attend encore un
+a pour type `(Num a) => a -> a -> a`. Appliquer une fonction sur un paramètre,
+alors qu'elle en attend deux, retourne une fonction qui attend encore un
 paramètre. Si l'on mappe `*` sur `[0..]`, on obtient en retour une liste de
 fonctions qui attendent chacune un paramètre, donc `(Num a) [a -> a]`. `map (*)
 [0..]` produit une liste comme celle qu'on obtiendrait en écrivant `[(0*),
@@ -496,9 +497,9 @@ Lambdas
 Les lambda expressions sont simplement des fonctions anonymes utilisées
 lorsqu'on a besoin d'une fonction à usage unique. Normalement, on crée une
 lambda uniquement pour la passer à une fonction d'ordre supérieur. Pour créer
-une lambda, on écrit un `\` (parce que ça ressemble à la lettre grecque
+une lambda, on écrit un ` \ ` (parce que ça ressemble à la lettre grecque
 lambda si vous le fixez assez longtemps des yeux) puis les paramètres, séparés
-par des espaces. Après cela vient un `->` puis le corps de la fonction. On
+par des espaces. Après cela vient `->` puis le corps de la fonction. On
 l'entoure généralement de parenthèses, autrement elle s'étend autant que
 possible vers la droite.
 
@@ -607,18 +608,18 @@ Un, deux, trois, test :
 Regardons de près comment ce pli se déroule. `\acc x -> acc + x` est la
 fonction binaire. `0` est la valeur de départ et `xs` la liste à plier.
 D'abord, `0` est utilisé pour `acc` et `3` pour `x`. `0 + 3` retourne `3` et
-devient le nouvel accumulateur, pour ainsi dire. Ensuite, `3` est utilisé comme
+devient, pour ainsi dire, le nouvel accumulateur. Ensuite, `3` est utilisé comme
 accumulateur, et l'élément courant, `5`, résultant en un `8` comme nouvel
 accumulateur. Encore en avant, `8` est l'accumulateur, `2` la valeur courante,
 le nouvel accumulateur est donc `10`. Utilisé avec la valeur courante `1`, il
 produit `11`. Bravo, vous venez d'achever votre premier pli !
 
 Le diagramme professionnel sur la gauche illustre la façon dont le pli se
-déroule, étape par étape (jour après jour !). Le nombre vert-marron est
+déroule, étape par étape (jour après jour !). Le nombre vert kaki est
 l'accumulateur. Vous pouvez voir comme la liste est consommée par la gauche par
-l'accumulateur. Om nom nom nom ! Si on prend en compte le fait que les
-fonctions sont curryfiées, on peut écrire cette implémentation encore plus
-rapidement :
+l'accumulateur. Om nom nom nom ! (NDT : "Miam miam miam !") Si on prend en
+compte le fait que les fonctions sont curryfiées, on peut écrire cette
+implémentation encore plus rapidement :
 
 > sum' :: (Num a) => [a] -> a
 > sum' = foldl (+) 0
@@ -628,7 +629,7 @@ La lambda `(\acc x -> acc + x)` est équivalente à `(+)`. On peut omettre le
 liste. En général, lorsque vous avec une fonction `foo a = bar b a`, vous
 pouvez réécrire `foo = bar b`, grâce à la curryfication.
 
-Bon, implémentons une autre fonction avec un pli à gauche avant de passe aux
+Bon, implémentons une autre fonction avec un pli à gauche avant de passer aux
 plis à droite. Je suis sûr que vous savez tous qu'`elem` vérifie si une valeur
 fait partie d'une liste, donc je ne vais pas vous le rappeler (oups, je viens
 de le faire !). Implémentons-là avec un pli à gauche.
@@ -641,14 +642,14 @@ de type booléen. Le type de l'accumulateur et de l'initialisateur est toujours
 le même quand on plie. Rappelez-vous en quand vous ne savez plus quoi utiliser
 comme valeur de départ, ça vous mettra sur la piste. Ici, on commence avec
 `False`. Il est logique d'utiliser `False` comme valeur initiale. On présume
-que l'élément n'est pas là, tant qu'on a pas de preuve de sa présence. Notez
+que l'élément n'est pas là, tant qu'on n'a pas de preuve de sa présence. Notez
 que si l'on appelle `fold` sur une liste vide, on obtient en retour la valeur
 initiale. Ensuite, on vérifie le premier élément pour savoir si c'est celui
 que l'on cherche. Si c'est le cas, on passe l'accumulateur à `True`. Sinon, on
 ne touche pas à l'accumulateur. S'il était `False`, il reste à `False` car on
 ne vient pas de trouver l'élément. S'il était `True`, on le laisse aussi.
 
-Le pli à droite, `foldr` travaille de manière analogue au plis à gauche, mais
+Le pli à droite, `foldr` travaille de manière analogue au pli à gauche, mais
 l'accumulateur consomme les valeurs en partant de la droite. Aussi, la fonction
 binaire du pli gauche prend l'accumulateur en premier paramètre, et la valeur
 courante en second (`\acc x -> …`), celle du pli droit prend la valeur
@@ -656,7 +657,7 @@ courante en premier et l'accumulateur en second (`\x acc -> …`). C'est assez
 logique que le pli à droite ait l'accumulateur à droite, vu qu'il plie depuis
 la droite.
 
-La valeur de l'accumulateur (et donc le résultat) d'un plis peut être de
+La valeur de l'accumulateur (et donc le résultat) d'un pli peut être de
 n'importe quel type. Un nombre, un booléen, ou même une liste. Implémentons la
 fonction `map` à l'aide d'un pli à droite. L'accumulateur sera la liste, on va
 accumuler les valeurs après mappage, élément par élément. De fait, il est
@@ -744,7 +745,7 @@ Une autre façon de se représenter les plis à droite et à gauche consiste à 
 dire : mettons qu'on a un pli à droite et une fonction binaire `f`, et une
 valeur initiale `z`. Si l'on plie à droite la liste `[3, 4, 5, 6]`, on fait en
 gros cela : `f 3 (f 4 (f 5 (f 6 z)))`. `f` est appelé avec le dernier élément
-de la liste et l'accumulateur, cette valeur est donné comme accumulateur a la
+de la liste et l'accumulateur, cette valeur est donnée comme accumulateur à la
 prochaine valeur, etc. Si on prend pour `f` la fonction `+` et pour
 accumulateur de départ `0`, ça donne `3 + (4 + (5 + (6 + 0)))`. Ou, avec un `+`
 préfixe, `(+) 3 ((+) 4 ((+) 5 ((+) 6 0)))`. De façon similaire, un pli à gauche
@@ -756,7 +757,7 @@ expression renvoie `[6, 5, 4, 3]`.
 
 `scanl` et `scanr` sont comme `foldl` et `foldr`, mais rapportent tous les
 résultats intermédiaires de l'accumulateur sous forme d'une liste. Il existe
-aussi `scanl1` et `scanr1`, analoques à `foldl1` et `foldr1`.
+aussi `scanl1` et `scanr1`, analogues à `foldl1` et `foldr1`.
 
 > ghci> scanl (+) 0 [3,5,2,1]
 > [0,3,8,10,11]
@@ -889,7 +890,7 @@ en :
 Mais qu'en est-il des fonctions à plusieurs paramètres ? Pour les utiliser dans
 de la composition de fonctions, il faut les avoir partiellement appliquées
 jusqu'à ce qu'elles ne prennent plus qu'un paramètre. `sum (replicate 5 (max
-6.7 8.9))` peut être réécrit `(sum . replicate 5 . max 6.7) 8.9` or bien `sum .
+6.7 8.9))` peut être réécrit `(sum . replicate 5 . max 6.7) 8.9` ou bien `sum .
 replicate 5 . max 6.7 $ 8.9`. Ce qui se passe ici : une fonction qui prend la
 même chose que `max 6.7` et applique `replicate 5` à celle-ci est créée.
 Ensuite, une fonction qui prend ça et applique `sum` est créée. Finalement,
@@ -898,7 +899,7 @@ prend `8.9` et applique `max 6.7`, puis applique `replicate 5` à ça, et
 applique `sum` à ça. Si vous voulez réécrire une expression pleine de
 parenthèses avec de la composition de fonctions, vous pouvez commencer par
 mettre le dernier paramètre de la dernière fonction à la suite d'un `$`, et
-ensuite composez les appels successifs, en les écrivant sans leur dernier
+ensuite composer les appels successifs, en les écrivant sans leur dernier
 paramètre et en les séparant par des points. Si vous avez `replicate 100
 (product (map (*3) (zipWith max [1, 2, 3, 4, 5] [4, 5, 6, 7, 8])))`, vous
 pouvez l'écrire `replicate 100 . product . map (*3) . zipWith max [1, 2, 3, 4,
@@ -960,5 +961,5 @@ plutôt écrit :
 >         belowLimit = takeWhile (<10000) oddSquares
 >     in  sum belowLimit
 
-Je ne gagnerai pas de compétition de golf ainsi, mais quelqu'un qui lire ça
-trouvera certainement cela plus simple à lire qu'une chaîne de compositions.
+Je ne gagnerai pas de compétition de golf ainsi, mais quelqu'un qui aura à lire
+ça trouvera certainement cela plus simple à lire qu'une chaîne de compositions.
