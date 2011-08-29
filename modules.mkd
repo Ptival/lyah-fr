@@ -1290,7 +1290,7 @@ trois dimensions, donc on n'exporte pas `rectangleArea`.
 Quand on crée un module, on n'exporte en général que les fonctions qui agissent
 en rapport avec l'interface de notre module, de manière à cacher
 l'implémentation. Si quelqu'un utilise notre module `Geometry`, il n'a pas à se
-soucier des fonctions que l'on a pas exportées. On peut décider de changer ces
+soucier des fonctions que l'on n'a pas exportées. On peut décider de changer ces
 fonctions complètement ou de les effacer dans une nouvelle version (on pourrait
 supprimer `rectangleArea` et utiliser `*` à la place) et personne ne s'en
 souciera parce qu'on ne les avait pas exportées.
