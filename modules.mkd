@@ -29,7 +29,7 @@ les imports sont faits en début de fichier. Un script peut bien sûr importer
 plusieurs modules. Écrivez simplement une ligne d'import par module. Importons
 le module `Data.List`, qui a un paquet de fonctions utiles pour travailler sur
 des listes, et utilisons une des fonctions que le module exporte afin de savoir
-combien d'éléments unique une liste comporte.
+combien d'éléments uniques une liste comporte.
 
 > import Data.List
 >
@@ -55,7 +55,7 @@ pouvez en charger plusieurs à la fois.
 > ghci> :m + Data.List Data.Map Data.Set
 
 Cependant, en chargeant un script qui importe des modules, vous n'avez même pas
-besoin d'utilise `:m +` pour accéder à ces modules.
+besoin d'utiliser `:m +` pour accéder à ces modules.
 
 Si vous n'avez besoin que de quelques fonctions d'un module, vous pouvez
 importer sélectivement juste ces fonctions. Si nous ne voulions que `nub` et
@@ -82,7 +82,7 @@ Voici comment on résout cela :
 
 Cela nous force à écrire `Data.Map.filter` pour désigner la fonction `filter`
 de `Data.Map`, alors que `filter` tout court correpond à la fonction du
-`Prelude` que'on connaît et qu'on aime tous. Mais écrire `Data.Map` devant
+`Prelude` qu'on connaît et qu'on aime tous. Mais écrire `Data.Map` devant
 chaque fonction du module est un peu fastidieux. C'est pourquoi on peut
 renommer les imports qualifiés :
 
@@ -158,13 +158,14 @@ souvent avoir des erreurs de débordement de pile. Le coupable est la nature
 paresseuse des plis, la valeur de l'accumulateur n'étant pas réellement mise à
 jour pendant la phase de pli. Ce qui se passe en réalité, c'est que
 l'accumulateur fait en quelque sorte la promesse qu'il se rappellera comment
-calculer la valeur quand on la lui demandera (NDT : un glaçon, traduction
-arbitraire de *thunk*). Cela a lieu pour chaque accumulateur intermédiaire, et
-tous les glaçons sont empilés sur votre pile, et finissent par la déborder.
-Les plis stricts ne sont pas de vils paresseux, et calculent les valeurs
-intermédiaires en route au lieu de remplir votre pile de glaçons.  Donc, si
-jamais vous rencontrez des problèmes de débordement de pile en faisant des plis
-paresseux, essayez d'utiliser plutôt les versions strictes.
+calculer sa valeur quand on la lui demandera (NDT : pour cela, ce qu'on appelle
+un glaçon, traduction de *thunk*, est créé). Cela a lieu pour chaque
+accumulateur intermédiaire, et tous les glaçons sont empilés sur votre pile, et
+finissent par la faire déborder.  Les plis stricts ne sont pas de vils
+paresseux, et calculent les valeurs intermédiaires en route au lieu de remplir
+votre pile de glaçons.  Donc, si jamais vous rencontrez des problèmes de
+débordement de pile en faisant des plis paresseux, essayez d'utiliser plutôt
+les versions strictes.
 
 `concat` aplatit une liste de listes en une liste simple.
 
@@ -243,7 +244,7 @@ utile.
 > ghci> takeWhile (/=' ') "This is a sentence"
 > "This"
 
-Si l'on cherchait la somme de toutes les puissances de 3 inférieures à 10000,
+Si l'on cherchait la somme de toutes les puissances de 3 inférieures à 10 000,
 on ne pourrait pas mapper `(^3)` à `[1..]`, puis appliquer un filtre et sommer
 le résultat, parce que `filter` ne termine pas sur des listes infinies. Vous
 savez peut-être que les éléments sont croissants, mais Haskell ne le sait pas.
@@ -252,12 +253,12 @@ Vous pouvez donc faire ça :
 > ghci> sum $ takeWhile (<10000) $ map (^3) [1..]
 > 53361
 
-On applique `(^3)` à une liste infinie, et on coupe dès que ça dépasse 10000.
+On applique `(^3)` à une liste infinie, et on coupe dès que ça dépasse 10 000.
 Il ne reste plus qu'à sommer aisément.
 
 `dropWhile` est similaire, mais elle jette les éléments tant que le prédicat
 est vrai. Une fois que le prédicat est invalidé, elle retourne ce qui reste de
-la liste. Très utile et adorable fonction !
+la liste. Fonction très utile et adorable !
 
 > ghci> dropWhile (/=' ') "This is a sentence"
 > " is a sentence"
@@ -295,8 +296,8 @@ Dans le tuple retourné par `break`, la seconde liste débute avec le premier
 élément ayant satisfait le prédicat.
 
 `sort` trie une liste. Le type des éléments de la liste doit être membre de la
-classe de types `Ord`, parce si l'on ne peut pas ordonner les éléments, eh bien
-on ne peut pas les trier.
+classe de types `Ord`, parce que si l'on ne peut pas ordonner les éléments, eh
+bien on ne peut pas les trier.
 
 > ghci> sort [8,5,3,2,1,6,4,2]
 > [1,2,2,3,4,5,6,8]
@@ -309,8 +310,8 @@ sont égaux.
 > ghci> group [1,1,1,1,2,2,2,2,3,3,2,2,2,5,6,7]
 > [[1,1,1,1],[2,2,2,2],[3,3],[2,2,2],[5],[6],[7]]
 
-Si l'on trie une liste avant de la groupe, on peut connaître le compte de
-chaque élément.
+Si l'on trie une liste avant de grouper ses éléments, on peut connaître le
+compte de chaque élément.
 
 > ghci> map (\l@(x:xs) -> (x,length l)) . group . sort $ [1,1,1,1,2,2,2,2,3,3,2,2,2,5,6,7]
 > [(1,4),(2,7),(3,2),(5,1),(6,1),(7,1)]
@@ -363,7 +364,7 @@ une liste.
 
 `partition` prend une liste et un prédicat, et retourne une paire de listes.
 La première liste contient tous les éléments qui satisfont le prédicat, la
-second tous les autres.
+seconde tous les autres.
 
 > ghci> partition (`elem` ['A'..'Z']) "BOBsidneyMORGANeddy"
 > ("BOBMORGAN","sidneyeddy")
@@ -383,9 +384,9 @@ toute la liste et la découpe conformément au prédicat.
 liste satisfaisant le prédicat. Mais il retourne ce prédicat encapsulé dans une
 valeur de type `Maybe`. Nous couvrirons les types de données algébriques plus
 en profondeur dans le prochain chapitre, mais pour l'instant, voilà ce que vous
-avez besoin de savoir : un valeur `Maybe` peut soit être `Just something`, soit
+avez besoin de savoir : une valeur `Maybe` peut soit être `Just something`, soit
 `Nothing`. Tout comme une liste peut être soit la liste vide, soit une liste
-avec des éléments, un valeur `Maybe` peut contenir soit aucun, soit un élement.
+avec des éléments, une valeur `Maybe` peut contenir soit aucun, soit un élement.
 Et comme le type d'une liste d'entiers est par exemple `[Int]`, le type d'un
 éventuel entier est `Maybe Int`. Bon, faisons un tour de `find` :
 
@@ -405,7 +406,7 @@ Vous vous souvenez quand nous cherchions la première fois que notre stock
 dépassait 1000 $ ? On avait fait `head (dropWhile (\(val,y,m,d) -> val < 1000)
 stock)`. Rappelez-vous que `head` n'est pas sûre. Que se serait-il passé si le
 stock n'avait jamais dépassé 1000 $ ? Notre application de `dropWhile` aurait
-retourné la list evide, et essayer de prendre sa tête aurait été une erreur.
+retourné la liste vide, et essayer de prendre sa tête aurait été une erreur.
 Cependant, si l'on réécrivait cela `find (\(val,y,m,d) -> val > 1000) stock`,
 on serait beaucoup plus tranquille. Si notre stock ne dépassait jamais 1000 $
 (donc, aucun élément ne satisfait le prédicat), on récupérerait `Nothing`. Mais
@@ -562,8 +563,8 @@ triée, la liste reste triée.
 
 Ce que `length`, `take`, `drop`, `splitAt`, `!!` et `replicate` ont de commun,
 c'est qu'elles prennent ou retournent un `Int`, alors qu'elles pourraient être
-plus générales en utilisant plutôt un type member des classes `Integral` ou
-`Num` (en fonction de la fonction). Elles ne le font pas pour des raisons
+plus générales en utilisant plutôt un type appartenant aux classes `Integral`
+ou `Num` (en fonction de la fonction). Elles ne le font pas pour des raisons
 historiques. Réparer cela détruirait certainement beaucoup de code existant.
 C'est pourquoi `Data.List` contient les équivalents plus génériques, nommés
 `genericLength`, `genericTake`, `genericDrop`, `genericSplitAt`, `genericIndex`
@@ -577,9 +578,9 @@ pour un nombre à virgule flottante, trouver la moyenne en faisant `let xs =
 
 Les fonctions `nub`, `delete`, `union`, `intersect` et `group` ont toute un
 équivalent plus général, respectivement `nubBy`, `deleteBy`, `unionBy`,
-`intersectBy` et `groupBy`. La difference entre les deux, c'est que les
+`intersectBy` et `groupBy`. La différence entre les deux, c'est que les
 premières utilisent `==` pour tester l'égalité, alors que les versions en *By*
-prennent en paramètre une fonction utilisé pour tester l'égalité. `group` est
+prennent en paramètre une fonction utilisée pour tester l'égalité. `group` est
 donc équivalente à `groupBy (==)`.
 
 Par exemple, mettons qu'on a une liste qui décrit les valeurs d'une fonction à
@@ -599,7 +600,7 @@ fonction d'égalité fournie prend deux éléments et retourne `True` seulement
 s'ils sont tous les deux positifs ou tous les deux négatifs. Elle pourrait
 aussi être écrite `\x y -> (x > 0) && (y > 0) || (x <= 0) && (y <= 0)`, bien
 que je trouve la première version plus lisible. Une manière encore plus claire
-d'écrire les fonction d'égalité pour les fonctions en *By* consiste à importer
+d'écrire les fonctions d'égalité pour les fonctions en *By* consiste à importer
 `on` depuis `Data.Function`. `on` est définie ainsi :
 
 > on :: (b -> b -> c) -> (a -> b) -> a -> a -> c
@@ -619,7 +620,7 @@ De façon similaire, les fonctions `sort`, `insert`, `maximum` et `minimum` ont
 aussi un équivalent plus général. Les fonctions comme `groupBy` prenaient une
 fonction pour déterminer si deux éléments étaient égaux. `sortBy`, `insertBy`,
 `maximumBy` et `minimumBy` prennent une fonction pour déterminer si un élément
-est plus petit, plus grand ou égal l'autre. La signature de `sortBy` est
+est plus petit, plus grand ou égal à l'autre. La signature de `sortBy` est
 `sortBy :: (a -> a -> Ordering) -> [a] -> [a]`. Si vous vous souvenez bien, le
 type `Ordering` peut prendre pour valeurs `LT`, `EQ` ou `GT`. `sort` est
 équivalent à `sortBy compare`, car `compare` prend juste deux éléments dont le
@@ -628,8 +629,8 @@ type est membre de la classe `Ord` et retourne leur relation d'ordre.
 Les listes peuvent être comparées, mais lorsqu'elles le sont, elles sont
 comparées lexicographiquement. Et si l'on avait une liste de listes et que l'on
 souhaitait la trier non pas par rapport au contenu des listes internes, mais
-plutôt de leur longueur ? Vous l'avez peut-être déjà deviné, on utilisera la
-fonction `sortBy`.
+plutôt en fonction de leur longueur ? Vous l'avez peut-être déjà deviné, on
+utilisera la fonction `sortBy`.
 
 > ghci> let xs = [[5,4,5,4,4],[1,2,3],[3,5,4,3],[],[2],[2,2]]
 > ghci> sortBy (compare `on` length) xs
@@ -662,7 +663,7 @@ les tabulations, les nouvelles lignes, etc.
 
 `isLower` vérifie si le caractère est minuscule.
 
-`isUpper` vérifier si le caractère est majuscule.
+`isUpper` vérifie si le caractère est majuscule.
 
 `isAlpha` vérifie si le caractère est une lettre.
 
@@ -679,7 +680,7 @@ par exemple, ne le sont pas.
 
 `isLetter` vérifie si le caractère est une lettre.
 
-`isMark` vérifie les caractères Unicode de marques. Ce sont des caractères qui
+`isMark` vérifie les caractères Unicode de marque. Ce sont des caractères qui
 se combinent au précédent pour créer des caractères accentués. Utile pour nous
 français.
 
@@ -823,7 +824,7 @@ msg`. Essayons d'encoder quelques messages.
 > "Rfww~%Hmwnxyrfx&%Mt%mt%mt&"
 
 C'est effectivement encodé. Décoder ces messages revient simplement à décaler
-les nombres d'autant dans le sens contraire.
+les nombres d'autant de places dans le sens opposé au sens initial.
 
 > decode :: Int -> String -> String
 > decode shift msg = encode (negate shift) msg
@@ -897,9 +898,9 @@ pli.
 
 Note : il est généralement mieux d'utiliser des plis pour effectuer de la
 récursivité standard sur les listes plutôt que d'écrire explicitement la
-récursivité, car c'est plus simple à lire et identifier. Tout le monde connaît
-les plis et savent les identifier lorsqu'ils voient un appel à `foldr`, mais ça
-leur prendre plus de temps de déchiffrer une récursivité explicite.
+récursivité, car c'est plus simple à lire et à identifier. Tout le monde
+connaît les plis et sait en identifier un lorsqu'il voit un appel à `foldr`,
+mais cela prend plus de temps de déchiffrer une récursivité explicite.
 
 > ghci> findKey "penny" phoneBook
 > Just "853-2492"
@@ -913,7 +914,7 @@ on récupère `Just` le numéro, sinon, on récupère `Nothing`.
 
 On vient juste d'implémenter la fonction `lookup` de `Data.List`. Si l'on veut
 trouver la valeur correspondant à une clé, on doit traverser la liste jusqu'à
-ce qu'on le trouve. Le module `Data.Map` offre des listes associatives qui sont
+ce qu'on la trouve. Le module `Data.Map` offre des listes associatives qui sont
 beaucoup plus rapides (car elles sont implémentées à l'aide d'arbres) et
 fournit également un paquet de fonctions utiles. À partir de maintenant, nous
 dirons qu'on travaille sur des maps plutôt que des listes associatives.
@@ -936,7 +937,7 @@ map avec les mêmes associations.
 > ghci> Map.fromList [(1,2),(3,4),(3,2),(5,5)]
 > fromList [(1,2),(3,2),(5,5)]
 
-S'il y a des clés en doublon dans la liste original, les doublons sont ignorés.
+S'il y a des clés en doublon dans la liste originale, les doublons sont ignorés.
 Voici la signature de type de `fromList` :
 
 > Map.fromList :: (Ord k) => [(k, v)] -> Map.Map k v
@@ -950,7 +951,7 @@ elles doivent être ordonnables. C'est une contrainte essentielle pour le module
 arbre.
 
 Vous devriez toujours utiliser `Data.Map` pour associer des clés-valeurs, à
-moins que vous ayez des clés qui ne sont pas membre d'`Ord`.
+moins que vous ayez des clés qui ne sont pas membres d'`Ord`.
 
 `empty` représente une map vide. Elle ne prend pas d'argument, et retourne une
 map vide.
@@ -958,7 +959,7 @@ map vide.
 > ghci> Map.empty
 > fromList []
 
-`insert` prends une clé, une valeur et une map, et retourne une nouvelle map
+`insert` prend une clé, une valeur et une map, et retourne une nouvelle map
 identique à l'ancienne, avec en plus la nouvelle clé-valeur insérée.
 
 > ghci> Map.empty
@@ -1001,8 +1002,8 @@ uniquement cette association.
 > ghci> Map.insert 5 9 $ Map.singleton 3 9
 > fromList [(3,9),(5,9)]
 
-`lookup` fonction comme `lookup` de `Data.List`, mais opère sur des maps. Elle
-retourne `Just something` si elle trouve quelque chose, `Nothing` sinon.
+`lookup` fonctionne comme `lookup` de `Data.List`, mais opère sur des maps.
+Elle retourne `Just something` si elle trouve quelque chose, `Nothing` sinon.
 
 `member` est un prédicat qui prend une clé, une map, et indique si la clé est
 dans la map.
@@ -1028,11 +1029,11 @@ dans la map.
 `keys` est l'équivalent de `map fst . Map.toList`, et `elems` l'équivalent de
 `map snd . Map.toList`.
 
-`fromListWith` est une cool petite fonction. Elle agit un peu comme `fromList`,
-mais elle ne jette pas les clés en double, et utilise une fonction passée en
-paramètre pour décider quoi faire d'elles. Disons qu'une fille peut avoir
-plusieurs numéros de téléphone, et qu'on a une liste associative comme celle-ci
-:
+`fromListWith` est une petite fonction assez cool. Elle agit un peu comme
+`fromList`, mais elle ne jette pas les clés en double, et utilise une fonction
+passée en paramètre pour décider quoi faire d'elles. Disons qu'une fille peut
+avoir plusieurs numéros de téléphone, et qu'on a une liste associative comme
+celle-ci :
 
 > phoneBook =
 >     [("betty","555-2938")
@@ -1245,7 +1246,7 @@ spécifions les fonctions qu'il exporte, et après cela, on peut commencer à
 > ) where
 
 Comme vous pouvez le voir, nous allons faire des aires et des volumes de
-spères, de cubes et de pavé droit. Définissons nos fonctions :
+sphères, de cubes et de pavés droits. Définissons nos fonctions :
 
 > module Geometry
 > ( sphereVolume
@@ -1290,10 +1291,10 @@ trois dimensions, donc on n'exporte pas `rectangleArea`.
 Quand on crée un module, on n'exporte en général que les fonctions qui agissent
 en rapport avec l'interface de notre module, de manière à cacher
 l'implémentation. Si quelqu'un utilise notre module `Geometry`, il n'a pas à se
-soucier des fonctions que l'on a pas exportées. On peut décider de changer ces
-fonctions complètement ou de les effacer dans une nouvelle version (on pourrait
-supprimer `rectangleArea` et utiliser `*` à la place) et personne ne s'en
-souciera parce qu'on ne les avait pas exportées.
+soucier des fonctions que l'on n'a pas exportées. On peut décider de changer
+ces fonctions complètement ou de les effacer dans une nouvelle version (on
+pourrait supprimer `rectangleArea` et utiliser `*` à la place) et personne ne
+s'en souciera parce qu'on ne les avait pas exportées.
 
 Pour utiliser notre module, on fait juste :
 
@@ -1308,8 +1309,8 @@ Découpons ces fonctions de manière à ce que `Geometry` soit un module avec
 trois sous-modules, un pour chaque type d'objet.
 
 D'abord, créons un dossier `Geometry`. Attention à la majuscule à G. Dans ce
-dossier, placez trois dossiers : `Sphere.hs`, `Cuboid.hs` et `Cube.hs`. Voici
-ce que les fichiers contiennent :
+dossier, placez trois dossiers : `Sphere.hs`, `Cuboid.hs` et `Cube.hs` (NDT :
+"Cuboid" signifie pavé droit). Voici ce que les fichiers contiennent :
 
 `Sphere.hs`
 
