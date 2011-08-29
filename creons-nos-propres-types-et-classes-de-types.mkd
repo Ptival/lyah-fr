@@ -1,0 +1,1097 @@
+Créons nos propres types et classes de types
+--------------------------------------------
+
+Dans les chapitres précédents, nous avons vu quelques types et classes de types
+qui existent en Haskell. Dans ce chapitre, nous verrons comment créer les
+nôtres et les mettre en pratique !
+
+Introduction aux types de données algébriques
+---------------------------------------------
+
+Jusqu'ici, nous avons croisé beaucoup de types de données. `Bool`, `Int`,
+`Char`, `Maybe`, etc. Mais comment créer les nôtres ? Eh bien, une des moyens
+consiste à utiliser le mot-clé **data** pour définir un type. Voyons comment le
+type `Bool` est défini dans la bibliothèque standard.
+
+> data Bool = False | True
+
+`data` signifie qu'on crée un nouveau type de données. La partie avant le `=`
+dénote le type, ici `Bool`. Les choses après le `=` sont des **constructeurs de
+valeurs**. Ils spécifient les différentes valeurs que peut prendre ce type. Le
+`|` se lit comme un *ou*. On peut donc lire cette déclaration : le type `Bool`
+peut avoir pour valeur `True` ou `False`. Le nom du type tout comme les noms
+des constructeurs de valeurs doivent commencer par une majuscule.
+
+De manière similaire, on peut imaginer `Int` défini ainsi :
+
+> data Int = -2147483648 | -2147483647 | ... | -1 | 0 | 1 | 2 | ... | 2147483647
+
+Le premier et le dernier constructeurs sont les valeurs minimales et maximales
+d'un `Int`. En vrai le type n'est pas défini ainsi, les points de suspension
+cachent l'omission d'un paquet énorme de nombres, donc ceci est juste à titre
+illustratif.
+
+Maintenant, imaginons comment l'on représenterait une forme en Haskell. Une
+possibilité serait d'utiliser des tuples. Un cercle pourrait être `(43.1, 55.0,
+10.4)` où les deux premières composantes serait les coordonnées du centre, et
+la troisième le rayon. Ça a l'air raisonnable, mais ça pourrait tout aussi bien
+représenter un vecteur 3D ou je ne sais quoi. Une meilleure solution consiste à
+créer notre type pour représenter les données. Disons qu'une forme puisse être
+un cercle ou un rectangle. Voilà :
+
+> data Shape = Circle Float Float Float | Rectangle Float Float Float Float
+
+Qu'est-ce que c'est que ça ? Pensez-y ainsi. Le constructeur de valeurs
+`Circle` a trois champs, qui sont tous des `Float`. Ainsi, lorsqu'on écrit un
+constructeur de valeurs, on peut optionellement ajouter des types à la suite
+qui définissent les valeurs qu'il peut contenir. Ici, les deux premiers champs
+sont les coordonnées du centre, le troisième est son rayon. Le constructeur de
+valeurs `Rectangle` a quatre champs qui acceptent des `Float`. Les deux
+premiers sont les coordonnées du coin supérieur gauche, et les deux autres
+celles du coin inférieur droit.
+
+Quand je dis champ, il s'agit en fait de paramètres. Les constructeurs de
+valeurs sont ainsi des fonctions qui retournent ultimement un type de données.
+Regardons les signatures de type de ces deux constructeurs de valeurs.
+
+> ghci> :t Circle
+> Circle :: Float -> Float -> Float -> Shape
+> ghci> :t Rectangle
+> Rectangle :: Float -> Float -> Float -> Float -> Shape
+
+Cool, donc les constructeurs de valeurs sont des fonctions comme les autres. Qui l'eût cru ? Créons une fonction qui prend une forme et retourne sa surface.
+
+> surface :: Shape -> Float
+> surface (Circle _ _ r) = pi * r ^ 2
+> surface (Rectangle x1 y1 x2 y2) = (abs $ x2 - x1) * (abs $ y2 - y1)
+
+La première chose notable, c'est la déclaration de type. Elle dit que la
+fonction prend un `Shape` et retourne un `Float`. On n'aurait pas pu écrire une
+déclaration de type `Circle -> Float` parce que `Circle` n'est pas un type,
+alors que `Shape` en est un. Tout comme on ne peut pas écrire une fonction qui
+a pour déclaration de type `True -> Int`. La prochaine chose remarquable, c'est
+le filtrage de motif sur les constructeurs de valeurs. Nous l'avons en fait
+déjà fait (tout le temps à vrai dire), lorsque l'on filtrait des valeurs contre
+`[]` ou `False` ou `5`, seulement ces valeurs n'avaient pas de champs. On écrit
+seulement le constructeur, puis on lie ses champs à des noms. Puisqu'on
+s'intéresse au rayon, on se fiche des autres champs, qui n'indiquent que la
+position du cercle.
+
+> ghci> surface $ Circle 10 20 10
+> 314.15927
+> ghci> surface $ Rectangle 0 0 100 100
+> 10000.0
+
+Yay, ça marche ! Mais si on essaie d'afficher `Circle 10 20 5` dans l'invite,
+on obtient une erreur. C'est parce qu'Haskell ne sait pas (encore) comment
+afficher ce type de données sous une forme littérale. Rappelez-vous, quand on
+essaie d'afficher une valeur dans l'invite, Haskell exécute la fonction `show`
+sur cette valeur pour obtenir une représentation en chaîne de caractères, puis
+affiche celle-ci dans le terminal. Pour rendre `Shape` membre de la classe de
+types `Show`, on peut le modifier ainsi :
+
+> data Shape = Circle Float Float Float | Rectangle Float Float Float Float deriving (Show)
+
+On ne s'intéressera pas à la dérivation trop pour l'instant. Disons seulement
+qu'en ajoutant `deriving (Show)` à la fin d'une déclaration *data*, Haskell
+rend magiquement ce type membre de la classe de types `Show`. Ainsi, on peut à
+présent faire :
+
+> ghci> Circle 10 20 5
+> Circle 10.0 20.0 5.0
+> ghci> Rectangle 50 230 60 90
+> Rectangle 50.0 230.0 60.0 90.0
+
+Les constructeurs de valeurs sont des fonctions, on peut donc les mapper, les
+appliquer partiellement, etc. Si l'on veut créer une liste de cercles
+concentriques de différents rayons, on peut faire :
+
+> ghci> map (Circle 10 20) [4,5,6,6]
+> [Circle 10.0 20.0 4.0,Circle 10.0 20.0 5.0,Circle 10.0 20.0 6.0,Circle 10.0 20.0 6.0]
+
+Notre type de données est satisfaisant, bien qu'il pourrait être amélioré.
+Créons un type de données intermédiaire qui définit un point dans l'espace
+bidimensionnel. On pourra l'utiliser pour rendre nos formes plus
+compréhensibles.
+
+> data Point = Point Float Float deriving (Show)
+> data Shape = Circle Point Float | Rectangle Point Point deriving (Show)
+
+Remarquez qu'en définissant un point, on a utilisé le même nom pour le type de
+données et pour le constructeur de valeurs. Ça n'a pas de sens particulier,
+mais il est assez usuel de donner le même nom lorsqu'un type n'a qu'un seul
+constructeur de valeurs. À présent, le `Circle` a deux champs, un de type
+`Point` et un autre de type `Float`. Cela simplifie la compréhension de ce
+qu'ils représentent. Idem pour le rectangle. On doit maintenant ajuster
+`surface` pour refléter ces changements.
+
+> surface :: Shape -> Float
+> surface (Circle _ r) = pi * r ^ 2
+> surface (Rectangle (Point x1 y1) (Point x2 y2)) = (abs $ x2 - x1) * (abs $ y2 - y1)
+
+On a seulement changé les motifs. Dans le motif du cercle, on ignore
+complètement le point. Dans celui du rectangle, on utilise des motifs imbriqués
+pour récupérer les champs des points. Si l'on voulait référencer le point
+lui-même pour une raison quelconque, on aurait pu utiliser des motifs nommés.
+
+> ghci> surface (Rectangle (Point 0 0) (Point 100 100))
+> 10000.0
+> ghci> surface (Circle (Point 0 0) 24)
+> 1809.5574
+
+Et pourquoi pas une fonciton qui bouge une forme ? Elle prend une forme, une
+quantité sur l'axe x et sur l'axe y, et retourne une forme aux mêmes
+dimensions, mais déplacée selon ces quantités.
+
+> nudge :: Shape -> Float -> Float -> Shape
+> nudge (Circle (Point x y) r) a b = Circle (Point (x+a) (y+b)) r
+> nudge (Rectangle (Point x1 y1) (Point x2 y2)) a b = Rectangle (Point (x1+a) (y1+b)) (Point (x2+a) (y2+b))
+
+Plutôt simpl. On ajoute simplement les déplacements aux coordonnées correspondantes.
+
+> ghci> nudge (Circle (Point 34 34) 10) 5 10
+> Circle (Point 39.0 44.0) 10.0
+
+Si on ne veut pas manipuler directement les points, on peut créer des fonctions
+auxiliaires qui créent des formes d'une tailler donnée à l'origine, puis les
+déplacer.
+
+> baseCircle :: Float -> Shape
+> baseCircle r = Circle (Point 0 0) r
+
+> baseRect :: Float -> Float -> Shape
+> baseRect width height = Rectangle (Point 0 0) (Point width height)
+> ghci> nudge (baseRect 40 100) 60 23
+> Rectangle (Point 60.0 23.0) (Point 100.0 123.0)
+
+Vous pouvez bien sûr exporter vos types de données de vos modules. Pour ce
+faire, ajoutez simplement les types que vous souhaitez exporter au même endroit
+que les fonctions à exporter, puis ouvrez des parenthèses et spécifiez les
+constructeurs de valeurs que vous voulez exporter, séparés par des virgules. Si
+vous voulez exporter tous les constructeurs, vous pouvez écrire `..`.
+
+Si on voulait exporter les fonctions et types définis ici dans un module, on
+pourrait commencer ainsi :
+
+> module Shapes
+> ( Point(..)
+> , Shape(..)
+> , surface
+> , nudge
+> , baseCircle
+> , baseRect
+> ) where
+
+En faisant `Shape(..)`, on exporte tous les constructeurs de valeurs de
+`Shape`, donc quiconque importe le module peut créer des formes à l'aide de
+`Rectangle` et `Circle`. C'est équivalent à `Shape (Rectangle, Circle)`.
+
+On pourrait aussi choisir de ne pas exporter de constructeurs de valeurs pour
+`Shape` en écrivant simplement `Shape` dans la déclaration d'export. Ainsi,
+quelqu'un qui voudrait créer une forme serait obligé de le faire en passant par
+les fonctions `baseCircle` et `baseRect`. `Data.Map` utilise cette approche.
+Vous ne pouvez pas créer de map en faisant `Map.Map [(1,2),(3,4)]` parce qu'il
+n'exporte pas ce constructeur de valeurs. Cependant, vous pouvez en créer à
+l'aide de fonctions auxiliaires comme `Map.fromList`. Souvenez-vous, les
+constructeurs de valeurs sont juste des fonction qui prennent des champs en
+paramètres et retournent une valeur d'un certain type (comme `Shape`). Donc
+quand on choisit de ne pas les exporter, on empêche seulement les personnes qui
+importent notre module d'utiliser ces fonctions, mais si d'autres fonctions
+exportées retournent un type, on peut les utiliser pour créer des valeurs de ce
+type de données.
+
+Ne pas exporter les constructeurs de valeurs d'un type de données le rend plus
+abstrait en cachant son implémentation. Également, quiconque utilise ce module
+ne peut pas filtrer par motif sur les constructeurs de valeurs.
+
+Syntaxe des enregistrements
+---------------------------
+
+OK, on vient de nous donner la tâche de créer un type de données pour décrire
+une personne. Les informations à stocker pour décrire une personne sont :
+prénom, nom de famille, âge, poids, numéro de téléphone, et parfum de glace
+préféré. Je ne sais pas pour vous, mais c'est tout ce que je souhaite savoir à
+propos d'une personne. Allons-y !
+
+> data Person = Person String String Int Float String String deriving (Show)
+
+Ok. Le premier champ est le prénom, le deuxième le nom, etc. Créons une
+personne.
+
+> ghci> let guy = Person "Buddy" "Finklestein" 43 184.2 "526-2928" "Chocolate"
+> ghci> guy
+> Person "Buddy" "Finklestein" 43 184.2 "526-2928" "Chocolate"
+
+Plutôt cool, bien qu'un peu illisible. Comment faire une fonction pour
+récupérer juste une information sur la personne ? Une pour son prénom, une pour
+son nom, etc. Nous devrions les définir ainsi :
+
+> firstName :: Person -> String
+> firstName (Person firstname _ _ _ _ _) = firstname
+>
+> lastName :: Person -> String
+> lastName (Person _ lastname _ _ _ _) = lastname
+>
+> age :: Person -> Int
+> age (Person _ _ age _ _ _) = age
+>
+> height :: Person -> Float
+> height (Person _ _ _ height _ _) = height
+>
+> phoneNumber :: Person -> String
+> phoneNumber (Person _ _ _ _ number _) = number
+>
+> flavor :: Person -> String
+> flavor (Person _ _ _ _ _ flavor) = flavor
+
+Wow ! Personnellement, je n'ai pas trop apprécié écrire ça ! En dépit d'être
+très encombrante et ENNUYEUSE à écrire, cette méthode fonctionne.
+
+> ghci> let guy = Person "Buddy" "Finklestein" 43 184.2 "526-2928" "Chocolate"
+> ghci> firstName guy
+> "Buddy"
+> ghci> height guy
+> 184.2
+> ghci> flavor guy
+> "Chocolate"
+
+Il doit y avoir un meilleur moyen, vous vous dites ! Eh bien non, il n'y en a
+pas, désolé.
+
+Non, je blague, il y en a un. Hahaha ! Les créateurs d'Haskell étaient très
+intelligents et ont anticipé ce scénario. Ils ont inclus une version
+alternative d'écrire les types de données. Voici comment l'on pourrait obtenir
+les mêmes fonctionnalités avec une syntaxe d'enregistrements.
+
+> data Person = Person { firstName :: String
+>                      , lastName :: String
+>                      , age :: Int
+>                      , height :: Float
+>                      , phoneNumber :: String
+>                      , flavor :: String
+>                      } deriving (Show)
+
+Donc, plutôt que de seulement nommer les types des champs les uns après les
+autres et de les séparer par des espaces, on peut utiliser des accolades. On
+écrit d'abord le nom du champ, par exemple `firstName`, puis un `::` (aussi
+appelé Paamayim Nekudotayim, haha) puis on spécifie son type. Le type de
+données résultant est exactement le même. Le principal avantage est que cela
+crée les fonctions pour examiner chaque champ du type de données. En utilisant
+la syntaxe des enregistrements, Haskell a automatiquement créé ces fonctions :
+`firstName`, `lastName`, `age`, `height`, `phoneNumber` et `flavor`.
+
+> ghci> :t flavor
+> flavor :: Person -> String
+> ghci> :t firstName
+> firstName :: Person -> String
+
+Il y a également un autre avantage à utiliser la syntaxe des enregistrements.
+Lorsqu'on dérive `Show` pour le type, il est affiché différemment lorsqu'on
+utilise la syntaxe des enregistrements pour définir et instancier le type.
+Mettons qu'on a un type qui représente des voitures. On souhaite garder une
+trace de la compagnie qui l'a créée, le nom du modèle et l'année de production.
+Regardez.
+
+> data Car = Car String String Int deriving (Show)
+
+> ghci> Car "Ford" "Mustang" 1967
+> Car "Ford" "Mustang" 1967
+
+Si on le définit à l'aide de la syntaxe des enregistrements, on peut créer une
+nouvelle voiture comme suit.
+
+> data Car = Car {company :: String, model :: String, year :: Int} deriving (Show)
+
+> ghci> Car {company="Ford", model="Mustang", year=1967}
+> Car {company = "Ford", model = "Mustang", year = 1967}
+
+À la création de la voiture, on a pas nécessairement à mettre les champs dans
+le bon ordre, du moment qu'on les liste tous. Alors que sans la syntaxe des
+enregistrements, l'ordre importe.
+
+Utilisez cette syntaxe lorsqu'un constructeur a plusieurs champs et qu'il n'est
+pas évident de prédire lequel correspond à quoi. Si l'on crée un type de
+données vecteur 3D en faisant `data Vector = Vector Int Int Int`, il est plutôt
+évident que les champs sont les trois composantes du vecteur. Par contre, pour
+`Person` ou `Car`, c'était plus compliqué et on a gagné à utiliser la syntaxe
+des enregistrements.
+
+Paramètres de types
+-------------------
+
+Un constructeur de valeurs peut prendre plusieurs valeurs comme paramètres et
+retourner une nouvelle valeur. Par exemple, le constructeur `Car` prend trois
+valeurs et produit une valeur de type `Car`. De manière similaire, les
+**constructeurs de types** peuvent prendre des types en paramètres pour créer
+de nouveaux types. Ca peut sembler un peu trop méta au premier abord, mais ce
+n'est pas si compliqué. Si vous êtes familier avec les templates C++, vous
+verrez des parallèles. Pour se faire une bonne image de l'utilisation des
+paramètres de types en action, regardons comment un des types que nous avons
+déjà rencontré est implémenté.
+
+> data Maybe a = Nothing | Just a
+
+La `a` est un paramètre de type. Et puisqu'il y a un paramètre de type
+impliqué, on dit que `Maybe` est un constructeur de type. En fonction de ce que
+l'on veut que ce type de données contienne lorsqu'il ne vaut pas `Nothing`, ce
+constructeur de types peut éventuellement construire un type `Maybe Int`,
+`Maybe Car`, `Maybe String`, etc. Aucune valeur ne peut avoir pour type
+`Maybe`, car ce n'est pas un type per se, mais un constructeur de types. Pour
+pouvoir être un type réel que peut avoir une valeur, il doit avoir tous ses
+paramètres remplis.
+
+Donc, si l'on passe `Char` en paramètre de type à `Maybe`, on obtient un type
+`Maybe Char`. La valeur `Just 'a'` a pour type `Maybe Char` par exemple.
+
+Vous ne le savez peut-être pas, mais on a utilisé un type qui a un paramètre de
+type avant même d'utiliser `Maybe`. Ce type est le type des listes. Bien qu'il
+y ait un peu de sucre syntaxique en jeu, le type liste prend un paramètre et
+produit un type concret. Des valeurs peuvent avoir pour type `[Int]`, `[Char]`,
+`[[String]]`, mais aucune valeur ne peut avoir pour type `[]`.
+
+Jouons un peu avec le type `Maybe`.
+
+> ghci> Just "Haha"
+> Just "Haha"
+> ghci> Just 84
+> Just 84
+> ghci> :t Just "Haha"
+> Just "Haha" :: Maybe [Char]
+> ghci> :t Just 84
+> Just 84 :: (Num t) => Maybe t
+> ghci> :t Nothing
+> Nothing :: Maybe a
+> ghci> Just 10 :: Maybe Double
+> Just 10.0
+
+Les paramètres de types sont utiles parce qu'on peut créer différents types qui
+dépendent de quelle sorte de types on souhaite que notre type de données
+contienne. Quand on fait `:t Just "Haha"`, le moteur d'inférence de types
+se rend compte que le type doit être `Maybe [Char]`, parce que le `a` dans le
+`Just a` est une chaîne de caractères, donc le `a` de `Maybe a` doit aussi être
+une chaîne de caractères.
+
+Remarquez que le type de `Nothing` est `Maybe a`. Son type est polymorphique.
+Si une fonction nécessite un `Maybe Int` en paramètre, on peut lui donner
+`Nothing`, parce que `Nothing` ne contient pas de valeur de toute façon, donc
+peu importe. Le type `Maybe a` peut se comporter comme `Maybe Int` s'il le
+faut, tout comme `5` peut se comporter comme un `Int` ou un `Double`. De façon
+similaire, le type de la liste vide est `[a]`. Une liste vide peut être une
+liste de quoi que ce soit. C'est pourquoi on peut faire `[1, 2, 3] ++ []` et
+`["ha", "ha", "ha"] ++ []`.
+
+Utiliser les paramètres de types est très bénéfique, mais seulement quand les
+utiliser a un sens. Généralement, on les utilise quand notre type de données
+fonctionne sans se soucier du type de ce qu'il contient en lui, comme pour
+notre type `Maybe a`. Si notre type se comporte comme une sorte de boîte, il
+est bien de les utiliser. On pourrait changer notre type de données `Car` de :
+
+> data Car = Car { company :: String
+>                , model :: String
+>                , year :: Int
+>                } deriving (Show)
+
+en :
+
+> data Car a b c = Car { company :: a
+>                      , model :: b
+>                      , year :: c
+>                      } deriving (Show)
+
+Mais y gagnerait-on vraiment ? La réponse est : probablement pas, parce qu'on
+finirait par définir des fonctions qui ne fonctionnent que sur le type `Car
+String String Int`. Par exemple, vu notre première définition de `Car`, on
+pourrait écrire une fonction qui affiche les propriétés de la voiture avec un
+joli petit texte.
+
+> tellCar :: Car -> String
+> tellCar (Car {company = c, model = m, year = y}) = "This " ++ c ++ " " ++ m ++ " was made in " ++ show y
+
+> ghci> let stang = Car {company="Ford", model="Mustang", year=1967}
+> ghci> tellCar stang
+> "This Ford Mustang was made in 1967"
+
+Quelle jolie petite fonction ! La déclaration de type est mignonne et
+fonctionne bien. Maintenant, si `Car` était `Car a b c` ?
+
+> tellCar :: (Show a) => Car String String a -> String
+> tellCar (Car {company = c, model = m, year = y}) = "This " ++ c ++ " " ++ m ++ " was made in " ++ show y
+
+Nous devrions forcer cette fonction à prendre un type `Car` tel que `(Show a)
+=> Car String String a`. Vous pouvez constater que la signature de type est
+plus compliquée, et le seul avantage qu'on en tire serait qu'on pourrait
+utiliser n'importe quelle type instance de la classe de types `Show` pour `c`.
+
+> ghci> tellCar (Car "Ford" "Mustang" 1967)
+> "This Ford Mustang was made in 1967"
+> ghci> tellCar (Car "Ford" "Mustang" "nineteen sixty seven")
+> "This Ford Mustang was made in \"nineteen sixty seven\""
+> ghci> :t Car "Ford" "Mustang" 1967
+> Car "Ford" "Mustang" 1967 :: (Num t) => Car [Char] [Char] t
+> ghci> :t Car "Ford" "Mustang" "nineteen sixty seven"
+> Car "Ford" "Mustang" "nineteen sixty seven" :: Car [Char] [Char] [Char]
+
+Dans la vie réelle cependant, on finirait par utiliser `Car String String Int`
+la plupart du temps, et il semblerait que paramétriser le type `Car` ne valait
+pas le coup. On utilise généralement les paramètres de types lorsque le type
+contenu dans les divers constructeurs de valeurs du type de données n'est pas
+vraiment important pour que le type fonctionne. Une liste de choses est une
+liste de choses, peu importe ce que les choses sont, ça marche. Si on souhaite
+sommer une liste de nombre, on peut spécifier au dernier moment que la fonction
+de sommage attend une liste de nombres. De même pour `Maybe`. `Maybe`
+représente une option qui est soit de n'avoir rien, soit d'avoir quelque chose.
+Peu importe ce que le type de cette chose est.
+
+Un autre exemple de type paramétré que nous avons déjà rencontré est `Map k v`
+de `Data.Map`. Le `k` est le type des clés, le `v` le type des valeurs. C'est
+un bon exemple d'endroit où les types paramétrés sont très utiles. Avoir des
+maps paramétrées nous permet de créer des maps de n'importe quel type vers
+n'importe quel autre type, du moment que le type de la clé soit membre de la
+classe de types `Ord`. Si nous étions en train de définir un type de map, on
+pourrait ajouter la contrainte de classe dans la déclaration *data* :
+
+> data (Ord k) => Map k v = ...
+
+Cependant, il existe une très forte convention en Haskell qui est de **ne
+jamais ajouter de contraintes de classe à une déclaration de données**.
+Pourquoi ? Eh bien, parce que le bénéfice est minimal, comparé au fait qu'on se
+retrouve à écrire plus de contraintes de classes, même lorsqu'elles ne sont pas
+nécessaires. Que l'on mette ou non, la contrainte `Ord k` dans la déclaration
+*data* de `Map k v`, on aura à écrire la contrainte dans les fonctions qui
+supposent un ordre sur les clés de toute façon. Mais, si l'on ne met pas la
+contrainte dans la déclaration *data*, alors on n'aura pas à mettre `(Ord k)
+=>` dans les déclarations de types de fonctions qui n'ont pas besoin de cette
+contrainte pour fonctionner. Un exemple d'une telle fonction est `toList`, qui
+prend un mapping et le convertit en liste associative. Sa signature de type est
+`toList :: Map k a -> [(k, a)]`. Si `Map k v` avait une contrainte de classe
+dans sa déclaration *data*, le type de `ToList` devrait être `toList :: (Ord k)
+=> Map k a -> [(k, a)]`, alors que cette fonction ne fait aucune comparaison de
+clés selon leur ordre.
+
+Conclusion : ne mettez pas de contraintes de classe dans les déclarations
+*data* même lorsqu'elles ont l'air sensées, parce que de toute manière, vous
+devrez les écrire dans les fonctions qui en dépendent.
+
+Implémentons un type de vecteur 3D et ajoutons-y quelques opérations. Nous
+utiliserons un type paramétré afin qu'il supporte plusieurs types numériques,
+bien qu'en général on n'en utilise qu'un seul.
+
+> data Vector a = Vector a a a deriving (Show)
+>
+> vplus :: (Num t) => Vector t -> Vector t -> Vector t
+> (Vector i j k) `vplus` (Vector l m n) = Vector (i+l) (j+m) (k+n)
+>
+> vectMult :: (Num t) => Vector t -> t -> Vector t
+> (Vector i j k) `vectMult` m = Vector (i*m) (j*m) (k*m)
+>
+> scalarMult :: (Num t) => Vector t -> Vector t -> t
+> (Vector i j k) `scalarMult` (Vector l m n) = i*l + j*m + k*n
+
+`vplus` somme deux vecteurs. Deux vecteurs sont sommés en sommant leurs
+composantes deux à deux. `scalarMult` est le produit scalaire de deux vecteurs
+et `vectorMult` permet de multiplier un vecteur par un scalaire. Ces fonctions
+peuvent opérer sur des types comme `Vector Int`, `Vector Integer`, `Vector
+Float`, à condition que le `a` de `Vector a` soit de la classe `Num`.
+Également, si vous examinez les déclarations de type des fonctions, vous verrez
+qu'elles n'opèrent que sur des vecteurs de même type et que les scalaires
+doivent également être du type contenu dans les vecteurs. Remarquez qu'on a pas
+mis de contrainte `Num` dans la déclaration *data*, puisqu'on a eu à l'écrire
+dans chaque fonction qui en dépendait de toute façon.
+
+Une fois de plus, il est très important de distinguer le constructeur de types
+du constructeur de valeurs. Lorsqu'on déclare un type, le nom à gauche du `=`
+est le constructeur de types, et les constructeurs situés après (séparés par
+des `|`) sont des constructeurs de valeurs. Donner à une fonction le type
+`Vector t t t -> Vector t t t -> t` serait faux, parce que l'on doit donner des
+types dans les déclarations de types, le constructeur de **types** vecteurs ne
+prend qu'un paramètre, alors que le constructeur de valeurs en prend trois.
+Jouons avec nos vecteurs.
+
+> ghci> Vector 3 5 8 `vplus` Vector 9 2 8
+> Vector 12 7 16
+> ghci> Vector 3 5 8 `vplus` Vector 9 2 8 `vplus` Vector 0 2 3
+> Vector 12 9 19
+> ghci> Vector 3 9 7 `vectMult` 10
+> Vector 30 90 70
+> ghci> Vector 4 9 5 `scalarMult` Vector 9.0 2.0 4.0
+> 74.0
+> ghci> Vector 2 9 3 `vectMult` (Vector 4 9 5 `scalarMult` Vector 9 2 4)
+> Vector 148 666 222
+
+Instances dérivées
+------------------
+
+Dans la section [Classes de types 101](TODO), nous avons vu les bases des
+classes de types. Nous avons dit qu'une classe de types est une sorte
+d'interface qui définit un comportement. Un type peut être fait une
+**instance** d'une classe de types s'il supporte ce comportement. Par exemple :
+le type `Int` est une instance d'`Eq` parce que cette classe définit le
+comportement de ce qui peut être testé pour l'égalité. Et puisqu'on peut tester
+l'égalité de deux entiers, `Int` est membre de la classe `Eq`. La vraie utilité
+vient des fonctions qui agissent comme l'intergace d'`Eq`, à savoir `==` et
+`/=`. Si un type est membre d'`Eq`, on peut utiliser les fonctions `==` et `/=`
+avec des valeurs de ce type. C'est pourquoi des expressions comme `4 == 4` et
+`"foo" /= "bar"` sont correctement typées.
+
+Nous avons aussi mentionné qu'elles sont souvent confondues avec les classes de
+langages comme Java, Python, C++ et autres, ce qui sème la confusion dans
+l'esprit de beaucoup de gens. Dans ces langages, les classes sont des patrons à
+partir desquels sont créés des objets qui contiennent un état et peuvent
+effectuer des actions. Les classes de types sont plutôt comme des interfaces.
+On ne crée pas de données à partir de classes de types. Plutôt, on crée d'abord
+notre type de données, puis on se demande pour quoi il peut se faire passer.
+S'il peut être comparé pour l'égalité, on le rend instance de la classe `Eq`.
+S'il peut être ordonné, on le rend instance de la classe `Ord`.
+
+Dans la prochaine section, nous verrons comment créer manuellement nos
+instances d'une classe de types en implémentant les fonctions définies par
+cette classe. Pour l'instant, voyons comment Haskell peut magiquement faire de
+nos types des instances de n'importe laquelle des classes de types suivantes :
+`Eq`, `Ord`, `Enum`, `Bounded`, `Show` et `Read`. Haskell peut dériver le
+comportement de nos types dans ces contextes si l'on utilise le mot clé
+*deriving* lors de la création du type de données.
+
+Considérez ce type de données :
+
+> data Person = Person { firstName :: String
+>                      , lastName :: String
+>                      , age :: Int
+>                      }
+
+Il décrit une personne. Posons comme hypothèse que deux personnes n'ont jamais
+les mêmes nom, prénom et âge. Maintenant, si l'on a un enregistrement pour deux
+personnes, est-ce que cela a un sens de vérifier s'il s'agit de la même
+personne ? Bien sûr. On peut essayer de voir si les enregistrements sont les
+mêmes ou non. C'est pourquoi il serait sensé que ce type soit membre de la
+classe `Eq`. Nous allons dériver cette instance.
+
+> data Person = Person { firstName :: String
+>                      , lastName :: String
+>                      , age :: Int
+>                      } deriving (Eq)
+
+Lorsqu'on dérive l'instance `Eq` pour un type, puis qu'on essaie de comparer
+deux valeurs de ce type avec `==` ou `/=`, Haskell va regarder si les deux
+constructeurs sont égaux (ici il n'y en a qu'un possible cependant), puis va
+tester si les données contenues dans les valeurs sont égales deux à deux en
+testant chaque paire de champ avec `==`. Ainsi, il y a un détail important, qui
+est que les types des champs doivent aussi êtres membres de la classe `Eq`.
+Puisque `String` et `Int` le sont, tout va bien. Testons notre instance d'`Eq`.
+
+> ghci> let mikeD = Person {firstName = "Michael", lastName = "Diamond", age = 43}
+> ghci> let adRock = Person {firstName = "Adam", lastName = "Horovitz", age = 41}
+> ghci> let mca = Person {firstName = "Adam", lastName = "Yauch", age = 44}
+> ghci> mca == adRock
+> False
+> ghci> mikeD == adRock
+> False
+> ghci> mikeD == mikeD
+> True
+> ghci> mikeD == Person {firstName = "Michael", lastName = "Diamond", age = 43}
+> True
+
+Bien sûr, puisque `Person` est maintenant dans `Eq`, on peut utiliser comme `a`
+pour toute fonction ayant une contrainte de classe `Eq a` dans sa signature,
+comme `elem`.
+
+> ghci> let beastieBoys = [mca, adRock, mikeD]
+> ghci> mikeD `elem` beastieBoys
+> True
+
+Les classes de types `Show` et `Read` sont pour les choses qui peuvent être
+converties respectivement vers et depuis une chaîne de caractères. Comme avec
+`Eq`, si un constructeur de types a des champs, leur type doit aussi être
+membre de `Show` ou `Read` si on veut faire de notre type une instance de l'une
+de ces classes. Faisons de notre type de données `Person` un membre de `Show`
+et de `Read`.
+
+> data Person = Person { firstName :: String
+>                      , lastName :: String
+>                      , age :: Int
+>                      } deriving (Eq, Show, Read)
+
+Maintenant, on peut afficher une personne dans le terminal.
+
+> ghci> let mikeD = Person {firstName = "Michael", lastName = "Diamond", age = 43}
+> ghci> mikeD
+> Person {firstName = "Michael", lastName = "Diamond", age = 43}
+> ghci> "mikeD is: " ++ show mikeD
+> "mikeD is: Person {firstName = \"Michael\", lastName = \"Diamond\", age = 43}"
+
+Si nous avions voulu afficher une personne dans le terminal avant de rendre
+`Person` membre de `Show`, Haskell se serait plaint du fait qu'il ne sache pas
+représenter une personne comme une chaîne de caractères. Mais maintenant qu'on
+a dérivé `Show`, il sait comment faire.
+
+`Read` est en gros l'inverse de `Show`. `Show` convertit des valeurs de notre
+type en des chaînes de caractères, `Read` convertit des chaîne de caractères en
+valeurs de notre type. Souvenez-vous cependant, lorsqu'on avait utilisé la
+fonction `read`, on avait dû annoter explicitement le type qu'on désirait. Sans
+cela, Haskell ne sait pas vers quel type on veut convertir.
+
+> ghci> read "Person {firstName =\"Michael\", lastName =\"Diamond\", age = 43}" :: Person
+> Person {firstName = "Michael", lastName = "Diamond", age = 43}
+
+Si on utilise le résultat de `read` dans un calcul plus élaboré, Haskell peut
+inférer le type qu'on attend, et l'on n'a alors pas besoin d'annoter le type.
+
+> ghci> read "Person {firstName =\"Michael\", lastName =\"Diamond\", age = 43}" == mikeD
+> True
+
+On peut aussi lire des types paramétrés, et il faut alors annoter le type avec
+les paramètres complétés. Ainsi, on ne peut pas faire `read "Just 't'" :: Maybe
+a`, mais on peut faire `read "Just 't'" :: Maybe Char`.
+
+On peut dériver des instances la classe de types `Ord`, qui est pour les types
+dont les valeurs peuvent être ordonnées. Si l'on compare deux valeurs du même
+type ayant été construites par deux constructeurs différents, la valeur
+construite par le constructeur défini en premier sera considérée plus petite.
+Par exemple, considérez le type `Bool`, qui peut avoir pour valeur `False` ou
+`True`. Pour comprendre comment il fonctionne lorsqu'il est comparé, on peut
+l'imaginer défini comme :
+
+> data Bool = False | True deriving (Ord)
+
+Puisque le constructeur de valeurs `False` est spécifié avant le constructeur
+de valeurs `True`, on peut considérer que `True` est plus grand que `False`.
+
+> ghci> True `compare` False
+> GT
+> ghci> True > False
+> True
+> ghci> True < False
+> False
+
+Dans le type de données `Maybe a`, le constructeur de valeurs `Nothing` est
+spécifié avant le constructeur de valeurs `Just`, donc une valeur `Nothing` est
+toujours plus petite qu'une valeur `Just something`, même si ce *something* est
+moins un milliard de milliards. Mais si l'on compare deux valeurs `Just`, alors
+Haskell compare ce qu'elles contiennent.
+
+> ghci> Nothing < Just 100
+> True
+> ghci> Nothing > Just (-49999)
+> False
+> ghci> Just 3 `compare` Just 2
+> GT
+> ghci> Just 100 > Just 50
+> True
+
+Mais on ne peut pas faire `Just (*3) > Just (*2)`, parce que `(*3)` et `(*2)`
+sont des fonctions, qui ne sont pas des instances d'`Ord`.
+
+On peut facilement utiliser des types de données algébriques pour créer des
+énumérations, et les classes de types `Enum` et `Bounded` nous aident dans la
+tâche. Considérez les types de données suivants :
+
+> data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
+
+Puisque tous les constructeurs de valeurs sont nullaires (ils ne prennent pas
+de paramètres, ou champs), on peut rendre le type membre de la classe `Enum`.
+La classe de types `Enum` est pour les choses qui ont des prédécesseurs et des
+successeurs. On peut aussi le rendre membre de la classe `Bounded`, qui est
+pour les choses avec une plus petite valeur et une plus grande valeur. Tant
+qu'on y est, faisons-en aussi une instance des autres classes qu'on a vues.
+
+> data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
+>            deriving (Eq, Ord, Show, Read, Bounded, Enum)
+
+Puisque le type est membre des classes `Show` et `Read`, on peut le convertir
+vers et depuis des chaînes de caractères.
+
+> ghci> Wednesday
+> Wednesday
+> ghci> show Wednesday
+> "Wednesday"
+> ghci> read "Saturday" :: Day
+> Saturday
+
+Puisqu'il est membre des classes `Eq` et `Ord`, on peut comparer et tester
+l'égalité de deux jours.
+
+> ghci> Saturday == Sunday
+> False
+> ghci> Saturday == Saturday
+> True
+> ghci> Saturday > Friday
+> True
+> ghci> Monday `compare` Wednesday
+> LT
+
+Il est aussi membre de `Bounded`, donc on peut demander le plus petit jour et
+le plus grand jour.
+
+> ghci> minBound :: Day
+> Monday
+> ghci> maxBound :: Day
+> Sunday
+
+C'est aussi une instance d'`Enum`. On peut obtenir le prédécesseur et le
+successeurs d'un jour, et créer une progression de jours !
+
+> ghci> succ Monday
+> Tuesday
+> ghci> pred Saturday
+> Friday
+> ghci> [Thursday .. Sunday]
+> [Thursday,Friday,Saturday,Sunday]
+> ghci> [minBound .. maxBound] :: [Day]
+> [Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday]
+
+C'est plutôt génial.
+
+Synonymes de types
+------------------
+
+Précédemment, on a mentionné qu'en écrivant des types, les types `[Char]` et
+`String` étaient équivalents et interchangeables. Ceci est implémenté à l'aide
+des **synonymes de types**. Les synonymes de types ne font rien per se, il
+s'agit simplement de donner des noms différents au même type afin que la
+lecture du code ou de la documentation ait plus de sens pour le lecteur. Voici
+comment la bibliothèque standard définit `String` comme un synonyme de
+`[Char]`.
+
+> type String = [Char]
+
+On a introduit le mot-clé *type*. Le mot clé peut être déroutant pour certains,
+puisqu'on ne crée en fait rien de nouveau (on faisait cela avec le mot-clé
+*data*), mais on crée seulement un synonyme pour un type déjà existant.
+
+Si l'on crée une fonction qui convertit une chaîne de caractères en majuscules
+et qu'on l'appelle `toUpperString`, on peut lui donner comme déclaration de
+type `toUpperString :: [Char] -> [Char]` ou `toUpperString :: String ->
+String`. Ces deux déclarations sont en effet identiques, mais la dernière est
+plus agréable à lire.
+
+Quand on utilisait le module `Data.Map`, on a commencé par représenter un
+carnet téléphonique comme une liste associative avant de le représenter comme
+une map. Comme nous l'avions alors vu, une liste associative est une liste de
+paires clé-valeur. Regardons le carnet que nous avions alors.
+
+> phoneBook :: [(String,String)]
+> phoneBook =
+>     [("betty","555-2938")
+>     ,("bonnie","452-2928")
+>     ,("patsy","493-2928")
+>     ,("lucille","205-2928")
+>     ,("wendy","939-8282")
+>     ,("penny","853-2492")
+>     ]
+
+On voit que le type de `phoneBook` est `[(String, String)]`. Cela nous indique
+que c'est une liste associative qui mappe des chaînes de caractères vers des
+chaînes de caractères, mais pas grand chose de plus. Créons un synonyme de
+types pour communiquer plus d'information dans la déclaration de type.
+
+> type PhoneBook = [(String,String)]
+
+À présent, la déclaration de notre carnet peut être `phoneBook :: PhoneBook`.
+Créons aussi un synonyme pour `String`.
+
+> type PhoneNumber = String
+> type Name = String
+> type PhoneBook = [(Name,PhoneNumber)]
+
+Donner des synonymes de types au type `String` est pratique courante chez les
+programmeurs en Haskell lorsqu'ils souhaitent indiquer plus d'information à
+propos des chaînes de caractères qu'ils utilisent dans leur programme et ce
+qu'elles représentent.
+
+À présent, lorsqu'on implémente une fonction qui prend un nom et un nombre,
+et cherche si cette combinaison de nom et de numéro est dans notre carnet
+téléphonique, on peut lui donner une description de type très jolie et
+descriptive.
+
+> inPhoneBook :: Name -> PhoneNumber -> PhoneBook -> Bool
+> inPhoneBook name pnumber pbook = (name,pnumber) `elem` pbook
+
+Si nous n'avions pas utilisé de synonymes de types, notre fonction aurait pour
+type `String -> String -> [(String,String)] -> Bool`. Ici, la déclaration
+tirant parti des synonymes de types est plus facile à lire. Cependant, n'en
+faites pas trop. On introduit les synonymes de types pour soit décrire ce que
+des types existants représentent dans nos fonctions (et ainsi les déclarations
+de types de nos fonctions deviennent de meilleurs documentations), soit lorsque
+quelque chose a un type assez long et répété souvent (comme `[(String,
+String)]`) et représente quelque chose de spécifique dans le contexte de nos
+fonctions.
+
+Les synonymes de types peuvent aussi être paramétrés. Si on veut un type qui
+représente le type des listes associatives de façon assez générale pour être
+utilisé quelque que soit le type des clés et des valeurs, on peut faire :
+
+> type AssocList k v = [(k,v)]
+
+Maintenant, une fonction qui récupère la valeur associée à une clé dans une
+liste associative peut avoir pour type `(Eq k) => k -> AssocList k v -> Maybe
+v`. `AssocList` est un constructeur de types qui prend deux types et produit un
+type concret, comme `AssocList Int String` par exemple.
+
+**Fonzie dit** : Hey ! Quand je parle de *types concrets*, je veux dire genre
+des types appliqués complètement comme `Map Int String`, ou si on se frotte à
+une de ces fonctions polymorphes, `[a]` ou `(Ord a) => Maybe a` et tout ça. Et
+tu vois, parfois moi et mes potes on dit que `Maybe` c'est un type, mais bon,
+c'est pas ce qu'on veut dire, parce que même les idiots savent que `Maybe` est
+un constructeur de type, t'as vu. Quand j'applique `Maybe` à un type, comme
+dans `Maybe String`, alors j'ai un type concret. Tu sais, les valeurs, elles ne
+peuvent avoir que des types concrets ! En gros, vis vite, aime fort, et ne
+prête ton peigne à personne !
+
+Tout comme l'on peut appliquer partiellement des fonctions pour obtenir de
+nouvelles fonctions, on peut appliquer partiellement des constructeurs de types
+pour obtenir de nouveaux constructeurs de types. Tout comme on appelle une
+fonctions avec trop peu de paramètres, on peut spécifier trop peu de paramètres
+de types à un constructeur de types et obtenir un constructeur de types
+partiellement appliqué. Si l'on voulait un type qui représentent une map (de
+`Data.Map`) qui va des entiers vers quelque chose, on pourrait faire soit :
+
+> type IntMap v = Map Int v
+
+Ou bien :
+
+> type IntMap = Map Int
+
+D'une manière ou de l'autre, le constructeur de types `IntMap` prend un seul
+paramètre qui est le type de ce vers quoi les entiers doivent pointer.
+
+**Ah oui**. Si vous comptez essayer d'implémenter ceci, vous allez probablement
+importer `Data.Map` qualifié. Quand vous faites un import qualifié, les
+constructeurs de type doivent aussi être précédés du nom du module. Donc vous
+écririez `type IntMap = Map.Map Int`.
+
+Soyez certains d'avoir bien saisi la distinction entre constructeurs de types
+et constructeurs de valeurs. Juste parce qu'on a créé un synonyme de types
+`IntMap` ou `AssocList` ne signifie pas que l'on peut faire quelque chose comme
+`AssocList [(1, 2), (4, 5), (7, 9)]`. Tout ce que cela signifie, c'est qu'on
+peut parler de ce type en utilisant des noms différents. On peut faire `[(1,
+2), (3, 5), (8, 9)] :: AssocList Int Int`, ce qui va faire que les nombres à
+l'intérieur auront pour type `Int`, mais on peut continuer à utiliser cette
+liste comme une liste normale qui contient des paires d'entiers. Les synonymes
+de types (et plus généralement les types) ne peuvent être utilisés que dans la
+partie types d'Haskell. On se situe dans cette partie lorsqu'on définit de
+nouveaux types (donc, dans une déclaration *data* ou *type*), ou lorsqu'on se
+situe après un `::`. Le `::` peut être dans des déclarations de types ou pour
+des annotations de types.
+
+Un autre type de données cool qui prend deux types en paramètres est `Either a
+b`. Voici grossièrement sa définition :
+
+> data Either a b = Left a | Right b deriving (Eq, Ord, Read, Show)
+
+Il a deux constructeurs de valeurs. Si le constructeur `Left` est utilisé,
+alors le contenu a pour type `a`, si `Right` est utilisé, le contenu a pour
+type `b`. Ainsi, on peut utiliser ce type pour encapsuler une valeur qui peut
+avoir un type ou un autre, et lorsqu'on récupère une valeur qui a pour type
+`Either a b`, on filtre généralement par motif sur `Left` et `Right` pour
+obtenir différentes choses en fonction.
+
+> ghci> Right 20
+> Right 20
+> ghci> Left "w00t"
+> Left "w00t"
+> ghci> :t Right 'a'
+> Right 'a' :: Either a Char
+> ghci> :t Left True
+> Left True :: Either Bool b
+
+Jusqu'ici, nous avons vu que `Maybe a` était principalement utilisé pour
+représenter des résultats de calculs qui pouvaient avoir soit échoué, soit
+réussi. Mais parfois, `Maybe a` n'est pas assez bien, parce que `Nothing`
+n'indique pas d'information autre que le fait que quelque chose a échoué. C'est
+bien pour les fonctions qui peuvent échouer seulement d'une façon, ou lorsqu'on
+se fiche de savoir comment elles ont échoué. Une recherche de clé dans
+`Data.Map` ne peut échouer que lorsqu'une clé n'était pas présente, donc on
+sait ce qui s'est passé. Cependant, lorsqu'on s'intéresse à comment une
+fonction a échoué ou pourquoi, on utilise généralement le type `Either a b`, où
+`a` est un type qui peut d'une certaine façon indiquer les raisons d'un
+éventuel échec, et `b` est le type du résultat d'un calcul réussi. Ainsi, les
+erreurs utilisent le constructeur de valeurs `Left`, alors que les résultats
+utilisent le constructeur de valeurs `Right`.
+
+Exemple : un lycée a des casiers dans lesquels les étudiants peuvent ranger
+leurs posters de Guns'n'Roses. Chaque casier a une combinaison. Quand un
+étudiant veut un nouveau casier, il indique au superviseur des casiers le
+numéro de casier qu'il voudrait, et celui-ci lui donne le code. Cependant, si
+quelqu'un utilise déjà ce casier, il ne peut pas lui donner le casier, et
+l'étudiant doit en choisir un autre. On va utiliser une map de `Data.Map` pour
+représenter les casiers. Elle associera à chaque numéro de casier une paire
+indiquant si le casier est utilisé ou non, et le code du casier.
+
+> import qualified Data.Map as Map
+>
+> data LockerState = Taken | Free deriving (Show, Eq)
+>
+> type Code = String
+>
+> type LockerMap = Map.Map Int (LockerState, Code)
+
+Simple. On introduit un nouveau type de données pour représenter un casier
+occupé ou libre, et on crée un synonyme de types pour le code du casier. On
+crée aussi un synonyme de types pour les maps qui prennent un entier et
+renvoient une paire d'état de de code de casier. À présent, on va créer une
+fonction qui cherche le code dans une map de casiers. On va utiliser un type
+`Either String Code` pour représenter le résultat, parce que la recherche peut
+échouer de deux façons - le casier peut être déjà pris, auquel cas on ne peut
+pas dévoiler le code, ou bien le numéro de casier peut tout simplement ne pas
+exister. Si la recherche échoue, on va utiliser une `String` pour décrire ce
+qui s'est passé.
+
+> lockerLookup :: Int -> LockerMap -> Either String Code
+> lockerLookup lockerNumber map =
+>     case Map.lookup lockerNumber map of
+>         Nothing -> Left $ "Locker number " ++ show lockerNumber ++ " doesn't exist!"
+>         Just (state, code) -> if state /= Taken
+>                                 then Right code
+>                                 else Left $ "Locker " ++ show lockerNumber ++ " is already taken!"
+
+On fait une recherche normale dans la map. Si l'on obtient `Nothing`, on
+retourne une valeur de type `Left String`, qui dit que le casier n'existe pas.
+Si on trouve le casier, on effectue une vérification supplémentaire pour voir
+s'il est utilisé. Si c'est le cas, on retourne `Left` en indiquant qu'il est
+déjà pris. Autrement, on retourne une valeur de type `Right Code`, dans
+laquelle on donne le code dudit casier. En fait, c'est un `Right String`, mais
+on a introduit un synonyme de types pour introduire un peu de documentation
+dans la déclaration de types. Voici une map à titre d'exemple :
+
+> lockers :: LockerMap  
+> lockers = Map.fromList   
+>     [(100,(Taken,"ZD39I"))  
+>     ,(101,(Free,"JAH3I"))  
+>     ,(103,(Free,"IQSA9"))  
+>     ,(105,(Free,"QOTSA"))  
+>     ,(109,(Taken,"893JJ"))  
+>     ,(110,(Taken,"99292"))  
+>     ]  
+
+Maintenant, cherchons le code de quelques casiers.
+
+> ghci> lockerLookup 101 lockers  
+> Right "JAH3I"  
+> ghci> lockerLookup 100 lockers  
+> Left "Locker 100 is already taken!"  
+> ghci> lockerLookup 102 lockers  
+> Left "Locker number 102 doesn't exist!"  
+> ghci> lockerLookup 110 lockers  
+> Left "Locker 110 is already taken!"  
+> ghci> lockerLookup 105 lockers  
+> Right "QOTSA"  
+
+On aurait pu utiliser un `Maybe a` pour représenter le résultat, mais alors on
+ne saurait pas pour quelle raison on n'a pas pu obtenir le code. Ici,
+l'information en cas d'échec est dans le type de retour.
+
+Structures de données récursives
+--------------------------------
+
+Comme on l'a vu, un constructeur de type de données algébrique peut avoir
+plusieurs (ou aucun) champs et chaque champ doit avoir un type concret. Avec
+cela en tête, on peut créer des types dont les constructeurs ont des champs qui
+sont de ce même type ! Ainsi, on peut créer des types de données récursifs, où
+une valeur d'un type peut contenir des valeurs de ce même type, qui à leur tour
+peuvent contenir encore plus de valeurs de ce type, et ainsi de suite.
+
+Pensez à cette liste : `[5]`. C'est juste un sucre syntaxique pour `5:[]`. À
+gauche de `:`, il y a une valeur, et à droite, il y a une liste. Dans ce cas,
+c'est une liste vide. Maintenant, qu'en est-il de `[4, 5]` ? Eh bien, ça se
+désucre en `4:(5:[])`. En considérant le premier `:`, on voit qu'il prend aussi
+un élément à gauche et une liste (ici `5:[]`) à droite. Il en va de même pour
+`3:(4:(5:(6:[])))`, qui peut aussi être écrit `3:4:5:6:[]` (parce que `:` est
+associatif à droite) ou `[3, 4, 5, 6]`.
+
+On peut dire qu'une liste peut être la liste vide ou composée d'un élément
+adjoint via `:` à une autre liste (qui peut être vide ou non).
+
+Utilisons un type de données algébrique pour implémenter nos propres listes
+dans ce cas !
+
+> data List a = Empty | Cons a (List a) deriving (Show, Read, Eq, Ord)  
+
+On peut lire ça comme la définition des listes donnée dans un paragraphe
+ci-dessus. Une liste est soit vide, soit une combinaison d'une tête qui a une
+valeur et d'une autre liste. Si cela vous laisse perplexe, peut-être que vous
+serez plus à l'aise avec une syntaxe d'enregistrements.
+
+> data List a = Empty | Cons { listHead :: a, listTail :: List a} deriving (Show, Read, Eq, Ord)
+
+Vous serez peut-être aussi surpris par le nom du constructeur `Cons` ici. *cons* est un autre nom de `:`. Vous voyez, pour les listes, `:` est en réalité un constructeur qui prend une valeur et une autre liste, pour retourner une liste. On peut d'ores et déjà utiliser notre nouveau type de listes ! Il a deux champs. Le premier de type `a` et le second de type `List a`.
+
+> ghci> Empty  
+> Empty  
+> ghci> 5 `Cons` Empty  
+> Cons 5 Empty  
+> ghci> 4 `Cons` (5 `Cons` Empty)  
+> Cons 4 (Cons 5 Empty)  
+> ghci> 3 `Cons` (4 `Cons` (5 `Cons` Empty))  
+> Cons 3 (Cons 4 (Cons 5 Empty))  
+
+On a appelé notre constructeur `Cons` de façon infixe pour souligner sa
+similarité avec `:`. `Empty` est similaire à `[]` et `4 \`Cons\` (5 \`Cons\`
+Empty)` est similaire à `4:(5:[])`.
+
+On peut définir des fonctions comme automatiquement infixes en ne les nommant
+qu'avec des caractères spéciaux. On peut aussi faire de même avec les
+constructeurs, puisque ce sont des fonctions qui retournent un type de données.
+Regardez ça !
+
+> infixr 5 :-:  
+> data List a = Empty | a :-: (List a) deriving (Show, Read, Eq, Ord) 
+
+Tout d'abord, on remarque une nouvelle construction syntaxique, la déclaration
+de fixité. Lorsqu'on définit des fonctions comme opérateurs, on peut leur
+donner une fixité (ce n'est pas nécessaire). Une fixité indique avec quelle
+force un opérateur lie, et s'il est associatif à droite ou à gauche. Par
+exemple, la fixité de `*` est `infixl 7 *`, et la fixité de `+` est `infixl 6`.
+Cela signifie qu'ils sont tous deux associatifs à gauche (`4 * 3 * 2` est
+équivalent à `(4 * 3) * 2)`), mais `*` lie plus fortement que `+`, car il a une
+plus grande fixité, et ainsi `5 * 4 + 3` est équivalent à `(5 * 4) + 3`.
+
+À part ce détail, on a juste écrit `a :-: (List a)` à la place de `Cons a (List
+a)`. Maintenant, on peut écrire des listes qui ont notre type de listes de la
+sorte :
+
+> ghci> 3 :-: 4 :-: 5 :-: Empty  
+> (:-:) 3 ((:-:) 4 ((:-:) 5 Empty))  
+> ghci> let a = 3 :-: 4 :-: 5 :-: Empty  
+> ghci> 100 :-: a  
+> (:-:) 100 ((:-:) 3 ((:-:) 4 ((:-:) 5 Empty)))  
+
+Lorsqu'on dérive `Show` pour notre type, Haskell va toujours afficher le
+constructeur comme une fonction préfixe, d'où le parenthésage autour de
+l'opérateur (rappelez-vous, `4 + 3` est juste `(+) 4 3`).
+
+Créons une fonction qui somme deux de nos listes ensemble. `++` est défini
+ainsi pour des listes normales :
+
+> infixr 5  ++ 
+> (++) :: [a] -> [a] -> [a]  
+> []     ++ ys = ys  
+> (x:xs) ++ ys = x : (xs ++ ys) 
+
+On va juste voler cette définition pour nos listes. On nommera la fonction
+`.++`.
+
+> infixr 5  .++  
+> (.++) :: List a -> List a -> List a   
+> Empty .++ ys = ys  
+> (x :-: xs) .++ ys = x :-: (xs .++ ys)  
+
+Voyons si ça a marché…
+
+> ghci> let a = 3 :-: 4 :-: 5 :-: Empty  
+> ghci> let b = 6 :-: 7 :-: Empty  
+> ghci> a .++ b  
+> (:-:) 3 ((:-:) 4 ((:-:) 5 ((:-:) 6 ((:-:) 7 Empty))))  
+
+Bien. Très bien. Si l'on voulait, on pourrait implémenter toutes les fonctions
+qui opèrent sur des listes pour notre propre type liste.
+
+Notez comme on a filtré sur le motif `(x :-: xs)`. Cela fonction car le
+filtrage par motifs n'est en fait basé que sur la correspondance des
+constructeurs. On peut filtrer sur `:-:` parce que c'est un constructeur de
+notre type de liste, tout comme on pouvait filtrer sur `:` pour des listes
+normales car c'était un de leurs constructeurs. Pareil pour `[]`. Puisque le
+filtrage de motifs marche (uniquement) sur les constructeurs, on peut filtrer
+sur des choses comme des constructeurs normaux préfixes, ou bien comme `8` ou
+`'a'`, qui sont simplement des constructeurs de types numériques ou de
+caractères respectivement.
+
+À présent, implémentons un **arbre de recherche binaire**.
