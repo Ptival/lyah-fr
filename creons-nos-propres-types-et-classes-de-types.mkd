@@ -952,28 +952,28 @@ laquelle on donne le code dudit casier. En fait, c'est un `Right String`, mais
 on a introduit un synonyme de types pour introduire un peu de documentation
 dans la déclaration de types. Voici une map à titre d'exemple :
 
-> lockers :: LockerMap  
-> lockers = Map.fromList   
->     [(100,(Taken,"ZD39I"))  
->     ,(101,(Free,"JAH3I"))  
->     ,(103,(Free,"IQSA9"))  
->     ,(105,(Free,"QOTSA"))  
->     ,(109,(Taken,"893JJ"))  
->     ,(110,(Taken,"99292"))  
->     ]  
+> lockers :: LockerMap
+> lockers = Map.fromList
+>     [(100,(Taken,"ZD39I"))
+>     ,(101,(Free,"JAH3I"))
+>     ,(103,(Free,"IQSA9"))
+>     ,(105,(Free,"QOTSA"))
+>     ,(109,(Taken,"893JJ"))
+>     ,(110,(Taken,"99292"))
+>     ]
 
 Maintenant, cherchons le code de quelques casiers.
 
-> ghci> lockerLookup 101 lockers  
-> Right "JAH3I"  
-> ghci> lockerLookup 100 lockers  
-> Left "Locker 100 is already taken!"  
-> ghci> lockerLookup 102 lockers  
-> Left "Locker number 102 doesn't exist!"  
-> ghci> lockerLookup 110 lockers  
-> Left "Locker 110 is already taken!"  
-> ghci> lockerLookup 105 lockers  
-> Right "QOTSA"  
+> ghci> lockerLookup 101 lockers
+> Right "JAH3I"
+> ghci> lockerLookup 100 lockers
+> Left "Locker 100 is already taken!"
+> ghci> lockerLookup 102 lockers
+> Left "Locker number 102 doesn't exist!"
+> ghci> lockerLookup 110 lockers
+> Left "Locker 110 is already taken!"
+> ghci> lockerLookup 105 lockers
+> Right "QOTSA"
 
 On aurait pu utiliser un `Maybe a` pour représenter le résultat, mais alors on
 ne saurait pas pour quelle raison on n'a pas pu obtenir le code. Ici,
@@ -1003,7 +1003,7 @@ adjoint via `:` à une autre liste (qui peut être vide ou non).
 Utilisons un type de données algébrique pour implémenter nos propres listes
 dans ce cas !
 
-> data List a = Empty | Cons a (List a) deriving (Show, Read, Eq, Ord)  
+> data List a = Empty | Cons a (List a) deriving (Show, Read, Eq, Ord)
 
 On peut lire ça comme la définition des listes donnée dans un paragraphe
 ci-dessus. Une liste est soit vide, soit une combinaison d'une tête qui a une
@@ -1014,14 +1014,14 @@ serez plus à l'aise avec une syntaxe d'enregistrements.
 
 Vous serez peut-être aussi surpris par le nom du constructeur `Cons` ici. *cons* est un autre nom de `:`. Vous voyez, pour les listes, `:` est en réalité un constructeur qui prend une valeur et une autre liste, pour retourner une liste. On peut d'ores et déjà utiliser notre nouveau type de listes ! Il a deux champs. Le premier de type `a` et le second de type `List a`.
 
-> ghci> Empty  
-> Empty  
-> ghci> 5 `Cons` Empty  
-> Cons 5 Empty  
-> ghci> 4 `Cons` (5 `Cons` Empty)  
-> Cons 4 (Cons 5 Empty)  
-> ghci> 3 `Cons` (4 `Cons` (5 `Cons` Empty))  
-> Cons 3 (Cons 4 (Cons 5 Empty))  
+> ghci> Empty
+> Empty
+> ghci> 5 `Cons` Empty
+> Cons 5 Empty
+> ghci> 4 `Cons` (5 `Cons` Empty)
+> Cons 4 (Cons 5 Empty)
+> ghci> 3 `Cons` (4 `Cons` (5 `Cons` Empty))
+> Cons 3 (Cons 4 (Cons 5 Empty))
 
 On a appelé notre constructeur `Cons` de façon infixe pour souligner sa
 similarité avec `:`. `Empty` est similaire à `[]` et `4 \`Cons\` (5 \`Cons\`
@@ -1032,8 +1032,8 @@ qu'avec des caractères spéciaux. On peut aussi faire de même avec les
 constructeurs, puisque ce sont des fonctions qui retournent un type de données.
 Regardez ça !
 
-> infixr 5 :-:  
-> data List a = Empty | a :-: (List a) deriving (Show, Read, Eq, Ord) 
+> infixr 5 :-:
+> data List a = Empty | a :-: (List a) deriving (Show, Read, Eq, Ord)
 
 Tout d'abord, on remarque une nouvelle construction syntaxique, la déclaration
 de fixité. Lorsqu'on définit des fonctions comme opérateurs, on peut leur
@@ -1048,11 +1048,11 @@ plus grande fixité, et ainsi `5 * 4 + 3` est équivalent à `(5 * 4) + 3`.
 a)`. Maintenant, on peut écrire des listes qui ont notre type de listes de la
 sorte :
 
-> ghci> 3 :-: 4 :-: 5 :-: Empty  
-> (:-:) 3 ((:-:) 4 ((:-:) 5 Empty))  
-> ghci> let a = 3 :-: 4 :-: 5 :-: Empty  
-> ghci> 100 :-: a  
-> (:-:) 100 ((:-:) 3 ((:-:) 4 ((:-:) 5 Empty)))  
+> ghci> 3 :-: 4 :-: 5 :-: Empty
+> (:-:) 3 ((:-:) 4 ((:-:) 5 Empty))
+> ghci> let a = 3 :-: 4 :-: 5 :-: Empty
+> ghci> 100 :-: a
+> (:-:) 100 ((:-:) 3 ((:-:) 4 ((:-:) 5 Empty)))
 
 Lorsqu'on dérive `Show` pour notre type, Haskell va toujours afficher le
 constructeur comme une fonction préfixe, d'où le parenthésage autour de
@@ -1061,25 +1061,25 @@ l'opérateur (rappelez-vous, `4 + 3` est juste `(+) 4 3`).
 Créons une fonction qui somme deux de nos listes ensemble. `++` est défini
 ainsi pour des listes normales :
 
-> infixr 5  ++ 
-> (++) :: [a] -> [a] -> [a]  
-> []     ++ ys = ys  
-> (x:xs) ++ ys = x : (xs ++ ys) 
+> infixr 5  ++
+> (++) :: [a] -> [a] -> [a]
+> []     ++ ys = ys
+> (x:xs) ++ ys = x : (xs ++ ys)
 
 On va juste voler cette définition pour nos listes. On nommera la fonction
 `.++`.
 
-> infixr 5  .++  
-> (.++) :: List a -> List a -> List a   
-> Empty .++ ys = ys  
-> (x :-: xs) .++ ys = x :-: (xs .++ ys)  
+> infixr 5  .++
+> (.++) :: List a -> List a -> List a
+> Empty .++ ys = ys
+> (x :-: xs) .++ ys = x :-: (xs .++ ys)
 
 Voyons si ça a marché…
 
-> ghci> let a = 3 :-: 4 :-: 5 :-: Empty  
-> ghci> let b = 6 :-: 7 :-: Empty  
-> ghci> a .++ b  
-> (:-:) 3 ((:-:) 4 ((:-:) 5 ((:-:) 6 ((:-:) 7 Empty))))  
+> ghci> let a = 3 :-: 4 :-: 5 :-: Empty
+> ghci> let b = 6 :-: 7 :-: Empty
+> ghci> a .++ b
+> (:-:) 3 ((:-:) 4 ((:-:) 5 ((:-:) 6 ((:-:) 7 Empty))))
 
 Bien. Très bien. Si l'on voulait, on pourrait implémenter toutes les fonctions
 qui opèrent sur des listes pour notre propre type liste.
@@ -1094,4 +1094,242 @@ sur des choses comme des constructeurs normaux préfixes, ou bien comme `8` ou
 `'a'`, qui sont simplement des constructeurs de types numériques ou de
 caractères respectivement.
 
-À présent, implémentons un **arbre de recherche binaire**.
+À présent, implémentons un **arbre binaire de recherche**. Si vous ne
+connaissez pas les arbres binaires de recherche, voici en quoi ils consistent :
+chaque élément pointe vers deux éléments, son fils gauche et son fils droit. Le
+fils gauche a une valeur inférieure à celle de l'élément, le fils droit a une
+valeur supérieure. Chacun des fils peut à son tour pointer vers zéro, un ou
+deux éléments. Chaque élément a ainsi au plus deux sous-arbres. Et la
+propriété intéressante de ces arbres est que tous les nœeuds du sous-arbre
+gauche d'un noeud donné, mettons 5, ont une valeur inférieure à 5. Quant aux
+noeuds du sous-arbre droit, ils sont tous supérieurs à 5. Ainsi, si l'on
+cherche 8 dans un arbre dont la racine vaut 5, on va chercher seulement dans le
+sous-arbre droit, puisque 8 est plus grand que 5. Si le noeud suivant est 7, on
+cherche encore à droite car 8 est plus grand que 7. Et voilà ! On a trouvé
+notre élément en seulement 3 coups ! Si l'on cherchait dans une liste, ou dans
+un arbre mal construit, cela pourrait nous prendre jursqu'à 8 coups pour savoir
+si 8 est là ou pas.
+
+Les ensembles de `Data.Set` et les maps de `Data.Map` sont implémentés à l'aide
+d'arbres binaires de recherche équilibrés, qui sont toujours bien équilibrés.
+
+Voilà ce qu'on va dire : un arbre est soit vide, soit un élément contenant une
+valeur et deux arbres. Ça sent le type de données algébrique à plein nez !
+
+> data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
+
+Ok, bien, c'est très bien. Plutôt que de construire des arbres à la main, on va
+créer une fonction qui prend un arbre, un élément, et insère cet élément. Cela
+se fait en comparant la valeur de l'élément que l'on souhaite insérer avec le
+noeud racine, s'il est plus petit on part à gauche, s'il est plus grand on part
+à droite. On fait de même avec tous les noeuds suivants jusqu'à ce qu'on arrive
+à un arbre vide. C'est ici qu'on doit insérer notre noeud qui va simplement
+remplacer ce vide.
+
+Dans des langages comme C, on fait ceci en modifiant des pointeurs et des
+valeurs dans l'arbre. En Haskell, on ne peut pas vraiment modifier l'arbre,
+donc on recrée un nouveau sous-arbre chaque fois qu'on décide d'aller à gauche
+ou à droite et au final, la fonction d'insertion construit un tout nouvel
+arbre, puisqu'Haskell n'a pas de concept de pointeurs mais seulement de
+valeurs. Ainsi, le type de la fonction d'insertion sera de la forme `a -> Tree
+a -> Tree a`. Elle prend un élément et un arbre et retourne un nouvel arbre qui
+contient cet élément. Ça peut paraître inefficace, mais la paresse se charge de
+ce problème.
+
+Voici donc deux fonctions. L'une est une fonction auxiliaire pour créer un
+arbre singleton (qui ne contient qu'un noeud) et l'autre est une fonction
+d'insertion.
+
+> singleton :: a -> Tree a
+> singleton x = Node x EmptyTree EmptyTree
+>
+> treeInsert :: (Ord a) => a -> Tree a -> Tree a
+> treeInsert x EmptyTree = singleton x
+> treeInsert x (Node a left right)
+>     | x == a = Node x left right
+>     | x < a  = Node a (treeInsert x left) right
+>     | x > a  = Node a left (treeInsert x right)
+
+La fonction `singleton` est juste un raccourci pour créer un noeud contenant
+une valeur et deux sous-arbres vides. Dans la fonction d'insertion, on a
+d'abord notre cas de base sous forme d'un motif. Si l'on atteint un arbre vide
+et qu'on veut y insérer notre valeur, cela veut dire qu'il faut renvoyer
+l'arbre singleton qui contient cette valeur. Si l'on insère dans un arbre non
+vide, il faut vérifier quelques choses. Si l'élément qu'on veut insérer est
+égal à la racine, alors on retourne le même arbre. S'il est plus petit, on
+retourne un arbre qui a la même racine, le même sous-arbre droit, mais qui a
+pour sous-arbre gauche le même qu'avant auquel on a ajouté l'élément à ajouter.
+Le raisonnement est symétrique si l'élément à ajouter est plus grand que
+l'élément à la racine.
+
+Ensuite, on va créer une fonction qui vérifie si un élément est dans l'arbre.
+Définissons d'abord le cas de base. Si on cherche un élément dans l'arbre vide,
+il n'est certainement pas là. Ok. Voyez comme le cas de base est similaire à
+celui lorsqu'on cherche un élément dans une liste. Si on cherche un élément
+dans une liste vide, il n'est sûrement pas là. Enfin bon, si l'arbre n'est pas
+vide, quelques vérifications. Si l'élément a la racine est celui qu'on cherche,
+trouvé ! Sinon, eh bien ? Puisqu'on sait que les éléments à gauche sont plus
+petits que lui, si on cherche un élément plus petit, on va le chercher à
+gauche. Symétriquement, on cherchera à droite un élément plus grand que celui à
+la racine.
+
+> treeElem :: (Ord a) => a -> Tree a -> Bool
+> treeElem x EmptyTree = False
+> treeElem x (Node a left right)
+>     | x == a = True
+>     | x < a  = treeElem x left
+>     | x > a  = treeElem x right
+
+Tout ce qu'on a eu à faire, c'est réécrire le paragraphe précédent en code.
+Amusons-nous avec nos arbres ! Plutôt que d'en créer un à la main (bien que ce
+soit possible), créons-en un à l'aide d'un pli sur une liste. Souvenez-vous, à
+peu près tout ce qui traverse une liste et retourne une valeur peut être
+implémenté comme un pli ! On va commencer avec un arbre vide, puis approcher
+une liste par la droite en insérant les éléments un à un dans l'arbre
+accumulateur.
+
+> ghci> let nums = [8,6,4,1,7,3,5]
+> ghci> let numsTree = foldr treeInsert EmptyTree nums
+> ghci> numsTree
+> Node 5 (Node 3 (Node 1 EmptyTree EmptyTree) (Node 4 EmptyTree EmptyTree)) (Node 7 (Node 6 EmptyTree EmptyTree) (Node 8 EmptyTree EmptyTree))
+
+Dans ce `foldr`, `treeInsert` était la fonction de pliage (elle prend un arbre,
+un élément d'une liste et produit un nouvel arbre) et `EmptyTree` était
+l'accumulateur initial. `nums`, évidemment, était la liste qu'on pliait.
+
+Lorsqu'on affiche notre arbre à la console, il n'est pas très lisible, mais en
+essayant, on peut voir sa structure. On peut voir que le noeud racine est 5 et
+qu'il a deux sous-arbres, un qui a pour noeud racine 3, l'autre qui a pour
+noeud racine 7, etc.
+
+> ghci> 8 `treeElem` numsTree
+> True
+> ghci> 100 `treeElem` numsTree
+> False
+> ghci> 1 `treeElem` numsTree
+> True
+> ghci> 10 `treeElem` numsTree
+> False
+
+Tester l'appartenance fonctionne aussi correctement. Cool.
+
+Comme vous le voyez, les structures de données algébriques sont des concepts
+cool et puissants en Haskell. On peut les utiliser pour faire tout des booléens
+et énumérations des jours de la semaine jusqu'aux arbres binaires de recherche,
+et encore plus !
+
+Classes de types 102
+--------------------
+
+Jusqu'ici, on a découvert des classes de types standard d'Haskell et on a vu
+quels types les habitaient. On a aussi appris à créer automatiquement des
+instances de ces classes en demandant à Haskell de les dériver pour nous. Dans
+cette section, on va créer nos propres classes de types, et nos propres
+instances, le tout à la main.
+
+Bref récapitulatif sur les classes de types : elles sont comme des interfaces.
+Une classe de types définit un comportement (tester l'égalité, comparer
+l'ordre, énumérer), puis les types qui peuvent se comporter de la sorte sont
+fait instances de ces classes. Le comporetement des classes de types est défini
+en définissant des fonctions ou juste des déclarations de types que les
+instances doivent implémenter. Ainsi, lorsqu'on dit qu'un type est une instance
+d'une classe de types, on veut dire qu'on peut utiliser les fonctions que cette
+classe définit sur des éléments de ce type.
+
+Les classes de types n'ont presque rien à voir avec les types dans des langages
+comme Java ou Python. Cela désoriente beaucoup de gens, aussi je veux que vous
+oubliiez tout ce que vous savez des classes dans les langages impératifs à
+partir de maintenant.
+
+Par exemple, la classe `Eq` est pour les choses qui peuvent être testées
+égales. Elle définit les fonctions `==` et `/=`. Si on a un type (mettons,
+`Car`) et que comparer deux voitures avec `==` a un sens, alors il est sensé de
+rendre `Car` instance d'`Eq`.
+
+Voici comment `Eq` est définie dans le prélude :
+
+> class Eq a where
+>     (==) :: a -> a -> Bool
+>     (/=) :: a -> a -> Bool
+>     x == y = not (x /= y)
+>     x /= y = not (x == y)
+
+Wow, wow, wow ! Quels nouveaux syntaxe et mot-clés étranges ! Pas d'inquiétude,
+tout cela va s'éclaircir bientôt. Tout d'abord, quand on écrit `class Eq a
+where`, cela signifie qu'on définit une nouvelle classe `Eq`. Le `a` est une
+variable de types et indique que `a` jouera le rôle du type qu'on souhaitera
+bientôt rendre instance d'`Eq`. Cette variable n'a pas à s'appeler `a`, ou même
+à être une lettre, elle doit juste être un mot en minuscules. Ensuite, on
+définit plusieurs fonctions. Il n'est pas obligatoire d'implémenter le corps de
+ces fonctions, on doit juste spécifier les déclarations de type des fonctions.
+
+Certaines personnes comprendraient peut-être mieux si l'on avait écrit `class
+Eq equatable where` et ensuite spécifié les déclarations de type comme `(==) ::
+equatable -> equatable -> Bool`.
+
+Toutefois, on *a implémenté* le corps des fonctions que `Eq` définit, mais on
+les a définies en termes de récursion mutuelle. On a dit que deux instances
+d'`Eq` sont égales si elles ne sont pas différentes, et différentes si elles ne
+sont pas égales. Ce n'était pas nécessaire, mais on l'a fait, et on va bientôt
+voir en quoi cela nous aide.
+
+Si nous avons, disons, `class Eq a where` et qu'on définit une déclaration de
+type dans cette classe comme `(==) :: a -> a -> Bool`, alors si on examine le
+type de cette fonction, celui-ci sera `(Eq a) => a -> a -> Bool`.
+
+Maintenant qu'on a une classe, que faire avec ? Eh bien, pas grand chose,
+vraiment. Mais une fois qu'on a des instances, on commence à bénéficier de
+fonctionnalités sympathiques. Regardez donc ce type :
+
+> data TrafficLight = Red | Yellow | Green
+
+Il définit les états d'un feu de signalisation. Voyez comme on n'a pas dérivé
+d'instances de classes. C'est parce qu'on va les écrire à la main, bien qu'on
+aurait pu dériver celles-ci pour des classes comme `Eq` et `Show`. Voici
+comment on fait de notre type une instance d'`Eq`.
+
+> instance Eq TrafficLight where
+>     Red == Red = True
+>     Green == Green = True
+>     Yellow == Yellow = True
+>     _ == _ = False
+
+On l'a fait en utilisant le mot-clé *instance*. *class* définit de nouvelles
+classes de types, et *instance* définit de nouvelles instances d'une classe de
+types. Quand nous définissions `Eq`, on a écrit `class Eq a where` et on a dit
+que `a` jouait le rôle du type qu'on voudra rendre instance de la classe plus
+tard. On le voit clairement ici, puisque quand on crée une instance, on écrit
+`instance Eq TrafficLight where`. On a remplacé le `a` par le type réel de
+cette instance particulière.
+
+Puisque `==` était défini en termes de `/=` et vice versa dans la déclaration
+de *classe*, il suffit d'en définir un dans l'instance pour obtenir l'autre
+automatiquement. On dit que c'est une définition complète minimale d'une classe
+de types - un des plus petits ensembles de fonctions à implémenter pour que le
+type puisse se comporter comme une instance de la classe. Pour remplir la
+définition complète minimale d'`Eq`, il faut redéfinir soit `==`, soit `/=`.
+Cependant, si `Eq` était définie seulement ainsi :
+
+> class Eq a where
+>     (==) :: a -> a -> Bool
+>     (/=) :: a -> a -> Bool
+
+alors nous aurions dû implémenter ces deux fonctions lors de la création d'une
+instance, car Haskell ne saurait pas comment elles sont reliées. La définition
+complète minimale serait alors : `==` et `/=`.
+
+Vous pouvez voir qu'on a implémenté `==` par un simple filtrage de motifs.
+Puisqu'il y a beaucoup de cas où deux lumières sont différentes, on a spécifié
+les cas d'égalité, et utilisé un motif attrape-tout pour dire que dans tous les
+autres cas, les lumières sont différentes.
+
+Créons une instance de `Show` à la main également. Pour sastisfaire une
+définition complète minimale de `Show`, il suffit d'implémenter `show`, qui
+prend une valeur et retourne une chaîne de caractères.
+
+> instance Show TrafficLight where
+>     show Red = "Red light"
+>     show Yellow = "Yellow light"
+>     show Green = "Green light"
+
+
