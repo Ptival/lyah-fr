@@ -1332,4 +1332,129 @@ prend une valeur et retourne une chaîne de caractères.
 >     show Yellow = "Yellow light"
 >     show Green = "Green light"
 
+Encore une fois, nous avons utilisé le filtrage par motif pour arriver à nos
+fins. Voyons cela en action :
 
+> ghci> Red == Red  
+> True  
+> ghci> Red == Yellow  
+> False  
+> ghci> Red `elem` [Red, Yellow, Green]  
+> True  
+> ghci> [Red, Yellow, Green]  
+> [Red light,Yellow light,Green light]  
+
+Joli. On aurait pu simplement dériver `Eq` et obtenir la même chose (on ne l'a
+pas fait, dans un but éducatif). Cependant, dériver `Show` aurait simplement
+traduit les constructeurs en chaînes de caractères. Si on veut afficher `"Reg
+light"`, il faut faire la déclaration d'instance à la main.
+
+Vous pouvez également créer des classes de types qui sont des sous-classes
+d'autres classes de types. La déclaration de classe de `Num` est un peu longue,
+mais elle débute ainsi :
+
+> class (Eq a) => Num a where  
+>    ...    
+
+Comme on l'a mentionné précédemment, il y a beaucoup d'endroits où l'on peut
+glisser des contraintes de classe. Ici c'est comme écrire `class Num a where`,
+mais on déclare que `a` doit être une instance d'`Eq` au préalable. Ainsi, un
+type doit être une instance d'`eq` avant de pouvoir prétendre être une instance
+de `Num`. Il est logique qu'avant qu'un type soit considéré comme numérique, on
+puisse attendre de lui qu'il soit testable pour l'égalité. C'est tout pour le
+sous-typage, c'est seulement une contrainte de classes sur une déclaration de
+*classe* ! À partir de là, quand on définit le corps des fonctions, que ce soit
+dans la déclaration de *classe* ou bien dans une déclaration d'*instance*, on
+peut toujours présumer que `a` et membre d'`Eq` et ainsi utiliser `==` sur des
+valeurs de ce type.
+
+Mais comment est-ce que `Maybe`, ou le type des listes, sont rendus instances
+de classes de types ? Ce qui rend `Maybe` différent de, par exemple,
+`TrafficLight`, c'est que `Maybe` tout seul n'est pas un type concret, mais un
+constructeur de types qui prend un type en paramètre (comme `Char` ou un autre)
+pour produire un type concret (comme `Maybe Char`). Regardons à nouveau la
+classe de types `Eq` :
+
+> class Eq a where  
+>     (==) :: a -> a -> Bool  
+>     (/=) :: a -> a -> Bool  
+>     x == y = not (x /= y)  
+>     x /= y = not (x == y)   
+
+De ces déclarations de types, on voit que `a` est utilisé comme un type concret
+car tous les types entre les flèches d'une fonction doivent être concrets
+(souvenez-vous, on ne peut avoir de fonction de type `a -> Maybe`, mais on peut
+avoir des fonctions `a -> Maybe a` ou `Maybe Int -> Maybe String`). C'est
+pour cela qu'on ne peut pas faire :
+
+> instance Eq Maybe where  
+>     ...   
+
+Parce que, comme on l'a vu, `a` doit être un type concret, et `Maybe` ne l'est
+pas. C'est un constructeur de types qui prend un paramètre pour produire un
+type concret. Il serait également très fastidieux d'écrire des instances
+`instance Eq (Maybe Int) where`, `instance Eq (Maybe Char) where`, etc. pour
+chaque type qu'on utilise. Ainsi, on peut écrire :
+
+> instance Eq (Maybe m) where  
+>     Just x == Just y = x == y  
+>     Nothing == Nothing = True  
+>     _ == _ = False 
+
+C'est-à-dire, on déclare tous les types de la forme `Maybe something` comme
+instances d'`Eq`. On aurait à vrai dire pu écrire `(Maybe something)`, mais on
+opte généralement pour des identifiants en une lettre pour rester proche du
+style Haskell. Le `(Maybe m)` ici joue le rôle du `a` de `class Eq a where`.
+Alors que `Maybe` n'était pas un type concret, `Maybe m` l'est. En spécifiant
+un paramètre de type (`m`, qui est en minuscule), on dit qu'on souhaite parler
+de tous les types de la forme `Maybe m`, où `m` est n'importe quel type, afin
+d'en faire une instance d'`Eq`.
+
+Il y a un problème à cela tout de même. Le voyez-vous ? On utilise `==` sur le
+contenu de `Maybe`, mais on n'a pas de garantie que ce que contient `Maybe` est
+membre d'`Eq` ! C'est pourquoi nous devons modifier la déclaration d'*instance*
+ainsi :
+
+> instance (Eq m) => Eq (Maybe m) where  
+>     Just x == Just y = x == y  
+>     Nothing == Nothing = True  
+>     _ == _ = False  
+
+On a dû ajouter une contrainte de classe ! Avec cette déclaration d'*instance*,
+on dit ceci : nous voulons que tous les types de la forme `Maybe m` soient
+membres de la classe `Eq`, à condition que le type `m` (celui dans le `Maybe`)
+soit lui-même membre d'`Eq`. C'est ce qu'Haskell dériverait d'ailleurs.
+
+La plupart du temps, les contraintes de classe dans les déclarations de
+*classes* sont utilisées pour faire d'une classe de types une sous-classe d'une
+autre classe de types, alors que les contraintes de classe dans les
+déclarations d'*instance* sont utilisées pour exprimer des pré-requis sur le
+contenu de certains types. Par exemple, ici nous avons requis que le contenu de
+`Maybe` soit membre de la classe `Eq`.
+
+Quand vous faites des instances, si vous voyez qu'un type est utilisé comme un
+type concret dans les déclarations de type de la classe (comme le `a` dans `a
+-> a -> Bool`), alors il faut fournir à l'instance un type concret en
+fournissant si besoin est des paramètres de type et en parenthésant le tout, de
+manière à obtenir un type concret.
+
+Prenez en compte le fait que le type dont vous essayez de faire une instance
+remplacera le paramètre dans la déclaration de *classe*. Le `a` de `class Eq a
+where` sera remplacé par un type réel lorsque vous écrirez une instance, donc
+essayez de mettre mentalement le type dans les déclarations de types des
+fonctions. `(==) :: Maybe -> Maybe -> Bool` ne veut ainsi par dire grand chose,
+alors que `(==) :: (Eq m) => Maybe m -> Maybe m -> Bool` est sensé. C'est juste
+pour mieux y voir dans votre tête, en réalité, `==` conservera toujours son
+type `(==) :: (Eq a) => a -> a -> Bool`, peu importe le nombre d'instances que
+l'on crée.
+
+Oh, encore un truc, regardez ça ! Si vous voulez connaître les instances d'une
+classe de types, faites juste `:info YourTypeClass` dans GHCi. En tapant `:info
+Num`, vous verrez toutes les fonctions que définit cette classe de types,
+suivies d'une liste de tous les types qui habitent cette classe. `:info` marche
+aussi sur les types et les constructeurs de types. `:info Maybe` vous montre
+toutes les classes dont `Maybe` est une instance. `:info` peut aussi montrer la
+déclaration de type d'une fonction. Je trouve ça plutôt cool.
+
+Une classe de types oui-non
+---------------------------
