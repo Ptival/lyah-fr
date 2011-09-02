@@ -725,7 +725,7 @@ On peut aussi utiliser `isSpace` pour simuler la fonction `words` de
 > ["hey"," ","guys"," ","its"," ","me"]
 > ghci>
 
-Hmmm... ça marche à peu près comme `words`, mais il nous reste les éléments qui
+Hmmm… ça marche à peu près comme `words`, mais il nous reste les éléments qui
 ne contiennent que des espaces. Que devrions-nous faire ? Je sais, filtrons ces
 importuns !
 

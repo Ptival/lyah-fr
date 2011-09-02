@@ -1101,10 +1101,10 @@ fils gauche a une valeur inférieure à celle de l'élément, le fils droit a un
 valeur supérieure. Chacun des fils peut à son tour pointer vers zéro, un ou
 deux éléments. Chaque élément a ainsi au plus deux sous-arbres. Et la
 propriété intéressante de ces arbres est que tous les nœeuds du sous-arbre
-gauche d'un noeud donné, mettons 5, ont une valeur inférieure à 5. Quant aux
-noeuds du sous-arbre droit, ils sont tous supérieurs à 5. Ainsi, si l'on
+gauche d'un nœeud donné, mettons 5, ont une valeur inférieure à 5. Quant aux
+nœeuds du sous-arbre droit, ils sont tous supérieurs à 5. Ainsi, si l'on
 cherche 8 dans un arbre dont la racine vaut 5, on va chercher seulement dans le
-sous-arbre droit, puisque 8 est plus grand que 5. Si le noeud suivant est 7, on
+sous-arbre droit, puisque 8 est plus grand que 5. Si le nœeud suivant est 7, on
 cherche encore à droite car 8 est plus grand que 7. Et voilà ! On a trouvé
 notre élément en seulement 3 coups ! Si l'on cherchait dans une liste, ou dans
 un arbre mal construit, cela pourrait nous prendre jursqu'à 8 coups pour savoir
@@ -1121,9 +1121,9 @@ valeur et deux arbres. Ça sent le type de données algébrique à plein nez !
 Ok, bien, c'est très bien. Plutôt que de construire des arbres à la main, on va
 créer une fonction qui prend un arbre, un élément, et insère cet élément. Cela
 se fait en comparant la valeur de l'élément que l'on souhaite insérer avec le
-noeud racine, s'il est plus petit on part à gauche, s'il est plus grand on part
-à droite. On fait de même avec tous les noeuds suivants jusqu'à ce qu'on arrive
-à un arbre vide. C'est ici qu'on doit insérer notre noeud qui va simplement
+nœeud racine, s'il est plus petit on part à gauche, s'il est plus grand on part
+à droite. On fait de même avec tous les nœeuds suivants jusqu'à ce qu'on arrive
+à un arbre vide. C'est ici qu'on doit insérer notre nœeud qui va simplement
 remplacer ce vide.
 
 Dans des langages comme C, on fait ceci en modifiant des pointeurs et des
@@ -1137,7 +1137,7 @@ contient cet élément. Ça peut paraître inefficace, mais la paresse se charge
 ce problème.
 
 Voici donc deux fonctions. L'une est une fonction auxiliaire pour créer un
-arbre singleton (qui ne contient qu'un noeud) et l'autre est une fonction
+arbre singleton (qui ne contient qu'un nœeud) et l'autre est une fonction
 d'insertion.
 
 > singleton :: a -> Tree a
@@ -1150,7 +1150,7 @@ d'insertion.
 >     | x < a  = Node a (treeInsert x left) right
 >     | x > a  = Node a left (treeInsert x right)
 
-La fonction `singleton` est juste un raccourci pour créer un noeud contenant
+La fonction `singleton` est juste un raccourci pour créer un nœeud contenant
 une valeur et deux sous-arbres vides. Dans la fonction d'insertion, on a
 d'abord notre cas de base sous forme d'un motif. Si l'on atteint un arbre vide
 et qu'on veut y insérer notre valeur, cela veut dire qu'il faut renvoyer
@@ -1198,9 +1198,9 @@ un élément d'une liste et produit un nouvel arbre) et `EmptyTree` était
 l'accumulateur initial. `nums`, évidemment, était la liste qu'on pliait.
 
 Lorsqu'on affiche notre arbre à la console, il n'est pas très lisible, mais en
-essayant, on peut voir sa structure. On peut voir que le noeud racine est 5 et
-qu'il a deux sous-arbres, un qui a pour noeud racine 3, l'autre qui a pour
-noeud racine 7, etc.
+essayant, on peut voir sa structure. On peut voir que le nœeud racine est 5 et
+qu'il a deux sous-arbres, un qui a pour nœeud racine 3, l'autre qui a pour
+nœeud racine 7, etc.
 
 > ghci> 8 `treeElem` numsTree
 > True
@@ -1335,14 +1335,14 @@ prend une valeur et retourne une chaîne de caractères.
 Encore une fois, nous avons utilisé le filtrage par motif pour arriver à nos
 fins. Voyons cela en action :
 
-> ghci> Red == Red  
-> True  
-> ghci> Red == Yellow  
-> False  
-> ghci> Red `elem` [Red, Yellow, Green]  
-> True  
-> ghci> [Red, Yellow, Green]  
-> [Red light,Yellow light,Green light]  
+> ghci> Red == Red
+> True
+> ghci> Red == Yellow
+> False
+> ghci> Red `elem` [Red, Yellow, Green]
+> True
+> ghci> [Red, Yellow, Green]
+> [Red light,Yellow light,Green light]
 
 Joli. On aurait pu simplement dériver `Eq` et obtenir la même chose (on ne l'a
 pas fait, dans un but éducatif). Cependant, dériver `Show` aurait simplement
@@ -1353,8 +1353,8 @@ Vous pouvez également créer des classes de types qui sont des sous-classes
 d'autres classes de types. La déclaration de classe de `Num` est un peu longue,
 mais elle débute ainsi :
 
-> class (Eq a) => Num a where  
->    ...    
+> class (Eq a) => Num a where
+>    ...
 
 Comme on l'a mentionné précédemment, il y a beaucoup d'endroits où l'on peut
 glisser des contraintes de classe. Ici c'est comme écrire `class Num a where`,
@@ -1375,11 +1375,11 @@ constructeur de types qui prend un type en paramètre (comme `Char` ou un autre)
 pour produire un type concret (comme `Maybe Char`). Regardons à nouveau la
 classe de types `Eq` :
 
-> class Eq a where  
->     (==) :: a -> a -> Bool  
->     (/=) :: a -> a -> Bool  
->     x == y = not (x /= y)  
->     x /= y = not (x == y)   
+> class Eq a where
+>     (==) :: a -> a -> Bool
+>     (/=) :: a -> a -> Bool
+>     x == y = not (x /= y)
+>     x /= y = not (x == y)
 
 De ces déclarations de types, on voit que `a` est utilisé comme un type concret
 car tous les types entre les flèches d'une fonction doivent être concrets
@@ -1387,8 +1387,8 @@ car tous les types entre les flèches d'une fonction doivent être concrets
 avoir des fonctions `a -> Maybe a` ou `Maybe Int -> Maybe String`). C'est
 pour cela qu'on ne peut pas faire :
 
-> instance Eq Maybe where  
->     ...   
+> instance Eq Maybe where
+>     ...
 
 Parce que, comme on l'a vu, `a` doit être un type concret, et `Maybe` ne l'est
 pas. C'est un constructeur de types qui prend un paramètre pour produire un
@@ -1396,10 +1396,10 @@ type concret. Il serait également très fastidieux d'écrire des instances
 `instance Eq (Maybe Int) where`, `instance Eq (Maybe Char) where`, etc. pour
 chaque type qu'on utilise. Ainsi, on peut écrire :
 
-> instance Eq (Maybe m) where  
->     Just x == Just y = x == y  
->     Nothing == Nothing = True  
->     _ == _ = False 
+> instance Eq (Maybe m) where
+>     Just x == Just y = x == y
+>     Nothing == Nothing = True
+>     _ == _ = False
 
 C'est-à-dire, on déclare tous les types de la forme `Maybe something` comme
 instances d'`Eq`. On aurait à vrai dire pu écrire `(Maybe something)`, mais on
@@ -1415,10 +1415,10 @@ contenu de `Maybe`, mais on n'a pas de garantie que ce que contient `Maybe` est
 membre d'`Eq` ! C'est pourquoi nous devons modifier la déclaration d'*instance*
 ainsi :
 
-> instance (Eq m) => Eq (Maybe m) where  
->     Just x == Just y = x == y  
->     Nothing == Nothing = True  
->     _ == _ = False  
+> instance (Eq m) => Eq (Maybe m) where
+>     Just x == Just y = x == y
+>     Nothing == Nothing = True
+>     _ == _ = False
 
 On a dû ajouter une contrainte de classe ! Avec cette déclaration d'*instance*,
 on dit ceci : nous voulons que tous les types de la forme `Maybe m` soient
@@ -1458,3 +1458,511 @@ déclaration de type d'une fonction. Je trouve ça plutôt cool.
 
 Une classe de types oui-non
 ---------------------------
+
+En JavaScript et dans d'autres langages à typage faible, on peut mettre
+quasiment ce que l'on veut dans une expression *if*. Par exemple, tout ceci est
+valide : `if (0) alert ("YEAH") else alert("NO!")`, `if ("") alert ("YEAH")
+else alert("NO!")`, `if (false) alert ("YEAH") else alert("NO!")`, etc. et tout
+cela lancera une alerte `NO!`. Si vous faites `if ("WHAT") alert ("YEAH") else
+alert("NO!")`, une alerte `"YEAH!"` sera lancée parce que JavaScript considère
+toutes les chaînes de caractères non vides comme des sortes de valeurs vraies.
+
+Bien qu'utiliser `Bool` pour une sémantique booléenne marche mieux en Haskell,
+implémentons un fonctionnement à la JavaScript pour le fun ! Commençons par une
+déclaration de *classe*.
+
+> class YesNo a where
+>     yesno :: a -> Bool
+
+Plutôt simple. La classe `YesNo` définit une seule fonction. Cette fonction
+prend une valeur d'un type qui peut représenter le concept de vérité, et nous
+indique si cette valeur est vraie ou fausse. Remarquez que la façon dont on
+utilise `a` dans cette déclaration implique que `a` doit être un type concret.
+
+Ensuite, définissons des instances. Pour les nombres, on va dire que tout
+nombre qui n'est pas 0 est vrai, et que 0 est faux (comme en JavaScript).
+
+> instance YesNo Int where
+>     yesno 0 = False
+>     yesno _ = True
+
+Les listes vides (et par extension les chaînes de caractère vide) sont des
+valeurs fausses, alors que les listes ou chaînes non vides sont des valeurs
+vraies.
+
+> instance YesNo [a] where
+>     yesno [] = False
+>     yesno _ = True
+
+Remarquez qu'on a ajouté un paramètre de type `a` ici pour faire de la liste un
+type concret, bien qu'on n'ait pas ajouté de contrainte sur ce que la liste
+contient. Quoi d'autre, hmmm… Je sais, `Bool` aussi contient la notion de
+vérité, et c'est plutôt évident de savoir lequel est quoi.
+
+> instance YesNo Bool where
+>     yesno = id
+
+Hein ? Qu'est-ce qu'`id` ? C'est juste une fonction de la bibliothèque standard
+qui prend un paramètre et retourne la même chose, ce qui correspond à ce qu'on
+écrirait ici de toute façon.
+
+Faisons de `Maybe a` une instance.
+
+> instance YesNo (Maybe a) where
+>     yesno (Just _) = True
+>     yesno Nothing = False
+
+Pas besoin de contrainte de classe puisqu'on ne fait aucune supposition sur ce
+que contient le `Maybe`. On a juste considéré que toute valeur `Just` est
+vraie, alors que `Nothing` est faux. Il a encore fallu écrire `(Maybe a)`
+plutôt que `Maybe` tout court, parce qu'en y réfléchissant, une fonction `Maybe
+-> Bool` ne peut pas exister (car `Maybe` n'est pas un type concret), alors que
+`Maybe a -> Bool` est bien et propre. Cependant, c'est plutôt cool puisqu'à
+présent, tout type de la forme `Maybe something` est membre de `YesNo`, peu
+importe ce que `something` est.
+
+Précédemment, on a défini un type `Tree a`, qui représentait un arbre binaire
+de recherche. On peut dire qu'un arbre vide est faux, alors qu'un arbre non
+vide est vrai.
+
+> instance YesNo (Tree a) where
+>     yesno EmptyTree = False
+>     yesno _ = True
+
+Est-ce qu'un feu tricolore peut être une valeur vraie ou fausse ? Bien sûr. Si
+c'est rouge, on s'arrête. Si c'est vert, on y va. Si c'est jaune ? Eh,
+personnellement je foncerai pour l'adrénaline.
+
+> instance YesNo TrafficLight where
+>     yesno Red = False
+>     yesno _ = True
+
+Cool, on a plein d'instances, jouons avec !
+
+> ghci> yesno $ length []
+> False
+> ghci> yesno "haha"
+> True
+> ghci> yesno ""
+> False
+> ghci> yesno $ Just 0
+> True
+> ghci> yesno True
+> True
+> ghci> yesno EmptyTree
+> False
+> ghci> yesno []
+> False
+> ghci> yesno [0,0,0]
+> True
+> ghci> :t yesno
+> yesno :: (YesNo a) => a -> Bool
+
+Bien, ça marche ! Faisons une fonction qui copie le comportement de *if*, mais
+avec des valeurs `YesNo`.
+
+> yesnoIf :: (YesNo y) => y -> a -> a -> a
+> yesnoIf yesnoVal yesResult noResult = if yesno yesnoVal then yesResult else noResult
+
+Plutôt direct. Elle prend une valeur `YesNo` et deux choses. Si la valeur est
+plutôt vraie, elle retourne la première chose, sinon elle retourne la deuxième.
+
+> ghci> yesnoIf [] "YEAH!" "NO!"
+> "NO!"
+> ghci> yesnoIf [2,3,4] "YEAH!" "NO!"
+> "YEAH!"
+> ghci> yesnoIf True "YEAH!" "NO!"
+> "YEAH!"
+> ghci> yesnoIf (Just 500) "YEAH!" "NO!"
+> "YEAH!"
+> ghci> yesnoIf Nothing "YEAH!" "NO!"
+> "NO!"
+
+La classe de types Functor
+--------------------------
+
+Jusqu'ici, nous avons rencontré pas mal de classes de types de la bibliothèque
+standard. On a joué avec `Ord`, pour les choses qu'on peut ranger en ordre. On
+a familiarisé avec `Eq`, pour les choses dont on peut tester l'égalité. On a vu
+`Show`, qui présente une interface pour les choses qui peuvent être affichées
+sous une forme de chaîne de caractères. Notre bon ami `Read` est là lorsqu'on
+veut convertir des chaînes de caractères en des valeurs d'un certain type. Et
+maintenant, on va regarder la classe de types `Functor`, qui est simplement
+pour les choses sur lesquelles on peut mapper. Vous pensez probablement aux
+listes à l'instant, puisque mapper sur des listes est un idiome prédominant en
+Haskell. Et vous avez raison, le type des listes est bien membre de la classe
+`Functor`.
+
+Quel meilleur moyen de connaître `Functor` que de regarder son implémentation ?
+Jetons un coup d'œil.
+
+> class Functor f where
+>     fmap :: (a -> b) -> f a -> f b
+
+Parfait. On voit que la classe définit une fonction, `fmap`, et ne fournit pas
+d'implémentation par défaut. Le type de `fmap` est intéressant. Jusqu'ici, dans
+les définitions de classes de types, la variable de type qui jouait le rôle du
+type dans la classe de type était un type concret, comme le `a` dans `(==) ::
+(Eq a) => a -> a -> Bool`. Mais maintenant, le `f` n'est pas un type concret
+(un type qui peut contenir des valeurs, comme `Int`, `Bool` ou `Maybe String`),
+mais un constructeur de types qui prend un paramètre de type. Petit
+rafraîchissement par l'exemple : `Maybe Int` est un type concret, mais `Maybe`
+est un constructeur qui prend un type en paramètre. Bon, on voit que `fmap`
+prend une fonction d'un type vers un autre type et un foncteur appliqué au
+premier type, et retourne un foncteur appliqué au second type.
+
+Si cela semble un peu confus, ne vous inquiétez pas. Tout sera bientôt révélé
+avec des exemples. Hmm, cette déclaration de type de `gmap` me rappelle quelque
+chose. Si vous ne connaissez pas la signature de `map`, c'est `map :: (a -> b)
+-> [a] -> [b]`.
+
+Ah, intéressant ! Elle prend une fonction d'un type vers un autre type, une
+liste du premier type, et retourne une liste du second type. Mes amis, je crois
+que nous avons là un foncteur ! En fait, `map` est juste le `fmap` des listes.
+Voici l'instance de `Functor` pour les listes.
+
+> instance Functor [] where
+>     fmap = map
+
+C'est tout ! Remarquez qu'on a pas écrit `instance Functor [a] where`, parce
+qu'en regardant `fmap :: (a -> b) -> f a -> f b`, on voit que `f` doit être un
+constructeur de types qui prend un type. `[a]` est déjà un type concret (d'une
+liste contenant n'importe quel type), alors que `[]` est un constructeur de
+types qui prend un type et produit des types comme `[Int]`, `[String]` ou même
+`[[String]]`.
+
+Puisque pour les listes, `fmap` est juste `map`, on obtient les mêmes résultats
+en utilisant l'un ou l'autre sur des listes.
+
+> ghci> fmap (*2) [1..3]
+> [2,4,6]
+> ghci> map (*2) [1..3]
+> [2,4,6]
+
+Que se passe-t-il lorsqu'on `map` ou `fmap` sur une liste vide ? Eh bien, bien
+sûr, on obtient une liste vide. On transforme simplement une liste vide de type
+`[a]` en une liste vide de type `[b]`.
+
+Tous les types qui peuvent se comporter comme des boîtes peuvent être des
+foncteurs. Vous pouvez imaginer une liste comme une boîte ayant une infinité de
+petits compartiments, et ils peuvent être soit tous vides, soit partiellement
+remplis. Donc, quoi d'autre qu'une liste peut être assimilé à une boîte ? Pour
+commencer, le type `Maybe a`. C'est comme une boîte qui peut contenir soit
+rien, auquel cas elle a la valeur `Nothing`, soit un élément, comme `"HAHA"`,
+auquel cas elle a la valeur `Just "HAHA"`. Voici comment `Maybe` est fait
+foncteur.
+
+> instance Functor Maybe where
+>     fmap f (Just x) = Just (f x)
+>     fmap f Nothing = Nothing
+
+Encore une fois, remarquez qu'on a écrit `instance Functor Maybe where` et pas
+`instance Functor (Maybe m) where`, contrairement à ce qu'on avait fait avec
+`Maybe` dans `YesNo`. `Functor` veut un constructeur de types qui prend un
+paramètre, pas un type concret. Si vous remplacez mentalement les `f` par des
+`Maybe`, `fmap` agit comme `(a -> b) -> Maybe a -> Maybe b` pour ce type, ce
+qui semble correct. Par contre, si vous remplacez mentalement `f` par `(Maybe
+m)`, alors elle devrait agir comme `(a -> b) -> Maybe m a -> Maybe m b`, ce qui
+n'a pas de sens puisque `Maybe` ne prend qu'un seul paramètre de type.
+
+Bon, l'implémentation de `fmap` est plutôt simple. Si c'est une valeur vide
+`Nothing`, alors on retourne `Nothing`. Si on mappe sur une boîte vide, on
+obtient une boîte vide. C'est sensé. Tout comme mapper sur une liste vide
+retourne une liste vide. Si ce n'est pas une valeur vide, mais plutôt une
+valeur emballée dans un `Just`, alors on applique la fonction sur le contenu du
+`Just`.
+
+> ghci> fmap (++ " HEY GUYS IM INSIDE THE JUST") (Just "Something serious.")
+> Just "Something serious. HEY GUYS IM INSIDE THE JUST"
+> ghci> fmap (++ " HEY GUYS IM INSIDE THE JUST") Nothing
+> Nothing
+> ghci> fmap (*2) (Just 200)
+> Just 400
+> ghci> fmap (*2) Nothing
+> Nothing
+
+Une autre chose sur laquelle on peut mapper, et donc en faire une instance de
+Functor, c'est notre type `Tree a`. On peut l'imaginer comme une boîte qui peut
+contenir zéro ou plusieurs valeurs, et le constructeur de type `Tree` prend
+exactement un paramètre de type. Si vous regardez `fmap` comme une fonction sur
+les `Tree`, sa signature serait `(a -> b) -> Tree a -> Tree b`. On va utiliser
+de la récursivité pour celui-là. Mapper sur un arbre vide produire un arbre
+vide. Mapper sur un arbre non vide donnera un arbre où notre fonction sera
+appliquée sur le nœud racine, et les deux sous-arbres correspondront aux
+sous-arbres du nœud de départ sur lesquels on aura mappé la même fonction.
+
+> instance Functor Tree where
+>     fmap f EmptyTree = EmptyTree
+>     fmap f (Node x leftsub rightsub) = Node (f x) (fmap f leftsub) (fmap f rightsub)
+
+> ghci> fmap (*2) EmptyTree
+> EmptyTree
+> ghci> fmap (*4) (foldr treeInsert EmptyTree [5,7,3,2,1,7])
+> Node 28 (Node 4 EmptyTree (Node 8 EmptyTree (Node 12 EmptyTree (Node 20 EmptyTree EmptyTree)))) EmptyTree
+
+Joli ! Et pourquoi pas `Either a b` à présent ? Peut-on en faire un foncteur ?
+La classe de types `Functor` veut des constructeurs de types à un paramètre de
+type, mais `Either` en prend deux. Hmmm ! Je sais, on va partiellement
+appliquer `Either` en lui donnant un paramètre de type, de façon à ce qu'il
+n'ait plus qu'un paramètre libre. Voici comment `Either a` est fait foncteur
+dans la bibliothèque standard :
+
+> instance Functor (Either a) where
+>     fmap f (Right x) = Right (f x)
+>     fmap f (Left x) = Left x
+
+Eh bien, qu'avons-nous fait là ? Vous voyez qu'on a fait d'`Either a` une
+instance, au lieu d'`Either`. C'est parce qu'`Either a` est un constructeur de
+types qui attend un paramètre, alors qu'`Either` en attend deux. Si `fmap`
+était spécifiquement pour `Either a`, elle aurait pour signature `(b -> c) ->
+Either a b -> Either a c`, parce que c'est identique à `(b -> c) -> (Either a)
+b -> (Either a) c`. Dans l'implémentation, on a mappé sur le constructeur de
+valeurs `Right`, mais pas sur `Left`. Pourquoi cela ? Eh bien, si on retourne
+à la définition d'`Either a b`, c'est un peu comme :
+
+> data Either a b = Left a | Right b
+
+Si l'on voulait mapper une fonction sur les deux à la fois, `a` et `b`
+devraient avoir le même type. Ce que je veux dire, c'est que si on voulait
+mapper une fonction qui transforme une chaîne de caractères en chaîne de
+caractères, que `b` était une chaîne de caractères, mais que `a` était un
+nombre, ça ne marcherait pas. Aussi, en voyant ce que serait le type de `fmap`
+s'il n'opérait que sur des valeurs `Either`, on voir que le premier paramètre
+doit rester le même alors que le second peut changer, et c'est le constructeur
+de valeurs `Left` qui actualise ce premire paramètre.
+
+Cela va bien de pair avec notre analogie de la boîte, si l'on imagine que
+`Left` est une boîte vide sur laquelle un message d'erreur indique pourquoi
+elle est vide.
+
+Les maps de `Data.Map` peuvent aussi être faites foncteurs puisqu'elles
+contiennent (ou non !) des valeurs. Dans le cas de `Map k v`, `fmap` va mapper
+une fonction de type `v -> v'` sur une map de type `Map k v` et retourner une
+map de type `Map k v'`.
+
+Notez que le `'` n'a pas de sémantique spéciale dans les noms des types, de
+même qu'il n'en avait pas dans les noms des valeurs. On l'utilise généralement
+pour dénoter des choses qui sont similaires mais un peu modifiées.
+
+Essayez de deviner comme `Map k` est fait instance de `Functor` par vous-même !
+
+Avec la classe `Functor`, on a vu comment les classes de types peuvent
+représenter des concepts d'ordre supérieur plutôt cool. On a aussi pratiqué un
+peu plus l'application partielle sur les types et la création d'instances. Dans
+un des chapitres suivants, on verra quelques lois qui s'appliquent sur les
+foncteurs.
+
+**Encore une chose !** Les foncteurs doivent suivre certaines lois afin qu'ils
+bénéficient de propriétés dont on dépendra sans trop s'en soucier. Si on fait
+`fmap (+1)` sur la liste `[1, 2, 3, 4]`, on obtient `[2, 3, 4, 5]`, et pas la
+liste renversée `[5, 4, 3, 2]`. Si on utilise `fmap (\a -> a)` (la fonction
+identité qui retourne son paramètre inchangé) sur une liste, on s'attend à
+retrouver la même liste en retour. Par exemple, si on donnait une mauvaise
+instance de foncteur à notre type `Tree`, alors en utilisant `fmap` sur un
+arbre où le sous-arbre gauche n'a que des éléments inférieurs au nœeud racine
+et le sous-arbre droit n'a que des éléments supérieurs, on risquerait de
+produire un arbre qui n'a plus cette propriété. On verra les lois des foncteurs
+plus en détail dans un des chapitres suivants.
+
+Sortes et un peu de type-foo
+----------------------------
+
+Les constructeurs de types prennent d'autres types en paramètres pour
+finalement produire des types concrets. Ca me rappelle un peu les fonctions,
+qui prennent des valeurs en paramètre pour produire des valeurs. On a vu que
+les constructeurs de types peuvent être appliqués partiellement (`Either
+String` est un constructeur de types qui prend un type et produit un type
+concret, comme `Either String Int`), tout comme le peuvent les fonctions. C'est
+effectivement très intéressant. Dans cette section, nous allons voir comment
+définir formellement la manière dont les constructeurs de types sont appliqués
+aux types, tout comme nous avions défini formellement comment les fonctions
+étaient appliquées à des valeurs en utilisant des déclarations de type. **Vous
+n'avez pas nécessairement besoin de lire cette section pour continuer votre
+quête magique d'Haskell**, et si vous ne la comprenez pas, ne vous inquiétez
+pas. Cependant, comprendre ceci vous donnera une compréhension très poussée du
+système de types.
+
+Donc, les valeurs comme `3`, `"YEAH"`, ou `takeWhile` (les fonctions sont aussi
+des valeurs, puisqu'on peut les passer et les retourner) ont chacune un type.
+Les types sont des petites étiquettes que les valeurs transportent afin qu'on
+puisse raisonner sur leur valeur. Mais les types ont eux-même leur petite
+étiquette, appelée **sorte**. Une sorte est plus ou moins le type d'un type. Ça
+peut sembler bizarre et déroutant, mais c'est en fait un concept très cool.
+
+Que sont les sortes et à quoi servent-elles ? Eh bien, examinons la sorte d'un
+type à l'aide de la commande `:k` dans GHCi.
+
+> ghci> :k Int
+> Int :: *
+
+Une étoile ? Comme c'est bizarre. Qu'est-ce que cela signifie ? Une `*`
+signifie que le type est un type concret. Un type concret est un type qui ne
+prend pas de paramètre de types, et les valeurs ne peuvent avoir que des types
+concrets. Si je devais lire `*` tout haut (ce qui n'a jamais été le cas), je
+dirais juste *étoile* ou *type*.
+
+Ok, voyons maintenant le type de `Maybe`.
+
+> ghci> :k Maybe
+> Maybe :: * -> *
+
+Le constructeur de types `Maybe` prend un type concret (comme `Int`) et
+retourne un type concret comme `Maybe Int`. Et c'est ce que nous dit cette
+sorte. Tout comme `Int -> Int` signifie qu'une fonction prend un `Int` et
+retourne un `Int`, `* -> *` signifie qu'un constructeur de types prend un type
+concret et retourne un type concret. Appliquons `Maybe` à un paramètre de type
+et voyons la sorte du résultat.
+
+> ghci> :k Maybe Int
+> Maybe Int :: *
+
+Comme prévu ! On a appliqué `Maybe` à un paramètre de type et obtenu un type
+concret (c'est ce que `* -> *` signifie). Un parallèle (bien que non
+équivalent, les types et les sortes étant des choses différentes) à cela est,
+lorsque l'on fait `:t isUpper` et `:t isUpper 'A'`. `isUpper` a pour type `Char
+-> Bool` et `isUpper 'A'` a pour type `Bool`, parce que sa valeur est
+simplement `True`. Ces deux types ont tout de même pour sorte `*`.
+
+On a utilisé `:k` sur un type pour obtenir sa sorte, comme on a utilisé `:t`
+sur une valeur pour connaître son type. Comme dit précédemment, les types sont
+les étiquettes des valeurs, et les sortes les étiquettes des types, et on peut
+voir des parallèles entre les deux.
+
+Regardons une autre sorte.
+
+> ghci> :k Either
+> Either :: * -> * -> *
+
+Aha, cela nous indique qu'`Either` prend deux types concrets en paramètres pour
+produire un type concret. Ca ressemble aussi à la déclaration de type d'une
+fonction qui prend deux choses et en retourne une troisième. Les constructeurs
+de types sont curryfiés (comme les fonctions), donc on peut les appliquer
+partiellement.
+
+> ghci> :k Either String
+> Either String :: * -> *
+> ghci> :k Either String Int
+> Either String Int :: *
+
+Lorsqu'on voulait faire d'`Either` une instance de `Functor`, on a dû
+l'appliquer partiellement parce que `Functor` voulait des types qui attendent
+un paramètre, alors qu'`Either` en prend deux. En d'autres mots, `Functor` veut
+des types de sorte `* -> *` et nous avons dû appliquer partiellement `Either`
+pour obtenir un type de sorte `* -> *` au lieu de sa sorte originale `* -> * ->
+*`. Si on regarde à nouveau la définition de `Functor` :
+
+> class Functor f where
+>     fmap :: (a -> b) -> f a -> f b
+
+on peut voir que `f` est utilisé comme un type qui prend un type concret et
+produit un type concret. On sait qu'il doit produire un type concret parce que
+ce type est utilisé comme valeur dans une fonction. Et de ça, on peut déduire
+que les types qui peuvent être amis avec `Functor` doivent avoir pour sorte `*
+-> *`.
+
+Maintenant, faisons un peu de type-foo. Regardez cette classe de types que je
+vais inventer maintenant :
+
+> class Tofu t where
+>     tofu :: j a -> t a j
+
+Wow, ça a l'air bizarre. Comment ferions-nous un type qui soit une instance de
+cette étrange classe de types ? Eh bien, regardons quelle sorte ce type devrait
+avoir. Puisque `j a` est utilisé comme le type d'une valeur que la fonction
+`tofu` prend en paramètre, `j a` doit avoir pour sorte `*`. En supposant que
+`a` a pour sorte `*`, alors `j` doit avoir pour sorte `* -> *`. On voit que `t`
+doit aussi produire un type concret et doit prendre deux types. Et sachant que
+`a` a pour sorte `*` et que `j` a pour sorte `* -> *`, on infère que `t` doit
+avoir pour sorte `* -> (* -> *) -> *`. Ainsi, il prend un type concret (`a`),
+un constructeur de types qui prend un type concret (`j`) et produit un type
+concret. Wow.
+
+OK, faisons alors un type qui a pour sorte `* -> (* -> *) -> *`. Voici une
+façon d'y arriver.
+
+> data Frank a b  = Frank {frankField :: b a} deriving (Show)
+
+Comment sait-on que ce type a pour sorte `* -> (* -> *) -> *` ? Eh bien, les
+champs des TAD (types abstraits de données) doivent contenir des valeurs, donc
+doivent avoir pour sorte `*`, évidemment. On suppose `*` pour `a`, ce qui veut
+dire que `b` prend un paramètre de type et donc sa sorte est `* -> *`. On
+connaît les sortes de `a` et `b`, et puisqu'ils sont les paramètres de `Frank`,
+on voit que `Frank` a pour sorte `* -> (* -> *) -> *`. Le premier `*`
+représente `a` et le `(* -> *)` représente `b`. Créons quelques valeurs de type
+`Frank` et vérifions leur type.
+
+> ghci> :t Frank {frankField = Just "HAHA"}
+> Frank {frankField = Just "HAHA"} :: Frank [Char] Maybe
+> ghci> :t Frank {frankField = Node 'a' EmptyTree EmptyTree}
+> Frank {frankField = Node 'a' EmptyTree EmptyTree} :: Frank Char Tree
+> ghci> :t Frank {frankField = "YES"}
+> Frank {frankField = "YES"} :: Frank Char []
+
+Hmm. Puisque `frankField` a un type de la forme `a b`, ses valeurs doivent
+avoir des types de forme similaire. Ainsi, elles peuvent être `Just "HAHA"`,
+qui a pour type `Maybe [Char]` ou une valeur `['Y', 'E', 'S']`, qui a pour type
+`[Char]` (si on utilisait notre propre type liste, ce serait `List Char`). Et
+on voit que les types des valeurs `Frank` correspondent bien à la sorte de
+`Frank`. `[Char]` a pour sorte `*` et `Maybe` a pour sorte `* -> *`. Puisque
+pour être une valeur, elle doit avoir un type concret et donc entièrement
+appliqué, chaque valeur `Frank blah blaah` a pour sorte `*`.
+
+Faire de `Frank` une instance de `Tofu` est plutôt facile. On voit que `tofu`
+prend un `j a` (par exemple un `Maybe Int`) et retourne un `t a j`. Si l'on
+remplaçait `j` par `Frank`, le type résultant serait `Frank Int Maybe`.
+
+> instance Tofu Frank where
+>     tofu x = Frank x
+
+> ghci> tofu (Just 'a') :: Frank Char Maybe
+> Frank {frankField = Just 'a'}
+> ghci> tofu ["HELLO"] :: Frank [Char] []
+> Frank {frankField = ["HELLO"]}
+
+Pas très utile, mais bon pour l'entraînement de nos muscles de types. Encore un
+peu de type-foo. Mettons qu'on ait ce type de données :
+
+> data Barry t k p = Barry { yabba :: p, dabba :: t k }
+
+Et maintenant, on veut créer une instance de `Functor`. `Functor` prend des
+types de sorte `* -> *` mais `Barry` n'a pas l'air de cette sorte. Quelle est
+la sorte de `Barry` ? Eh bien, on voit qu'il prend trois paramètres de types,
+donc ça va être `something -> something -> something -> *`. Il est prudent de
+considérer que `p` est un type concret et a pour sorte `*`. Pour `k`, on
+suppose `*`, et par extension, `t` a pour sorte `* -> *`. Remplaçons les
+*something* plus tôt par ces sortes, et l'on obtient `(* -> *) -> * -> * -> *`.
+Vérifions avec GHCi.
+
+> ghci> :k Barry
+> Barry :: (* -> *) -> * -> * -> *
+
+Ah, on avait raison. Comme c'est satisfaisant. Maintenant, pour rendre ce type
+membre de `Functor` il nous faut appliquer partiellement les deux premiers
+paramètres de type de façon à ce qu'il nous reste un `* -> *`. Cela veut dire
+que le début de la déclaration d'instance sera : `instance Functor (Barry a b)
+where`. Si on regarde `fmap` comme si elle était faite spécifiquement pour
+`Barry`, elle aurait pour type `fmap :: (a -> b) -> Barry c d a -> Barry c d
+b`, parce qu'on remplace juste les `f` de `Functor` par `Barry c d`. Le
+troisième paramètre de type de `Barry` devra changer, et on voit qu'il est
+convenablement placé dans son propre champ.
+
+> instance Functor (Barry a b) where
+>     fmap f (Barry {yabba = x, dabba = y}) = Barry {yabba = f x, dabba = y}
+
+Et voilà ! On vient juste de mapper `f` sur le premier champ.
+
+Dans cette section, on a vu un tour détaillé du fonctionnement des paramètres
+de types et on les a en quelque sorte formalisés avec les sortes, comme on
+avait formalisé les paramètres de fonctions avec des déclarations de type. On a
+vu qu'il existe des parallèles intéressants entre les fonctions et les
+constructeurs de types. Cependant, ce sont deux choses complètement
+différentes. En faisant du vrai Haskell, vous n'aurez généralement pas à
+travailler avec des sortes et à inférer des sortes à la main comme on a fait
+ici. Généralement, vous devez juste appliquer partiellement `* -> *` ou `*` à
+votre type personnalisé pour en faire une instance d'une des classes de types
+standard, mais il est bon de savoir comment et pourquoi cela fonctionne. Il est
+aussi intéressant de s'apercevoir que les types ont leur propre type. Encore
+une fois, vous n'avez pas à comprendre tout ce qu'on vient de faire pour
+continuer à lire, mais si vous comprenez comment les sortes fonctionnent, il y
+a des chances pour que vous ayez développé une compréhension solide du système
+de types d'Haskell.

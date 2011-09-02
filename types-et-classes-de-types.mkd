@@ -93,7 +93,7 @@ Voici un survol des types usuels.
 maximale. Habituellement, sur des machines 32-bits, le plus grand `Int` est
 2147483647 et le plus petit -2147483648.
 
-`Integer` désigne... euh, aussi les entiers. La différence, c'est qu'il n'est
+`Integer` désigne… euh, aussi les entiers. La différence, c'est qu'il n'est
 pas borné, donc il peut être utilisé pour représenter des nombres énormes. Je
 veux dire, vraiment énormes. `Int` est cependant plus efficace.
 
@@ -152,7 +152,7 @@ déclaration de type de `head` indique qu'elle prend une liste de n'importe quel
 type, et retourne un élément de ce type.
 
 Bien que les variables de type puissent avoir des noms plus longs qu'un
-caractère, généralement on les note a, b, c, d...
+caractère, généralement on les note a, b, c, d…
 
 Vous souvenez-vous de `fst` ? Elle retourne la première composante d'une paire.
 Regardons son type.
