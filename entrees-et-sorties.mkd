@@ -1,0 +1,230 @@
+Entrées et Sorties
+==================
+
+Nous avons mentionné qu'Haskell était un langage purement fonctionnel. Alors
+que dans des langages impératifs, on parvient généralement à faire quelque
+chose en donnant à l'ordinateur une série d'étapes à exécuter, en programmation
+fonctionnelle on définit plutôt ce que les choses sont. En Haskell, une
+fonction ne peut pas changer un état, comme par exemple le contenu d'une
+variable (quand une fonction change un état, on dit qu'elle a des *effets de
+bord*). La seule chose qu'une fonction peut faire en Haskell, c'est renvoyer un
+résultat basé sur les paramètres qu'on lui a donnés. Si une fonction est
+appelée deux fois avec les mêmes paramètres, elle doit retourner le même
+résultat. Bien que ça puisse paraître un peu limitant lorsqu'on vient d'un
+monde impératif, on a vu que c'est en fait plutôt sympa. Dans un langage
+impératif, vous n'avez aucune garantie qu'une fonction qui est sensée calculer
+des nombres ne va pas brûler votre maison, kidnapper votre chien et rayer votre
+voiture avec une patate pendant qu'elle calcule ces nombres. Par exemple, quand
+on a fait un arbre binaire de recherche, on n'a pas inséré un élément dans un
+arbre en modifiant l'arbre à sa place. Notre fonction pour insérer dans un
+arbre binaire retournait en fait un nouvel arbre, parce qu'elle ne peut pas
+modifier l'ancien.
+
+Bien qu'avoir des fonctions incapables de changer d'état soit bien puisque cela
+nous aide à raisonner sur nos programmes, il y a un problème avec ça. Si une
+fonction ne peut rien changer dans le monde, comment est-elle sensée nous dire
+ce qu'elle a calculé ? Pour nous dire ce qu'elle a calculé, elle doit pouvoir
+changer l'état d'un matériel de sortie (généralement, l'état de notre écran),
+qui va ensuite émettre des photons qui voyageront jusqu'à notre cerveau pour
+changer l'état de notre esprit, mec.
+
+Ne désespérez pas, tout n'est pas perdu. Il s'avère qu'Haskell a en fait un
+système très malin pour gérer ces fonctions qui ont des effets de bord, qui
+sépare proprement les parties de notre programme qui sont pures de celles qui
+sont impures, font tout le sale boulot comme parler au clavier ou à l'écran.
+Avec ces deux parties séparées, on peut toujours raisonner sur la partie pure
+du programme, et bénéficier de toutes les choses que la pureté offre, comme la
+paresse, la robustesse et la modularité, tout en communiquant efficacement avec
+le monde extérieur.
+
+Hello, world!
+-------------
+
+Jusqu'ici, nous avions toujours chargé nos fonctions dans GHCi pour les tester
+et jouer avec elles. On a aussi exploré les fonctions de la bibliothèque
+standard de cette façon. Mais à présent, après environ huit chapitres, on va
+finalement écrire notre premier *vrai* programme Haskell ! Yay ! Et pour sûr,
+on va se faire ce bon vieux `"hello, world"`.
+
+**Hey !** Pour ce chapitre, je vais supposer que vous disposez d'un
+environnement à la Unix pour apprendre Haskell. Si vous êtes sous Windows, je
+suggère d'utiliser [Cygwin](http://www.cygwin.com/), qui est un environnement à
+la Linux pour Windows, autrement dit, juste ce qu'il vous faut.
+
+Pour commencer, tapez ceci dans votre éditeur de texte favori :
+
+> main = putStrLn "hello, world"
+
+On vient juste de définir un nom `main`, qui consiste à appeler `putStrLn` avec
+le paramètre `"hello, world"`. Ça semble plutôt banal, mais ça ne l'est pas,
+comme on va le voir bientôt. Sauvegardez ce fichier comme `helloworld.hs`.
+
+Et maintenant, on va faire quelque chose sans précédent. On va réellement
+compiler notre programme ! Je suis tellement ému ! Ouvrez votre terminal et
+naviguez jusqu'au répertoire où `helloworld.hs` est placé et faites :
+
+> $ ghc --make helloworld
+> [1 of 1] Compiling Main             ( helloworld.hs, helloworld.o )
+> Linking helloworld ...
+
+Ok ! Avec de la chance, vous avez quelque chose comme ça et vous pouvez à
+présent lancer le programme en faisant `./helloworld`.
+
+> $ ./helloworld
+> hello, world
+
+Et voilà, notre premier programme compilé qui affichait quelque chose dans le
+terminal. Comme c'est extraordinaire(ment ennuyeux) !
+
+Examinons ce qu'on vient d'écrire. D'abord, regardons le type de la fonction
+`putStrLn`.
+
+> ghci> :t putStrLn
+> putStrLn :: String -> IO ()
+> ghci> :t putStrLn "hello, world"
+> putStrLn "hello, world" :: IO ()
+
+On peut lire le type de `putStrLn` ainsi : `putStrLn` prend une chaîne de
+caractères et retourne une **action I/O** qui a pour type de retour `()`
+(c'est-à-dire le tuple vide, aussi connu comme *unit*). Une action I/O est
+quelque chose qui, lorsqu'elle sera exécutée, va effectuer une action avec des
+effets de bord (généralement, lire en entrée ou afficher à l'écran) et
+contiendra une valeur de retour. Afficher quelque chose à l'écran n'a pas
+vraiment de valeur de retour significative, alors une valeur factice `()` est
+utilisée.
+
+Le tuple vide est une valeur `()` qui a pour type `()`.
+
+Donc, quand est-ce que cette action sera exécutée ? Eh bien, c'est ici que le
+`main` entre en jeu. Une action I/O sera exécutée lorsqu'on lui donne le nom
+`main` et qu'on lance le programme ainsi créé.
+
+Que votre programme entier ne soit qu'une action I/O semble un peu limitant.
+C'est pourquoi on peut utiliser la notation *do* pour coller ensemble plusieurs
+actions I/O en une seule. Regardez l'exemple suivant :
+
+> main = do
+>     putStrLn "Hello, what's your name?"
+>     name <- getLine
+>     putStrLn ("Hey " ++ name ++ ", you rock!")
+
+Ah, intéressant, une nouvelle syntaxe ! Et celle-ci se lit presque comme un
+programme impératif. Si vous compilez cela et l'essayez, cela se comportera
+certainement conformément à ce que vous attendez. Remarquez qu'on a dit *do*,
+puis on a aligné une série d'étapes, comme en programmation impérative. Chacune
+de ces étapes est une action I/O. En les mettant ensemble avec la syntaxe *do*,
+on les a collées en une seule action I/O. L'action obtenue a pour type `IO ()`,
+parce que c'est le type de la dernière action à l'intérieur du collage.
+
+À cause de ça, `main` a toujours la signature de type `main :: IO something`,
+où `something` est un type concret. Par convention, on ne spécifie généralement
+pas la déclaration de type de `main`.
+
+Une chose intéressante qu'on n'a pas rencontrée avant est à la troisième ligne,
+qui dit `name <- getLine`. On dirait qu'elle lit une ligne depuis l'entrée et
+la stocke dans une variable `name`. Est-ce le cas ? Examinons le type de
+`getLine`.
+
+> ghci> :t getLine
+> getLine :: IO String
+
+Aha, o-kay. `getLine` est une action I/O qui contient un résultat de type
+`String`. Ça tombe sous le sens, parce qu'elle attendra que l'utilisateur tape
+quelque chose dans son terminal, et ensuite, cette frappe sera représentée
+comme une chaîne de caractères. Mais qu'est-ce qui se passe dans `name <-
+getLine` alors ? Vous pouvez lire ceci ainsi : **effectue l'action I/O
+`getLine` puis lie la valeur résultante au nom `name`**. `getLine` a pour type
+`IO String`, donc `name` aura pour type `String`. Vous pouvez imaginer une
+action I/O comme une boîte avec des petits pieds qui sortirait dans la monde
+réel et irait faire quelque chose là-bas (comme des graffitis sur les murs) et
+reviendra peut-être avec une valeur. Une fois qu'elle a attrapé une valeur pour
+vous, le seul moyen d'ouvrir la boîte pour en récupérer le contenu est
+d'utiliser la construction `<-`. Et si l'on sort une valeur d'une action I/O,
+on ne peut le faire qu'à l'intérieur d'une autre action I/O. C'est ainsi
+qu'Haskell parvient à séparer proprement les parties pure et impure du code.
+`getLine` est en un sens impure, parce que sa valeur de retour n'est pas
+garantie d'être la même lorsqu'on l'exécute deux fois. C'est pourquoi elle est
+en quelque sorte *tachée* par le constructeur de types `IO`, et on ne peut
+récupérer cette donnée que dans du code I/O. Et puisque le code I/O est taché
+aussi, tout calcul qui dépend d'une valeur tachée I/O renverra un résultat
+taché.
+
+Quand je dis *taché*, je ne veux pas dire taché de façon à ce que l'on ne
+puisse plus jamais utiliser le résultat contenu dans l'action I/O dans un code
+pur. Non, on dé-tache temporairement la donné dans l'action I/O lorsqu'on la
+lie à un nom. Quand on fait `name <- getLine`, `name` est une chaîne de
+caractères normale, parce qu'elle représente ce qui est dans la boîte. On peut
+avoir une fonction très compliquée qui, mettons, prend votre nom (une chaîne de
+caractères normale) et un paramètre, et vous donne votre fortune et votre futur
+basé sur votre nom. On peut faire cela :
+
+> main = do
+>     putStrLn "Hello, what's your name?"
+>     name <- getLine
+>     putStrLn $ "Read this carefully, because this is your future: " ++ tellFortune name
+
+et `tellFortune` (ou n'importe quelle fonction à laquelle on passe `name`) n'a
+pas besoin de savoir quoi que ce soit à propos d'I/O, c'est une simple fonction
+`String -> String` !
+
+Regardez ce bout de code. Est-il valide ?
+
+> nameTag = "Hello, my name is " ++ getLine 
+
+Si vous avez répondu non, offrez-vous un cookie. Si vous avez dit oui, buvez un
+verre de lave en fusion. Non, je blague ! La raison pour laquelle ça ne marche
+pas, c'est parce que `++` requiert que ses deux paramètres soient des listes du
+même type. Le premier paramètre a pour type `String` (ou `[Char]` si vous
+voulez), alors que `getLine` a pour type `IO String`. On ne peut pas concaténer
+une chaîne de caractères et une action I/O. On doit d'abord récupérer le
+résultat de l'action I/O pour obtenir une valeur de type `String`, et le seul
+moyen de faire ceci c'est de faire `name <- getLine` dans une autre action I/O.
+Si l'on veut traiter des données impures, il faut le faire dans un
+environnement impur. Ainsi, la trace de l'impureté se propage comme le fléau
+des morts-vivants, et il est dans notre meilleur intérêt de restreindre les
+parties I/O de notre code autant que faire se peut.
+
+Chaque action I/O effectuée encapsule son résultat en son sein. C'est pourquoi
+notre précédent programme aurait pu s'écrire ainsi :
+
+> main = do  
+>     foo <- putStrLn "Hello, what's your name?"  
+>     name <- getLine  
+>     putStrLn ("Hey " ++ name ++ ", you rock!")
+
+Cependant, `foo` aurait juste pour valeur `()`, donc écrire ça serait un peu
+discutable. Remarquez qu'on a pas lié le dernier `putStrLn`. C'est parce que,
+dans un bloc *do*, **la dernière action ne peut pas être liée à un nom**
+contrairement aux précédentes. Nous verrons pourquoi c'est le cas un peu plus
+tard quand nous nous aventurerons dans le monde des monades. Pour l'instant,
+vous pouvez imaginer que le bloc *do* extrait automatiquement la valeur de la
+dernière action et la lie à son propre résultat.
+
+À part la dernière ligne, toute ligne d'un bloc *do* qui ne lie pas peut être
+réécrite avec une liaison. Ainsi, `putStrLn "BLAH"` peut être réécrit comme `_
+<- putStrLn "BLAH"`. Mais ça ne sert à rien, donc on enlève le `<-` pour les
+actions I/O dont le résultat ne nous importe pas, comme `putStrLn something`.
+
+Les débutants pensent parfois que faire
+
+> name = getLine 
+
+va lire l'entrée et lier la valeur de cela à `name`. Eh bien non, tout ce que
+cela fait, c'est de donner un autre nom à l'action I/O `getLine`, ici, `name`.
+Rappelez-vous, pour obtenir une valeur d'une action I/O, vous devez le faire de
+l'intérieur d'une autre action I/O et la liant à un nom via `<-`.
+
+Les actions I/O ne seront exécutées que si elles ont pour nom `main` ou
+lorsqu'elles sont dans une grosse action I/O composée par un bloc *do* en train
+d'être exécutée. On peut utiliser les blocs *do* pour coller des actions I/O,
+puis utiliser cette action I/O dans un autre bloc *do*, et ainsi de suite. De
+toute façon, elles ne seront exécutées que si elles finissent par se retrouver
+dans `main`.
+
+Oh, j'oubliais, il y a un autre cas où une action I/O est exécutée. C'est
+lorsque l'on tape cette action I/O dans GHCi et qu'on presse Entrée.
+
+> ghci> putStrLn "HEEY"  
+> HEEY 
+
+
