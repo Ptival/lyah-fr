@@ -4,6 +4,8 @@ Syntaxe des fonctions
 Filtrage par motif
 ------------------
 
+<img src="img/pattern.png" alt="motif" class="right"/>
+
 Ce chapitre couvrira certaines des constructions syntaxiques cool d'Haskell, et
 l'on va commencer par le filtrage par motif. Le filtrage par motif consiste à
 spécifier des motifs auxquels une donnée doit se conformer, puis vérifier si
@@ -245,6 +247,8 @@ est impossible.
 Gardes, gardes !
 ----------------
 
+<img src="img/guards.png" alt="gardes" class="left"/>
+
 Alors que les motifs sont un moyen de vérifier qu'une valeur se conforme à une
 forme et de la déconstruire, les gardes permettent de vérifier si des
 propriétés d'une valeur (ou de plusieurs d'entre elles) sont vraies ou fausses.
@@ -462,6 +466,8 @@ cylindre à partir de sa hauteur et de son rayon :
 >         topArea = pi * r ^2
 >     in  sideArea + 2 * topArea
 
+<img src="img/letitbe.png" alt="let it be" class="right"/>
+
 La liaison est de la forme `let <bindings> in <expression>`. Les noms que vous
 définissez dans *let* sont accessibles dans l'expression qui suit le *in*.
 
@@ -547,6 +553,8 @@ proche de son nom, de sa déclaration de type, et le tout est plus lisible.
 
 Expressions case
 ----------------
+
+<img src="img/case.png" alt="attaché-case" class="right"/>
 
 Beaucoup de langages impératifs (C, C++, Java, etc.) ont une syntaxe *case*, et
 si vous avez déjà programmé dans ceux-ci, vous savez probablement de quoi il

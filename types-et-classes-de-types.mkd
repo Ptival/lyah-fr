@@ -4,6 +4,8 @@ Types et classes de types
 Faites confiance aux types
 --------------------------
 
+<img src="img/cow.png" alt="vache" class="left"/>
+
 Nous avons mentionné auparavant qu'Haskell avait un système de types statique.
 Le type de chaque expression est connu à la compilation, ce qui mène à un code
 plus sûr. Si vous écrivez un programme dans lequel vous tentez de diviser un
@@ -38,6 +40,8 @@ indique son type. Essayons.
 > (True, 'a') :: (Bool, Char)
 > ghci> :t 4 == 5
 > 4 == 5 :: Bool
+
+<img src="img/bomb.png" alt="bombe" class="right"/>
 
 Ici on voit que faire `:t` sur une expression affiche l'expression, suivie de
 `::` et de son type. `::` se lit "a pour type". Les types explicites sont
@@ -140,6 +144,8 @@ n'importe quel type et retourne son premier élément, qu'est-ce que ça peut bi
 > ghci> :t head
 > head :: [a] -> a
 
+<img src="img/box.png" alt="boîte" class="left"/>
+
 Hmmm ! C'est quoi ce `a` ? Un type ? Rappelez-vous, nous avions dit que les
 types doivent commencer par une majuscule, donc ça ne peut pas être exactement
 un type. Puisqu'il commence par une minuscule, c'est une **variable de type**.
@@ -169,6 +175,8 @@ première composante et la valeur retournée ont le même type.
 
 Classes de types 101
 -------------------
+
+<img src="img/classes.png" alt="classes" class="right"/>
 
 Une classe de types est une sorte d'interface qui définit un comportement. Si
 un type appartient à une classe de types, cela signifie qu'il supporte et

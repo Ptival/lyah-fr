@@ -26,6 +26,8 @@ De manière similaire, on peut imaginer `Int` défini ainsi :
 
 > data Int = -2147483648 | -2147483647 | ... | -1 | 0 | 1 | 2 | ... | 2147483647
 
+<img src="img/caveman.png" alt="homme des cavernes" class="left"/>
+
 Le premier et le dernier constructeurs sont les valeurs minimales et maximales
 d'un `Int`. En vrai le type n'est pas défini ainsi, les points de suspension
 cachent l'omission d'un paquet énorme de nombres, donc ceci est juste à titre
@@ -209,6 +211,8 @@ ne peut pas filtrer par motif sur les constructeurs de valeurs.
 Syntaxe des enregistrements
 ---------------------------
 
+<img src="img/record.png" alt="enregistrement" class="right"/>
+
 OK, on vient de nous donner la tâche de créer un type de données pour décrire
 une personne. Les informations à stocker pour décrire une personne sont :
 prénom, nom de famille, âge, poids, numéro de téléphone, et parfum de glace
@@ -333,7 +337,9 @@ déjà rencontré est implémenté.
 
 > data Maybe a = Nothing | Just a
 
-La `a` est un paramètre de type. Et puisqu'il y a un paramètre de type
+<img src="img/yeti.png" alt="yéti" class="left"/>
+
+Le `a` est un paramètre de type. Et puisqu'il y a un paramètre de type
 impliqué, on dit que `Maybe` est un constructeur de type. En fonction de ce que
 l'on veut que ce type de données contienne lorsqu'il ne vaut pas `Nothing`, ce
 constructeur de types peut éventuellement construire un type `Maybe Int`,
@@ -433,6 +439,8 @@ utiliser n'importe quelle type instance de la classe de types `Show` pour `c`.
 > ghci> :t Car "Ford" "Mustang" "nineteen sixty seven"
 > Car "Ford" "Mustang" "nineteen sixty seven" :: Car [Char] [Char] [Char]
 
+<img src="img/meekrat.png" alt="suricate" class="right"/>
+
 Dans la vie réelle cependant, on finirait par utiliser `Car String String Int`
 la plupart du temps, et il semblerait que paramétriser le type `Car` ne valait
 pas le coup. On utilise généralement les paramètres de types lorsque le type
@@ -522,6 +530,8 @@ Jouons avec nos vecteurs.
 
 Instances dérivées
 ------------------
+
+<img src="img/gob.png" alt="marin" class="right"/>
 
 Dans la section [Classes de types 101](TODO), nous avons vu les bases des
 classes de types. Nous avons dit qu'une classe de types est une sorte
@@ -755,6 +765,8 @@ comment la bibliothèque standard définit `String` comme un synonyme de
 
 > type String = [Char]
 
+<img src="img/chicken.png" alt="poulet" class="left"/>
+
 On a introduit le mot-clé *type*. Le mot clé peut être déroutant pour certains,
 puisqu'on ne crée en fait rien de nouveau (on faisait cela avec le mot-clé
 *data*), mais on crée seulement un synonyme pour un type déjà existant.
@@ -984,6 +996,8 @@ l'information en cas d'échec est dans le type de retour.
 Structures de données récursives
 --------------------------------
 
+<img src="img/thefonz.png" alt="fonz" class="right"/>
+
 Comme on l'a vu, un constructeur de type de données algébrique peut avoir
 plusieurs (ou aucun) champs et chaque champ doit avoir un type concret. Avec
 cela en tête, on peut créer des types dont les constructeurs ont des champs qui
@@ -1099,6 +1113,8 @@ filtrage de motifs marche (uniquement) sur les constructeurs, on peut filtrer
 sur des choses comme des constructeurs normaux préfixes, ou bien comme `8` ou
 `'a'`, qui sont simplement des constructeurs de types numériques ou de
 caractères respectivement.
+
+<img src="img/binarytree.png" alt="arbre binaire" class="left"/>
 
 À présent, implémentons un **arbre binaire de recherche**. Si vous ne
 connaissez pas les arbres binaires de recherche, voici en quoi ils consistent :
@@ -1226,6 +1242,8 @@ et encore plus !
 
 Classes de types 102
 --------------------
+
+<img src="img/trafficlight.png" alt="feu de signalisation" class="right"/>
 
 Jusqu'ici, on a découvert des classes de types standard d'Haskell et on a vu
 quels types les habitaient. On a aussi appris à créer automatiquement des
@@ -1465,6 +1483,8 @@ déclaration de type d'une fonction. Je trouve ça plutôt cool.
 Une classe de types oui-non
 ---------------------------
 
+<img src="img/yesno.png" alt="oui non" class="left"/>
+
 En JavaScript et dans d'autres langages à typage faible, on peut mettre
 quasiment ce que l'on veut dans une expression *if*. Par exemple, tout ceci est
 valide : `if (0) alert ("YEAH") else alert("NO!")`, `if ("") alert ("YEAH")
@@ -1604,6 +1624,8 @@ Jetons un coup d'œil.
 
 > class Functor f where
 >     fmap :: (a -> b) -> f a -> f b
+
+<img src="img/functor.png" alt="foncteur" class="right"/>
 
 Parfait. On voit que la classe définit une fonction, `fmap`, et ne fournit pas
 d'implémentation par défaut. Le type de `fmap` est intéressant. Jusqu'ici, dans
@@ -1770,8 +1792,10 @@ et le sous-arbre droit n'a que des éléments supérieurs, on risquerait de
 produire un arbre qui n'a plus cette propriété. On verra les lois des foncteurs
 plus en détail dans un des chapitres suivants.
 
-Sortes et un peu de type-foo
-----------------------------
+Sortes et un peu de type-fu
+---------------------------
+
+<img src="img/typefoo.png" alt="type-fu" class="right"/>
 
 Les constructeurs de types prennent d'autres types en paramètres pour
 finalement produire des types concrets. Ca me rappelle un peu les fonctions,
@@ -1866,7 +1890,7 @@ ce type est utilisé comme valeur dans une fonction. Et de ça, on peut déduire
 que les types qui peuvent être amis avec `Functor` doivent avoir pour sorte `*
 -> *`.
 
-Maintenant, faisons un peu de type-foo. Regardez cette classe de types que je
+Maintenant, faisons un peu de type-fu. Regardez cette classe de types que je
 vais inventer maintenant :
 
 > class Tofu t where
@@ -1926,7 +1950,7 @@ remplaçait `j` par `Frank`, le type résultant serait `Frank Int Maybe`.
 > Frank {frankField = ["HELLO"]}
 
 Pas très utile, mais bon pour l'entraînement de nos muscles de types. Encore un
-peu de type-foo. Mettons qu'on ait ce type de données :
+peu de type-fu. Mettons qu'on ait ce type de données :
 
 > data Barry t k p = Barry { yabba :: p, dabba :: t k }
 

@@ -4,6 +4,8 @@ Modules
 Charger des modules
 -------------------
 
+<img src="img/modules.png" alt="modules" class="right"/>
+
 Un module Haskell est une collection de fonctions, types et classes de types en
 rapport les uns avec les autres. Un programme Haskell est une collection de
 modules où le module principal charge les autres modules et utilise les
@@ -151,6 +153,8 @@ Maintenant, pour les sommer, il suffit de faire :
 Lorsqu'on transpose ces trois listes, les puissances de 3 se retrouvent dans la
 première ligne, les puissances de 2 dans la deuxième, et ainsi de suite. Mapper
 `sum` sur cette liste produit le résultat désiré.
+
+<img src="img/legolists.png" alt="listes lego" class="left"/>
 
 `foldl'` et `foldl1'` sont des versions strictes de leur équivalents paresseux.
 Si vous faites des plis paresseux sur des listes très grandes, vous pouvez
@@ -647,6 +651,8 @@ length`.
 Data.Char
 ---------
 
+<img src="img/legochar.png" alt="lego char" class="right"/>
+
 Le module `Data.Char` fait ce que son nom indique. Il exporte des fonctions qui
 agissent sur des caractères. Et qui servent aussi pour filtrer ou mapper sur
 des chaînes de caractères, puisque ce ne sont que des listes de caractères.
@@ -909,6 +915,8 @@ mais cela prend plus de temps de déchiffrer une récursivité explicite.
 > ghci> findKey "wilma" phoneBook
 > Nothing
 
+<img src="img/legomap.png" alt="carte lego" class="left"/>
+
 Ça fonctionne comme un charme ! Si on a le numéro de téléphone de cette fille,
 on récupère `Just` le numéro, sinon, on récupère `Nothing`.
 
@@ -1098,6 +1106,8 @@ fonctions dans la
 Data.Set
 --------
 
+<img src="img/legosets.png" alt="lego sets" class="right"/>
+
 Le module `Data.Set` nous offre des ensembles. Comme les ensembles en
 mathématiques. Les ensembles sont un peu comme un mélange de listes et de maps.
 Tous les éléments d'un ensemble sont uniques. Et comme ils sont implémentés en
@@ -1213,6 +1223,8 @@ comme vous pouvez le voir, `nub` préserve l'ordre des éléments alors que
 
 Créer nos propres modules
 -------------------------
+
+<img src="img/making_modules.png" alt="créer des modules" class="right"/>
 
 On vient de regarder des modules plutôt cool, mais comment crée-t-on nos
 propres modules ? Presque tous les langages de programmation vous permettent de

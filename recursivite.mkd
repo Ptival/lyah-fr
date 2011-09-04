@@ -4,6 +4,8 @@ Récursivité
 Bonjour récursivité !
 ---------------------
 
+<img src="img/recursion.png" alt="récursivité" class="left"/>
+
 Nous avons rapidement mentionné la récursivité dans le chapitre précédent. Dans
 celui-ci, regardons-là de plus près, pourquoi elle est importante en Haskell et
 comment on peut écrire des solutions concises et élégantes à certains problèmes
@@ -100,6 +102,8 @@ le plus grand d'entre eux. Ici, nous pourrions réécrire `maximum'` en utilisan
 Comme c'est élégant ! Dans le principe, le maximum d'une liste est le max de
 son premier élément et du maximum de la queue.
 
+<img src="img/maxs.png" alt="maxs" class="center"/>
+
 Un peu plus de fonctions récursives
 -----------------------------------
 
@@ -140,6 +144,8 @@ tout cela :
 >     | n <= 0   = []
 > take' _ []     = []
 > take' n (x:xs) = x : take' (n-1) xs
+
+<img src="img/painter.png" alt="peintre" class="right"/>
 
 Le premier motif spécifie qu'essayer de prendre 0 ou moins éléments retourne
 une liste vide. Remarquez qu'on utilise `_` pour filtrer la liste parce que
@@ -227,6 +233,8 @@ des langages impératifs, l'implémentation Haskell est bien plus courte et
 implémentons le, bien qu'implémenter quicksort en Haskell est assez ringard vu
 que tout le monde le fait déjà pour montrer comme Haskell est élégant.
 
+<img src="img/quickman.png" alt="quickman" class="left"/>
+
 Donc, la signature de type sera `quicksort :: (Ord a) => [a] -> [a]`. Pas de
 surprise ici. Le cas de base ? La liste vide, bien sûr. Une liste vide triée
 est une liste vide. Maintenant, voilà l'algorithme : **une liste triée est une
@@ -266,7 +274,7 @@ liste entière est triée ! On les trie à l'aide de la même fonction. Finaleme
 on va tellement réduire les listes qu'il ne restera que des listes vides, qui
 sont triées par définition, puisqu'elles sont vides. Voilà une illustration :
 
-TODO
+<img src="img/quicksort.png" alt="quicksort" class="center"/>
 
 Un élément en place et qui ne bougera plus est représenté en <span
 style="color:#FF6600;font-weight:bold;">orange</span>. Si vous les lisez de
@@ -293,6 +301,8 @@ arbre ou une autre structure de données. Une somme est le premier élément, pl
 la somme du reste de la liste. Un produit est le premier élément, multiplié par
 le produit du reste de la liste. La longueur est 1, plus la longueur du reste
 de la liste. Et cætera, et cætera…
+
+<img src="img/brain.png" alt="cerveau" class="left"/>
 
 Bien sûr, il y a aussi les cas de base. Généralement, le cas de base est un
 scénario pour lequel un appel récursif n'a plus de sens. Pour des listes, le

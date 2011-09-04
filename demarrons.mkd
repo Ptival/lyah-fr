@@ -4,6 +4,8 @@ Démarrons
 Prêts, feu, partez !
 --------------------
 
+<img src="img/startingout.png" alt="œuf" class="right"/>
+
 Bien, démarrons ! Si vous êtes le genre de personne horrible qui ne lit pas les
 introductions et que vous l'avez sautée, vous feriez peut-être bien de tout de
 même lire la dernière section de l'introduction, car elle explique ce dont vous
@@ -109,6 +111,8 @@ multiplie entre eux. Comme vous l'avez constaté, on l'appelle en le mettant en
 sandwich entre ces paramètres. C'est pour ça qu'on dit que c'est une fonction
 *infixe*. La plupart des fonctions qu'on n'utilise pas avec des nombres sont
 des fonctions *préfixes*. Intéressons-nous à celles-ci.
+
+<img src="img/ringring.png" alt="dring" class="right"/>
 
 Les fonctions sont généralement préfixes, donc à partir de maintenant, nous ne
 préciserons pas qu'une fonction est préfixe, on le supposera par défaut. Dans
@@ -238,6 +242,8 @@ supérieurs à 100 sont déjà bien assez gros comme ça !
 >                         then x
 >                         else x*2
 
+<img src="img/baby.png" alt="bébé" class="left"/>
+
 Ici, nous avons introduit la construction if de Haskell. Vous êtes probablement
 habitué aux constructions if des autres langages. La différence entre le if de
 Haskell et celui des autres langages, c'est qu'en Haskell, le else est
@@ -278,6 +284,8 @@ de manière interchangeable.
 
 Une introduction aux listes
 ---------------------------
+
+<img src="img/list.png" alt="liste" class="left"/>
 
 Tout comme les listes de courses dans le monde réel, les listes Haskell sont
 très utiles. C'est la structure de donnée la plus utilisée, et elle peut l'être
@@ -420,7 +428,7 @@ queue.
 
 En imaginant une liste comme un monstre, voilà ce que ça donne.
 
-TODO
+<img src="img/listmonster.png" alt="monstre liste" class="center"/>
 
 Mais que se passe-t-il si l'on essaie de prendre la tête d'une liste vide ?
 
@@ -515,6 +523,8 @@ verrons d'autres [plus tard](TODO).
 Texas ranges
 ------------
 
+<img src="img/cowboy.png" alt="cowboy" class="right"/>
+
 Que faire si l'on veut la liste des nombres de 1 à 20 ? Bien sûr, on pourrait
 les taper un par un, mais ce n'est pas une solution pour des gentlemen qui
 demandent l'excellence de leurs langages de programmation. Nous utiliserons
@@ -600,15 +610,17 @@ retourne `[10, 10, 10]`.
 Je suis une liste en compréhension
 ----------------------------------
 
+<img src="img/kermit.png" alt="kermit" class="left"/>
+
 Si vous avez déjà suivi une classe de mathématiques, vous avez probablement
 déjà rencontré des ensembles définis en compréhension. On les utilise
 généralement pour construire des ensembles plus spécifiques à partir d'autres
 ensembles plus généraux. Une compréhension simple d'un ensemble qui contient
-les dix premiers entiers naturels pairs est ![notation ensembliste](TODO). La
-partie située devant la barre verticale est la fonction qui produit la sortie,
-`x` est la variable, `N` est l'ensemble en entrée et `x <= 10` est un prédicat.
-Cela signifie que l'ensemble contient le double de tous les entiers naturels
-qui satisfont le prédicat.
+les dix premiers entiers naturels pairs est ![notation
+ensembliste](img/setnotation.png). La partie située devant la barre verticale
+est la fonction qui produit la sortie, `x` est la variable, `N` est l'ensemble
+en entrée et `x <= 10` est un prédicat.  Cela signifie que l'ensemble contient
+le double de tous les entiers naturels qui satisfont le prédicat.
 
 Si nous voulions écrire cela en Haskell, nous pourrions le faire ainsi `take 10
 [2,4..]`. Mais que faire si l'on ne voulait pas les doubles des 10 premiers
@@ -729,6 +741,8 @@ elles sont imbriquées.
 Tuples
 ------
 
+<img src="img.tuple.png" alt="tuple" class="right"/>
+
 D'une façon, les tuples sont comme des listes - ils permettent de stocker
 plusieurs valeurs dans une seule. Cependant, il y a des différences
 fondamentales. Une liste de nombres est une liste de nombres. C'est son type,
@@ -831,6 +845,8 @@ finies avec des listes infinies :
 
 > ghci> zip [1..] ["apple", "orange", "cherry", "mango"]
 > [(1,"apple"),(2,"orange"),(3,"cherry"),(4,"mango")]
+
+<img src="img/pythag.png" alt="pythagore" class="center"/>
 
 Voici un problème qui combine tuples et listes en compréhensions : quel
 triangle rectangle a des côtés tous entiers, tous inférieurs ou égaux à 10, et

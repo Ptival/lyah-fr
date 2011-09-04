@@ -1,6 +1,8 @@
 Entrées et Sorties
 ==================
 
+<img src="img/dognap.png" alt="enlèvement de chien" class="right"/>
+
 Nous avons mentionné qu'Haskell était un langage purement fonctionnel. Alors
 que dans des langages impératifs, on parvient généralement à faire quelque
 chose en donnant à l'ordinateur une série d'étapes à exécuter, en programmation
@@ -39,6 +41,8 @@ le monde extérieur.
 
 Hello, world!
 -------------
+
+<img src="img/helloworld.png" alt="hello world" class="left"/>
 
 Jusqu'ici, nous avions toujours chargé nos fonctions dans GHCi pour les tester
 et jouer avec elles. On a aussi exploré les fonctions de la bibliothèque
@@ -127,6 +131,8 @@ la stocke dans une variable `name`. Est-ce le cas ? Examinons le type de
 
 > ghci> :t getLine
 > getLine :: IO String
+
+<img src="img/luggage.png" alt="bagage" class="left"/>
 
 Aha, o-kay. `getLine` est une action I/O qui contient un résultat de type
 `String`. Ça tombe sous le sens, parce qu'elle attendra que l'utilisateur tape
@@ -667,6 +673,8 @@ lorsqu'elle sera exécutée, de magnifiques poèmes dans votre terminal.
 Fichiers et flots
 -----------------
 
+<img src="img/streams.png" alt="flots" class="right"/>
+
 `getChar` est une action I/O qui lit un caractère du terminal. `getLine` est
 une action I/O qui lit une ligne du terminal. Ces deux sont plutôt simples, et
 la plupart des langages de programmation ont des fonctions ou des instructions
@@ -992,6 +1000,8 @@ comme :
 
 > data IOMode = ReadMode | WriteMode | AppendMode | ReadWriteMode
 
+<img src="img/file.png" alt="lime" class="left"/>
+
 Tout comme notre type qui représente sept valeurs pour les jours de la semaine,
 ce type est une énumération qui représente ce qu'on veut faire avec le fichier
 ouvert. Très simple. Notez bien que le type est `IOMode` et non pas `IO Mode`.
@@ -1066,6 +1076,8 @@ le fichier à la fin. Voici comment coder notre propre fonction `withFile` :
 >     result <- f handle
 >     hClose handle
 >     return result
+
+<img src="img/edd.png" alt="edd" class="right"/>
 
 On sait que le résultat sera une action I/O, donc on peut commencer par écrire
 un *do*. D'abord, on ouvre le fichier pour récupérer une poignée. Puis, on
@@ -1340,6 +1352,8 @@ temporaire. Essayons à présent !
 Arguments de ligne de commande
 ------------------------------
 
+<img src="img/arguments.png" alt="arguments" class="right"/>
+
 Gérer les arguments de ligne de commande est plutôt nécessaire si vous voulez
 faire un script ou une application à lancer depuis le terminal. Heureusement,
 la bibliothèque standard Haskell a un moyen très sympa pour récupérer les
@@ -1568,6 +1582,8 @@ Voilà le programme final en entier, dans toute sa splendeur !
 >     removeFile fileName
 >     renameFile tempName fileName
 
+<img src="img/salad.png" alt="salade" class="left"/>
+
 Pour résumer notre solution : on a faire une liste associative de résolution
 qui associe à chaque commande une fonction qui prend des arguments de la ligne
 de commande et retourne une action I/O. On regarde ce qu'est la commande, et en
@@ -1618,6 +1634,8 @@ exceptions, qu'on va bientôt rencontrer.
 
 Aléatoire
 ---------
+
+<img src="img/random.png" alt="aléatoire" class="right"/>
 
 Souvent quand on programme, on a besoin de données aléatoires. Peut-être que
 vous faite un jeu où un dé doit être lancé, ou vous avez besoin de données
@@ -1924,6 +1942,8 @@ pense.
 >             else putStrLn $ "Sorry, it was " ++ show randNumber
 >         askForNumber newGen
 
+<img src="img/jackofdiamonds.png" alt="valet de carreau" class="left"/>
+
 On crée une fonction `askForNumber`, qui prend un générateur aléatoire et
 retourne une action I/O qui demande un nombre à l'utilisateur et lui dit s'il a
 bien deviné. Dans cette fonction, on génère d'abord un nombre aléatoire et un
@@ -1995,6 +2015,8 @@ une fonction facilement réutilisable.
 
 Chaîne d'octets
 ---------------
+
+<img src="img/chainchomp.png" alt="chomp enchaîné" class="right"/>
 
 Les listes sont des structures de données cool et utiles. Jusqu'ici, on les a
 utilisé à peu près partout. Il y a une multitude de fonctions opérant sur elles
@@ -2189,6 +2211,8 @@ convertis en chaînes d'octets si les performances sont insatisfaisantes.
 Exceptions
 ----------
 
+<img src="img/timber.png" alt="timber" class="left"/>
+
 Tous les langages ont des procédures, des fonctions et des bouts de code qui
 peuvent échouer d'une certaine façon. C'est la vie. Différents langages ont
 différentes manières de gérer ces erreurs. En C, on utilise généralement une
@@ -2233,6 +2257,8 @@ crise de colère lorsqu'on lui donne une liste vide.
 > *** Exception: divide by zero
 > ghci> head []
 > *** Exception: Prelude.head: empty list
+
+<img src="img/police.png" alt="police" class="left"/>
 
 Du code pur peut lancer des exceptions, mais elles ne peuvent être attrapées
 que dans du code impur (dans un bloc *do* sous `main`). C'est parce que l'on ne
@@ -2319,6 +2345,8 @@ paramètre à `catch` lève une exception I/O, cette exception sera passée au
 gestionnaire, qui décidera alors quoi faire. Le résultat final est une action
 I/O qui se comportera soit comme son premier paramètre, ou bien exécutera le
 gestionnaire en fonction de l'exception levée par la première action I/O.
+
+<img src="img/puppy.png" alt="chiot" class="right"/>
 
 Si vous êtes familier avec les blocs *try-catch* de langages comme Java ou
 Python, la fonction `catch` est similaire. Le premier paramètre est la chose à

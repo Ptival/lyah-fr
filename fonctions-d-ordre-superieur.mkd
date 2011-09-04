@@ -1,6 +1,8 @@
 Fonctions d'ordre supérieur
 ===========================
 
+<img src="img/sun.png" alt="soleil" class="right"/>
+
 Les fonctions Haskell peuvent prendre d'autres fonctions en paramètres, et
 retourner des fonctions en valeur de retour. Une fonction capable d'une de ces
 deux choses est dite d'odre supérieur. Les fonctions d'ordre supérieur ne sont
@@ -28,6 +30,8 @@ ainsi équivalents :
 > 5
 > ghci> (max 4) 5
 > 5
+
+<img src="img/curry.png" alt="haskell curry" class="left"/>
 
 Mettre un espace entre deux choses consiste à **appliquer une fonction**.
 L'espace est en quelque sorte un opérateur, et il a la plus grande précédence.
@@ -145,6 +149,8 @@ fonction en paramètre, et l'applique deux fois à quelque chose !
 
 > applyTwice :: (a -> a) -> a -> a
 > applyTwice f x = f (f x)
+
+<img src="img/bonus.png" alt="bonus" class="right"/>
 
 D'abord, remarquez la déclaration de type. Avant, on n'avait pas besoin de
 parenthèses, parce que `->` est naturellement associatif à droite. Ici, au
@@ -356,6 +362,8 @@ petits que le pivot. On peut faire de même avec `filter` :
 >         biggerSorted = quicksort (filter (>x) xs)
 >     in  smallerSorted ++ [x] ++ biggerSorted
 
+<img src="img/map.png" alt="carte" class="left"/>
+
 Mapper et filtrer sont le marteau et le clou de la boîte à outils de tout
 programmeur fonctionnel. Bon, il importe peut que vous utilisiez plutôt `map`
 et `filter` que des listes en compréhension. Souvenez-vous comment nous avions
@@ -494,6 +502,8 @@ Demander l'élément d'index `4` de notre liste retourne une fonction équivalen
 Lambdas
 -------
 
+<img src="img/lambda.png" alt="lambda" class="right"/>
+
 Les lambda expressions sont simplement des fonctions anonymes utilisées
 lorsqu'on a besoin d'une fonction à usage unique. Normalement, on crée une
 lambda uniquement pour la passer à une fonction d'ordre supérieur. Pour créer
@@ -514,6 +524,8 @@ utiliser une lambda :
 Les lambdas sont des expressions, c'est pourquoi on peut les manipuler comme
 ça. L'expression `(\xs -> length xs > 15)` retourne une fonction qui nous dit
 si la longueur de la liste passée en paramètre est plus grande que 15.
+
+<img src="img/lamb.png" alt="agneau" class="left"/>
 
 Les personnes n'étant pas habituées à la curryfication et à l'application
 partielle de fonctions utilisent souvent des lambdas là où ils n'en ont en fait
@@ -571,6 +583,8 @@ passée à une autre comme paramètre.
 Haskell plie mais ne rompt pas
 ------------------------------
 
+<img src="img/origami.png" alt="origami" class="right"/>
+
 À l'époque où nous faisions de la récursivité, nous avions repéré un thème
 récurrent dans nos fonctions récursives qui opéraient sur des listes. Nous
 introduisions un motif `x:xs` et nous faisions quelque chose avec la tête et
@@ -604,6 +618,8 @@ Un, deux, trois, test :
 
 > ghci> sum' [3,5,2,1]
 > 11
+
+<img src="img/foldl.png" alt="foldl" class="left"/>
 
 Regardons de près comment ce pli se déroule. `\acc x -> acc + x` est la
 fonction binaire. `0` est la valeur de départ et `xs` la liste à plier.
@@ -679,6 +695,8 @@ Cela serait `map' f xs = foldl (\acc x -> acc ++ [f x]) [] xs`, mais le
 problème, c'est que `++` est beaucoup plus coûteux que `:`, donc généralement,
 on utilise des plis à droite lorsqu'on construit des nouvelles listes à partir
 d'une liste.
+
+<img src="img/washmachine.png" alt="machine à laver" class="left"/>
 
 Si vous renversez une liste, vous pouvez faire un pli droit sur une liste comme
 vous auriez fait un pli gauche sur la liste originale, et vice versa.  Parfois,
@@ -807,6 +825,8 @@ fonction*. Voyons sa définition :
 > ($) :: (a -> b) -> a -> b
 > f $ x = f x
 
+<img src="img/dollar.png" alt="dollar" class="left"/>
+
 De quoi ? Qu'est-ce que c'est que cet opérateur inutile ? C'est juste une
 application de fonction ! Eh bien, presque, mais pas complètement ! Alors que
 l'application de fonction habituelle (avec un espace entre deux choses) a une
@@ -851,6 +871,8 @@ fonction `.`, définie ainsi :
 
 > (.) :: (b -> c) -> (a -> b) -> a -> c
 > f . g = \x -> f (g x)
+
+<img src="img/notes.png" alt="notes" class="left"/>
 
 Prêtez attention à la déclaration de type. `f` doit prendre pour paramètre une
 valeur qui a le même type que la valeur retournée par `g`. Ainsi, la fonction

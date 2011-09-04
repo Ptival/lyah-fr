@@ -19,6 +19,8 @@ assembler les pièces du puzzle et tout s'est mis à sa place. Ceci est un essai
 afin de produire une ressource de plus afin d'apprendre Haskell, de sorte que
 vous ayez plus de chance d'en trouver une que vous appréciez.
 
+<img src="img/bird.png" alt="oiseau" class="left"/>
+
 Ce tutoriel vise les personnes ayant de l'expérience dans un langage de
 programmation impérative (C, C++, Java, Python, …) mais qui n'ont jamais
 programmé dans un langage de programmation fonctionnel auparavant (Haskell, ML,
@@ -41,6 +43,8 @@ Ca vous force à penser différemment, ce qui nous amène à la section suivante
 
 Donc, qu'est-ce que Haskell ?
 -----------------------------
+
+<img src="img/fx.png" alt="fx" class="right"/>
 
 Haskell est un **langage de programmation purement fonctionnelle**. Dans les
 langages impératifs, vous effectuez des choses en donnant à l'ordinateur une
@@ -68,6 +72,8 @@ facilement (et même de prouver) qu'une fonction est correcte, puis de
 construire des fonctions plus complexes en collant des simples fonctions l'une
 à l'autre.
 
+<img src="img/lazy.png" alt="paresseux" class="right"/>
+
 Haskell est **paresseux**. Cela signifie qu'à moins de lui demander
 explicitement, Haskell n'exécutera pas les fonctions et ne calculera pas les
 choses tant qu'il n'est pas forcé de nous montrer les résultats. Cela va bien
@@ -91,6 +97,8 @@ traversée qu'une fois, et seulement quand vous en avez vraiment besoin. De
 cette façon, lorsque vous voulez quelque chose d'un langage paresseux, vous
 pouvez juste prendre les données initiales, et efficacement les transformer de
 toutes les façons possibles jusqu'à arriver à vos fins.
+
+<img src="img/boat.png" alt="bateau" class="right"/>
 
 Haskell est **typé statiquement**. Lorsque vous compilez votre programme, le
 compilateur sait quel bout de code est un nombre, lequel est une chaîne de
