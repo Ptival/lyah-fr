@@ -59,7 +59,8 @@ Regardons les signatures de type de ces deux constructeurs de valeurs.
 > ghci> :t Rectangle
 > Rectangle :: Float -> Float -> Float -> Float -> Shape
 
-Cool, donc les constructeurs de valeurs sont des fonctions comme les autres. Qui l'eût cru ? Créons une fonction qui prend une forme et retourne sa surface.
+Cool, donc les constructeurs de valeurs sont des fonctions comme les autres.
+Qui l'eût cru ? Créons une fonction qui prend une forme et retourne sa surface.
 
 > surface :: Shape -> Float
 > surface (Circle _ _ r) = pi * r ^ 2
@@ -147,7 +148,8 @@ dimensions, mais déplacée selon ces quantités.
 > nudge (Circle (Point x y) r) a b = Circle (Point (x+a) (y+b)) r
 > nudge (Rectangle (Point x1 y1) (Point x2 y2)) a b = Rectangle (Point (x1+a) (y1+b)) (Point (x2+a) (y2+b))
 
-Plutôt simpl. On ajoute simplement les déplacements aux coordonnées correspondantes.
+Plutôt simple. On ajoute simplement les déplacements aux coordonnées
+correspondantes.
 
 > ghci> nudge (Circle (Point 34 34) 10) 5 10
 > Circle (Point 39.0 44.0) 10.0
@@ -1012,7 +1014,11 @@ serez plus à l'aise avec une syntaxe d'enregistrements.
 
 > data List a = Empty | Cons { listHead :: a, listTail :: List a} deriving (Show, Read, Eq, Ord)
 
-Vous serez peut-être aussi surpris par le nom du constructeur `Cons` ici. *cons* est un autre nom de `:`. Vous voyez, pour les listes, `:` est en réalité un constructeur qui prend une valeur et une autre liste, pour retourner une liste. On peut d'ores et déjà utiliser notre nouveau type de listes ! Il a deux champs. Le premier de type `a` et le second de type `List a`.
+Vous serez peut-être aussi surpris par le nom du constructeur `Cons` ici.
+*cons* est un autre nom de `:`. Vous voyez, pour les listes, `:` est en réalité
+un constructeur qui prend une valeur et une autre liste, pour retourner une
+liste. On peut d'ores et déjà utiliser notre nouveau type de listes ! Il a deux
+champs. Le premier de type `a` et le second de type `List a`.
 
 > ghci> Empty
 > Empty
