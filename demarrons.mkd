@@ -1,8 +1,22 @@
-Démarrons
-=========
+% Démarrons
 
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="introduction" class="prevlink">Introduction</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="types-et-classes-de-types" class="nextlink">Types et classes de types</a>
+</li>
+</ul>
+</div>
+
+<h2 id="prets-feu-partez">
 Prêts, feu, partez !
---------------------
+</h2>
 
 <img src="img/startingout.png" alt="œuf" class="right"/>
 
@@ -171,8 +185,9 @@ cela ne veut donc pas dire que `bar` est appelé avec les paramètres `bar` et
 obtenir un nombre, et qu'on appelle `bar` à nouveau sur ce nombre. En C, cela
 serait `bar(bar(3))`.
 
-Les premières fonctions de bébé
--------------------------------
+<h2 id="nos-premieres-fonctions">
+Nos premières fonctions
+</h2>
 
 Dans la section précédente, nous avons eu un premier aperçu de l'appel de
 fonctions. Essayons maintenant de créer les nôtres ! Ouvrez votre éditeur de
@@ -282,8 +297,9 @@ les noms (et les fonctions) signifient une fois qu'on les a définis,
 `conanO'Brien` et la chaîne `"It's a-me, Conan O'Brien!"` peuvent être utilisés
 de manière interchangeable.
 
-Une introduction aux listes
----------------------------
+<h2 id="introduction-aux-listes">
+Introduction aux listes
+</h2>
 
 <img src="img/list.png" alt="liste" class="left"/>
 
@@ -520,8 +536,9 @@ car c'est plus simple à lire.
 C'était un premier tour des fonctions qui opérent sur des listes. Nous en
 verrons d'autres [plus tard](TODO).
 
-Texas ranges
-------------
+<h2 id="texas-rangees">
+Texas rangées
+</h2>
 
 <img src="img/cowboy.png" alt="cowboy" class="right"/>
 
@@ -607,8 +624,9 @@ Cependant, il est plus simple d'utiliser la fonction `replicate` pour obtenir
 un certain nombre de fois le même élément dans une liste. `replicate 3 10`
 retourne `[10, 10, 10]`.
 
+<h2 id="je-suis-une-liste-en-comprehension">
 Je suis une liste en compréhension
-----------------------------------
+</h2>
 
 <img src="img/kermit.png" alt="kermit" class="left"/>
 
@@ -738,8 +756,9 @@ Vous pouvez écrire les compréhensions de listes sur plusieurs lignes. Donc, en
 dehors de GHCi, il vaut mieux les découper sur plusieurs lignes, surtout si
 elles sont imbriquées.
 
+<h2 id="tuples">
 Tuples
-------
+</h2>
 
 <img src="img.tuple.png" alt="tuple" class="right"/>
 
@@ -874,3 +893,17 @@ en disant que l'on veut ceux dont le périmètre est 24.
 Et voilà notre réponse ! C'est un schéma courant en programmation
 fonctionnelle. Vous prenez un ensemble de solutions, et vous appliquez des
 transformations sur ces solutions et les filtrez jusqu'à obtenir les bonnes.
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="introduction" class="prevlink">Introduction</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="types-et-classes-de-types" class="nextlink">Types et classes de types</a>
+</li>
+</ul>
+</div>

@@ -1,5 +1,18 @@
-Entrées et Sorties
-==================
+% Entrées et Sorties
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="creer-nos-propres-types-et-classes-de-types" class="prevlink">Créer nos propres types et classes de types</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="resoudre-des-problemes-fonctionnellement" class="nextlink">Résoudre des problèmes fonctionnellement</a>
+</li>
+</ul>
+</div>
 
 <img src="img/dognap.png" alt="enlèvement de chien" class="right"/>
 
@@ -39,8 +52,9 @@ du programme, et bénéficier de toutes les choses que la pureté offre, comme l
 paresse, la robustesse et la modularité, tout en communiquant efficacement avec
 le monde extérieur.
 
+<h2 id="hello-world">
 Hello, world!
--------------
+</h2>
 
 <img src="img/helloworld.png" alt="hello world" class="left"/>
 
@@ -670,8 +684,9 @@ caractères et l'affiche à l'écran. Pensez-y comme une fonction qui prend une
 chaîne de caractères et retourne une action I/O. Cette action I/O affichera,
 lorsqu'elle sera exécutée, de magnifiques poèmes dans votre terminal.
 
+<h2 id="fichiers-et-flots">
 Fichiers et flots
------------------
+</h2>
 
 <img src="img/streams.png" alt="flots" class="right"/>
 
@@ -1349,8 +1364,9 @@ temporaire. Essayons à présent !
 > $ cat todo.txt
 > Take salad out of the oven
 
+<h2 id="arguments-de-ligne-de-commande">
 Arguments de ligne de commande
-------------------------------
+</h2>
 
 <img src="img/arguments.png" alt="arguments" class="right"/>
 
@@ -1464,10 +1480,10 @@ par `main` :
 >     action args
 
 D'abord, on récupère les arguments et on les lie à `(command:args)`. Si vous
-vous souvenez de votre filtrage de motif, cela signifie que le premier argument
-est lié à `command` et que le reste est lié à `args`. Si on appelle notre
-programme en faisant `todo add todo.txt "Spank the monkey"`, `command` sera
-`"add"` et `args` sera `["todo.xt", "Spank the monkey"]`.
+vous souvenez de votre filtrage par motif, cela signifie que le premier
+argument est lié à `command` et que le reste est lié à `args`. Si on appelle
+notre programme en faisant `todo add todo.txt "Spank the monkey"`, `command`
+sera `"add"` et `args` sera `["todo.xt", "Spank the monkey"]`.
 
 À la prochaine ligne, on cherche notre commande dans la liste de résolution.
 Puisque `"add"` pointe vers `add`, on récupère `Just add` en résultat. On
@@ -1632,8 +1648,9 @@ HAHAHAHA`) en faisant une action I/O qui rapporte une erreur (disons,
 échéant, en utilisant cette action. Un autre moyen est d'utiliser les
 exceptions, qu'on va bientôt rencontrer.
 
+<h2 id="aleatoire">
 Aléatoire
----------
+</h2>
 
 <img src="img/random.png" alt="aléatoire" class="right"/>
 
@@ -2013,8 +2030,9 @@ global et on appelle `main` à nouveau. Les deux approches sont valides, mais
 j'aime la première parce qu'elle fait moins de choses dans `main` et nous offre
 une fonction facilement réutilisable.
 
+<h2 id="chaines-d-octets">
 Chaîne d'octets
----------------
+</h2>
 
 <img src="img/chainchomp.png" alt="chomp enchaîné" class="right"/>
 
@@ -2208,8 +2226,9 @@ obteniez de bons gains de performance sans trop d'efforts de votre part.
 J'écris généralement mes programmes avec des chaînes de caractères, et je les
 convertis en chaînes d'octets si les performances sont insatisfaisantes.
 
+<h2 id="exceptions">
 Exceptions
-----------
+</h2>
 
 <img src="img/timber.png" alt="timber" class="left"/>
 
@@ -2360,8 +2379,8 @@ Le gestionnaire prend une valeur de type `IOError`, qui est une valeur
 signifiant que l'exception qui a eu lieu était liée à une I/O. Elle contient
 aussi des informations sur le type de l'exception levée. La façon dont ce type
 est implémenté dépend de l'implémentation du langage, donc on ne peut pas
-inspecter les valeurs de type `IOError` par filtrage de motifs, tout comme on
-ne peut pas filtrer par motifs les valeurs de type `IO something`. On peut tout
+inspecter les valeurs de type `IOError` par filtrage par motif, tout comme on
+ne peut pas filtrer par motif les valeurs de type `IO something`. On peut tout
 de même utiliser tout un tas de prédicats utiles pour savoir des choses à
 propos de valeurs de type `IOError` comme nous le verrons dans une seconde.
 
@@ -2516,7 +2535,7 @@ programme pour afficher le chemin du fichier responsable de l'exception.
 Dans la garde où `isDoesNotExistError` est `True`, on a utilisé une expression
 *case* pour appeler `ioeGetFileName` avec `e`, puis on a filtré par motif
 contre la valeur `Maybe` retournée. Utiliser une expression *case* se fait
-généralement pour filtrer par motifs sur quelque chose sans introduire une
+généralement pour filtrer par motif sur quelque chose sans introduire une
 nouvelle fonction.
 
 Vous n'avez pas à utiliser un unique gestionnaire pour `catch` toutes les
@@ -2547,3 +2566,17 @@ que s'en remettre aux I/O pour les attraper. Même en collant des actions I/O
 les unes aux autres, je préfère que leur type soit `IO (Either a b)`,
 c'est-à-dire des actions I/O normales mais dont le résultat peut être `Left a`
 ou `Right b` lorsqu'elles sont exécutées.
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="creer-nos-propres-types-et-classes-de-types" class="prevlink">Créer nos propres types et classes de types</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="resoudre-des-problemes-fonctionnellement" class="nextlink">Résoudre des problèmes fonctionnellement</a>
+</li>
+</ul>
+</div>

@@ -1,8 +1,22 @@
-Récursivité
-===========
+% Récursivité
 
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="syntaxe-des-fonctions" class="prevlink">Syntaxe des fonctions</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="fonctions-d-ordre-superieur" class="nextlink">Fonctions d'ordre supérieur</a>
+</li>
+</ul>
+</div>
+
+<h2 id="bonjour-recursivite">
 Bonjour récursivité !
----------------------
+</h2>
 
 <img src="img/recursion.png" alt="récursivité" class="left"/>
 
@@ -36,8 +50,9 @@ impératifs, vous faites des calculs en Haskell en définissant ce que les chose
 boucles *while* et *for* en Haskell, et à la place, on utilise souvent la
 récursivité pour déclarer ce qu'est quelque chose.
 
-Génial maximum
---------------
+<h2 id="maximum-de-fun">
+Maximum de fun
+</h2>
 
 La fonction `maximum` prend une liste de choses qui peuvent être ordonnées
 (i.e. des instances de la classe `Ord`) et retourne la plus grande d'entre
@@ -63,7 +78,7 @@ liste ! Et voilà ! Implémentons ça en Haskell.
 >     where maxTail = maximum' xs
 
 Comme vous le voyez, le filtrage par motif va bien de pair avec la récursivité
-! La plupart des langages impératifs ne proposent pas de filtrage de motif,
+! La plupart des langages impératifs ne proposent pas de filtrage par motif,
 donc vous êtes obligé d'utiliser plein de *if else* pour tester les cas de
 base. Ici, on les met simplement dans des motifs. La première condition dit :
 si la liste est vide, plante ! Raisonnable, après tout quel est le maximum
@@ -71,10 +86,10 @@ d'une liste vide ? Je ne sais pas. Le deuxième motif est aussi un cas de base.
 Il dit que pour une liste singleton, il suffit de retourner son unique élément.
 
 Maintenant, le troisième motif est là où se passe l'action. On utilise du
-filtrage de motif pour séparer la tête et la queue de la liste. C'est un idiome
-usuel pour faire de la récursivité sur des listes, donc habituez-vous.  On
-utilise une liaison *where* pour définir `maxTail` comme le maximum du reste de
-la liste. Ensuite, on vérifie si la tête est plus grande que le maximum du
+filtrage par motif pour séparer la tête et la queue de la liste. C'est un
+idiome usuel pour faire de la récursivité sur des listes, donc habituez-vous.
+On utilise une liaison *where* pour définir `maxTail` comme le maximum du reste
+de la liste. Ensuite, on vérifie si la tête est plus grande que le maximum du
 reste de la liste. Si c'est le cas, la tête est retournée. Sinon, le maximum du
 reste de la liste est retourné.
 
@@ -104,8 +119,9 @@ son premier élément et du maximum de la queue.
 
 <img src="img/maxs.png" alt="maxs" class="center"/>
 
+<h2 id="un-peu-plus-de-fonctions-recursives">
 Un peu plus de fonctions récursives
------------------------------------
+</h2>
 
 Maintenant que l'on sait penser en termes de récursivité, essayons
 d'implémenter quelques fonctions récursives. D'abord, nous allons implémenter
@@ -221,8 +237,9 @@ droïdes que vous recherchez.
 Plutôt simple et attendu. Si la tête n'est pas l'élément recherché, on cherche
 dans la queue. Si on arrive à une liste vide, le résultat est `False`.
 
+<h2 id="vite-triez">
 Vite, triez !
--------------
+</h2>
 
 Soit une liste d'éléments qui peuvent être triés. Leur type est une instance de
 la classe `Ord`. À présent, on souhaite les trier ! Il existe un algorithme
@@ -284,14 +301,15 @@ n'importe quel élément et le comparer à tous les autres. Dans quicksort,
 l'élément choisi pour être comparé aux autres est appelé le pivot. Ici, les
 pivots sont représentés en <span
 style="color:#009900;font-weight:bold">vert</span>. Nous avons choisi la tête
-car il est facile de l'obtenir par filtrage de motif. Les éléments plus petits
+car il est facile de l'obtenir par filtrage par motif. Les éléments plus petits
 que le pivot sont en <span style="color:#0f0;font-weight:bold">vert
 clair</span> et ceux plus grands que le pivot en <span
 style="color:#030;font-weight:bold">vert foncé</span>. Le gradient jaune-orangé
 représente l'application de quicksort.
 
+<h2 id="penser-recursif">
 Penser récursif
----------------
+</h2>
 
 Nous avons fait pas mal de récursivité et, comme vous l'avez probablement
 remarqué, il y a un motif sous-jacent. Généralement, vous définissez des cas de
@@ -326,5 +344,19 @@ Donc, lorsque vous essayez de penser à une solution récursive pour un problèm
 conviendra pas et d'utiliser cela comme cas de base. Pensez aux éléments
 neutres et demandez-vous si vous aurez à déconstruire les paramètres de la
 fonction (par exemple, les listes sont généralement séparées en tête et queue
-par un filtrage de motif) et sur quelle partie vous effectuerez un appel
+par un filtrage par motif) et sur quelle partie vous effectuerez un appel
 récursif.
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="syntaxe-des-fonctions" class="prevlink">Syntaxe des fonctions</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="fonctions-d-ordre-superieur" class="nextlink">Fonctions d'ordre supérieur</a>
+</li>
+</ul>
+</div>

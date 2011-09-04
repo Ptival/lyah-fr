@@ -1,5 +1,18 @@
-Fonctions d'ordre supérieur
-===========================
+% Fonctions d'ordre supérieur
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="recursivite" class="prevlink">Récursivité</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="modules" class="nextlink">Modules</a>
+</li>
+</ul>
+</div>
 
 <img src="img/sun.png" alt="soleil" class="right"/>
 
@@ -11,8 +24,9 @@ Elles s'avèrent indispensable pour définir ce que les choses *sont* plutôt
 que des étapes qui changent un état et bouclent. Elles sont un moyen très
 puissant de résoudre des problèmes et de réflexion sur les programmes.
 
+<h2 id="fonctions-curryfiees">
 Fonctions curryfiées
---------------------
+</h2>
 
 En Haskell, toutes les fonctions ne prennent en fait qu'un unique paramètre.
 Comment avons-nous pu définir des fonctions qui en prenaient plus d'un alors ?
@@ -140,8 +154,9 @@ littérale. Quand on entre `1 + 1` dans GHCi, il calcule d'abord la valeur `2`
 puis appelle `show` sur `2` pour obtenir une représentation textuelle de ce
 nombre. La représentation de `2` est `"2"`, et c'est ce qu'il nous affiche.
 
-De l'ordre supérieur à l'ordre du jour
---------------------------------------
+<h2 id="a-l-ordre-du-jour-de-l-ordre-superieur">
+À l'ordre du jour : de l'ordre supérieur
+</h2>
 
 Les fonctions peuvent prendre des fonctions en paramètres et retourner des
 fonctions. Pour illustrer cela, nous allons créer une fonction qui prend une
@@ -280,8 +295,9 @@ d'ordre supérieur en réfléchissant à ce que leur résultat serait si elles
 > ghci> zipWith (flip' div) [2,2..] [10,8,6,4,2]
 > [5,4,3,2,1]
 
+<h2 id="maps-et-filtres">
 Maps et filtres
----------------
+</h2>
 
 `map` prend une fonction et une liste, et applique la fonction à tous les
 éléments de la liste, résultant en une nouvelle liste. Regardons sa signature
@@ -499,8 +515,9 @@ Demander l'élément d'index `4` de notre liste retourne une fonction équivalen
 à `(4*)`. Puis on applique cette fonction à `5`. Donc c'est comme écrire `(4*)
 5` ou juste `4 * 5`.
 
+<h2 id="lambdas">
 Lambdas
--------
+</h2>
 
 <img src="img/lambda.png" alt="lambda" class="right"/>
 
@@ -540,7 +557,7 @@ Comme les autres fonctions, les lambdas peuvent prendre plusieurs paramètres.
 > ghci> zipWith (\a b -> (a * 30 + 3) / b) [5,4,3,2,1] [1,2,3,4,5]
 > [153.0,61.5,31.0,15.75,6.6]
 
-Et comme les fonctions, vous pouvez filtrer par motifs dans les lambdas. La
+Et comme les fonctions, vous pouvez filtrer par motif dans les lambdas. La
 seule différence, c'est que vous ne pouvez pas définir plusieurs motifs pour un
 paramètre, comme par exemple créer un motif `[]` et un `(x:xs)` pour le même
 paramètre, et avoir les valeurs parcourir les différents motifs. Si un filtrage
@@ -580,8 +597,9 @@ avec juste une autre fonction, et de passer le résultat à un `map` ou un
 fait que cette fonction est généralement appliquée partiellement avant d'être
 passée à une autre comme paramètre.
 
-Haskell plie mais ne rompt pas
-------------------------------
+<h2 id="plie-mais-ne-rompt-pas">
+Plie mais ne rompt pas
+</h2>
 
 <img src="img/origami.png" alt="origami" class="right"/>
 
@@ -750,7 +768,7 @@ fonctions de la bibliothèque standard avec eux :
 > last' :: [a] -> a
 > last' = foldl1 (\_ x -> x)
 
-`head` est tout de même mieux implémenté par filtrage de motif, mais c'était
+`head` est tout de même mieux implémenté par filtrage par motif, mais c'était
 juste pour l'exemple, que l'on peut y arriver avec des plis. Notre fonction
 `reverse'` est à ce titre plutôt astucieuse. On prend pour valeur initiale une
 liste vide, et on attaque la liste par la gauche en positionnant les éléments
@@ -816,8 +834,9 @@ travailler sur des listes infinies. Bien que nous sachions que cette liste est
 croissante, `filter` ne le sait pas, donc on utilise `takeWhile` pour arrêter
 de scanner dès qu'une somme est plus grande que 1000.
 
-Appliquer des fonctions avec des $
-----------------------------------
+<h2 id="appliquer-des-fonctions">
+Appliquer des fonctions avec $
+</h2>
 
 Bien, maintenant, découvrons la fonction `$`, aussi appelée *application de
 fonction*. Voyons sa définition :
@@ -858,8 +877,9 @@ peut par exemple mapper l'application de fonction sur une liste de fonctions.
 > ghci> map ($ 3) [(4+), (10*), (^2), sqrt]
 > [7.0,30.0,9.0,1.7320508075688772]
 
+<h2 id="composition-de-fonctions">
 Composition de fonctions
-------------------------
+</h2>
 
 En mathématique, la composition de fonctions est définie ainsi : TODO, ce qui
 signifie que deux fonctions produisent une nouvelle fonction qui, lorsqu'elle
@@ -985,3 +1005,17 @@ plutôt écrit :
 
 Je ne gagnerai pas de compétition de golf ainsi, mais quelqu'un qui aura à lire
 ça trouvera certainement cela plus simple à lire qu'une chaîne de compositions.
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="recursivite" class="prevlink">Récursivité</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="modules" class="nextlink">Modules</a>
+</li>
+</ul>
+</div>

@@ -1,12 +1,26 @@
-Créons nos propres types et classes de types
---------------------------------------------
+% Créer nos propres types et classes de types
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="modules" class="prevlink">Modules</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="entrees-et-sorties" class="nextlink">Entrées et sorties</a>
+</li>
+</ul>
+</div>
 
 Dans les chapitres précédents, nous avons vu quelques types et classes de types
 qui existent en Haskell. Dans ce chapitre, nous verrons comment créer les
 nôtres et les mettre en pratique !
 
+<h2 id="introduction-aux-types-de-donnees-algebriques">
 Introduction aux types de données algébriques
----------------------------------------------
+</h2>
 
 Jusqu'ici, nous avons croisé beaucoup de types de données. `Bool`, `Int`,
 `Char`, `Maybe`, etc. Mais comment créer les nôtres ? Eh bien, une des moyens
@@ -73,7 +87,7 @@ fonction prend un `Shape` et retourne un `Float`. On n'aurait pas pu écrire une
 déclaration de type `Circle -> Float` parce que `Circle` n'est pas un type,
 alors que `Shape` en est un. Tout comme on ne peut pas écrire une fonction qui
 a pour déclaration de type `True -> Int`. La prochaine chose remarquable, c'est
-le filtrage de motif sur les constructeurs de valeurs. Nous l'avons en fait
+le filtrage par motif sur les constructeurs de valeurs.  Nous l'avons en fait
 déjà fait (tout le temps à vrai dire), lorsque l'on filtrait des valeurs contre
 `[]` ou `False` ou `5`, seulement ces valeurs n'avaient pas de champs. On écrit
 seulement le constructeur, puis on lie ses champs à des noms. Puisqu'on
@@ -208,8 +222,9 @@ Ne pas exporter les constructeurs de valeurs d'un type de données le rend plus
 abstrait en cachant son implémentation. Également, quiconque utilise ce module
 ne peut pas filtrer par motif sur les constructeurs de valeurs.
 
+<h2 id="syntaxe-des-enregistrements">
 Syntaxe des enregistrements
----------------------------
+</h2>
 
 <img src="img/record.png" alt="enregistrement" class="right"/>
 
@@ -322,8 +337,9 @@ données vecteur 3D en faisant `data Vector = Vector Int Int Int`, il est plutô
 `Person` ou `Car`, c'était plus compliqué et on a gagné à utiliser la syntaxe
 des enregistrements.
 
+<h2 id="parametres-de-types">
 Paramètres de types
--------------------
+</h2>
 
 Un constructeur de valeurs peut prendre plusieurs valeurs comme paramètres et
 retourner une nouvelle valeur. Par exemple, le constructeur `Car` prend trois
@@ -528,8 +544,9 @@ Jouons avec nos vecteurs.
 > ghci> Vector 2 9 3 `vectMult` (Vector 4 9 5 `scalarMult` Vector 9 2 4)
 > Vector 148 666 222
 
+<h2 id="instances-derivees">
 Instances dérivées
-------------------
+</h2>
 
 <img src="img/gob.png" alt="marin" class="right"/>
 
@@ -752,8 +769,9 @@ successeurs d'un jour, et créer une progression de jours !
 
 C'est plutôt génial.
 
+<h2 id="synonymes-de-types">
 Synonymes de types
-------------------
+</h2>
 
 Précédemment, on a mentionné qu'en écrivant des types, les types `[Char]` et
 `String` étaient équivalents et interchangeables. Ceci est implémenté à l'aide
@@ -993,8 +1011,9 @@ On aurait pu utiliser un `Maybe a` pour représenter le résultat, mais alors on
 ne saurait pas pour quelle raison on n'a pas pu obtenir le code. Ici,
 l'information en cas d'échec est dans le type de retour.
 
+<h2 id="structures-de-donnees-recursives">
 Structures de données récursives
---------------------------------
+</h2>
 
 <img src="img/thefonz.png" alt="fonz" class="right"/>
 
@@ -1105,11 +1124,11 @@ Bien. Très bien. Si l'on voulait, on pourrait implémenter toutes les fonctions
 qui opèrent sur des listes pour notre propre type liste.
 
 Notez comme on a filtré sur le motif `(x :-: xs)`. Cela fonction car le
-filtrage par motifs n'est en fait basé que sur la correspondance des
+filtrage par motif n'est en fait basé que sur la correspondance des
 constructeurs. On peut filtrer sur `:-:` parce que c'est un constructeur de
 notre type de liste, tout comme on pouvait filtrer sur `:` pour des listes
 normales car c'était un de leurs constructeurs. Pareil pour `[]`. Puisque le
-filtrage de motifs marche (uniquement) sur les constructeurs, on peut filtrer
+filtrage par motif marche (uniquement) sur les constructeurs, on peut filtrer
 sur des choses comme des constructeurs normaux préfixes, ou bien comme `8` ou
 `'a'`, qui sont simplement des constructeurs de types numériques ou de
 caractères respectivement.
@@ -1240,8 +1259,9 @@ cool et puissants en Haskell. On peut les utiliser pour faire tout des booléens
 et énumérations des jours de la semaine jusqu'aux arbres binaires de recherche,
 et encore plus !
 
+<h2 id="classes-de-types-102">
 Classes de types 102
---------------------
+</h2>
 
 <img src="img/trafficlight.png" alt="feu de signalisation" class="right"/>
 
@@ -1342,7 +1362,7 @@ alors nous aurions dû implémenter ces deux fonctions lors de la création d'un
 instance, car Haskell ne saurait pas comment elles sont reliées. La définition
 complète minimale serait alors : `==` et `/=`.
 
-Vous pouvez voir qu'on a implémenté `==` par un simple filtrage de motifs.
+Vous pouvez voir qu'on a implémenté `==` par un simple filtrage par motif.
 Puisqu'il y a beaucoup de cas où deux lumières sont différentes, on a spécifié
 les cas d'égalité, et utilisé un motif attrape-tout pour dire que dans tous les
 autres cas, les lumières sont différentes.
@@ -1480,8 +1500,9 @@ aussi sur les types et les constructeurs de types. `:info Maybe` vous montre
 toutes les classes dont `Maybe` est une instance. `:info` peut aussi montrer la
 déclaration de type d'une fonction. Je trouve ça plutôt cool.
 
+<h2 id="une-classe-de-types-oui-non">
 Une classe de types oui-non
----------------------------
+</h2>
 
 <img src="img/yesno.png" alt="oui non" class="left"/>
 
@@ -1604,8 +1625,9 @@ plutôt vraie, elle retourne la première chose, sinon elle retourne la deuxièm
 > ghci> yesnoIf Nothing "YEAH!" "NO!"
 > "NO!"
 
+<h2 id="la-classe-de-types-functor">
 La classe de types Functor
---------------------------
+</h2>
 
 Jusqu'ici, nous avons rencontré pas mal de classes de types de la bibliothèque
 standard. On a joué avec `Ord`, pour les choses qu'on peut ranger en ordre. On
@@ -1792,8 +1814,9 @@ et le sous-arbre droit n'a que des éléments supérieurs, on risquerait de
 produire un arbre qui n'a plus cette propriété. On verra les lois des foncteurs
 plus en détail dans un des chapitres suivants.
 
+<h2 id="sortes-et-un-peu-de-type-fu">
 Sortes et un peu de type-fu
----------------------------
+</h2>
 
 <img src="img/typefoo.png" alt="type-fu" class="right"/>
 
@@ -1996,3 +2019,17 @@ une fois, vous n'avez pas à comprendre tout ce qu'on vient de faire pour
 continuer à lire, mais si vous comprenez comment les sortes fonctionnent, il y
 a des chances pour que vous ayez développé une compréhension solide du système
 de types d'Haskell.
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="modules" class="prevlink">Modules</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="entrees-et-sorties" class="nextlink">Entrées et sorties</a>
+</li>
+</ul>
+</div>

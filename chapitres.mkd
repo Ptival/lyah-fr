@@ -1,0 +1,73 @@
+% Chapitres
+
+Apprenez Haskell pour le meilleur !
+===================================
+
+* [Introduction](introduction)
+    + [À propos de ce tutoriel](introduction#a-propos-de-ce-tutoriel)
+    + [Donc, qu'est-ce qu'Haskell ?](introduction#donc-qu-est-ce-qu-haskell)
+    + [Ce dont vous avez besoin avant de plonger](introduction#ce-dont-vous-avez-besoin-avant-de-plonger)
+
+* [Démarrons](demarrons)
+    + [Prêts, feu, partez !](demarrons#prets-feu-partez)
+    + [Nos premières fonctions](demarrons#nos-premieres-fonctions)
+    + [Introduction aux listes](demarrons#introduction-aux-listes)
+    + [Texas rangées](demarrons#texas-rangees)
+    + [Je suis une liste en compréhension](demarrons#je-suis-une-liste-en-comprehension)
+    + [Tuples](demarrons#tuples)
+
+* [Types et classes de types](types-et-classes-de-types)
+    + [Faites confiance aux types](types-et-classes-de-types#faites-confiance-aux-types)
+    + [Variables de type](types-et-classes-de-types#variables-de-type)
+    + [Classes de types 101](types-et-classes-de-types#classes-de-types-101)
+
+* [Syntaxe des fonctions](syntaxe-des-fonctions)
+    + [Filtrage par motif](syntaxe-des-fonctions#filtrage-par-motif)
+    + [Gardes, gardes !](syntaxe-des-fonctions#gardes-gardes)
+    + [Où !?](syntaxe-des-fonctions#ou)
+    + [Let it be](syntaxe-des-fonctions#let-it-be)
+    + [Expressions case](syntaxe-des-fonctions#expressions-case)
+
+* [Récursivité](recursivite)
+    + [Bonjour récursivité !](recursivite#bonjour-recursivite)
+    + [Maximum de fun](recursivite#maximum-de-fun)
+    + [Un peu plus de fonctions récursives](recursivite#un-peu-plus-de-fonctions-recursives)
+    + [Vite, triez !](recursivite#vite-triez)
+    + [Penser récursif](recursivite#penser-recursif)
+
+* [Fonctions d'ordre supérieur](fonctions-d-ordre-superieur)
+    + [Fonctions curryfiées](fonctions-d-ordre-superieur#fonctions-curryfiees)
+    + [À l'ordre du jour : de l'ordre supérieur](fonctions-d-ordre-superieur#a-l-ordre-du-jour-de-l-ordre-superieur)
+    + [Maps et filtres](fonctions-d-ordre-superieur#maps-et-filtres)
+    + [Lambdas](fonctions-d-ordre-superieur#lambdas)
+    + [Plie mais ne rompt pas](fonctions-d-ordre-superieur#plie-mais-ne-rompt-pas)
+    + [Appliquer des fonctions avec $](fonctions-d-ordre-superieur#appliquer-des-fonctions)
+    + [Composition de fonctions](fonctions-d-ordre-superieur#composition-de-fonctions)
+
+* [Modules](modules)
+    + [Charger des modules](modules#charger-des-modules)
+    + [Data.List](modules#data-list)
+    + [Data.Char](modules#data-char)
+    + [Data.Map](modules#data-map)
+    + [Data.Set](modules#data-set)
+    + [Créer nos propres modules](modules#creer-nos-propres-modules)
+
+* [Créer nos propres types et classes de types](creer-nos-propres-types-et-classes-de-types)
+    + [Introduction aux types de données algébriques](creer-nos-propres-types-et-classes-de-types#introduction-aux-types-de-donnees-algebriques)
+    + [Syntaxe des enregistrements](creer-nos-propres-types-et-classes-de-types#syntaxe-des-enregistrements)
+    + [Paramètres de types](creer-nos-propres-types-et-classes-de-types#parametres-de-types)
+    + [Instances dérivées](creer-nos-propres-types-et-classes-de-types#instances-derivees)
+    + [Synonymes de types](creer-nos-propres-types-et-classes-de-types#synonymes-de-types)
+    + [Structures de données récursives](creer-nos-propres-types-et-classes-de-types#structures-de-donnees-recursives)
+    + [Classes de types 102](creer-nos-propres-types-et-classes-de-types#classes-de-types-102)
+    + [Une classe de types oui-non](creer-nos-propres-types-et-classes-de-types#une-classe-de-types-oui-non)
+    + [La classe de types Functor](creer-nos-propres-types-et-classes-de-types#la-classe-de-types-functor)
+    + [Sortes et un peu de type-fu](creer-nos-propres-types-et-classes-de-types#sortes-et-un-peu-de-type-fu)
+
+* [Entrées et sorties](entrees-et-sorties)
+    + [Hello, world!](entrees-et-sorties#hello-world)
+    + [Fichiers et flots](entrees-et-sorties#fichiers-et-flots)
+    + [Arguments de ligne de commande](entrees-et-sorties#arguments-de-ligne-de-commande)
+    + [Aléatoire](entrees-et-sorties#aleatoire)
+    + [Chaînes d'octets](entrees-et-sorties#chaines-d-octets)
+    + [Exceptions](entrees-et-sorties#exceptions)

@@ -1,8 +1,22 @@
-Types et classes de types
-=========================
+% Types et classes de types
 
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="demarrons" class="prevlink">Démarrons</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="syntaxe-des-fonctions" class="nextlink">Syntaxe des fonctions</a>
+</li>
+</ul>
+</div>
+
+<h2 id="faites-confiance-aux-types">
 Faites confiance aux types
---------------------------
+</h2>
 
 <img src="img/cow.png" alt="vache" class="left"/>
 
@@ -134,8 +148,9 @@ composantes, donc il existe théoriquement une infinité de types de tuples, ce
 qui fait trop pour être contenu dans ce tutoriel. Remarquez que le tuple vide
 `()` est aussi un type, qui ne contient qu'une seule valeur : `()`.
 
+<h2 id="variables-de-type">
 Variables de type
------------------
+</h2>
 
 Quel est le type de `head` d'après vous ? Puisque `head` prend une liste de
 n'importe quel type et retourne son premier élément, qu'est-ce que ça peut bien
@@ -173,8 +188,9 @@ Notez que, le fait que `a` et `b` soient deux variables de type différentes
 n'implique pas que les types doivent être différents. Cela indique juste que la
 première composante et la valeur retournée ont le même type.
 
+<h2 id="classes-de-types-101">
 Classes de types 101
--------------------
+</h2>
 
 <img src="img/classes.png" alt="classes" class="right"/>
 
@@ -414,3 +430,17 @@ d'ajouter un `Int` à un nombre à virgule flottante. Pour éviter ceci, on fait
 Remarquez que `fromIntegral` a plusieurs contraintes de classe dans sa
 signature. C'est tout à fait valide, et comme vous voyez, les contraintes sont
 séparées par des virgules dans les parenthèses.
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="demarrons" class="prevlink">Démarrons</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="syntaxe-des-fonctions" class="nextlink">Syntaxe des fonctions</a>
+</li>
+</ul>
+</div>

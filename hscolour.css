@@ -1,0 +1,23 @@
+h2 {clear: left;}
+pre {background-color: black; padding: 4px 4px 4px 4px; clear: both;}
+code {background-color: #DDD; font-weight: bold; padding: 0 2px 0 2px;}
+.hs-keyglyph, .hs-layout {color: #8AC6F2;}
+.hs-keyword {color: #95E454;}
+.hs-str, .hs-chr {color: #FF9;}
+.hs-varid, .hs-conop, .hs-cpp, .hs-sel, .hs-conid, .hs-varop {color: white;}
+.hs-comment, .hs-varop {color: #8AC6F2;}
+.hs-num {color: #E5786D;}
+.hs-definition {color: #AAA;}
+.hs-keyword {color: #95E454;}
+img.left {float: left; margin:10px;}
+img.right {float: right; margin:10px; clear: right;}
+img.center {margin: 10px auto 25px auto; display: block;}
+.prev-toc-next {width: 100%; display: table;}
+.prev-toc-next ul { display: table-row; list-style: none;
+    list-style-type: disc; margin: 25px 25px; }
+.prev-toc-next ul li {display: table-cell; width: 33%;}
+.prevlink {padding-left: 20px; background-image: url(img/prv.png);
+    background-position: 0px 3px; background-repeat: no-repeat;}
+.nextlink {padding-right: 20px; background-image: url(img/nxt.png);
+    background-position: top right; background-repeat: no-repeat;}
+

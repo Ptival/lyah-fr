@@ -1,8 +1,22 @@
-Modules
-=======
+% Modules
 
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="fonctions-d-ordre-superieur" class="prevlink">Fonctions d'ordre supérieur</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="creer-nos-propres-types-et-classes-de-types" class="nextlink">Créer nos propres types et classes de types</a>
+</li>
+</ul>
+</div>
+
+<h2 id="charger-des-modules">
 Charger des modules
--------------------
+</h2>
 
 <img src="img/modules.png" alt="modules" class="right"/>
 
@@ -106,8 +120,9 @@ Pour trouver des fonctions et savoir dans quel module elles résident, utilisez
 génial, vous pouvez chercher quelque chose par son nom, par le nom de son
 module, ou même par son type !
 
+<h2 id="data-list">
 Data.List
----------
+</h2>
 
 Le module `Data.List` s'occupe des listes, évidemment. Il contient des
 fonctions très pratiques. Nous en avons déjà croisées quelques unes (comme
@@ -648,8 +663,9 @@ fonctions en *By* qui attendent une fonction d'égalité, vous ferez souvent
 attendent une fonction de comparaison, vous ferez souvent `compare \`on\`
 length`.
 
+<h2 id="data-char">
 Data.Char
----------
+</h2>
 
 <img src="img/legochar.png" alt="lego char" class="right"/>
 
@@ -842,8 +858,9 @@ les nombres d'autant de places dans le sens opposé au sens initial.
 > ghci> decode 5 . encode 5 $ "This is a sentence"
 > "This is a sentence"
 
+<h2 id="data-map">
 Data.Map
---------
+</h2>
 
 Les listes associatives (ou dictionnaires) sont des listes utilisées pour
 stocker des paires clé-valeur, où l'ordre n'est pas important. Par exemple, on
@@ -1103,8 +1120,9 @@ Ce n'était qu'un aperçu de `Data.Map`. Vous pouvez voir la liste complète des
 fonctions dans la
 [documentation](http://www.haskell.org/ghc/docs/latest/html/libraries/containers/Data-Map.html).
 
+<h2 id="data-set">
 Data.Set
---------
+</h2>
 
 <img src="img/legosets.png" alt="lego sets" class="right"/>
 
@@ -1221,8 +1239,9 @@ de `Ord`.
 comme vous pouvez le voir, `nub` préserve l'ordre des éléments alors que
 `setNub` les mélange.
 
+<h2 id="creer-nos-propres-modules">
 Créer nos propres modules
--------------------------
+</h2>
 
 <img src="img/making_modules.png" alt="créer des modules" class="right"/>
 
@@ -1399,3 +1418,17 @@ gros avec plein de fonctions, essayez de voir lesquelles partagent un but
 commun et si vous pouvez les regrouper dans un module. Vous n'aurez plus qu'à
 importer ce module si vous souhaitez réutiliser ces fonctionnalités dans un
 autre programme.
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="fonctions-d-ordre-superieur" class="prevlink">Fonctions d'ordre supérieur</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="creer-nos-propres-types-et-classes-de-types" class="nextlink">Créer nos propres types et classes de types</a>
+</li>
+</ul>
+</div>

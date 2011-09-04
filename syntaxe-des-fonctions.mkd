@@ -1,8 +1,22 @@
-Syntaxe des fonctions
-=====================
+% Syntaxe des fonctions
 
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="types-et-classes-de-types" class="prevlink">Types et classes de types</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="recursivite" class="nextlink">Récursivité</a>
+</li>
+</ul>
+</div>
+
+<h2 id="filtrage-par-motif">
 Filtrage par motif
-------------------
+</h2>
 
 <img src="img/pattern.png" alt="motif" class="right"/>
 
@@ -99,7 +113,7 @@ composantes en y. Voilà ce que nous aurions fait sans filtrage par motif :
 > addVectors a b = (fst a + fst b, snd a + snd b)
 
 Bon, ça marche, mais il y a une meilleure façon de faire. Utilisons le filtrage
-par motifs.
+par motif.
 
 > addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)
 > addVectors (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)
@@ -149,7 +163,7 @@ Si vous désirez lier, mettons, les trois premiers éléments à trois variables
 et le reste de la liste à une autre variable, vous pouvez utiliser un motif
 comme `x:y:z:xs`. Il ne validera que des listes qui ont trois éléments ou plus.
 
-Maintenant que l'on sait utiliser le filtrage par motifs sur des listes,
+Maintenant que l'on sait utiliser le filtrage par motif sur des listes,
 implémentons notre fonction `head`.
 
 > head' :: [a] -> a
@@ -244,8 +258,9 @@ seconde liste ? Ça n'a pas trop de sens. Cela aurait du sens de filtrer contre
 `(xs ++ [x, y, z])` ou juste `(xs ++ [x])`, mais par nature des listes, cela
 est impossible.
 
+<h2 id="gardes-gardes">
 Gardes, gardes !
-----------------
+</h2>
 
 <img src="img/guards.png" alt="gardes" class="left"/>
 
@@ -353,8 +368,9 @@ Note : Non seulement pouvons-nous appeler des fonctions de manière infixe avec
 des apostrophes renversées, on peut également les définir de cette manière.
 Parfois, c'est plus simple à lire comme ça.
 
+<h2 id="ou">
 Où !?
------
+</h2>
 
 Dans la section précédente, nous définissions le calculateur d'IMC ainsi :
 
@@ -447,8 +463,9 @@ créer une fonction et de définir des fonctions auxiliaires dans sa clause
 *where* et de définir des fonctions auxiliaires à ces fonctions auxiliaires
 dans leur clause *where*.
 
+<h2 id="let-it-be">
 Let it be
----------
+</h2>
 
 Les liaisons *let* sont très similaires aux liaisons *where*. Les liaisons
 *where* sont une construction syntaxique permettant de lier des variables en
@@ -551,8 +568,9 @@ personnes préfèrent également que les liaisons *where* se situent après les
 fonctions qui s'en servent. De cette manière, le corps de la fonction est plus
 proche de son nom, de sa déclaration de type, et le tout est plus lisible.
 
+<h2 id="expressions-case">
 Expressions case
-----------------
+</h2>
 
 <img src="img/case.png" alt="attaché-case" class="right"/>
 
@@ -613,3 +631,17 @@ aurait aussi pu définir :
 >     where what [] = "empty."
 >           what [x] = "a singleton list."
 >           what xs = "a longer list."
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="types-et-classes-de-types" class="prevlink">Types et classes de types</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="recursivite" class="nextlink">Récursivité</a>
+</li>
+</ul>
+</div>

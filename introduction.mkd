@@ -1,8 +1,22 @@
-Introduction
-============
+% Introduction
 
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="demarrons" class="nextlink">Démarrons</a>
+</li>
+</ul>
+</div>
+
+<h2 id="a-propos-de-ce-tutoriel">
 À propos de ce tutoriel
------------------------
+</h2>
 
 Bienvenue dans **Apprenez Haskell pour le meilleur** ! Si vous lisez ceci, il
 est possible que vous vouliez apprendre Haskell. Vous êtes au bon endroit, mais
@@ -28,8 +42,8 @@ OCaml, …). Bien que je me doute que même sans vraie expérience en
 programmation, un chouette type comme vous pourra suivre et apprendre Haskell.
 
 Le canal #haskell sur le réseau freenode est un bon endroit pour poser des
-questions si vous êtes bloqué. (NdT: Le canal #haskell.fr du même réseau vous
-permettra de poser vos questions en français.) Les gens y sont extrêmement
+questions si vous êtes bloqué (NdT: Le canal #haskell.fr du même réseau vous
+permettra de poser vos questions en français). Les gens y sont extrêmement
 gentils, patients et compréhensifs envers les débutants.
 
 J'ai échoué dans mon apprentissage de Haskell à peu près deux fois avant
@@ -41,8 +55,9 @@ l'apprendre même si cela semble bizarre au début. Apprendre Haskell est très
 similaire à l'apprentissage de la programmation la première fois - c'est fun !
 Ca vous force à penser différemment, ce qui nous amène à la section suivante…
 
-Donc, qu'est-ce que Haskell ?
------------------------------
+<h2 id="donc-qu-est-ce-qu-haskell">
+Donc, qu'est-ce qu'Haskell ?
+</h2>
 
 <img src="img/fx.png" alt="fx" class="right"/>
 
@@ -125,8 +140,9 @@ travail sur Haskell a débuté en 1987 lorsqu'un comité de chercheurs s'est
 rassemblé pour concevoir un langage révolutionnaire. En 2003, le rapport
 Haskell fut publié, et définit une version stable du langage.
 
+<h2 id="ce-dont-vous-avez-besoin-avant-de-plonger">
 Ce dont vous avez besoin avant de plonger
------------------------------------------
+</h2>
 
 Un éditeur de texte, et un compilateur Haskell. Vous avez probablement déjà un
 éditeur de texte favori, donc ne perdons pas de temps avec ça. Pour les besoins
@@ -151,3 +167,17 @@ recharge le script courant. Ma procédure habituelle quand je joue avec des
 choses est de définir des fonctions dans a.hs, de les charger, et de bidouiller
 avec, puis de retourner changer le .hs, recharger, etc. C'est aussi ce qu'on va
 faire à présent.
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="demarrons" class="nextlink">Démarrons</a>
+</li>
+</ul>
+</div>
