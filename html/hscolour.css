@@ -20,4 +20,8 @@ img.center {margin: 10px auto 25px auto; display: block;}
     background-position: 0px 3px; background-repeat: no-repeat;}
 .nextlink {padding-right: 20px; background-image: url(img/nxt.png);
     background-position: top right; background-repeat: no-repeat;}
-
+.bgwrapper {margin-top: 50px; margin-bottom: 50px;
+    background-color: white; padding: 25px 0 50px 0;}
+#content {width: 800px; margin: 0px auto;}
+body {background-image: url(img/bg.png); font-size: 14px;
+    line-height: 25px; margin: 0}

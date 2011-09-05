@@ -9,13 +9,13 @@ RMFIRST9 := tail -n +10
 RMLAST2 := head -n -2
 
 SOURCE := $(wildcard *.mkd)
-TARGET := $(SOURCE:.mkd=.html)
+TARGET := $(addprefix html/, $(SOURCE:.mkd=.html))
 
 all: $(TARGET)
 
-.mkd.html:
+html/%.html:%.mkd
 	cat $< | $(HSCOLOUR) -css | $(RMFIRST9) | $(RMLAST2) \
-	| $(PANDOC) -t html -c hscolour.css \
+	| $(PANDOC) -t html -c hscolour.css -B before.html -A after.html \
 	| $(UNLIT1) | $(UNLIT2) | $(UNLIT3) > $@
 
 .mkd.tex:
