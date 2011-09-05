@@ -1,5 +1,3 @@
-% Chapitres
-
 Apprenez Haskell pour le meilleur !
 ===================================
 
