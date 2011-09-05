@@ -79,7 +79,7 @@ déclaration de type d'une fonction avant de s'inquiéter de l'implémentation, 
 d'écrire cette déclaration. En Haskell, une déclaration de type nous en dit
 beaucoup sur une fonction, grâce au système de types puissant.</div>
 
-<img src="calculator.png" alt="calculatrice" class="left"/>
+<img src="img/calculator.png" alt="calculatrice" class="left"/>
 
 Cool. Quand on implémente une solution à un problème en Haskell, il est aussi
 bien de penser à la façon dont vous le feriez à la main et d'en tirer des
@@ -278,7 +278,7 @@ fixe pour voyager d'une intersection à une autre. Vous devez trouver le chemin
 optimal pour arriver à Londres aussi vite que possible ! Vous partez du côté
 gauche et pouvez soit changer de route principale, soit rouler vers Londres.
 
-<img src="roads.png" alt="routes" class="center"/>
+<img src="img/roads.png" alt="routes" class="center"/>
 
 Comme vous le voyez sur l'image, le chemin le plus court d'Heathrow à Londres
 dans ce cas consiste à démarrer sur la route principale B, changer de route
@@ -334,7 +334,7 @@ solution est optimale, on pourra simplement se dire qu'on en est plutôt sûr.
 Ce n'est donc pas une bonne solution. Voici une image simplifiée de notre
 système routier :
 
-<img src="roads_simple.png" alt="routes simplifiées" class="center"/>
+<img src="img/roads_simple.png" alt="routes simplifiées" class="center"/>
 
 Parfait, pouvez-vous trouver quel est le plus court chemin jusqu'à la première
 intersection de la route A (le premier point bleu sur la route A, noté A1) ?
