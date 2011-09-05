@@ -1,12 +1,12 @@
 Apprenez Haskell pour le meilleur !
 ===================================
 
-* [Introduction](introduction)
+#. [Introduction](introduction)
     + [À propos de ce tutoriel](introduction#a-propos-de-ce-tutoriel)
     + [Donc, qu'est-ce qu'Haskell ?](introduction#donc-qu-est-ce-qu-haskell)
     + [Ce dont vous avez besoin avant de plonger](introduction#ce-dont-vous-avez-besoin-avant-de-plonger)
 
-* [Démarrons](demarrons)
+#. [Démarrons](demarrons)
     + [Prêts, feu, partez !](demarrons#prets-feu-partez)
     + [Nos premières fonctions](demarrons#nos-premieres-fonctions)
     + [Introduction aux listes](demarrons#introduction-aux-listes)
@@ -14,26 +14,26 @@ Apprenez Haskell pour le meilleur !
     + [Je suis une liste en compréhension](demarrons#je-suis-une-liste-en-comprehension)
     + [Tuples](demarrons#tuples)
 
-* [Types et classes de types](types-et-classes-de-types)
+#. [Types et classes de types](types-et-classes-de-types)
     + [Faites confiance aux types](types-et-classes-de-types#faites-confiance-aux-types)
     + [Variables de type](types-et-classes-de-types#variables-de-type)
     + [Classes de types 101](types-et-classes-de-types#classes-de-types-101)
 
-* [Syntaxe des fonctions](syntaxe-des-fonctions)
+#. [Syntaxe des fonctions](syntaxe-des-fonctions)
     + [Filtrage par motif](syntaxe-des-fonctions#filtrage-par-motif)
     + [Gardes, gardes !](syntaxe-des-fonctions#gardes-gardes)
     + [Où !?](syntaxe-des-fonctions#ou)
     + [Let it be](syntaxe-des-fonctions#let-it-be)
     + [Expressions case](syntaxe-des-fonctions#expressions-case)
 
-* [Récursivité](recursivite)
+#. [Récursivité](recursivite)
     + [Bonjour récursivité !](recursivite#bonjour-recursivite)
     + [Maximum de fun](recursivite#maximum-de-fun)
     + [Un peu plus de fonctions récursives](recursivite#un-peu-plus-de-fonctions-recursives)
     + [Vite, triez !](recursivite#vite-triez)
     + [Penser récursif](recursivite#penser-recursif)
 
-* [Fonctions d'ordre supérieur](fonctions-d-ordre-superieur)
+#. [Fonctions d'ordre supérieur](fonctions-d-ordre-superieur)
     + [Fonctions curryfiées](fonctions-d-ordre-superieur#fonctions-curryfiees)
     + [À l'ordre du jour : de l'ordre supérieur](fonctions-d-ordre-superieur#a-l-ordre-du-jour-de-l-ordre-superieur)
     + [Maps et filtres](fonctions-d-ordre-superieur#maps-et-filtres)
@@ -42,7 +42,7 @@ Apprenez Haskell pour le meilleur !
     + [Appliquer des fonctions avec $](fonctions-d-ordre-superieur#appliquer-des-fonctions)
     + [Composition de fonctions](fonctions-d-ordre-superieur#composition-de-fonctions)
 
-* [Modules](modules)
+#. [Modules](modules)
     + [Charger des modules](modules#charger-des-modules)
     + [Data.List](modules#data-list)
     + [Data.Char](modules#data-char)
@@ -50,7 +50,7 @@ Apprenez Haskell pour le meilleur !
     + [Data.Set](modules#data-set)
     + [Créer nos propres modules](modules#creer-nos-propres-modules)
 
-* [Créer nos propres types et classes de types](creer-nos-propres-types-et-classes-de-types)
+#. [Créer nos propres types et classes de types](creer-nos-propres-types-et-classes-de-types)
     + [Introduction aux types de données algébriques](creer-nos-propres-types-et-classes-de-types#introduction-aux-types-de-donnees-algebriques)
     + [Syntaxe des enregistrements](creer-nos-propres-types-et-classes-de-types#syntaxe-des-enregistrements)
     + [Paramètres de types](creer-nos-propres-types-et-classes-de-types#parametres-de-types)
@@ -62,10 +62,19 @@ Apprenez Haskell pour le meilleur !
     + [La classe de types Functor](creer-nos-propres-types-et-classes-de-types#la-classe-de-types-functor)
     + [Sortes et un peu de type-fu](creer-nos-propres-types-et-classes-de-types#sortes-et-un-peu-de-type-fu)
 
-* [Entrées et sorties](entrees-et-sorties)
+#. [Entrées et sorties](entrees-et-sorties)
     + [Hello, world!](entrees-et-sorties#hello-world)
     + [Fichiers et flots](entrees-et-sorties#fichiers-et-flots)
     + [Arguments de ligne de commande](entrees-et-sorties#arguments-de-ligne-de-commande)
     + [Aléatoire](entrees-et-sorties#aleatoire)
     + [Chaînes d'octets](entrees-et-sorties#chaines-d-octets)
     + [Exceptions](entrees-et-sorties#exceptions)
+
+Ce travail est une traduction de [Learn You a Haskell For Great
+Good!](http://learnyouahaskell.com/). Le texte original est de Miran Lipovača,
+la traduction a été réalisée par Valentin Robert. Le texte original est
+distribué sous licence [Paternité - Pas d'Utilisation Commerciale - Partage à
+l'Identique 3.0 non
+transcrit](http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr) parce que
+son auteur n'a pas trouvé de licence avec un nom encore plus long. Ce travail
+est par conséquent redistribué sous la même licence.

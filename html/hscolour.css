@@ -1,10 +1,19 @@
 body {background-image: url(img/bg.png); font-size: 14px;
     line-height: 25px; margin: 0}
 h1 {font-size: 60px; line-height: 60px; font-family: georgia, Arial, serif;
-    margin: 0 0 15px 0; font-weight: normal;}
+    margin: 0 15px; font-weight: normal;}
 h2 {clear: left;}
 pre {background-color: black; padding: 4px 4px 4px 4px; clear: both;}
 code {background-color: #DDD; font-weight: bold; padding: 0 2px 0 2px;}
+ol {list-style-type: decimal; font-family: arial,serif; font-size: 24px;
+    padding-left: 25px; margin: 0px; color: #408156; margin-bottom: 25px;}
+ol > li > a:hover {color: #BD2A33;}
+ol > li > a {text-decoration: none; color: #555; display: block;
+    border-bottom: 1px solid #DDD;}
+ul {list-style-type: disc; margin: 25px 25px;}
+li > ul > li {list-style-type: none;}
+li > ul > li > a:hover {color: #BD2A33;}
+li > ul > li > a {font-size: 16px; color: black; text-decoration: underline;}
 .hs-keyglyph, .hs-layout {color: #8AC6F2;}
 .hs-keyword {color: #95E454;}
 .hs-str, .hs-chr {color: #FF9;}
