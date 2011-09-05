@@ -23,7 +23,7 @@ Introduction aux types de données algébriques
 </h2>
 
 Jusqu'ici, nous avons croisé beaucoup de types de données. `Bool`, `Int`,
-`Char`, `Maybe`, etc. Mais comment créer les nôtres ? Eh bien, une des moyens
+`Char`, `Maybe`, etc. Mais comment créer les nôtres ? Eh bien, un des moyens
 consiste à utiliser le mot-clé **data** pour définir un type. Voyons comment le
 type `Bool` est défini dans la bibliothèque standard.
 
@@ -109,7 +109,7 @@ types `Show`, on peut le modifier ainsi :
 
 > data Shape = Circle Float Float Float | Rectangle Float Float Float Float deriving (Show)
 
-On ne s'intéressera pas à la dérivation trop pour l'instant. Disons seulement
+On ne s'intéressera pas trop à la dérivation pour l'instant. Disons seulement
 qu'en ajoutant `deriving (Show)` à la fin d'une déclaration *data*, Haskell
 rend magiquement ce type membre de la classe de types `Show`. Ainsi, on peut à
 présent faire :
@@ -171,7 +171,7 @@ correspondantes.
 > Circle (Point 39.0 44.0) 10.0
 
 Si on ne veut pas manipuler directement les points, on peut créer des fonctions
-auxiliaires qui créent des formes d'une tailler donnée à l'origine, puis les
+auxiliaires qui créent des formes d'une taille donnée à l'origine, puis les
 déplacer.
 
 > baseCircle :: Float -> Shape
@@ -211,7 +211,7 @@ les fonctions `baseCircle` et `baseRect`. `Data.Map` utilise cette approche.
 Vous ne pouvez pas créer de map en faisant `Map.Map [(1,2),(3,4)]` parce qu'il
 n'exporte pas ce constructeur de valeurs. Cependant, vous pouvez en créer à
 l'aide de fonctions auxiliaires comme `Map.fromList`. Souvenez-vous, les
-constructeurs de valeurs sont juste des fonction qui prennent des champs en
+constructeurs de valeurs sont juste des fonctions qui prennent des champs en
 paramètres et retournent une valeur d'un certain type (comme `Shape`). Donc
 quand on choisit de ne pas les exporter, on empêche seulement les personnes qui
 importent notre module d'utiliser ces fonctions, mais si d'autres fonctions
@@ -281,8 +281,8 @@ pas, désolé.
 
 Non, je blague, il y en a un. Hahaha ! Les créateurs d'Haskell étaient très
 intelligents et ont anticipé ce scénario. Ils ont inclus une version
-alternative d'écrire les types de données. Voici comment l'on pourrait obtenir
-les mêmes fonctionnalités avec une syntaxe d'enregistrements.
+alternative de l'écriture des types de données. Voici comment l'on pourrait
+obtenir les mêmes fonctionnalités avec une syntaxe d'enregistrements.
 
 > data Person = Person { firstName :: String
 >                      , lastName :: String
@@ -326,7 +326,7 @@ nouvelle voiture comme suit.
 > ghci> Car {company="Ford", model="Mustang", year=1967}
 > Car {company = "Ford", model = "Mustang", year = 1967}
 
-À la création de la voiture, on a pas nécessairement à mettre les champs dans
+À la création de la voiture, on n'a pas nécessairement à mettre les champs dans
 le bon ordre, du moment qu'on les liste tous. Alors que sans la syntaxe des
 enregistrements, l'ordre importe.
 
@@ -345,7 +345,7 @@ Un constructeur de valeurs peut prendre plusieurs valeurs comme paramètres et
 retourner une nouvelle valeur. Par exemple, le constructeur `Car` prend trois
 valeurs et produit une valeur de type `Car`. De manière similaire, les
 **constructeurs de types** peuvent prendre des types en paramètres pour créer
-de nouveaux types. Ca peut sembler un peu trop méta au premier abord, mais ce
+de nouveaux types. Ça peut sembler un peu trop méta au premier abord, mais ce
 n'est pas si compliqué. Si vous êtes familier avec les templates C++, vous
 verrez des parallèles. Pour se faire une bonne image de l'utilisation des
 paramètres de types en action, regardons comment un des types que nous avons
@@ -408,14 +408,15 @@ Utiliser les paramètres de types est très bénéfique, mais seulement quand le
 utiliser a un sens. Généralement, on les utilise quand notre type de données
 fonctionne sans se soucier du type de ce qu'il contient en lui, comme pour
 notre type `Maybe a`. Si notre type se comporte comme une sorte de boîte, il
-est bien de les utiliser. On pourrait changer notre type de données `Car` de :
+est bien de les utiliser. On pourrait changer notre type de données `Car` de
+ceci :
 
 > data Car = Car { company :: String
 >                , model :: String
 >                , year :: Int
 >                } deriving (Show)
 
-en :
+en cela :
 
 > data Car a b c = Car { company :: a
 >                      , model :: b
@@ -444,7 +445,7 @@ fonctionne bien. Maintenant, si `Car` était `Car a b c` ?
 Nous devrions forcer cette fonction à prendre un type `Car` tel que `(Show a)
 => Car String String a`. Vous pouvez constater que la signature de type est
 plus compliquée, et le seul avantage qu'on en tire serait qu'on pourrait
-utiliser n'importe quelle type instance de la classe de types `Show` pour `c`.
+utiliser n'importe quel type instance de la classe de types `Show` pour `c`.
 
 > ghci> tellCar (Car "Ford" "Mustang" 1967)
 > "This Ford Mustang was made in 1967"
@@ -458,7 +459,7 @@ utiliser n'importe quelle type instance de la classe de types `Show` pour `c`.
 <img src="img/meekrat.png" alt="suricate" class="right"/>
 
 Dans la vie réelle cependant, on finirait par utiliser `Car String String Int`
-la plupart du temps, et il semblerait que paramétriser le type `Car` ne valait
+la plupart du temps, et il semblerait que paramétrer le type `Car` ne vaudrait
 pas le coup. On utilise généralement les paramètres de types lorsque le type
 contenu dans les divers constructeurs de valeurs du type de données n'est pas
 vraiment important pour que le type fonctionne. Une liste de choses est une
@@ -520,9 +521,9 @@ peuvent opérer sur des types comme `Vector Int`, `Vector Integer`, `Vector
 Float`, à condition que le `a` de `Vector a` soit de la classe `Num`.
 Également, si vous examinez les déclarations de type des fonctions, vous verrez
 qu'elles n'opèrent que sur des vecteurs de même type et que les scalaires
-doivent également être du type contenu dans les vecteurs. Remarquez qu'on a pas
-mis de contrainte `Num` dans la déclaration *data*, puisqu'on a eu à l'écrire
-dans chaque fonction qui en dépendait de toute façon.
+doivent également être du type contenu dans les vecteurs. Remarquez qu'on n'a
+pas mis de contrainte `Num` dans la déclaration *data*, puisqu'on a eu à
+l'écrire dans chaque fonction qui en dépendait de toute façon.
 
 Une fois de plus, il est très important de distinguer le constructeur de types
 du constructeur de valeurs. Lorsqu'on déclare un type, le nom à gauche du `=`
@@ -552,12 +553,12 @@ Instances dérivées
 
 Dans la section [Classes de types 101](TODO), nous avons vu les bases des
 classes de types. Nous avons dit qu'une classe de types est une sorte
-d'interface qui définit un comportement. Un type peut être fait une
+d'interface qui définit un comportement. Un type peut devenir une
 **instance** d'une classe de types s'il supporte ce comportement. Par exemple :
 le type `Int` est une instance d'`Eq` parce que cette classe définit le
 comportement de ce qui peut être testé pour l'égalité. Et puisqu'on peut tester
 l'égalité de deux entiers, `Int` est membre de la classe `Eq`. La vraie utilité
-vient des fonctions qui agissent comme l'intergace d'`Eq`, à savoir `==` et
+vient des fonctions qui agissent comme l'interface d'`Eq`, à savoir `==` et
 `/=`. Si un type est membre d'`Eq`, on peut utiliser les fonctions `==` et `/=`
 avec des valeurs de ce type. C'est pourquoi des expressions comme `4 == 4` et
 `"foo" /= "bar"` sont correctement typées.
@@ -756,7 +757,7 @@ le plus grand jour.
 > Sunday
 
 C'est aussi une instance d'`Enum`. On peut obtenir le prédécesseur et le
-successeurs d'un jour, et créer une progression de jours !
+successeur d'un jour, et créer une progression de jours !
 
 > ghci> succ Monday
 > Tuesday
@@ -813,7 +814,7 @@ paires clé-valeur. Regardons le carnet que nous avions alors.
 On voit que le type de `phoneBook` est `[(String, String)]`. Cela nous indique
 que c'est une liste associative qui mappe des chaînes de caractères vers des
 chaînes de caractères, mais pas grand chose de plus. Créons un synonyme de
-types pour communiquer plus d'information dans la déclaration de type.
+types pour communiquer plus d'informations dans la déclaration de type.
 
 > type PhoneBook = [(String,String)]
 
@@ -842,8 +843,8 @@ type `String -> String -> [(String,String)] -> Bool`. Ici, la déclaration
 tirant parti des synonymes de types est plus facile à lire. Cependant, n'en
 faites pas trop. On introduit les synonymes de types pour soit décrire ce que
 des types existants représentent dans nos fonctions (et ainsi les déclarations
-de types de nos fonctions deviennent de meilleurs documentations), soit lorsque
-quelque chose a un type assez long et répété souvent (comme `[(String,
+de types de nos fonctions deviennent de meilleures documentations), soit
+lorsque quelque chose a un type assez long et répété souvent (comme `[(String,
 String)]`) et représente quelque chose de spécifique dans le contexte de nos
 fonctions.
 
@@ -863,7 +864,7 @@ des types appliqués complètement comme `Map Int String`, ou si on se frotte à
 une de ces fonctions polymorphes, `[a]` ou `(Ord a) => Maybe a` et tout ça. Et
 tu vois, parfois moi et mes potes on dit que `Maybe` c'est un type, mais bon,
 c'est pas ce qu'on veut dire, parce que même les idiots savent que `Maybe` est
-un constructeur de type, t'as vu. Quand j'applique `Maybe` à un type, comme
+un constructeur de types, t'as vu. Quand j'applique `Maybe` à un type, comme
 dans `Maybe String`, alors j'ai un type concret. Tu sais, les valeurs, elles ne
 peuvent avoir que des types concrets ! En gros, vis vite, aime fort, et ne
 prête ton peigne à personne !
@@ -873,7 +874,7 @@ nouvelles fonctions, on peut appliquer partiellement des constructeurs de types
 pour obtenir de nouveaux constructeurs de types. Tout comme on appelle une
 fonctions avec trop peu de paramètres, on peut spécifier trop peu de paramètres
 de types à un constructeur de types et obtenir un constructeur de types
-partiellement appliqué. Si l'on voulait un type qui représentent une map (de
+partiellement appliqué. Si l'on voulait un type qui représente une map (de
 `Data.Map`) qui va des entiers vers quelque chose, on pourrait faire soit :
 
 > type IntMap v = Map Int v
@@ -959,7 +960,7 @@ indiquant si le casier est utilisé ou non, et le code du casier.
 Simple. On introduit un nouveau type de données pour représenter un casier
 occupé ou libre, et on crée un synonyme de types pour le code du casier. On
 crée aussi un synonyme de types pour les maps qui prennent un entier et
-renvoient une paire d'état de de code de casier. À présent, on va créer une
+renvoient une paire d'état et de code de casier. À présent, on va créer une
 fonction qui cherche le code dans une map de casiers. On va utiliser un type
 `Either String Code` pour représenter le résultat, parce que la recherche peut
 échouer de deux façons - le casier peut être déjà pris, auquel cas on ne peut
@@ -1123,7 +1124,7 @@ Voyons si ça a marché…
 Bien. Très bien. Si l'on voulait, on pourrait implémenter toutes les fonctions
 qui opèrent sur des listes pour notre propre type liste.
 
-Notez comme on a filtré sur le motif `(x :-: xs)`. Cela fonction car le
+Notez comme on a filtré sur le motif `(x :-: xs)`. Cela fonctionne car le
 filtrage par motif n'est en fait basé que sur la correspondance des
 constructeurs. On peut filtrer sur `:-:` parce que c'est un constructeur de
 notre type de liste, tout comme on pouvait filtrer sur `:` pour des listes
@@ -1205,14 +1206,14 @@ l'élément à la racine.
 
 Ensuite, on va créer une fonction qui vérifie si un élément est dans l'arbre.
 Définissons d'abord le cas de base. Si on cherche un élément dans l'arbre vide,
-il n'est certainement pas là. Ok. Voyez comme le cas de base est similaire à
-celui lorsqu'on cherche un élément dans une liste. Si on cherche un élément
-dans une liste vide, il n'est sûrement pas là. Enfin bon, si l'arbre n'est pas
-vide, quelques vérifications. Si l'élément a la racine est celui qu'on cherche,
-trouvé ! Sinon, eh bien ? Puisqu'on sait que les éléments à gauche sont plus
-petits que lui, si on cherche un élément plus petit, on va le chercher à
-gauche. Symétriquement, on cherchera à droite un élément plus grand que celui à
-la racine.
+il n'est certainement pas là. Ok. Voyez comme le cas de base est similaire au
+cas de base lorsqu'on cherche un élément dans une liste. Si on cherche un
+élément dans une liste vide, il n'est sûrement pas là. Enfin bon, si l'arbre
+n'est pas vide, quelques vérifications. Si l'élément à la racine est celui
+qu'on cherche, trouvé ! Sinon, eh bien ? Puisqu'on sait que les éléments à
+gauche sont plus petits que lui, si on cherche un élément plus petit, on va le
+chercher à gauche. Symétriquement, on cherchera à droite un élément plus grand
+que celui à la racine.
 
 > treeElem :: (Ord a) => a -> Tree a -> Bool
 > treeElem x EmptyTree = False
@@ -1255,9 +1256,9 @@ nœeud racine 7, etc.
 Tester l'appartenance fonctionne aussi correctement. Cool.
 
 Comme vous le voyez, les structures de données algébriques sont des concepts
-cool et puissants en Haskell. On peut les utiliser pour faire tout des booléens
-et énumérations des jours de la semaine jusqu'aux arbres binaires de recherche,
-et encore plus !
+cool et puissants en Haskell. On peut les utiliser pour tout faire, des
+booléens et énumérations des jours de la semaine jusqu'aux arbres binaires de
+recherche, et encore plus !
 
 <h2 id="classes-de-types-102">
 Classes de types 102
@@ -1274,7 +1275,7 @@ instances, le tout à la main.
 Bref récapitulatif sur les classes de types : elles sont comme des interfaces.
 Une classe de types définit un comportement (tester l'égalité, comparer
 l'ordre, énumérer), puis les types qui peuvent se comporter de la sorte sont
-fait instances de ces classes. Le comporetement des classes de types est défini
+fait instances de ces classes. Le comportement des classes de types est défini
 en définissant des fonctions ou juste des déclarations de types que les
 instances doivent implémenter. Ainsi, lorsqu'on dit qu'un type est une instance
 d'une classe de types, on veut dire qu'on peut utiliser les fonctions que cette
@@ -1445,7 +1446,7 @@ chaque type qu'on utilise. Ainsi, on peut écrire :
 >     Nothing == Nothing = True
 >     _ == _ = False
 
-C'est-à-dire, on déclare tous les types de la forme `Maybe something` comme
+C'est-à-dire qu'on déclare tous les types de la forme `Maybe something` comme
 instances d'`Eq`. On aurait à vrai dire pu écrire `(Maybe something)`, mais on
 opte généralement pour des identifiants en une lettre pour rester proche du
 style Haskell. Le `(Maybe m)` ici joue le rôle du `a` de `class Eq a where`.
@@ -1533,7 +1534,7 @@ nombre qui n'est pas 0 est vrai, et que 0 est faux (comme en JavaScript).
 >     yesno 0 = False
 >     yesno _ = True
 
-Les listes vides (et par extension les chaînes de caractère vide) sont des
+Les listes vides (et par extension les chaînes de caractères vides) sont des
 valeurs fausses, alors que les listes ou chaînes non vides sont des valeurs
 vraies.
 
@@ -1631,15 +1632,15 @@ La classe de types Functor
 
 Jusqu'ici, nous avons rencontré pas mal de classes de types de la bibliothèque
 standard. On a joué avec `Ord`, pour les choses qu'on peut ranger en ordre. On
-a familiarisé avec `Eq`, pour les choses dont on peut tester l'égalité. On a vu
-`Show`, qui présente une interface pour les choses qui peuvent être affichées
-sous une forme de chaîne de caractères. Notre bon ami `Read` est là lorsqu'on
-veut convertir des chaînes de caractères en des valeurs d'un certain type. Et
-maintenant, on va regarder la classe de types `Functor`, qui est simplement
-pour les choses sur lesquelles on peut mapper. Vous pensez probablement aux
-listes à l'instant, puisque mapper sur des listes est un idiome prédominant en
-Haskell. Et vous avez raison, le type des listes est bien membre de la classe
-`Functor`.
+s'est familiarisé avec `Eq`, pour les choses dont on peut tester l'égalité. On
+a vu `Show`, qui présente une interface pour les choses qui peuvent être
+affichées sous une forme de chaîne de caractères. Notre bon ami `Read` est là
+lorsqu'on veut convertir des chaînes de caractères en des valeurs d'un certain
+type. Et maintenant, on va regarder la classe de types `Functor`, qui est
+simplement pour les choses sur lesquelles on peut mapper. Vous pensez
+probablement aux listes à l'instant, puisque mapper sur des listes est un
+idiome prédominant en Haskell. Et vous avez raison, le type des listes est bien
+membre de la classe `Functor`.
 
 Quel meilleur moyen de connaître `Functor` que de regarder son implémentation ?
 Jetons un coup d'œil.
@@ -1674,7 +1675,7 @@ Voici l'instance de `Functor` pour les listes.
 > instance Functor [] where
 >     fmap = map
 
-C'est tout ! Remarquez qu'on a pas écrit `instance Functor [a] where`, parce
+C'est tout ! Remarquez qu'on n'a pas écrit `instance Functor [a] where`, parce
 qu'en regardant `fmap :: (a -> b) -> f a -> f b`, on voit que `f` doit être un
 constructeur de types qui prend un type. `[a]` est déjà un type concret (d'une
 liste contenant n'importe quel type), alors que `[]` est un constructeur de
@@ -1736,7 +1737,7 @@ Functor, c'est notre type `Tree a`. On peut l'imaginer comme une boîte qui peut
 contenir zéro ou plusieurs valeurs, et le constructeur de type `Tree` prend
 exactement un paramètre de type. Si vous regardez `fmap` comme une fonction sur
 les `Tree`, sa signature serait `(a -> b) -> Tree a -> Tree b`. On va utiliser
-de la récursivité pour celui-là. Mapper sur un arbre vide produire un arbre
+de la récursivité pour celui-là. Mapper sur un arbre vide produira un arbre
 vide. Mapper sur un arbre non vide donnera un arbre où notre fonction sera
 appliquée sur le nœud racine, et les deux sous-arbres correspondront aux
 sous-arbres du nœud de départ sur lesquels on aura mappé la même fonction.
@@ -1777,7 +1778,7 @@ devraient avoir le même type. Ce que je veux dire, c'est que si on voulait
 mapper une fonction qui transforme une chaîne de caractères en chaîne de
 caractères, que `b` était une chaîne de caractères, mais que `a` était un
 nombre, ça ne marcherait pas. Aussi, en voyant ce que serait le type de `fmap`
-s'il n'opérait que sur des valeurs `Either`, on voir que le premier paramètre
+s'il n'opérait que sur des valeurs `Either`, on voit que le premier paramètre
 doit rester le même alors que le second peut changer, et c'est le constructeur
 de valeurs `Left` qui actualise ce premire paramètre.
 
@@ -1821,7 +1822,7 @@ Sortes et un peu de type-fu
 <img src="img/typefoo.png" alt="type-fu" class="right"/>
 
 Les constructeurs de types prennent d'autres types en paramètres pour
-finalement produire des types concrets. Ca me rappelle un peu les fonctions,
+finalement produire des types concrets. Ça me rappelle un peu les fonctions,
 qui prennent des valeurs en paramètre pour produire des valeurs. On a vu que
 les constructeurs de types peuvent être appliqués partiellement (`Either
 String` est un constructeur de types qui prend un type et produit un type
@@ -1887,7 +1888,7 @@ Regardons une autre sorte.
 > Either :: * -> * -> *
 
 Aha, cela nous indique qu'`Either` prend deux types concrets en paramètres pour
-produire un type concret. Ca ressemble aussi à la déclaration de type d'une
+produire un type concret. Ça ressemble aussi à la déclaration de type d'une
 fonction qui prend deux choses et en retourne une troisième. Les constructeurs
 de types sont curryfiés (comme les fonctions), donc on peut les appliquer
 partiellement.
