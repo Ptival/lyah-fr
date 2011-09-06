@@ -1,0 +1,792 @@
+% Foncteurs, foncteurs applicatifs et monoïdes
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="resoudre-des-problemes-fonctionnellement" class="prevlink">Résoudre des problèmes fonctionnellement</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="une-poignee-de-monades" class="nextlink">Une poignée de monades</a>
+</li>
+</ul>
+</div>
+
+La combinaison de la pureté, des fonctions d'ordre supérieur, des type de
+données algébriques paramétrés, et des classes de types que propose Haskell
+nous permet d'implémenter du polymorphisme à un niveau bien plus élevé que dans
+la plupart des autres langages. On n'a pas besoin de penser aux types comme
+appartenant à une hiérarchie de types. À la place, on pense à ce que les types
+peuvent faire, et on les connecte aux classes de types appropriées. Un `Int`
+peut se faire passer pour beaucoup de choses. Il peut se faire passer pour
+quelque chose dont on peut tester l'égalité, pour quelque chose qu'on peut
+ordonner, pour quelque chose qu'on peut énumérer, etc.
+
+Les classes de types sont ouvertes, ce qui veut dire qu'on peut définir nos
+propres types de données, réfléchir à ce qu'ils peuvent faire, et les connecter
+aux classes de types qui définissent ses comportements. Grâce à cela, et au
+système de types d'Haskell qui nous permet de savoir beaucoup de choses sur une
+fonction rien qu'en regardant sa déclaration de types, on peut définir des
+classes de types qui définissent des comportements très généraux et abstraits.
+On a vu des classes de types définissant des opérateurs pour tester l'égalité
+ou comparer des choses. Ce sont des comportements assez abstraits et élégants,
+mais on ne les considère pas comme cela parce qu'on fait souvent la même chose
+dans nos vies réelles. On a récemment découvert les foncteurs, qui sont
+simplement des choses sur lesquelles on peut mapper. C'est un exemple de
+propriété utile mais plutôt abstraite que peuvent décrire les classes de types.
+Dans ce chapitre, on va regarder les foncteurs d'un peu plus près, ainsi que
+des versions plus fortes et utiles de foncteurs, appelés foncteurs applicatifs.
+On va aussi s'intéresser aux monoïdes, qui sont un peu comme des chaussettes.
+
+<h2 id="foncteurs-revisités">
+Foncteurs revisités
+</h2>
+
+On a déjà parlé des foncteurs dans [leur propre petite
+section](creer-nos-propres-types-et-classes-de-types#la-classe-de-types-functor).
+Si vous ne l'avez pas encore lue, vous devriez probablement le faire à présent,
+ou plus tard, quand vous aurez plus de temps. Ou faire semblant de l'avoir lue.
+
+Ceci étant, un petit rappel : les foncteurs sont des choses sur lesquelles on
+peut mapper, comme des listes, des `Maybe`, des arbres, et d'autres. En
+Haskell, ils sont définis par la classe de types `Functor`, qui n'a qu'une
+méthode de classe de type, `fmap`, ayant pour type `fmap :: (a -> b) -> f a ->
+f b`. Cela dit : donne-moi une fonction qui prend un `a` et retourne un `b`, et
+une boîte avec un (ou plusieurs) `a` à l'intérieur, et je te donnerai une boîte
+avec un (ou plusieurs) `b` à l'intérieur. Elle applique grosso-modo la fonction
+aux éléments dans la boîte.
+
+<div class="hintbox">
+
+**Un conseil.** Souvent, l'analogie de la boîte aide à se faire une intuition
+de la façon font fonctionnent les foncteurs, et plus tard, on utilisera
+probablement la même analogie pour les foncteurs applicatifs et les monades.
+C'est une analogie correcte pour aider les débutants à comprendre les
+foncteurs, mais ne la prenez pas trop littéralement, parce que pour certains
+foncteurs, l'analogie est fortement tirée par les cheveux. Un terme plus
+correct pour définir ce qu'est un foncteur serait un contexte de calcul. Le
+contexte peut être que le calcul peut avoir renvoyé une valeur ou échoué
+(`Maybe` et `Either a`) ou que le calcul renvoie plusieurs valeurs (les
+listes), ce genre de choses.
+
+</div>
+
+Si on veut faire d'un constructeur de types une instance de `Functor`, il doit
+avoir pour sorte `* -> *`, ce qui signifie qu'il doit prendre exactement un
+type concret en paramètre de type. Par exemple, `Maybe` peut être une instance
+parce qu'il prend un paramètre de type pour produire un type concret, comme
+`Maybe Int` ou `Maybe String`. Si un constructeur de types prend deux
+paramètres, comme `Either`, il faut l'appliquer partiellement jusqu'à ce qu'il
+ne prenne plus qu'un paramètre de type. Ainsi, on ne peut pas écrire `instance
+Functor Either where`, mais on peut écrire `instance Functor (Either a) where`,
+et alors en imaginant que `fmap` ne fonctionne que pour les `Either a`, elle
+aurait pour déclaration de type `fmap :: (b -> c) -> Either a b -> Either a c`.
+Comme vous pouvez le voir, la partie `Either a` est fixée, parce que `Either a`
+ne prend qu'un paramètre de type, alors qu'`Either` en prend deux, et ainsi
+`fmap :: (b -> c) -> Either b -> Either c` ne voudrait rien dire.
+
+On sait à présent comment plusieurs types (ou plutôt, des constructeurs de
+types) sont des instances de `Functor`, comme `[]`, `Maybe`, `Either a` et un
+type `Tree` qu'on a créé nous-même. On a vu comment l'on pouvait mapper des
+fonctions sur ceux-ci pour le meilleur. Dans cette section, on va découvrir
+deux autres instances de foncteurs, `IO` et `(->) r`.
+
+Si une valeur a pour type, mettons, `IO String`, cela signifie que c'est une
+action I/O qui, lorsqu'elle est exécutée, ira dans le monde réel et nous
+récupèrera une chaîne de caractères, qu'elle rendra comme son résultat. On peut
+utiliser `<-` dans la syntaxe *do* pour lier ce résultat à un nom. On a
+mentionné que les actions I/O sont comme des boîtes avec des petits pieds qui
+sortent chercher des valeurs dans le monde à l'extérieur pour nous. On peut
+inspecter ce qu'elles ont ramené, mais après inspection, on doit les envelopper
+à nouveau dans `IO`. En pensant à cette analogie de boîte avec des petits
+pieds, on peut voir comment `IO` agit comme un foncteur.
+
+Voyons comment faire d'`IO` une instance de `Functor`. Quand on `fmap` une
+fonction sur une action I/O, on veut obtenir une action I/O en retour qui fait
+la même chose, mais applique notre fonction sur la valeur résultante.
+
+> instance Functor IO where
+>     fmap f action = do
+>         result <- action
+>         return (f result)
+
+Le résultat du mappage de quelque chose sur une action I/O sera une action I/O,
+donc on utilise immédiatement la notation *do* pour coller deux actions en une.
+Dans l'implémentation de `fmap`, on crée une nouvelle action I/O qui commence
+par exécuter l'action I/O originale, et on appelle son résultat `result`. Puis,
+on fait `return (f result)`. `return` est, comme vous le savez, une fonction
+qui crée une action I/O qui ne fait rien, mais présente un résultat. L'action
+produite par un bloc *do* aura toujours pour résultat celui de sa dernière
+action. C'est pourquoi on utilise `return` pour créer une action I/O qui ne
+fait pas grand chose, mais présente `f result` comme le résultat de l'action
+I/O composée.
+
+On peut jouer un peu avec pour se faire une intuition. C'est en fait assez
+simple. Regardez ce code :
+
+> main = do line <- getLine
+>           let line' = reverse line
+>           putStrLn $ "You said " ++ line' ++ " backwards!"
+>           putStrLn $ "Yes, you really said" ++ line' ++ " backwards!"
+
+On demande une ligne à l'utilisateur, et on la lui rend, mais renversée. Voici
+comment réécrire ceci en utilisant `fmap` :
+
+> main = do line <- fmap reverse getLine
+>           putStrLn $ "You said " ++ line ++ " backwards!"
+>           putStrLn $ "Yes, you really said" ++ line ++ " backwards!"
+
+<img src="img/alien.png" alt="alien" class="left"/>
+
+Tout comme on peut `fmap reverse` sur `Just "blah"` pour obtenir `Just "halb"`,
+on peut `fmap reverse` sur `getLine`. `getLine` est une action I/O qui a pour
+type `IO String` et mapper `reverse` sur elle nous donne une action I/O qui va
+aller dans le monde réel et récupérer une ligne, puis appliquer `reverse`
+dessus. Tout comme on peut appliquer une fonction à quelque chose enfermé dans
+une boîte `Maybe`, on peut appliquer une fonction à quelque chose enfermé dans
+une boît `IO`, seulement la boîte doit toujours aller dans le monde réel pour
+obtenir quelque chose. Ensuite, lorsqu'on la lie à quelque chose avec `<-`, le
+nom sera lié au résultat auquel `reverse` aura déjà été appliquée.
+
+L'action I/O `fmap (++"!") getLine"` se comporte comme `getLine`, mais ajoute
+toujours `"!"` à son résultat !
+
+Si on regarde ce que le type de `fmap` serait si elle était limitée à `IO`, ce
+serait `fmap :: (a -> b) -> IO a -> IO b`. `fmap` prend une fonction et une
+action I/O et retourne une nouvelle action I/O comme l'ancienne, mais avec la
+fonction appliquée à son résultat.
+
+Si jamais vous liez le résultat d'une action I/O à un nom, juste pour ensuite
+appliquer une fonction à ce nom et lui donner un nouveau nom, utilisez plutôt
+`fmap`, ce sera plus joli. Si vous voulez appliquez des transformations
+multiples à une donnée dans un foncteur, vous pouvez soit déclarer une fonction
+dans l'espace de nom global, soit utiliser une lambda expression, ou
+idéalement, utiliser la composition de fonctions :
+
+> import Data.Char
+> import Data.List
+>
+> main = do line <- fmap (intersperse '-' . reverse . map toUpper) getLine
+>           putStrLn line
+
+> $ runhaskell fmapping_io.hs
+> hello there
+> E-R-E-H-T- -O-L-L-E-H
+
+Comme vous le savez probablement, `intersperse '-' . reverse . map toUpper` est
+une fonction qui prend une chaîne de caractères, mappe `toUpper` sur celle-ci,
+applique `reverse` au résultat, et applique `intersperse '-'` à ce résultat.
+C'est comme écrire `(\xs -> intersperse '-' (reverse (map toUpper xs)))`, mais
+plus joli.
+
+Une autre instance de `Functor` qu'on a utilisée tout du long sans se douter
+qu'elle était un foncteur est `(->) r`. Vous êtes sûrement confus à présent,
+qu'est-ce que ça veut dire `(->) r` ? Le type de fonctions `r -> a` peut être
+réécrit `(->) r a`, tout comme `2 + 3` peut être réécrit `(+) 2 3`. Quand on
+regarde `(->) r a`, on peut voir `(->)` sous un nouveau jour, et s'apercevoir
+que c'est juste un constructeur de types qui prend deux paramètres de types,
+tout comme `Either`. Mais souvenez-vous, on a dit qu'un constructeur de types
+doit prendre exactement un paramètre pour être une instance de `Functor`. C'est
+pourquoi `(->)` ne peut pas être une instance de `Functor`, mais si on
+l'applique partiellement en `(->) r`, ça ne pose plus de problème. Si la
+syntaxe nous permettait d'appliquer partiellement les constructeurs de type
+avec des sections (comme l'on peut partiellement appliquer `+` en faisant
+`(2+)`, qui est équivalent à `(+) 2`), vous pourriez réécrire `(->) r` comme
+`(r ->)`. Comment est-ce que les fonctions sont-elles des foncteurs ? Eh bien,
+regardons l'implémentation, qui se trouve dans `Control.Monad.Instances`.
+
+<div class="hintbox">
+
+Généralement, on indique une fonction qui prend n'importe quoi et retourne
+n'importe quoi `a -> b`. `r -> a` est identique, on a juste choisi d'autres
+lettres pour les variables de type.
+
+</div>
+
+> instance Functor ((->) r) where
+>     fmap f g = (\x -> f (g x))
+
+Si la syntaxe le permettait, on aurait pu écrire :
+
+> instance Functor (r ->) where
+>     fmap f g = (\x -> f (g x))
+
+Mais elle ne le permet pas, donc on doit l'écrire de la première façon.
+
+Tout d'abord, pensons au type de `fmap`. C'est `fmap :: (a -> b) -> f a -> f
+b`. À présent, remplaçons mentalement les `f`, qui ont pour rôle d'être notre
+foncteur, par des `(->) r`. On fait cela pour voir comment `fmap` doit se
+comporter pour cette instance. On obtient `fmap :: (a -> b) -> ((->) r a) ->
+((->) r b)`. Maintenant, on peut réécrire `(->) r a` et `(->) r b` de manière
+infixe en `r -> a` et `r -> b`, comme on l'écrit habituellement pour les
+fonctions. On a donc `fmap :: (a -> b) -> (r -> a) -> (r -> b)`.
+
+Hmmm OK. Mapper une fonction sur une fonction produit une fonction, tout comme
+mapper une fonction sur un `Maybe` produit un `Maybe` et mapper une fonction
+sur une liste produit une liste. Qu'est-ce que le type `fmap :: (a -> b) -> (r
+-> a) -> (r -> b)` nous indique ? Eh bien, on voit qu'elle prend une fonction
+de `a` vers `b` et une fonction de `r` vers `a`, et retourne une fonction de
+`r` vers `b`. Cela ne vous rappelle rien ? Oui ! La composition de fonctions !
+On connecte la sortie de `r -> a` à l'entrée de `a -> b` pour obtenir une
+fonction `r -> b`, ce qui est exactement ce que fait la composition de
+fonctions. Si vous regardez comment l'instance est définie plus ci-dessus, vous
+verrez qu'on a juste composé les fonctions. Une autre façon d'écrire cette
+instance serait :
+
+> instance Functor ((->) r) where
+>     fmap = (.)
+
+Cela rend évident le fait qu'utiliser `fmap` sur des fonctions sert juste à
+composer. Faites `:m + Control.Monad.Instances`, puisque c'est là que
+l'instance est définie, et essayez de jouer à mapper sur des fonctions.
+
+> ghci> :t fmap (*3) (+100)
+> fmap (*3) (+100) :: (Num a) => a -> a
+> ghci> fmap (*3) (+100) 1
+> 303
+> ghci> (*3) `fmap` (+100) $ 1
+> 303
+> ghci> (*3) . (+100) $ 1
+> 303
+> ghci> fmap (show . (*3)) (*100) 1
+> "300"
+
+On peut appeler `fmap` de façon infixe pour souligner la ressemblance avec `.`.
+Dans la deuxième ligne d'entrée, on mappe `(*3)` sur `(+100)`, ce qui retourne
+une fonction qui prend une entrée, appelle `(+100)` sur celle-ci, puis appelle
+`(*3)` sur ce résultat. On appelle cette fonction sur la valeur `1`.
+
+Est-ce que l'analogie des boîtes fonctionne toujours ici ? Avec un peu
+d'imagination, oui. Quand on fait `fmap (+3)` sur `Just 3`, il est facile
+d'imaginer le `Maybe` boîte qui a un contenu sur lequel on applique la fonction
+`(+3)`. Mais qu'en est-il quand on fait `fmap (*3) (+100)` ? Eh bien, vous
+pouvez imaginer `(+100)` comme une boîte qui contient son résultat futur. Comme
+on imaginait une action I/O comme une boîte qui irait chercher son résultat
+dans le monde réel. Faire `fmap (*3)` sur `(+100)` crée une autre fonction qui
+se comporte comme `(+100)`, mais avant de produire son résultat, applique
+`(*3)` dessus. Ainsi, on voit que `fmap` se comporte comme `.` pour les
+fonctions.
+
+Le fait que `fmap` soit la composition de fonctions quand elle est utilisée sur
+des fonctions n'est pas très utile pour l'instant, mais c'est tout du moins
+intéressant. Cela tord également notre esprit un peu et nous fait voir comment
+des choses agissant plutôt comme des calculs que comme des boîtes (tel `IO` et
+`(->) r`) peuvent elles aussi être des foncteurs. La fonction mappée sur un
+calcul agit comme ce calcul, mais modifie son résultat avec cette fonction.
+
+<img src="img/lifter.png" alt="souleveur" class="right"/>
+
+Avant de regarder les règles que `fmap` doit respecter, regardons encore une
+fois son type. Celui-ci est `fmap :: (a -> b) -> f a -> f b`. Il manque la
+contrainte de classe `(Functor f) =>`, mais on l'oublie par concision, parce
+qu'on parle de foncteurs donc on sait ce que signifie `f`. Quand on a découvert
+les [fonctions curryfiées](fonctions-d-ordre-superieur#fonctions-curryfiees),
+on a dit que toutes les fonctions Haskell prennent un unique paramètre. Une
+fonction `a -> b -> c` ne prend en réalité qu'un paramètre `a` et retourne une
+fonction `b -> c`, qui prend un paramètre et retourne un `c`. C'est pourquoi,
+si l'on appelle une fonction avec trop peu de paramètres (c'est-à-dire qu'on
+l'applique partiellement), on obtient en retour une fonction qui prend autant
+de paramètres qu'il en manquait (on repense à nouveau à nos fonctions comme
+prenant plusieurs paramètres). Ainsi, `a -> b -> c` peut être écrit `a -> (b ->
+c)` pour faire apparaître la curryfication.
+
+Dans la même veine, si l'on écrit `fmap :: (a -> b) -> (f a -> f b)`, on peut
+imaginer `fmap` non pas comme une fonction qui prend une fonction et un
+foncteur pour retourner un foncteur, mais plutôt comme une fonction qui prend
+une fonction, et retourne une nouvelle fonction, similaire à l'ancienne, mais
+qui prend et retourne des foncteurs. Elle prend une fonction `a -> b`, et
+retourne une fonction `f a -> f b`. On dit qu'on *lifte* la fonction. Jouons
+avec cette idée en utilisant la commande `:t` de GHCi :
+
+> ghci> :t fmap (*2)
+> fmap (*2) :: (Num a, Functor f) => f a -> f a
+> ghci> :t fmap (replicate 3)
+> fmap (replicate 3) :: (Functor f) => f a -> f [a]
+
+L'expression `fmap (*2)` est une fonction qui prend un foncteur `f` sur des
+nombres, et retourne un foncteur sur des nombres. Ce foncteur peut être une
+liste, un `Maybe`, un `Either String`, peu importe. L'expression `fmap
+(replicate 3)` prend un foncteur de n'importe quel type et retourne un foncteur
+sur des listes d'éléments de ce type.
+
+<div class="hintbox">
+
+Quand on dit *foncteur sur des nombres*, vous pouvez imaginer un *foncteur qui
+contient des nombres*. La première version est un peu plus sophistiquée et
+techniquement correcte, mais la seconde est plus simple à saisir.
+
+</div>
+
+Ceci est encore plus apparent si l'on applique partiellement, mettons, `fmap
+(++"!")` et qu'on lie cela à un nom dans GHCi.
+
+Vous pouvez imaginer `fmap` soit comme une fonction qui prend une fonction et
+un foncteur, et mappe cette fonction sur le foncteur, ou bien comme une
+fonction qui prend une fonction et la lifte en une fonction sur des foncteurs.
+Les deux visions sont correctes et équivalentes en Haskell.
+
+Le type `fmap (replicate 3) :: (Functor f) => f a -> f [a]` signifie que la
+fonction marchera sur n'importe quel foncteur. Ce qu'elle fera exactement
+dépendra du foncteur en question. Si on utilise `fmap (replicate 3)` sur une
+liste, l'implémentation de `fmap` pour les listes sera choisie, c'est-à-dire
+`map`. Si on l'utilise sur `Maybe a`, cela appliquera `replicate 3` à la valeur
+dans le `Just`, alors qu'un `Nothing` restera un `Nothing`.
+
+> ghci> fmap (replicate 3) [1,2,3,4]
+> [[1,1,1],[2,2,2],[3,3,3],[4,4,4]]
+> ghci> fmap (replicate 3) (Just 4)
+> Just [4,4,4]
+> ghci> fmap (replicate 3) (Right "blah")
+> Right ["blah","blah","blah"]
+> ghci> fmap (replicate 3) Nothing
+> Nothing
+> ghci> fmap (replicate 3) (Left "foo")
+> Left "foo"
+
+Maintenant, nous allons voir les **lois des foncteurs**. Afin que quelque chose
+soit un foncteur, il doit satisfaire quelques lois. On attend de tous les
+foncteurs qu'ils présentent certaines propriétés et comportements fonctoriels.
+Ils doivent se comporter de façon fiable comme des choses sur lesquelles on
+peut mapper. Appeler `fmap` sur un foncteur devrait seulement mapper une
+fonction sur le foncteur, rien de plus. Ce comportement est décrit dans les
+lois des foncteurs. Il y en a deux, et toute instance de `Functor` doit les
+respecter. Elles ne sont cependant pas vérifiées automatiquement par Haskell,
+il faut donc les tester soi-même.
+
+**La première loi des foncteurs dit que si l'on mappe la fonction `id` sur un
+foncteur, le foncteur retourné doit être identique au foncteur original.** Si
+on écrit cela plus formellement, cela signifie que <span class="law">fmap id =
+id</span>. En gros, cela dit que si l'on fait `fmap id` sur un foncteur, cela
+doit être pareil que de faire simplement `id` sur ce foncteur. Souvenez-vous,
+`id` est la fonction identité, qui retourne son paramètre à l'identique. Elle
+peut également être écrite `\x -> x`. Si l'on voit le foncteur comme quelque
+chose sur laquelle on peut mapper, alors la loi <span class="law">fmap
+id</span> peut sembler triviale ou évidente.
+
+Voyons si cette loi tient pour quelques foncteurs.
+
+> ghci> fmap id (Just 3)
+> Just 3
+> ghci> id (Just 3)
+> Just 3
+> ghci> fmap id [1..5]
+> [1,2,3,4,5]
+> ghci> id [1..5]
+> [1,2,3,4,5]
+> ghci> fmap id []
+> []
+> ghci> fmap id Nothing
+> Nothing
+
+Si on regarde l'implémentation de `fmap`, par exemple pour `Maybe`, on peut
+se rendre compte que la première loi des foncteurs est respectée.
+
+> instance Functor Maybe where
+>     fmap f (Just x) = Just (f x)
+>     fmap f Nothing = Nothing
+
+Imaginons qu'`id` soit à la place de `f` dans l'implémentation. On voit que si
+l'on `fmap id` sur `Just x`, le résultat sera `Just (id x)`, et puisqu'`id`
+retourne son paramètre à l'identique, on peut en déduire que `Just (id x)` est
+égal à `Just x`. Ainsi, mapper `id` sur une valeur `Maybe` construite avec
+`Just` retourne la même valeur.
+
+Voir que mapper `id` sur une valeur `Nothing` retourne la même valeur est
+trivial. De ces deux équations de l'implémentation de `fmap`, on déduit que
+`fmap id = id` est vrai.
+
+<img src="justice.png" alt="justice" class="left"/>
+
+**La seconde loi dit que composer deux fonctions, et mapper le résultat sur un
+foncteur doit être identique à mapper d'abord une des fonctions sur le
+foncteur, puis mapper l'autre sur le résultat.** Formellement, on veut <span
+class="law">fmap (f . g) = fmap f . fmap g</span>. Ou, d'une autre façon, pour
+tout foncteur F, on souhaite : <span class="law">fmap (f . g) F = fmap f (fmap
+g F)</span>.
+
+Si l'on peut montrer qu'un type obéit ces deux lois des foncteurs, alors on
+peut avoir l'assurance qu'il aura les mêmes propriétés fondamentales vis-à-vis
+du mappage. On sait que lorsque l'on fait `fmap` sur ce type, il ne se passera
+rien d'autre qu'un mappage, et il se comportera comme une chose sur laquelle on
+mappe, i.e. un foncteur. On peut voir si un type respecte la seconde loi en
+regardant l'implémentation de `fmap` pour ce type, et en utilisant la même
+méthode qu'on a utilisé pour voir si `Maybe` obéissait à la première loi.
+
+Si vous le voulez, on peut vérifier que la seconde loi des foncteurs est
+vérifiée par `Maybe`. Si on fait `fmap (f . g)` sur `Nothing`, on obtient
+`Nothing`, parce que quelle que soit la fonction mappée sur `Nothing`, on
+obtient `Nothing`. De même, faire `fmap f (fmap g Nothing)` retourne `Nothing`,
+pour la même raison. OK, voir que la seconde loi tient pour une valeur
+`Nothing` de `Maybe` était plutôt facile, presque trivial.
+
+Et si c'est une valeur `Just something` ? Eh bien, si l'on fait `fmap (f . g)
+(Just x)`, on voit de l'implémentation que c'est `Just ((f . g) x)`, qui est,
+évidemment, `Just (f (g x))`. Si l'on fait `fmap f (fmap g (Just x))`, on voit
+que `fmap g (Just x)` est `Just (g x)`. Donc, `fmap f (fmap g (Just x))` est
+égal à `fmap f (Just (g x))`, et de l'implémentation, on voit que cela est égal
+à `Just (f (g x))`.
+
+Si vous êtes un peu perdu dans cette preuve, ne vous inquiétez pas. Soyez sûr
+de bien comprendre comme fonctionne la [composition de
+fonctions](fonctions-d-ordre-superieur#composition-de-fonctions). Très souvent,
+on peut voir intuitivement que ces lois sont respectées parce que le type se
+comporte comme un conteneur ou comme une fonction. Vous pouvez aussi essayer
+sur un tas de valeurs et vous convaincre que le type suit bien les lois.
+
+Intéressons-nous au cas pathologique d'un constructeur de types instance de
+`Functor` mais qui n'est pas vraiment un foncteur, parce qu'il ne satisfait pas
+les lois. Mettons qu'on ait un type :
+
+> data CMaybe a = CNothing | CJust Int a deriving (Show)
+
+Le C ici est pour *compteur*. C'est un type de données qui ressemble beaucoup à
+`Maybe a`, mais la partie `Just` contient deux champs plutôt qu'un. Le premier
+champ du constructeur de valeurs `CJust` aura toujours pour type `Int`, et ce
+sera une sorte de compteur, et le second champ sera de type `a`, qui vient du
+paramètre de type, et son type dépendra bien sûr du type concret qu'on choisit
+pour `CMaybe a`. Jouons avec notre type pour se faire une intuition.
+
+> ghci> CNothing
+> CNothing
+> ghci> CJust 0 "haha"
+> CJust 0 "haha"
+> ghci> :t CNothing
+> CNothing :: CMaybe a
+> ghci> :t CJust 0 "haha"
+> CJust 0 "haha" :: CMaybe [Char]
+> ghci> CJust 100 [1,2,3]
+> CJust 100 [1,2,3]
+
+Si on utilise le constructeur `CNothing`, il n'y a pas de champs, alors que le
+constructeur `CJust` a un champ entier et un champ de n'importe quel type.
+Créons une instance de `Functor` pour laquelle, chaque fois qu'on utilise
+`fmap`, la fonction est appliquée au second champ, alors que le premier est
+incrémenté de 1.
+
+> instance Functor CMaybe where
+>     fmap f CNothing = CNothing
+>     fmap f (CJust counter x) = CJust (counter+1) (f x)
+
+C'est un peu comme l'implémentation de `Maybe`, à l'exception que lorsqu'on
+fait `fmap` sur une valeur qui n'est pas une boîte vide (donc sur une valeur
+`CJust`), en plus d'appliquer la fonction au contenu, on augmente le compteur
+de 1. Tout va bien pour l'instant, on peut même jouer un peu avec :
+
+> ghci> fmap (++"ha") (CJust 0 "ho")
+> CJust 1 "hoha"
+> ghci> fmap (++"he") (fmap (++"ha") (CJust 0 "ho"))
+> CJust 2 "hohahe"
+> ghci> fmap (++"blah") CNothing
+> CNothing
+
+Est-ce que cela vérifie les lois des foncteurs ? Pour démontrer que ce n'est
+pas le cas, il nous suffit de trouver un contre-exemple.
+
+> ghci> fmap id (CJust 0 "haha")
+> CJust 1 "haha"
+> ghci> id (CJust 0 "haha")
+> CJust 0 "haha"
+
+Ah ! La première loi dit que mapper `id` sur un foncteur équivaut à appeler
+`id` sur ce même foncteur, mais dans cet exemple, ce n'est pas vrai pour notre
+foncteur `CMaybe`. Bien qu'il soit membre de la classe `Functor`, il n'obéit
+pas les lois des foncteurs, et n'est donc pas un foncteur. Si quelqu'un
+utilisait notre type `CMaybe` comme un foncteur, il s'attendrait à ce qu'il
+obéisse aux lois des foncteurs, comme tout bon foncteur. Mais `CMaybe` échoue à
+être un foncteur bien qu'il puisse faire semblant d'en être un, et l'utiliser
+en tant que tel pourrait amener à un code erroné. Lorsqu'on utilise un
+foncteur, cela ne devrait pas importer que l'on compose des fonctions avant de
+les mapper ou que l'on mappe les fonctions une à une à la suite. Mais pour
+`CMaybe`, cela compte, parce qu'il compte combien de fois on a mappé sur lui.
+Pas cool ! Si l'on voulait que `CMaybe` obéisse aux lois des foncteurs, il
+faudrait que le champ `Int` ne soit pas modifié lors d'un `fmap`.
+
+Au départ, les lois des foncteurs peuvent sembler un peu déroutantes et peu
+nécessaires, mais on finit par s'apercevoir que si un type obéit à ces lois,
+alors on peut présumer de son comportement. Si un type obéit aux lois des
+foncteurs, on sait qu'appeler `fmap` sur une valeur va seulement mapper la
+fonction, rien de plus. Cela amène à un code plus abstrait et extensible, parce
+qu'on peut utiliser ces lois pour raisonner sur le comportement de n'importe
+quel foncteur et créer des fonctions qui opèrent de façon fiable sur n'importe
+quel foncteur.
+
+Toutes les instances de `Functor` de la bibliothèque standard obéissent à ces
+lois, mais vous pouvez vérifier si vous ne me croyez pas. Et la prochaine fois
+que vous créez une instance de `Functor`, prenez une minute pour vous assurer
+qu'elle obéit aux lois des foncteurs. Une fois que vous avez utilisé assez de
+foncteurs, vous développez une intuition pour ces propriétés et comportements
+qu'ils ont en commun et il n'est plus dur de se rendre compte intuitivememnt
+qu'un type obéit ou non aux lois des foncteurs. Mais même sans intuition, vous
+pouvez toujours regarder l'implémentation ligne par ligne et voir si les lois
+sont respectées, ou trouver un contre-exemple.
+
+On peut aussi regarder les foncteurs comme des choses qui retournent des
+valeurs dans un contexte. Par exemple, `Just 3` retourne la valeur `3` dans le
+contexte où il peut ne pas y avoir de valeur retournée. `[1, 2, 3]` retourne
+trois valeurs - `1`, `2` et `3`, le contexte étant qu'il peut y avoir aucune ou
+plusieurs valeurs. La fonction `(+3)` retourne une valeur, qui dépend du
+paramètre qu'on lui donne.
+
+Si vous imaginez les foncteurs comme des choses qui retournent des valeurs,
+vous pouvez imaginer mapper sur des foncteurs comme attacher des
+transformations à la sortie du foncteur pour changer les valeurs qu'il
+retourne. Lorsqu'on fait `fmap (+3) [1, 2, 3]`, on attache la transformation
+`(+3)` à la sortie de `[1, 2, 3]`, donc quand on observe un des nombres que la
+liste retourne, `(+3)` lui est appliqué. Un autre exemple est celui du mappage
+sur des fonctions. Quand on fait `fmap (+3) (*3)`, on attache la transformation
+`(+3)` à ce qui sortira de `(*3)`. On voit ainsi mieux pourquoi utiliser `fmap`
+sur des fonctions consiste juste à composer les fonctions (`fmap (+3) (*3)` est
+égal à `(+3) . (*3)`, qui est égal à `\x -> ((x*3)+3)`), parce qu'on prend une
+fonction comme `(*3)` et qu'on attache la transformation `(+3)` à sa sortie. Le
+résultat est toujours une fonction, seulement quand on lui donne une valeur,
+elle sera multipliée par trois, puis passera par la transformation attaché où
+on lui ajoutera trois. C'est ce qui se passe avec la composition.
+
+Foncteurs applicatifs
+---------------------
+
+<img src="img/present.png" alt="cadeau" class="right"/>
+
+Dans cette section, nous allons nous intéresser aux foncteurs applicatifs, qui
+sont des foncteurs gonflés aux hormones, représentés en Haskell par la classe
+de types `Applicative`, située dans le module `Control.Applicative`.
+
+Comme vous le savez, les fonctions en Haskell sont curryfiées par défaut, ce
+qui signifie qu'une fonction qui semble prendre plusieurs paramètres en prend
+en fait un seul et retourne une fonction qui prend le prochain paramètre, et
+ainsi de suite. Si une fonction a pour type `a -> b -> c`, on dit généralement
+qu'elle prend deux paramètres et retourne un `c`, mais en réalité, elle prend
+un `a` et retourne une fonction `b -> c`. C'est pourquoi on peut appeler une
+fonction en faisant `f x y` ou bien `(f x) y`. Ce mécanisme nous permet
+d'appliquer partiellement des fonctions en les appelant avec trop peu de
+paramètres, ce qui résulte en des fonctions que l'on peut passer à d'autres
+fonctions.
+
+Jusqu'ici, lorsqu'on mappait des fonctions sur des foncteurs, on mappait
+généralement des fonctions qui ne prenaient qu'un paramètre. Mais que se
+passe-t-il lorsqu'on souhaite mapper `*`, qui prend deux paramètres, sur un
+foncteur ? Regardons quelques exemples concrets. Si l'on a `Just 3` et que l'on
+fait `fmap (*) (Just 3)`, qu'obtient-on ? En regardant l'implémentation de
+l'instance de `Functor` de `Maybe`, on sait que si c'est une valeur `Just
+something`, elle applique la fonction sur le `something` à l'intérieur du
+`Just`. Ainsi, faire `fmap (*) (Just 3)` retourne `Just ((*) 3)`, qui peut être
+écrit `Just (* 3)` en utilisant une section. Intéressant ! On obtient une
+fonction enveloppée dans un `Just` !
+
+> ghci> :t fmap (++) (Just "hey")
+> fmap (++) (Just "hey") :: Maybe ([Char] -> [Char])
+> ghci> :t fmap compare (Just 'a')
+> fmap compare (Just 'a') :: Maybe (Char -> Ordering)
+> ghci> :t fmap compare "A LIST OF CHARS"
+> fmap compare "A LIST OF CHARS" :: [Char -> Ordering]
+> ghci> :t fmap (\x y z -> x + y / z) [3,4,5,6]
+> fmap (\x y z -> x + y / z) [3,4,5,6] :: (Fractional a) => [a -> a -> a]
+
+Si l'on mappe `compare`, qui a pour type `(Ord a) => a -> a -> Ordering` sur
+une liste de caractères, on obtient une liste de fonctions ayant pour type
+`Char -> Ordering`, parce que la fonction `compare` est partiellement appliquée
+sur les caractères de la liste. Ce n'est pas une liste de fonctions `(Ord a) =>
+a -> Ordering`, parce que le premier `a` appliqué était un `Char` et donc le
+deuxième `a` doit également être un `Char`.
+
+On voit qu'en mappant des fonctions à plusieurs paramètres sur des foncteurs,
+on obtient des foncteurs qui contiennent des fonctions. Que peut-on faire de
+ceux-ci ? Pour commencer, on peut mapper sur ceux-ci des fonctions qui prennent
+en paramètres une fonction, parce que ce qui est dans le foncteur sera donné à
+la fonction mappée comme paramètre.
+
+> ghci> let a = fmap (*) [1,2,3,4]
+> ghci> :t a
+> a :: [Integer -> Integer]
+> ghci> fmap (\f -> f 9) a
+> [9,18,27,36]
+
+Mais si l'on a une valeur fonctorielle `Just (3 *)` et une autre valeur
+fonctorielle `Just 3`, et qu'on souhaite sortir la fonction de `Just (3 *)`
+pour la mapper sur `Just 5` ? Avec des foncteurs normaux, on est bloqué, parce
+qu'ils ne supportent que la mappage de fonctions normales sur des foncteurs.
+Même lorsqu'on a mappé `\f -> f 9` sur un foncteur qui contenait une fonction,
+on ne mappait qu'une fonction normale sur celui-ci. Mais `fmap` ne nous permet
+pas de mapper une fonction qui est dans un foncteur sur un autre foncteur. On
+pourrait filtrer par motif sur le constructeur `Just` pour récupérer la
+fonction, puis la mapper sur `Just 5`, mais on voudrait une solution plus
+générale et abstraite à ce problème, qui fonctionnerait pour tous les
+foncteurs.
+
+Je vous présente la classe de types `Applicative`. Elle réside dans le module
+`Control.Applicative` et définit deux méthodes, `pure` et `<*>`. Elle ne
+fournit pas d'implémentation par défaut pour celles-ci, il faut donc les
+définir toutes deux nous-même si l'on veut faire de quelque chose un foncteur
+applicatif. La classe est définie ainsi :
+
+> class (Functor f) => Applicative f where
+>     pure :: a -> f a
+>     (<*>) :: f (a -> b) -> f a -> f b
+
+Ces trois petites lignes de définition nous disent beaucoup de choses !
+Commençons par la première ligne. Elle débute la définition de la classe
+`Applicative` et introduit une contrainte de classe. Elle dit que si l'on veut
+faire d'un constructeur de types une instance d'`Applicative`, il doit d'abord
+être membre de `Functor`. C'est pourquoi, si l'on sait qu'un constructeur de
+type est membre d'`Applicative`, alors c'est aussi un `Functor`, et on peut
+donc utiliser `fmap` sur lui.
+
+La première méthode qu'elle définie est appelée `pure`. Sa déclaration de type
+est `pure :: a -> f a`. `f` jouer le rôle de notre instance de foncteur
+applicatif. Puisqu'Haskell a un très bon système de types, et puisqu'une
+fonction ne peut que prendre des paramètres et retourner une valeur, on peut
+dire beaucoup de choses avec une déclaration de type, et ceci n'est pas une
+exception. `pure` prend une valeur de n'importe quel type, et retourne un
+foncteur applicatif encapsulant cette valeur en son intérieur. Quand on dit *en
+son intérieur*, on se réfère à nouveau à l'analogie de la boîte, bien qu'on ait
+vu qu'elle ne soit pas toujours la plus à même d'expliquer ce qu'il se trame.
+La déclaration `a -> f a` est tout de même plutôt descriptive. On prend une
+valeur et on l'enveloppe dans un foncteur applicatif.
+
+Une autre façon de penser à `pure` consiste à dire qu'elle prend une valeur et
+la met dans un contexte par défaut (ou pur) - un contexte minimal qui retourne
+cette valeur.
+
+La fonction `<*>` est très intéressante. Sa déclaration de type est `f (a -> b)
+-> f a -> f b`. Cela ne vous rappelle rien ? Bien sûr, `fmap :: (a -> b) -> f a
+-> f b`. C'est un peu un `fmap` amélioré. Alors que `fmap` prend une fonction
+et un foncteur, et applique cette fonction à l'intérieur du foncteur, `<*>`
+prend un foncteur contenant une fonction et un autre foncteur, et d'une
+certaine façon extrait la fonction du premier foncteur pour la mapper sur
+l'autre foncteur. Quand je dit *extrait*, je veux en fait presque dire
+*exécute* puis extrait, peut-être même *séquence*. On verra pourquoi bientôt.
+
+Regardons l'implémentation de l'instance d'`Applicative` de `Maybe`.
+
+> instance Applicative Maybe where
+>     pure = Just
+>     Nothing <*> _ = Nothing
+>     (Just f) <*> something = fmap f something
+
+Encore une fois, de la définition de la classe, on voit que le `f` qui joue le
+rôle du foncteur applicatif doit prendre un type concret en paramètre, donc on
+écrit `instance Applicative Maybe where` plutôt que `instance Applicative
+(Maybe a) where`.
+
+Tout d'abord, `pure`. On a dit précédemment qu'elle était supposée prendre
+quelque chose et l'encapsuler dans un foncteur applicatif. On a écrit `pure =
+Just`, parce que les constructeurs de valeurs comme `Just` sont des fonctions
+normales. On aurait pu écrire `pure x = Just x`.
+
+Ensuite, on a la définition de `<*>`. On ne peut pas extraire de fonction d'un
+`Nothing`, parce qu'il ne contient rien. Donc si l'on essaie d'extraire une
+fonction d'un `Nothing`, le résultat est `Nothing`. Si vous regardez la
+définition de classe d'`Applicative`, vous verrez qu'il y a une classe de
+contrainte `Functor`, qui signifie que les deux paramètres de `<*>` sont des
+foncteurs. Si le premier paramètre n'est pas un `Nothing`, mais un `Just`
+contenant une fonction, on veut mapper cette fonction sur le second paramètre.
+Ceci prend également en compte le cas où le second paramètre est `Nothing`,
+puisque faire `fmap` sur un `Nothing` retourne `Nothing`.
+
+Donc, pour `Maybe`, `<*>` extrait la fonction de la valeur de gauche si c'est
+un `Just` et la mappe sur la valeur de droite. Si n'importe lequel des
+paramètres est `Nothing`, le résultat est `Nothing`.
+
+Ok, cool, super. Testons cela.
+
+> ghci> Just (+3) <*> Just 9
+> Just 12
+> ghci> pure (+3) <*> Just 10
+> Just 13
+> ghci> pure (+3) <*> Just 9
+> Just 12
+> ghci> Just (++"hahah") <*> Nothing
+> Nothing
+> ghci> Nothing <*> Just "woot"
+> Nothing
+
+On voit que faire `pure (+3)` où `Just (+3)` est équivalent dans ce cas.
+Utilisez `pure` quand vous utilisez des valeurs `Maybe` dans un contexte
+applicatif (i.e. quand vous les utilisez avec `<*>`), sinon utilisez `Just`.
+Les quatre premières lignes entrées montrent comment la fonction extraite est
+mappée, mais dans ces exemples, elle aurait tout aussi bien pu être mappée
+immédiatement sur les foncteurs. La dernière ligne est intéressante parce qu'on
+essaie d'extraire une fonction d'un `Nothin` et de le mapper sur quelque chose,
+ce qui résulte en un `Nothing` évidemment.
+
+Avec des foncteurs normaux, on peut juste mapper une fonction sur un foncteur,
+et on ne peut plus récupérer ce résultat hors du foncteur de manière générale,
+même lorsque le résultat est une fonction appliquée partiellement. Les
+foncteurs applicatifs, quant à eux, permettent d'opérer sur plusieurs foncteurs
+avec la même fonction. Regardez ce bout de code :
+
+> ghci> pure (+) <*> Just 3 <*> Just 5
+> Just 8
+> ghci> pure (+) <*> Just 3 <*> Nothing
+> Nothing
+> ghci> pure (+) <*> Nothing <*> Just 5
+> Nothing
+
+<img src="img/whale.png" alt="baleine" class="right"/>
+
+Que se passe-t-il là ? Regardons, étape par étape. `<*>` est associatif à
+gauche, ce qui signifie que `pure (+) <*> Just 3 <*> Just 5` est équivalent à
+`(pure (+) <*> Just 3) <*> Just 5`. Tout d'abord, la fonction `+` est mise dans
+un foncteur, qui est dans ce cas une valeur `Maybe`. Donc, au départ, on a
+`pure (+)` qui est égal à `Just (+)`. Ensuite, `Just (+) <*> Just 3` a lieu. Le
+résultat est `Just (3+)`. Ceci à cause de l'application partielle. Appliquer la
+fonction `+` seulement sur `3` résulte en une fonction qui prend un paramètre,
+et lui ajoute 3. Finalement, `Just (3+) <*> Just 5` est effectuée, ce qui
+résulte en `Just 8`.
+
+N'est-ce pas génial !? Les foncteurs applicatifs et le style applicatif
+d'écrire `pure f <*> x <*> y <*> …` nous permettent de prendre une fonction
+qui attend des paramètres qui ne sont pas nécessairement enveloppés dans des
+foncteurs, et d'utiliser cette fonction pour opérer sur des valeurs qui sont
+dans des contextes fonctoriels. La fonction peut prendre autant de paramètres
+qu'on le souhaite, parce qu'elle est partiellement appliquée étape par étape, à
+chaque occurence de `<*>`.
+
+Cela devient encore plus pratique et apparent si l'on considère le fait que
+`pure f <*> x` est égal à `fmap f x`. C'est une des lois des foncteurs
+applicatifs. Nous les regarderons plus en détail plus tard, pour l'instant, on
+peut voir intuitivement que c'est le cas. Pensez-y, ça tombe sous le sens.
+Comme on l'a dit plus tôt, `pure` place une valeur dans un contexte par défaut.
+Si l'on place une fonction dans un contexte par défaut, et qu'on l'extrait de
+ce contexte pour l'appliquer à une valeur dans un autre foncteur applicatif, on
+a fait la même chose que de juste mapper cette fonction sur le second foncteur
+applicatif. Plutôt que d'écrire `pure f <*> x <*> y <*> …`, on peut écrire
+`fmap f x <*> y <*> …`. C'est pourquoi `Control.Applicative` exporte une
+fonction `<$>` qui est simplement `fmap` en tant qu'opérateur infixe. Voici sa
+définition :
+
+> (<$>) :: (Functor f) => (a -> b) -> f a -> f b  
+> f <$> x = fmap f x 
+
+<div class="hintbox">
+
+**Yo !** Petit rappel : les variables de types sont indépendentes des noms des
+paramètres ou des noms des valeurs en général. Le `f` de la déclaration de la
+fonction ici est une variable de type avec une contrainte de classe disant que
+tout type remplaçant `f` doit être membre de la classe `Functor`. Le `f` dans
+le coprs de la fonction dénote une fonction qu'on mappe sur `x`. Le fait que
+`f` soit utilisé pour représenter ces deux choses ne signifie pas qu'elles
+représentent la même chose.
+
+</div>
+
+En utilisant `<$>`, le style applicatif devient brillant, parce qu'à présent,
+si l'on veut appliquer une fonction `f` sur trois foncteurs applicatifs, on
+peut écrire`f <$> x <*> y <*> z`. Si les paramètres n'étaient pas des foncteurs
+applicatifs mais des valeurs normales, on aurait écrit `f x y z`.
+
+<div class="prev-toc-next">
+<ul>
+<li style="text-align:left">
+<a href="resoudre-des-problemes-fonctionnellement" class="prevlink">Résoudre des problèmes fonctionnellement</a>
+</li>
+<li style="text-align:center">
+[Table des matières](chapitres)
+</li>
+<li style="text-align:right">
+<a href="une-poignee-de-monades" class="nextlink">Une poignée de monades</a>
+</li>
+</ul>
+</div>
