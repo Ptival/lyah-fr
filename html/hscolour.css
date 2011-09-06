@@ -38,3 +38,6 @@ img.center {margin: 10px auto 25px auto; display: block;}
 #content {width: 800px; margin: 0px auto;}
 .hintbox{padding: 10px; background-color: #FFC; margin-bottom: 25px;
     background-image: url(img/note.jpg);}
+.law {background-color: #9DC; color: black; white-space: nowrap;
+    font-family: Consolas, "Courier New", monospace; font-size: 16px;
+    padding: 0px 3px;}
