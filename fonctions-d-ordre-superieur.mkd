@@ -185,7 +185,7 @@ soit. Mais alors, le second paramètre doit être du type correspondant.
 
 <div class="hintbox">
 
-Note : à partir de maintenant, nous dirons qu'une fonction prend plusieurs
+**Note :** à partir de maintenant, nous dirons qu'une fonction prend plusieurs
 paramètres malgré le fait qu'elle ne prend en réalité qu'un paramètre et
 retourne une fonction appliquée partiellement jusqu'à finalement arriver à une
 valeur solide. Donc, pour simplifier, on dira que `a -> a -> a` prend deux
@@ -497,8 +497,8 @@ de chaînes dans la liste finale.
 
 <div class="hintbox">
 
-Note : Cette fonction a pour type `numLongChains :: Int` parce que `length` a
-pour type `Int` au lieu de `Num a`, pour des raisons historiques. Si nous
+**Note :** Cette fonction a pour type `numLongChains :: Int` parce que `length`
+a pour type `Int` au lieu de `Num a`, pour des raisons historiques. Si nous
 voulions retourner `Num a`, on aurait pu utiliser `fromIntegral` sur le nombre
 retourné.
 

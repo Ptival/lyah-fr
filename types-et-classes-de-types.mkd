@@ -208,7 +208,7 @@ Quelle est la signature de type de `==` ?
 
 <div class="hintbox">
 
-Note : l'opérateur d'égalité, `==` est une fonction. De même pour `+`, `*`,
+**Note :** l'opérateur d'égalité, `==` est une fonction. De même pour `+`, `*`,
 `-`, `/` et quasiment tous les opérateurs. Si une fonction ne contient que des
 caractères spéciaux, elle est considérée infixe par défaut. Si nous voulons
 examiner son type, la passer à une autre fonction, ou l'appeler de façon

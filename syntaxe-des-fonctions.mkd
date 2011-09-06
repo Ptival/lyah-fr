@@ -157,9 +157,9 @@ ce premier. Un motif de la forme `x:xs` attachera la tête à `x` et le reste à
 
 <div class="hintbox">
 
-Note : Le motif `x:xs` est très utilisé, particulièrement dans les fonctions
-récursives. Mais les motifs qui ont un `:` ne peuvent valider que des listes
-de longueur 1 ou plus.
+**Note :** Le motif `x:xs` est très utilisé, particulièrement dans les
+fonctions récursives. Mais les motifs qui ont un `:` ne peuvent valider que des
+listes de longueur 1 ou plus.
 
 </div>
 

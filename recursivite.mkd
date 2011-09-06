@@ -145,10 +145,10 @@ fonction à atteindre son cas de base.
 
 <div class="hintbox">
 
-Note : `Num` n'est pas une sous-classe d'`Ord`. Cela signifie qu'un nombre n'a
-pas forcément besoin d'être ordonnable. C'est pourquoi on doit spécifier à la
-fois `Num` et `Ord` en contraintes de classe pour pouvoir faire à la fois des
-additions, des soustractions et des comparaisons.
+**Note :** `Num` n'est pas une sous-classe d'`Ord`. Cela signifie qu'un nombre
+n'a pas forcément besoin d'être ordonnable. C'est pourquoi on doit spécifier à
+la fois `Num` et `Ord` en contraintes de classe pour pouvoir faire à la fois
+des additions, des soustractions et des comparaisons.
 
 </div>
 
