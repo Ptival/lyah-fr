@@ -73,8 +73,8 @@ Apprenez Haskell pour le meilleur !
 Ce travail est une traduction de [Learn You a Haskell For Great
 Good!](http://learnyouahaskell.com/). Le texte original est de Miran Lipovača,
 la traduction a été réalisée par Valentin Robert. Le texte original est
-distribué sous licence [Paternité - Pas d'Utilisation Commerciale - Partage à
-l'Identique 3.0 non
+distribué sous licence [Creative Commons Paternité - Pas d'Utilisation
+Commerciale - Partage à l'Identique 3.0 non
 transcrit](http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr) parce que
 son auteur n'a pas trouvé de licence avec un nom encore plus long. Ce travail
 est par conséquent redistribué sous la même licence.
