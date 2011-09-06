@@ -524,6 +524,166 @@ gauche, qui doit avoir pour type `a -> b -> a`.
 >                         else (C,c):(A,a):pathA
 >     in  (newPathToA, newPathToB)
 
+<img src="img/guycar.png" alt="homme en voiture" class="right"/>
+
+Que se passe-t-il là ? D'abord, il faut calculer le temps optimal sur la route
+A en se basant sur le précédent temps optimal sur A, et de même pour B. On fait
+`sum $ map snd pathA`, donc si `pathA` est quelque chose comme
+`[(A,100),(C,20)]`, `priceA` devient `120`. `forwardPriceToA` est le temps
+optimal pour aller à la prochaine intersection de A en venant de la précédente
+intersection de A. Il est égal au meilleur temps jusqu'au précédent A, plus la
+longueur de la partie A de la section courante. `crossPriceToA` est le temps
+optimal pour aller au prochain A en venant du précédent B et en traversant. Il
+est égal au meilleur temps jusqu'au précédent B, plus la longueur B de la
+section, plus la longueur C de la section. On détermine `forwardPriceToB` et
+`crossPriceToB` de manière analogue.
+
+À présent qu'on connaît le meilleur chemin jusqu'à A et B, il ne nous reste
+plus qu'à trouver les nouveaux chemins jusqu'à A et B. S'il est moins cher
+d'aller à A en avançant simplement, on définit `newPathToA` comme `(A,
+a):pathA`. On prépose simplement le `Label` `A` et la longueur de la section
+`a` au chemin optimal jusqu'au point A précédent. En gros, on dit que le
+meilleur chemin jusqu'à la prochaine intersection sur A est le meilleur chemin
+jusqu'à la précédente intersection sur A, suivie par la section en avant sur A.
+Souvenez-vous qu'`A` n'est qu'une étiquette, alors que `a` a pour type `Int`.
+Pourquoi est-ce qu'on prépose plutôt que de faire `pathA ++ [(A, a)]` ? Eh
+bien, ajouter un élément en début de liste (aussi appelé *conser*) est bien
+plus rapide que de l'ajouter à la fin. Cela implique que notre chemin sera à
+l'envers une fois qu'on aura plié la liste avec cette fonction, mais il sera
+simple de le renverser plus tard. S'il est moins cher d'aller à la prochaine
+intersection sur A en avançant sur B puis en traversant, alors `newPathToA` est
+le chemin jusqu'à la précédente intersection sur B, suivie d'une section en
+avant sur B et d'une section traversante. On fait de même pour `newPathToB`, à
+l'exception que tout est dans l'autre sens.
+
+Finalement, on retourne `newPathToA` et `newPathToB` sous forme de paire.
+
+Testons cette fonction sur la première section d'`heathrowToLondon`. Puisque
+c'est la première section, les paramètre contenant les meilleurs chemins
+jusqu'à l'intersection précédente sur A et sur B sera une paire de listes
+vides.
+
+> ghci> roadStep ([], []) (head heathrowToLondon)
+> ([(C,30),(B,10)],[(B,10)])
+
+Souvenez-vous, les chemins sont renversés, lisez-les donc de la droite vers la
+gauche. Ici, on peut lire que le meilleur chemin jusqu'au prochain A consiste à
+avancer sur B puis à traverser, et le meilleur chemin jusqu'au prochain B
+consiste à avancer directement sur B.
+
+<div id="hintbox">
+
+**Astuce d'optimisation :** quand on fait `priceA = sum $ map snd pathA`, on
+calcule le prix à partir du chemin à chaque étape de l'algorithme. On pourrait
+éviter cela en implémentant `roadStep` comme une fonction ayant pour type
+`(Path, Path, Int, Int) -> Section -> (Path, Path, Int, Int)`, où les entiers
+réprésenteraient le prix des chemins A et B.
+
+</div>
+
+Maintenant qu'on a une fonction qui prend une paire de chemins et une section
+et produit un nouveau chemin optimal, on peut simplement plier sur une liste de
+sections. `roadStep` sera appelée avec `([], [])` et la première section, et
+retournera une paire de chemins optimaux pour cette section. Puis, elle sera
+appelée avec cette paire de chemins et la prochaine section, et ainsi de suite.
+Quand on a traversé toutes les sections, il nous reste une paire de chemins
+optimaux, et le plus court des deux est notre réponse. Avec ceci en tête, on
+peut implémenter `optimalPath`.
+
+> optimalPath :: RoadSystem -> Path
+> optimalPath roadSystem =
+>     let (bestAPath, bestBPath) = foldl roadStep ([],[]) roadSystem
+>     in  if sum (map snd bestAPath) <= sum (map snd bestBPath)
+>             then reverse bestAPath
+>             else reverse bestBPath
+
+On plie depuis la gauche `roadSystem` (souvenez-vous, c'est une liste de
+sections) avec pour accumulateur initial une paire de chemins vides. Le
+résultat de ce pli est une paire de chemins, qu'on filtre par motif pour
+obtenir les chemins. Puis, on regarde lequel est le plus rapide, et on retourne
+celui-ci. Avant de le retourner, on le renverse, parce que les chemins étaient
+jusqu'alors renversées parce qu'on avait choisi de conser plutôt que de
+postposer.
+
+Testons cela !
+
+> ghci> optimalPath heathrowToLondon
+> [(B,10),(C,30),(A,5),(C,20),(B,2),(B,8),(C,0)]
+
+C'est le bon résultat ! Génial ! Il diffère légèrement de celui auquel on
+s'attendait, parce qu'il y a une étape `(C, 0)` à la fin, qui signifie qu'on
+traverse la route à son arrivée à Londres, mais comme cette traversée n'a aucun
+coût, le résultat reste valide.
+
+On a la fonction qui trouve le chemin optimal, il ne nous reste plus qu'à lire
+une représentation littérale d'un système routier de l'entrée standard, le
+convertir en un type `RoadSystem`, lancer notre fonction `optimalPath` dessus,
+et afficher le chemin.
+
+D'abord, créons une fonction qui prend une liste et la découpe en groupes de
+même taille. On va l'appeler `groupsOf`. Pour le paramètre `[1..10]`, `groupsOf
+3` devrait retourner `[[1,2,3],[4,5,6],[7,8,9],[10]]`.
+
+> groupsOf :: Int -> [a] -> [[a]]
+> groupsOf 0 _ = undefined
+> groupsOf _ [] = []
+> groupsOf n xs = take n xs : groupsOf n (drop n xs)
+
+Une fonction récursive standard. Pour un `xs` valant `[1..10]` et un `n` égal à
+`3`, ceci est égal à `[1,2,3] : groupsOf 3 [4,5,6,7,8,9,10]`. Quand la
+récursivité s'achève, on a notre liste en groupes de trois éléments. Et voici
+notre fonction `main`, qui lit l'entrée standard, crée un `RoadSystem` et
+affiche le chemin le plus court.
+
+> import Data.List
+>
+> main = do
+>     contents <- getContents
+>     let threes = groupsOf 3 (map read $ lines contents)
+>         roadSystem = map (\[a,b,c] -> Section a b c) threes
+>         path = optimalPath roadSystem
+>         pathString = concat $ map (show . fst) path
+>         pathPrice = sum $ map snd path
+>     putStrLn $ "The best path to take is: " ++ pathString
+>     putStrLn $ "The price is: " ++ show pathPrice
+
+D'abord, on récupère le contenu de l'entrée standard. Puis, on appelle `lines`
+sur ce contenu pour convertir quelque chose comme `"50\n10\n30\n…` en
+`["50","10","30"…` et ensuite, on mappe `read` là-dessus pour obtenir une liste
+de nombres. On appelle `groupsOf 3` sur cette liste pour la changer en une
+liste de listes de longueur 3. On mappe la lambda `(\[a,b,c] -> Section a b c)`
+sur cette liste de listes. Comme vous le voyez, la lambda prend une liste de
+longueur 3, et la transforme en une section. Donc `roadSystem` est à présent
+notre système routier et a un type correct, c'est-à-dire `RoadSystem` (ou
+`[Section]`). On appelle `optimalPath` avec ça et on obtient le chemin optimal
+et son coût dans une représentation textuelle agréable qu'on affiche.
+
+Enregistrons le texte suivant :
+
+> 50
+> 10
+> 30
+> 5
+> 90
+> 20
+> 40
+> 2
+> 25
+> 10
+> 8
+> 0
+
+dans un fichier `paths.txt` et donnons-le à notre programme.
+
+> $ cat paths.txt | runhaskell heathrow.hs
+> The best path to take is: BCACBBC
+> The price is: 75
+
+Ça fonctionne à merveille ! Vous pouvez utiliser vos connaissances du module
+`Data.Random` pour générer un système routier plus long, que vous pouvez donner
+à la fonction qu'on a écrite. Si vous obtenez un dépassement de pile, essayez
+de remplacer `foldl` par `foldl'`, sa version stricte.
+
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
