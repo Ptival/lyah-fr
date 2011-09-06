@@ -919,11 +919,15 @@ pli.
 > findKey :: (Eq k) => k -> [(k,v)] -> Maybe v
 > findKey key = foldr (\(k,v) acc -> if key == k then Just v else acc) Nothing
 
+<div class="hintbox">
+
 Note : il est généralement mieux d'utiliser des plis pour effectuer de la
 récursivité standard sur les listes plutôt que d'écrire explicitement la
 récursivité, car c'est plus simple à lire et à identifier. Tout le monde
 connaît les plis et sait en identifier un lorsqu'il voit un appel à `foldr`,
 mais cela prend plus de temps de déchiffrer une récursivité explicite.
+
+</div>
 
 > ghci> findKey "penny" phoneBook
 > Just "853-2492"

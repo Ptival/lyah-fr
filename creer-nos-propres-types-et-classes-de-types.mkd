@@ -859,6 +859,8 @@ liste associative peut avoir pour type `(Eq k) => k -> AssocList k v -> Maybe
 v`. `AssocList` est un constructeur de types qui prend deux types et produit un
 type concret, comme `AssocList Int String` par exemple.
 
+<div class="hintbox">
+
 **Fonzie dit** : Hey ! Quand je parle de *types concrets*, je veux dire genre
 des types appliqués complètement comme `Map Int String`, ou si on se frotte à
 une de ces fonctions polymorphes, `[a]` ou `(Ord a) => Maybe a` et tout ça. Et
@@ -868,6 +870,8 @@ un constructeur de types, t'as vu. Quand j'applique `Maybe` à un type, comme
 dans `Maybe String`, alors j'ai un type concret. Tu sais, les valeurs, elles ne
 peuvent avoir que des types concrets ! En gros, vis vite, aime fort, et ne
 prête ton peigne à personne !
+
+</div>
 
 Tout comme l'on peut appliquer partiellement des fonctions pour obtenir de
 nouvelles fonctions, on peut appliquer partiellement des constructeurs de types
@@ -886,10 +890,14 @@ Ou bien :
 D'une manière ou de l'autre, le constructeur de types `IntMap` prend un seul
 paramètre qui est le type de ce vers quoi les entiers doivent pointer.
 
+<div class="hintbox">
+
 **Ah oui**. Si vous comptez essayer d'implémenter ceci, vous allez probablement
 importer `Data.Map` qualifié. Quand vous faites un import qualifié, les
 constructeurs de type doivent aussi être précédés du nom du module. Donc vous
 écririez `type IntMap = Map.Map Int`.
+
+</div>
 
 Soyez certains d'avoir bien saisi la distinction entre constructeurs de types
 et constructeurs de valeurs. Juste parce qu'on a créé un synonyme de types
@@ -1308,9 +1316,13 @@ bientôt rendre instance d'`Eq`. Cette variable n'a pas à s'appeler `a`, ou mê
 définit plusieurs fonctions. Il n'est pas obligatoire d'implémenter le corps de
 ces fonctions, on doit juste spécifier les déclarations de type des fonctions.
 
+<div class="hintbox">
+
 Certaines personnes comprendraient peut-être mieux si l'on avait écrit `class
 Eq equatable where` et ensuite spécifié les déclarations de type comme `(==) ::
 equatable -> equatable -> Bool`.
+
+</div>
 
 Toutefois, on *a implémenté* le corps des fonctions que `Eq` définit, mais on
 les a définies en termes de récursion mutuelle. On a dit que deux instances
@@ -1318,9 +1330,13 @@ d'`Eq` sont égales si elles ne sont pas différentes, et différentes si elles 
 sont pas égales. Ce n'était pas nécessaire, mais on l'a fait, et on va bientôt
 voir en quoi cela nous aide.
 
+<div class="hintbox">
+
 Si nous avons, disons, `class Eq a where` et qu'on définit une déclaration de
 type dans cette classe comme `(==) :: a -> a -> Bool`, alors si on examine le
 type de cette fonction, celui-ci sera `(Eq a) => a -> a -> Bool`.
+
+</div>
 
 Maintenant qu'on a une classe, que faire avec ? Eh bien, pas grand chose,
 vraiment. Mais une fois qu'on a des instances, on commence à bénéficier de
@@ -1483,6 +1499,8 @@ type concret dans les déclarations de type de la classe (comme le `a` dans `a
 fournissant si besoin est des paramètres de type et en parenthésant le tout, de
 manière à obtenir un type concret.
 
+<div class="hintbox">
+
 Prenez en compte le fait que le type dont vous essayez de faire une instance
 remplacera le paramètre dans la déclaration de *classe*. Le `a` de `class Eq a
 where` sera remplacé par un type réel lorsque vous écrirez une instance, donc
@@ -1492,6 +1510,8 @@ alors que `(==) :: (Eq m) => Maybe m -> Maybe m -> Bool` est sensé. C'est juste
 pour mieux y voir dans votre tête, en réalité, `==` conservera toujours son
 type `(==) :: (Eq a) => a -> a -> Bool`, peu importe le nombre d'instances que
 l'on crée.
+
+</div>
 
 Oh, encore un truc, regardez ça ! Si vous voulez connaître les instances d'une
 classe de types, faites juste `:info YourTypeClass` dans GHCi. En tapant `:info
@@ -1791,9 +1811,13 @@ contiennent (ou non !) des valeurs. Dans le cas de `Map k v`, `fmap` va mapper
 une fonction de type `v -> v'` sur une map de type `Map k v` et retourner une
 map de type `Map k v'`.
 
+<div class="hintbox">
+
 Notez que le `'` n'a pas de sémantique spéciale dans les noms des types, de
 même qu'il n'en avait pas dans les noms des valeurs. On l'utilise généralement
 pour dénoter des choses qui sont similaires mais un peu modifiées.
+
+</div>
 
 Essayez de deviner comme `Map k` est fait instance de `Functor` par vous-même !
 
@@ -1802,6 +1826,8 @@ représenter des concepts d'ordre supérieur plutôt cool. On a aussi pratiqué 
 peu plus l'application partielle sur les types et la création d'instances. Dans
 un des chapitres suivants, on verra quelques lois qui s'appliquent sur les
 foncteurs.
+
+<div class="hintbox">
 
 **Encore une chose !** Les foncteurs doivent suivre certaines lois afin qu'ils
 bénéficient de propriétés dont on dépendra sans trop s'en soucier. Si on fait
@@ -1814,6 +1840,8 @@ arbre où le sous-arbre gauche n'a que des éléments inférieurs au nœeud raci
 et le sous-arbre droit n'a que des éléments supérieurs, on risquerait de
 produire un arbre qui n'a plus cette propriété. On verra les lois des foncteurs
 plus en détail dans un des chapitres suivants.
+
+</div>
 
 <h2 id="sortes-et-un-peu-de-type-fu">
 Sortes et un peu de type-fu

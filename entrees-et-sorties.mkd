@@ -64,10 +64,14 @@ standard de cette façon. Mais à présent, après environ huit chapitres, on va
 finalement écrire notre premier *vrai* programme Haskell ! Yay ! Et pour sûr,
 on va se faire ce bon vieux `"hello, world"`.
 
+<div class="hintbox">
+
 **Hey !** Pour ce chapitre, je vais supposer que vous disposez d'un
 environnement à la Unix pour apprendre Haskell. Si vous êtes sous Windows, je
 suggère d'utiliser [Cygwin](http://www.cygwin.com/), qui est un environnement à
 la Linux pour Windows, autrement dit, juste ce qu'il vous faut.
+
+</div>
 
 Pour commencer, tapez ceci dans votre éditeur de texte favori :
 
@@ -111,7 +115,11 @@ contiendra une valeur de retour. Afficher quelque chose à l'écran n'a pas
 vraiment de valeur de retour significative, alors une valeur factice `()` est
 utilisée.
 
+<div class="hintbox">
+
 Le tuple vide est une valeur `()` qui a pour type `()`.
+
+</div>
 
 Donc, quand est-ce que cette action sera exécutée ? Eh bien, c'est ici que le
 `main` entre en jeu. Une action I/O sera exécutée lorsqu'on lui donne le nom
@@ -306,10 +314,14 @@ ligne vide. Voici le programme :
 Pour vous rendre compte de ce qu'il fait, essayez de l'exécuter avant qu'on
 s'intéresse au code.
 
+<div class="hintbox">
+
 **Astuce** : Pour lancer un programme, vous pouvez soit le compiler puis lancer
 l'exécutable produit en faisant `ghc --make helloworld` puis `./helloworld`, ou
 bien vous pouvez utiliser la command `runhaskell` ainsi : `runhaskell
 helloworld.hs` et votre programme sera exécuté à la volée.
+
+</div>
 
 Tout d'abord, regardons la fonction `reverseWords`. C'est une fonction normale
 qui prend une chaîne de caractères comme `"hey there man"` et appelle `words`
@@ -403,9 +415,13 @@ ne veut pas que l'action créée par le bloc ait la valeur de la dernière actio
 qui la compose, auquel cas on place un `return` tout à la fin avec le résultat
 qu'on veut obtenir de cette action composée.
 
+<div class="hintbox">
+
 Un bloc *do* peut aussi avoir une seule action I/O. Dans ce cas, c'est
 équivalent à écrire seulement l'action. Certains vont préférer écrire `then do
 return ()` parce que le *else* avait un *do*.
+
+</div>
 
 Avant de passer aux fichiers, regardons quelques fonctions utiles pour faire
 des I/O.
@@ -1974,6 +1990,8 @@ chaîne entrée par l'utilisateur est vide. Si elle l'est, une action I/O vide
 ce bloc *do* est effectuée. On utilise `read` sur `numberString` pour la
 convertir en nombre, donc `number` est `7`.
 
+<div class="hintbox">
+
 **Excusez-moi !** Si l'utilisateur nous donne ici une entrée que `read` ne peut
 pas lire (comme `"haha"`), notre programme va planter avec un message d'erreur
 horrible. Si vous ne voulez pas que votre programme plante sur une entrée
@@ -1981,6 +1999,8 @@ erronée, utilisez `reads`, qui retourne une liste vide quand elle n'arrive pas
 à lire la chaîne. Quand elle y parvient, elle retourne une liste singleton avec
 notre valeur en première composante, et le reste de la chaîne qu'elle n'a pas
 consommé dans l'autre composante.
+
+</div>
 
 On vérifie si le nombre qu'on a entré est égal à celui généré aléatoirement et
 on donne à l'utilisateur le message approprié. Puis on appelle `askForNumber`

@@ -206,11 +206,15 @@ Quelle est la signature de type de `==` ?
 > ghci> :t (==)
 > (==) :: (Eq a) => a -> a -> Bool
 
+<div class="hintbox">
+
 Note : l'opérateur d'égalité, `==` est une fonction. De même pour `+`, `*`,
 `-`, `/` et quasiment tous les opérateurs. Si une fonction ne contient que des
 caractères spéciaux, elle est considérée infixe par défaut. Si nous voulons
 examiner son type, la passer à une autre fonction, ou l'appeler de façon
 préfixe, nous devons l'entourer de parenthèses.
+
+</div>
 
 Intéressant. Nous voyons quelque chose de nouveau ici, le symbole `=>`. Tout ce
 qui se situe avant le `=>` est appelé une **contrainte de classe**. On peut

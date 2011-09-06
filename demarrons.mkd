@@ -366,10 +366,14 @@ l'entourer de crochets pour en faire d'abord une liste.
 vide. Si nous ajoutons `3` devant elle, elle devient `[3]`. Si nous ajoutons
 encore `2` devant, elle devient `[2, 3]`, etc.
 
+<div class="hintbox">
+
 Note : `[]`, `[[]]` et `[[], [], []]` sont trois choses différentes. La
 première est une liste vide, la deuxième est une liste qui contient un élément,
 cet élément étant une liste vide, la troisième est une liste qui contient trois
 éléments, qui sont tous des listes vides.
+
+</div>
 
 Si vous voulez obtenir un élément d'une liste par son index, utilisez `!!`. Les
 indices démarrent à 0.
@@ -834,9 +838,13 @@ tailles différentes. Deux fonctions utiles qui opérent sur des paires :
 > ghci> snd ("Wow", False)
 > False
 
+<div class="hintbox">
+
 Note : ces deux fonctions opèrent seulement sur des paires. Elles ne marcheront
 pas sur des triplets, des quadruplets, etc. Nous verrons comment extraire des
 données de tuples de différentes façons un peu plus tard.
+
+</div>
 
 Une fonction cool qui produit une liste de paires : `zip`. Elle prend deux
 listes et les zippe ensemble en joignant les éléments correspondants en des

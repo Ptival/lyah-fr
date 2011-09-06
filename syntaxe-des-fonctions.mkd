@@ -155,9 +155,13 @@ filtrer la liste vide `[]`, ou un motif incluant `:` et la liste vide. Puisque
 ce premier. Un motif de la forme `x:xs` attachera la tête à `x` et le reste à
 `xs`, même s'il n'y a qu'un seul élément, auquel cas `xs` sera la liste vide.
 
+<div class="hintbox">
+
 Note : Le motif `x:xs` est très utilisé, particulièrement dans les fonctions
 récursives. Mais les motifs qui ont un `:` ne peuvent valider que des listes
 de longueur 1 ou plus.
+
+</div>
 
 Si vous désirez lier, mettons, les trois premiers éléments à trois variables,
 et le reste de la liste à une autre variable, vous pouvez utiliser un motif
@@ -333,8 +337,12 @@ Voyons si je suis gros…
 Youpi ! Je ne suis pas gros ! Mais Haskell vient de me traiter de moche. Peu
 importe !
 
+<div class="hintbox">
+
 Notez qu'il n'y a pas de `=` après les paramètres et avant les gardes.
 Beaucoup de débutants font des erreurs de syntaxe en le mettant ici.
+
+</div>
 
 Un autre exemple simple : implémentons notre propre fonction `max`. Si vous
 vous souvenez, elle prend deux choses comparables et retourne la plus grande

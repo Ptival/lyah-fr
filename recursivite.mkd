@@ -143,10 +143,14 @@ Sinon, retourner une liste qui a `x` comme premier élément, et ensuite `x`
 répliqué n-1 fois pour la queue. À force, la partie en `(n-1)` va amener notre
 fonction à atteindre son cas de base.
 
+<div class="hintbox">
+
 Note : `Num` n'est pas une sous-classe d'`Ord`. Cela signifie qu'un nombre n'a
 pas forcément besoin d'être ordonnable. C'est pourquoi on doit spécifier à la
 fois `Num` et `Ord` en contraintes de classe pour pouvoir faire à la fois des
 additions, des soustractions et des comparaisons.
+
+</div>
 
 Maintenant, implémentons `take`. Elle prend un certain nombre d'éléments d'une
 liste.  Par exemple, `take 3 [5, 4, 3, 2, 1]` retourne `[5, 4, 3]`. Si on
