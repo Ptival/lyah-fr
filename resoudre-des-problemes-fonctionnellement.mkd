@@ -57,15 +57,15 @@ pile est maintenant `10, 4`. De même avec `3`, la pile est à présent `10, 4,
 3`. Soudain, on rencontre un opérateur, j'ai nommé `+` ! On dépile les deux
 nombres en sommet de la pile (donc la pile devient `10`), on somme ces deux
 nombres, et on empile le résultat. La pile est désormais `10, 7`. On empile le
-`2`, la pile devient `10, 7, 2`. Un nouvel opérateur, on dépile donc `7` et
-`2`, on les multiplie et on empile le résultat. `7` fois `2` donne `14`, la
-pile est donc `10, 14`. Finalement, il y a un `-`. On dépile `10` et `14`, on
-soustrait `14` de `10` et on empile le résultat. La pile est maintenant `-4`,
-et puisqu'il n'y a plus de nombres ou d'opérateurs dans notre expression, c'est
-notre résultat !
+`2`, la pile devient `10, 7, 2`. On rencontre un nouvel opérateur, on dépile
+donc `7` et `2`, on les multiplie et on empile le résultat. `7` fois `2` donne
+`14`, la pile est donc `10, 14`. Finalement, il y a un `-`. On dépile `10` et
+`14`, on soustrait `14` de `10` et on empile le résultat. La pile est
+maintenant `-4`, et puisqu'il n'y a plus de nombres ou d'opérateurs dans notre
+expression, c'est notre résultat !
 
 Maintenant qu'on sait calculer n'importe quelle expression NPI à la main,
-réfléchisons à une manière d'écrire une fonction Haskell qui prendrait en
+réfléchissons à une manière d'écrire une fonction Haskell qui prendrait en
 paramètre une chaîne de caractères contenant une expression NPI, comme `"10 4 3
 + 2 * -"`, et nous renvoie son résultat.
 
@@ -103,7 +103,7 @@ résultat du pli sera aussi une pile, seulement, comme on l'a vu, elle ne
 contiendra qu'un élément.
 
 Une autre chose à pondérer est, eh bien, comment va-t-on représenter cette pile
-? Je propose d'utiliser une liste. Également, je propose de garder le somme de
+? Je propose d'utiliser une liste. Également, je propose de garder la somme de
 notre pile du côté de la tête de la liste. C'est parce qu'ajouter en tête
 (début) de liste est bien plus rapide que d'ajouter à la fin. Donc si l'on a
 une pile qui consiste en, mettons, `10, 4, 3`, nous la représenterons comme la
@@ -157,18 +157,18 @@ pour obtenir les deux éléments en haut de pile, et filtrer les opérateurs com
 >             foldingFunction (x:y:ys) "-" = (y - x):ys
 >             foldingFunction xs numberString = read numberString:xs
 
-On a étendu cela sur quatre motifs. Les motifs seront essayé de haut en bas.
+On a étendu cela sur quatre motifs. Les motifs seront essayés de haut en bas.
 D'abord, la fonction de pli regarde si l'élément courant est `"*"`. Si c'est le
-cas, alors elle prendre une liste comme `[3, 4, 9, 3]` et nommera ses deux
+cas, alors elle prendra une liste comme `[3, 4, 9, 3]` et nommera ses deux
 premiers éléments `x` et `y` respectivement. Dans ce cas, `x` serait `3` et `y`
 serait `4`. `ys` serait `[9, 3]`. Elle retourne une liste comme `ys`, mais avec
 le produit de `x` et `y` en tête. Ainsi, on a dépilé les deux nombres en haut
-de pile, on les a multiplié et on a empilé le résultat. Si l'élément n'est pas
+de pile, on les a multipliés et on a empilé le résultat. Si l'élément n'est pas
 `"*"`, le filtrage par motif continue avec le motif `"+"`, et ainsi de suite.
 
 Si l'élément n'est aucun des opérateurs, alors on suppose que c'est une chaîne
-qui représente un nombre. Si c'est un nombre, on appelle `read` pour sur la
-chaîne pour obtenir un nombre, et on retourne la pile précédente avec ce nombre
+qui représente un nombre. Si c'est un nombre, on appelle `read` sur la chaîne
+pour obtenir un nombre, et on retourne la pile précédente avec ce nombre
 empilé.
 
 Et c'est tout ! Remarquez aussi qu'on a ajouté une contrainte de classe
@@ -307,7 +307,7 @@ Pour découper mentalement le fichier d'entrée, lisez-le trois lignes par trois
 lignes, et coupez mentalement le système routier en sections. Chaque section se
 compose d'un morceau de route A, d'un morceau de route B, et d'une route
 croisant A et B. Pour conserver cette lecture trois par trois, on dit qu'il y a
-une dernière route transversale qui prend 0 minutes à traverser. Parce qu'une
+une dernière route transversale qui prend 0 minute à traverser. Parce qu'une
 fois arrivé à Londres, ce n'est plus important, on est arrivé.
 
 Tout comme on l'a fait en résolvant le problème de la calculatrice NPI, on va
@@ -346,11 +346,11 @@ chose. On voit qu'il est beaucoup plus court de passer par B (10 minutes) que
 de passer par A et traverser, ce qui nous prendrait 80 minutes !
 
 À présent, on connaît le chemin le plus court jusqu'à A1 (passer par B et
-traverser, on va dire `B, C` avec un coût de 40) et on connaît le plus court
-chemin jusqu'à B1 (directement par B, donc `B`, en 10 minutes). Est-ce que ce
-savoir nous aide pour connaître le chemin le plus court jusqu'à la prochain
-intersection de chacune des routes principales ? Mon dieu, mais c'est bien sûr
-!
+traverser, on va dire `B, C` avec un coût de 40 minutes) et on connaît le plus
+court chemin jusqu'à B1 (directement par B, donc `B`, en 10 minutes). Est-ce
+que ce savoir nous aide pour connaître le chemin le plus court jusqu'à la
+prochaine intersection de chacune des routes principales ? Mon dieu, mais c'est
+bien sûr !
 
 Voyons ce que serait le plus court chemin jusqu'à A2. Pour aller à A2, on peut
 soit aller directement d'A1 à A2, soit avancer depuis B1 et traverser
@@ -371,8 +371,8 @@ n'a plus besoin de prendre cela en compte à l'étape suivante.
 
 À présent qu'on connaît les meilleurs chemins pour aller à A2 et à B2, on peut
 répéter le processus indéfiniment jusqu'à atteindre l'arrivée. Une fois qu'on
-connaître les meilleurs chemins pour A4 et B4, le moins coûteux sera notre
-chemin optimal.
+connaît les meilleurs chemins pour A4 et B4, le moins coûteux sera notre chemin
+optimal.
 
 En gros, pour la deuxième section, on répète ce qu'on a fait pour la première
 section, mais en prenant en compte les meilleurs chemins précédents pour A
@@ -404,9 +404,9 @@ Prochaine étape ! Comment représenter le système routier avec des types de
 données d'Haskell ? Une manière consiste à imaginer les points de départ et
 d'intersection comme des nœuds d'un graphe qui pointe vers d'autres
 intersections. Si on imagine que les points de départs pointent l'un vers
-l'autre via une route de longueur nulle, on voit que chaque intersection
-(ou nœud) pointe vers le nœud du côté opposé et vers le prochain nœud du même
-côté. À l'exceptions des derniers nœuds, qui ne pointent que vers l'un l'autre.
+l'autre via une route de longueur nulle, on voit que chaque intersection (ou
+nœud) pointe vers le nœud du côté opposé et vers le prochain nœud du même côté.
+À l'exception des derniers nœuds, qui ne pointent que l'un vers l'autre.
 
 > data Node = Node Road Road | EndNode Road
 > data Road = Road Int Node
@@ -444,11 +444,11 @@ mais pas trop simples non plus !
 > data Section = Section { getA :: Int, getB :: Int, getC :: Int } deriving (Show)
 > type RoadSystem = [Section]
 
-C'est plutôt parfait ! C'est aussi simple que possible, et m'est avis que ça
-suffira amplement pour implémenter notre solution. `Section` est un simple
-type de données algébriques qui contient trois entiers pour la longueur des
-trois parties de route de la section. On introduit également un synonyme de
-type, nommant `RoadSystem` une liste de sections.
+C'est plutôt parfait ! C'est aussi simple que possible, et je pense que ça
+suffira amplement pour implémenter notre solution. `Section` est un simple type
+de données algébriques qui contient trois entiers pour la longueur des trois
+parties de route de la section. On introduit également un synonyme de type,
+nommant `RoadSystem` une liste de sections.
 
 <div class="hintbox"> On aurait aussi pu utiliser un triplet `(Int, Int, Int)`
 pour représenter une section de route. Utiliser des tuples plutôt que vos
