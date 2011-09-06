@@ -315,9 +315,13 @@ contiennent plusieurs éléments du même type. Cela signifie qu'on peut avoir u
 liste d'entiers, une liste de caractères, mais jamais une liste qui a à la fois
 des entiers et des caractères. Place à une liste !
 
-Note : Nous utilisons le mot-clé `let` pour définir un nom directement dans
+<div class="hintbox">
+
+**Note :** Nous utilisons le mot-clé `let` pour définir un nom directement dans
 GHCi. Écrire `let a = 1` dans GHCi est équivalent à écrire `a = 1` dans un
 script puis charger ce script.
+
+</div>
 
 > ghci> let lostNumbers = [4,8,15,16,23,42]
 > ghci> lostNumbers
@@ -368,7 +372,7 @@ encore `2` devant, elle devient `[2, 3]`, etc.
 
 <div class="hintbox">
 
-Note : `[]`, `[[]]` et `[[], [], []]` sont trois choses différentes. La
+**Note :** `[]`, `[[]]` et `[[], [], []]` sont trois choses différentes. La
 première est une liste vide, la deuxième est une liste qui contient un élément,
 cet élément étant une liste vide, la troisième est une liste qui contient trois
 éléments, qui sont tous des listes vides.
@@ -840,9 +844,9 @@ tailles différentes. Deux fonctions utiles qui opérent sur des paires :
 
 <div class="hintbox">
 
-Note : ces deux fonctions opèrent seulement sur des paires. Elles ne marcheront
-pas sur des triplets, des quadruplets, etc. Nous verrons comment extraire des
-données de tuples de différentes façons un peu plus tard.
+**Note :** ces deux fonctions opèrent seulement sur des paires. Elles ne
+marcheront pas sur des triplets, des quadruplets, etc. Nous verrons comment
+extraire des données de tuples de différentes façons un peu plus tard.
 
 </div>
 
