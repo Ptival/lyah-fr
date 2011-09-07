@@ -397,7 +397,7 @@ Voir que mapper `id` sur une valeur `Nothing` retourne la même valeur est
 trivial. De ces deux équations de l'implémentation de `fmap`, on déduit que
 `fmap id = id` est vrai.
 
-<img src="justice.png" alt="justice" class="left"/>
+<img src="img/justice.png" alt="justice" class="left"/>
 
 **La seconde loi dit que composer deux fonctions, et mapper le résultat sur un
 foncteur doit être identique à mapper d'abord une des fonctions sur le
@@ -544,8 +544,9 @@ résultat est toujours une fonction, seulement quand on lui donne une valeur,
 elle sera multipliée par trois, puis passera par la transformation attaché où
 on lui ajoutera trois. C'est ce qui se passe avec la composition.
 
+<h2 id="foncteurs-applicatifs">
 Foncteurs applicatifs
----------------------
+</h2>
 
 <img src="img/present.png" alt="cadeau" class="right"/>
 
@@ -757,8 +758,8 @@ applicatif. Plutôt que d'écrire `pure f <*> x <*> y <*> …`, on peut écrire
 fonction `<$>` qui est simplement `fmap` en tant qu'opérateur infixe. Voici sa
 définition :
 
-> (<$>) :: (Functor f) => (a -> b) -> f a -> f b  
-> f <$> x = fmap f x 
+> (<$>) :: (Functor f) => (a -> b) -> f a -> f b
+> f <$> x = fmap f x
 
 <div class="hintbox">
 
@@ -776,6 +777,666 @@ En utilisant `<$>`, le style applicatif devient brillant, parce qu'à présent,
 si l'on veut appliquer une fonction `f` sur trois foncteurs applicatifs, on
 peut écrire`f <$> x <*> y <*> z`. Si les paramètres n'étaient pas des foncteurs
 applicatifs mais des valeurs normales, on aurait écrit `f x y z`.
+
+Regardons cela de plus près. On a une valeur `Just "johntra"` et une valeur
+`Just "volta"`, et on veut joindre les deux en une `String` dans un foncteur
+`Maybe`. On fait cela :
+
+> ghci> (++) <$> Just "johntra" <*> Just "volta"
+> Just "johntravolta"
+
+Avant qu'on se penche là-dessus, comparez la ligne ci-dessus avec celle-ci :
+
+> ghci> (++) "johntra" "volta"
+> "johntravolta"
+
+Génial ! Pour utiliser une fonction sur des foncteurs applicatifs, parsemez
+quelques `<$>` et `<*>` et la fonction opérera sur des foncteurs applicatifs et
+retournera un foncteur applicatif.
+
+Quand on fait `(++) <$> Just "johntra" <*> Just "volta"`, `(++)`, qui a pour
+type `(++) :: [a] -> [a] -> [a]` est tout d'abord mappée sur `Just "johntra"`,
+résultant en une valeur comme `Just ("johntra"++)` ayant pour type `Maybe
+([Char] -> [Char])`. Remarquez comme le premier paramètre de `(++)` a été avalé
+et les `a` sont devenus des `Char`. À présent, `Just ("johntra"++) <*> Just
+"volta"` est exécuté, ce qui sort la fonction du `Just` et la mappe sur `Just
+"volta"`, retournant `Just "johntravolta"`. Si l'une de ces deux valeurs était
+un `Nothing`, le résultat serait `Nothing`.
+
+Jusqu'ici, on a seulement regardé `Maybe` dans nos exemples, et vous vous dites
+peut-être que les foncteurs applicatifs sont juste pour les `Maybe`. Il y a
+beaucoup d'autres instances d'`Applicative`, alors découvrons en plus !
+
+Les listes (ou plutôt, le constructeur de types listes, `[]`) sont des
+foncteurs applicatifs. Quelle surprise ! Voici l'instance d'`Applicative` de
+`[]` :
+
+> instance Applicative [] where
+>     pure x = [x]
+>     fs <*> xs = [f x | f <- fs, x <- xs]
+
+Plus tôt, on a dit que `pure` prenait des valeurs, et les plaçait dans un
+contexte par défaut. En d'autres mots, dans un contexte minimal qui retourne
+cette valeur. Le contexte minimal pour les listes serait une liste vide, `[]`,
+mais la liste vide représente l'absence de valeurs, donc elle ne peut pas
+contenir l'élément qu'on passe à `pure`. C'est pourquoi `pure` prend un
+élément, et le place dans une liste singleton. De manière similaire, le
+contexte minimal du foncteur applicatif `Maybe` aurait été `Nothing`, mais
+comme il représentait l'absence de valeurs, `pure` était implémenté avec
+`Just`.
+
+> ghci> pure "Hey" :: [String]
+> ["Hey"]
+> ghci> pure "Hey" :: Maybe String
+> Just "Hey"
+
+Qu'en est-il de `<*>` ? Si on imagine le type de `<*>` si elle était limitée
+aux listes, ce serait `(<*>) :: [a -> b] -> [a] -> [b]`. On l'implémente à
+l'aide d'une [liste en
+compréhension](demarrons#je-suis-une-liste-en-comprehension). `<*>` doit d'une
+certaine façon extraire la fonction de son paramètre de gauche, et la mapper
+sur son paramètre de droite. Mais ici, la liste de gauche peut contenir zéro,
+une ou plusieurs fonctions. La liste de droite peut elle aussi contenir
+plusieurs valeurs. C'est pourquoi on utilise une liste en compréhension pour
+piocher dans les deux listes. On applique toutes les fonctions possibles de la
+liste de gauche sur toutes les valeurs possibles de la liste de droite. La
+liste résultante contient toutes les combinaisons possibles d'application d'une
+fonction de la liste de gauche sur une valeur de la liste de droite.
+
+> ghci> [(*0),(+100),(^2)] <*> [1,2,3]
+> [0,0,0,101,102,103,1,4,9]
+
+La liste de gauche contient trois fonctions, et la liste de droite contient
+trois valeurs, donc la liste résultante contient neuf éléments. Chaque fonction
+de la liste de gauche est appliqué à chaque valeur de la liste de droite. Si
+l'on a une liste de fonctions qui prennent deux paramètres, on peut les
+appliquer entre deux listes.
+
+> ghci> [(+),(*)] <*> [1,2] <*> [3,4]
+> [4,5,5,6,3,4,6,8]
+
+Puisque `<*>` est associative à gauche, `[(+), (*)] <*> [1, 2]` est exécuté en
+premier, résultant en une liste équivalente à `[(1+), (2+), (1*), (2*)]`, parce
+que chaque fonction à gauche est appliquée sur chaque valeur de droite. Puis,
+`[(1+),(2+),(1*),(2*)] <*> [3,4]` est exécuté, produisant le résultat final.
+
+Utiliser le style applicatif avec les listes est fun ! Regardez :
+
+> ghci> (++) <$> ["ha","heh","hmm"] <*> ["?","!","."]
+> ["ha?","ha!","ha.","heh?","heh!","heh.","hmm?","hmm!","hmm."]
+
+À nouveau, remarquez qu'on a utilisé une fonction normale qui prend deux
+chaînes de caractères entre deux foncteurs applicatifs à l'aide des opérateurs
+applicatifs appropriés.
+
+Vous pouvez imaginer les listes comme des calculs non déterministes. Une valeur
+comme `100` ou `"what"` peut être vu comme un calcul déterministe qui ne
+renvoie qu'un seul résultat, alors qu'une liste `[1, 2, 3]` peut être vue comme
+un calcul qui ne peut pas se décider sur le résultat qu'il doit avoir, et nous
+présente donc tous les résultats possibles. Donc, quand vous faites quelque
+chose comme `(+) <$> [1, 2, 3] <*> [4, 5, 6]`, vous pouvez imaginer ça comme la
+somme de deux calculs non déterministes avec `+`, qui produit ainsi un nouveau
+calcul non déterministe encore moins certain de son résultat.
+
+Le style applicatif sur les listes est souvent un bon remplaçant des listes en
+compréhensions. Dans le deuxième chapitre, on souhaitait connaître tous les
+produits possibles de `[2, 5, 10]` et `[8, 10, 11]`, donc on a fait :
+
+> ghci> [ x*y | x <- [2,5,10], y <- [8,10,11]]
+> [16,20,22,40,50,55,80,100,110]
+
+On pioche simplement dans deux listes et on applique la fonction à toutes les
+combinaisons d'éléments. Cela peut être fait dans le style applicatif :
+
+> ghci> (*) <$> [2,5,10] <*> [8,10,11]
+> [16,20,22,40,50,55,80,100,110]
+
+Cela me paraît plus clair, parce qu'il est plus simple de voir qu'on appelle
+seulement `*` entre deux calculs non déterministes. Si l'on voulait tous les
+produits possibles de deux listes supérieurs à 50, on ferait :
+
+> ghci> filter (>50) $ (*) <$> [2,5,10] <*> [8,10,11]
+> [55,80,100,110]
+
+Il est facile de voir comment `pure f <*> xs` est égal à `fmap f xs` sur les
+listes. `pure f` est juste `[f]`, et `[f] <*> xs` appliquera chaque fonction de
+la liste de gauche à chaque valeur de la liste de droite, mais puisqu'il n'y a
+qu'une fonction à gauche, c'est comme mapper.
+
+Une autre instance d'`Applicative` qu'on a déjà rencontrée est `IO`. Voici
+comment son instance est implémentée :
+
+> instance Applicative IO where
+>     pure = return
+>     a <*> b = do
+>         f <- a
+>         x <- b
+>         return (f x)
+
+<img src="img/knight.png" alt="chevalier" class="left"/>
+
+Puisque `pure` ne fait que mettre des valeurs dans un contexte minimal qui
+puisse toujours renvoyer ce résultat, il est sensé que `pure` soit juste
+`return`, parce que c'est exactement ce que fait `return` : elle crée une
+action I/O qui ne fait rien, mais retourne la valeur passée en résultat, sans
+rien écrire sur le terminal ni écrire dans un fichier.
+
+Si `<*>` était spécialisée pour `IO`, elle aurait pour type `(<*>) :: IO (a ->
+b) -> IO a -> IO b`. Elle prendrait une action I/O qui retourne une fonction en
+résultat, et une autre action I/O, et retournerait une action I/O à partir de
+ces deux, qui, lorsqu'elle serait exécutée, effectuerait d'abord la première
+action pour obtenir la fonction, puis effectuerait la seconde pour obtenir une
+valeur, et retournerait le résultat de la fonction appliquée à la valeur. On
+utilise la syntaxe *do* pour l'implémenter ici. Souvenez-vous, la syntaxe *do*
+prend plusieurs actions I/O et les colle les unes aux autres, ce qui est
+exactement ce que l'on veut ici.
+
+Avec `Maybe` et `[]`, on pouvait imaginer que `<*>` extrayait simplement une
+fonction de son paramètre de gauche et l'appliquait d'une certaine façon sur
+son paramètre de droite. Avec `IO`, l'extraction est toujours de la partie,
+mais on a également une notion d'*ordonnancement*, parce qu'on prend deux
+actions I/O et qu'on les ordonne, en les collant l'une à l'autre. On doit
+extraire la fonction de la première action I/O, mais pour pouvoir l'extraire,
+il faut exécuter l'action.
+
+Considérez ceci :
+
+> myAction :: IO String
+> myAction = do
+>     a <- getLine
+>     b <- getLine
+>     return $ a ++ b
+
+C'est une action I/O qui demande à l'utilisateur d'entrer deux lignes, et
+retourne en résultat ces deux lignes concaténées. Ceci est obtenu en collant
+deux actions I/O `getLine` ensemble avec un `return`, afin que le résultat soit
+`a ++ b`. Une autre façon d'écrire cela en style applicatif serait :
+
+> myAction :: IO String
+> myAction = (++) <$> getLine <*> getLine
+
+Ce qu'on faisait précédemment, c'était créer une action I/O qui appliquait une
+fonction entre les résultats de deux actions I/O, et ici c'est pareil.
+Souvenez-vous, `getLine` est une action I/O qui a pour type `getLine :: IO
+String`. Quand on utilise `<*>` entre deux foncteurs applicatifs, le résultat
+est un foncteur applicatif, donc tout va bien.
+
+Le type de l'expression `(++) <$> getLine <*> getLine` est `IO String`, ce qui
+signifie que cette expression est une action I/O comme une autre, qui contient
+également une valeur résultante, comme toutes les actions I/O. C'est pourquoi
+on peut faire :
+
+> main = do
+>     a <- (++) <$> getLine <*> getLine
+>     putStrLn $ "The two lines concatenated turn out to be: " ++ a
+
+Si jamais vous vous retrouvez en train de lier des actions I/O à des noms, puis
+à faire `return` sur l'application d'une fonction à ces noms, considérez
+utiliser le style applicatif, qui sera probablement plus concis et simple.
+
+Une autre instance d'`Applicative` est `(->) r`, autrement dit les fonctions.
+Elles sont rarement utilisées en style applicatif, à moins que vous ne fassiez
+du golf avec votre code, mais elles sont tout de même d'intéressants foncteurs
+applicatifs, regardons donc comment leur instance est implémentée.
+
+<div class="hintbox">
+
+Si vous ne comprenez pas ce que `(->) r` signifie, lisez la section précédente
+où l'on expliquait que `(->) r` était un foncteur.
+
+</div>
+
+> instance Applicative ((->) r) where
+>     pure x = (\_ -> x)
+>     f <*> g = \x -> f x (g x)
+
+Lorsqu'on encapsule une valeur dans un foncteur applicatif avec `pure`, le
+résultat retourné doit être cette valeur. Il nous faut un contexte minimal
+retournant cette valeur. C'est pourquoi, dans l'instance des fonctions, `pure`
+prend une valeur, et crée une fonction qui ignore le paramètre qu'elle reçoit
+pour retourner plutôt cette valeur là. Le type de `pure` spécialisée pour
+l'instance `(->) r` serait `pure :: a -> (r -> a)`.
+
+> ghci> (pure 3) "blah"
+> 3
+
+Grâce à la curryfication, l'application des fonctions est associative à gauche,
+on peut donc omettre les parenthèses.
+
+> ghci> pure 3 "blah"
+> 3
+
+L'implémentation pour cette instance de `<*>` est un peu énigmatique, il vaut
+donc mieux regarder comment l'on utilise les fonctions en foncteurs applicatifs
+en style applicatif.
+
+> ghci> :t (+) <$> (+3) <*> (*100)
+> (+) <$> (+3) <*> (*100) :: (Num a) => a -> a
+> ghci> (+) <$> (+3) <*> (*100) $ 5
+> 508
+
+Appeler `<*>` avec deux foncteurs applicatifs retourne un foncteur applicatif,
+donc utilisé sur deux fonctions elle renvoie une fonction. Que se passe-t-il
+donc ici ? Quand on fait `(+) <$> (+3) <*> (*100)`, on crée une fonction qui
+utilise `+` sur les résultats de `(+3)` et de `(*100)`, et retourne cela. Pour
+montrer un exemple réel, quand on fait `(+) <$> (+3) <*> (*100) $ 5`, `(+3)` et
+`(*100)` sont appliquées sur `5`, retournant `8` et `500`. Puis `+` est appelée
+sur `8` et `500`, retournant `508`.
+
+> ghci> (\x y z -> [x,y,z]) <$> (+3) <*> (*2) <*> (/2) $ 5
+> [8.0,10.0,2.5]
+
+<img src="img/jazzb.png" alt="SLAP" class="right"/>
+
+De même ici. On crée une fonction qui appelle la fonction `\x y z -> [x, y, z]`
+sur les résultats de `(+3)`, `(*2)` et `(/2)`. Le `5` est donné à chacune de
+ces trois fonctions, puis `\x y z -> [x, y, z]` est appelée avec ces trois
+résultats.
+
+Vous pouvez imaginer les fonctions comme des boîtes qui contiennent leur
+résultat à venir, donc faire `k <$> f <*> g` crée une fonction qui appellera
+`k` sur les résultats à venir de `f` et `g`. Quand on fait `(+) <$> Just 3 <*>
+Just 5`, on utilise `+` sur des valeurs qui peuvent être là ou non, ce qui
+retourne donc une valeur qui peut être là ou non. Quand on fait `(+) <$> (+10)
+<*> (+5)`, on utilise `+` sur une valeur future de `(+10)` et `(+5)`, et le
+résultat sera aussi une valeur future qui ne sera produit que lorsqu'on
+appellera la fonction avec un paramètre.
+
+On utilise peu les fonctions comme des foncteurs applicatifs, mais c'est tout
+de même intéressant. Ce n'est pas très important pour vous de comprendre
+comment l'instance de `(->) r` d'`Applicative` fonctionne, donc ne désespérez
+pas si vous ne le saisissez pas dès maintenant. Essayez de jouer avec le style
+applicatif pour améliorer votre intuition des fonctions en tant que foncteurs
+applicatifs.
+
+Une instance d'`Applicative` que l'on n'a jamais rencontrée auparavant est
+`ZipList`, et elle réside dans `Control.Applicative`.
+
+Il s'avère qu'il y a plusieurs façons pour une liste d'être un foncteur
+applicatif. L'une est celle qu'on a déjà vue, qui dit qu'appeler `<*>` sur une
+liste et une liste de valeurs retourne une liste de toutes les combinaisons
+possibles d'application d'une fonction de la liste de gauche sur une valeur de
+la liste de droite. Si l'on fait `[(+3),(*2)] <*> [1,2]`, `(+3)` est appliquée
+à la fois sur `1` et sur `2`, et `(*2)` est également appliquée avec `1` et
+`2`, ce qui nous donne une liste à quatre éléments, `[4, 5, 2, 4]`.  de
+fonctions et une liste de valeurs
+
+Cependant, `[(+3),(*2)] <*> [1,2]` pourrait aussi fonctionner de manière à ce
+que la première fonction de la liste de gauche soit appliquée avec la première
+valeur de la liste de droite, la deuxième fonction avec la deuxième valeur, et
+ainsi de suite. Cela retournerait une liste à deux valeurs, `[4, 4]`. Vous
+pouvez l'imaginer comme `[1 + 3, 2 * 2]`.
+
+Puisqu'un type ne peut pas avoir deux instances de la même classe de types, le
+type `ZipList a` est introduit, et il a pour seul constructeur `ZipList` qui ne
+prend qu'un seul champ, de type liste. Voici son instance :
+
+> instance Applicative ZipList where
+>         pure x = ZipList (repeat x)
+>         ZipList fs <*> ZipList xs = ZipList (zipWith (\f x -> f x) fs xs)
+
+`<*>` fait juste ce qu'on a dit. Elle applique la première fonction avec la
+première valeur, la deuxième fonction avec la deuxième valeur, etc. Cela est
+réalisé avec `zipWith (\f x -> f x) fs xs`. La liste résultante sera aussi
+longue que la plus courte des deux listes, parce que c'est ce que fait
+`zipWith`.
+
+`pure` est également intéressante ici. Elle prend une valeur, et la met dans
+une liste qui contient cette valeur un nombre infini de fois. `pure "haha"`
+retourne `ZipList (["haha", "haha", "haha", …`. C'est peut-être un peu
+déroutant, puisqu'on a dit que `pure` devait mettre une valeur dans un contexte
+minimal qui retournait cette valeur. Et vous vous dites sûrement qu'une liste
+infinie est difficilement minimale. Mais cela a du sens pour les listes
+zippées, parce qu'elle doit produire cette valeur à chaque position. Cela
+permet aussi de satisfaire la loi disant que `pure f <*> xs` doit être égal à
+`fmap f xs`. Si `pure 3` ne retournait que `ZipList [3]`, `pure (*2) <*>
+ZipList [1, 5, 10]` retournerait `ZipList [2]`, parce que la liste retournée
+par `zipWith` est aussi longue que la plus courte des deux. Alors que si l'on
+zippe une liste finie à une liste infinie, la longueur de la liste résultante
+sera celle de la liste finie.
+
+Que font donc les listes zippées dans le style applicatif ? Voyons cela. Oh, le
+type `ZipList a` n'a pas d'instance de `Show`, il faut donc utiliser
+`getZipList` pour récupérer une liste normale à partir d'une liste zippée.
+
+> ghci> getZipList $ (+) <$> ZipList [1,2,3] <*> ZipList [100,100,100]
+> [101,102,103]
+> ghci> getZipList $ (+) <$> ZipList [1,2,3] <*> ZipList [100,100..]
+> [101,102,103]
+> ghci> getZipList $ max <$> ZipList [1,2,3,4,5,3] <*> ZipList [5,3,1,2]
+> [5,3,3,4]
+> ghci> getZipList $ (,,) <$> ZipList "dog" <*> ZipList "cat" <*> ZipList "rat"
+> [('d','c','r'),('o','a','a'),('g','t','t')]
+
+<div class="hintbox">
+
+La fonction `(,,)` est identique à `\x y z -> (x, y, z)`. Également, la
+fonction `(,)` est identique à `\x y -> (x, y)`.
+
+</div>
+
+En plus de `zipWith`, la bibliothèque standard a des fonctions comme
+`zipWith3`, `zipWith4`, jusqu'à 7. `zipWith` prend une fonction à deux
+paramètres et zippe deux listes avec cette fonction. `zipWith3` prend une
+fonction à trois paramètres et zippe trois listes à l'aide de celle-ci, et
+ainsi de suite. En utilisant des listes zippées avec un style applicatif, on
+n'a pas besoin d'avoir une fonction zip différente pour chaque nombre de listes
+à zipper. On utilise simplement le style applicatif pour zipper ensemble un
+nombre arbitraire de listes avec une fonction, c'est plutôt cool.
+
+`Control.Applicative` définit une fonction nommée `liftA2`, qui a pour type
+`liftA2 :: (Applicative f) => (a -> b -> c) -> f a -> f b -> f c`. Elle est
+définie ainsi :
+
+> liftA2 :: (Applicative f) => (a -> b -> c) -> f a -> f b -> f c
+> liftA2 f a b = f <$> a <*> b
+
+Rien de spécial, elle applique juste une fonction entre deux foncteurs
+applicatifs, encapsulant le style applicatif auquel on s'était habitué. On
+observe cette fonction pour la raison qu'elle démontre clairement en quoi les
+foncteurs applicatifs sont plus puissants que les foncteurs ordinaires.  Avec
+des foncteurs ordinaires, on peut seulement mapper des fonctions sur un
+foncteur. Avec des foncteurs applicatifs, on peut appliquer une fonction entre
+plusieurs foncteurs. Il est aussi intéressant d'imaginer le type de cette
+fonction comme `(a -> b -> c) -> (f a -> f b -> f c)`. Quand on regarde de
+cette façon, on voit que `liftA2` prend une fonction binaire normale, et la
+promeut en une fonction binaire sur deux foncteurs.
+
+Voici un concept intéressant : on peut prendre deux foncteurs applicatifs, et
+les combiner en un foncteur applicatif qui contient en lui les résultats de ces
+deux foncteurs applicatifs, sous forme d'une liste. Par exemple, on a `Just 3` et `Just 4`. Imaginons que ce deuxième a une liste singleton en lui, c'est très simple à réaliser :
+
+> ghci> fmap (\x -> [x]) (Just 4)
+> Just [4]
+
+Ok, donc disons qu'on a `Just 3` et `Just [4]`. Comment obtenir `Just [3, 4]` ?
+Facile.
+
+> ghci> liftA2 (:) (Just 3) (Just [4])
+> Just [3,4]
+> ghci> (:) <$> Just 3 <*> Just [4]
+> Just [3,4]
+
+Souvenez-vous, `:` est la fonction qui prend un élément, une liste, et retourne
+une nouvelle liste qui a cet élément en tête. À présent qu'on a `Just [3, 4]`,
+pourrait-on combiner ceci avec `Just 2` pour produire `Just [2, 3, 4]` ? Bien
+sûr. Il semble qu'on puisse combiner n'importe quel nombre de foncteurs
+applicatifs en un foncteur applicatif qui contient une liste de tous les
+résultats. Essayons d'implémenter une fonction qui prend une liste de foncteurs
+applicatifs et retourne un foncteur applicatif qui contienne une liste en
+résultat. On l'appellera `sequenceA`.
+
+> sequenceA :: (Applicative f) => [f a] -> f [a]
+> sequenceA [] = pure []
+> sequenceA (x:xs) = (:) <$> x <*> sequenceA xs
+
+Ah, de la récursivité ! Tout d'abord, regardons le type. Elle transforme une
+liste de foncteurs applicatifs en un foncteur applicatif avec une liste. Ainsi,
+on peut voir apparaître notre cas de base. Si on veut transformer une liste
+vide en un foncteur applicatif retournant une liste, eh bien il suffit de
+mettre la liste vide dans un contexte minimal applicatif. Vient ensuite la
+récursion. Si on a une liste avec une tête et une queue (souvenez-vous, `x` est
+un foncteur applicatif, `xs` une liste de ceux-ci), on appelle `sequenceA` sur
+la queue pour obtenir un foncteur applicatif qui contient une liste. On n'a
+plus qu'à préposer la valeur contenue dans le foncteur `x` à cette liste, et
+voilà !
+
+Ainsi, si l'on fait `sequenceA [Just 1, Just 2]`, c'est comme `(:) <$> Just 1
+<*> sequenceA [Just 2]`. C'est égal à `(:) <$> Just 1 <*> ((:) <$> Just 2 <*>
+sequenceA [])`. Ah ! On sait que `sequenceA []` est simplement `Just []`, donc
+cette expression se réduit en `(:) <$> Just 1 <*> ((:) <$> Just 2 <*> Just
+[])`, puis en `(:) <$> Just 1 <*> Just [2]` et finalement en `Just [1,2]` !
+
+Un autre moyen d'implémenter `sequenceA` est à l'aide d'un pli. Souvenez-vous,
+presque toute fonction parcourant une liste d'élément en accumulant un résultat
+peut être implémentée comme un pli.
+
+> sequenceA :: (Applicative f) => [f a] -> f [a]
+> sequenceA = foldr (liftA2 (:)) (pure [])
+
+On approche la liste par la droite avec un accumulateur initial égal à `pure
+[]`. On fait `listA2 (:)` entre l'accumulateur et le dernier élément de la
+liste, ce qui retourne un foncteur applicatif qui contient une liste singleton.
+Puis l'on fait `liftA2 (:)` sur le nouveau dernier élément et l'accumulateur,
+et ainsi de suite, jusqu'à ce qu'il ne reste plus que l'accumulateur, contenant
+la liste des résultats des foncteurs applicatifs.
+
+Testons notre fonction sur quelques foncteurs applicatifs.
+
+> ghci> sequenceA [Just 3, Just 2, Just 1]
+> Just [3,2,1]
+> ghci> sequenceA [Just 3, Nothing, Just 1]
+> Nothing
+> ghci> sequenceA [(+3),(+2),(+1)] 3
+> [6,5,4]
+> ghci> sequenceA [[1,2,3],[4,5,6]]
+> [[1,4],[1,5],[1,6],[2,4],[2,5],[2,6],[3,4],[3,5],[3,6]]
+> ghci> sequenceA [[1,2,3],[4,5,6],[3,4,4],[]]
+> []
+
+Ah ! Plutôt cool. Quand on l'utilise sur des valeurs `Maybe`, `sequenceA` crée
+une valeur `Maybe` avec tous les résultats dans une liste. Si l'une des valeurs
+est `Nothing`, alors le résultat est `Nothing`. C'est utile lorsque vous avez
+une liste de valeurs `Maybe`, et que vous ne vous intéressez à ses résultats
+que s'ils sont tous différents de `Nothing`.
+
+Quand on l'utilise avec des fonctions, `sequenceA` prend une liste de fonctions
+et retourne une fonction qui retourne une liste. Dans notre exemple, on a créé
+une fonction qui prend un nombre en paramètre et appliquait chaque fonction
+d'une liste sur ce nombre, retournant la liste des résultats. `sequenceA [(+3),
+(+2), (+1)] 3` appellera `(+3)` avec `3`, `(+2)` avec `3` et `(+1)` avec `3`,
+et retourne tous ces résultats sous forme de liste.
+
+Faire `(+) <$> (+3) <*> (*2)` créera une fonction qui prend un paramètre, le
+donne à la fois à `(+3)` et à `(*2)`, et appelle `+` avec ces deux résultats.
+Dans la même veine, il est normal que `sequenceA [(+3), (*2)]` crée une
+fonction qui prend un paramètre, et le donne à toutes les fonctions de la
+liste. Plutôt que d'appeler `+` sur le résultat de ces fonctions, une
+combinaison de `:` et de `pure []` est utilisée pour rassembler ces résultats
+en une liste, qui est le résultat de cette fonction.
+
+Utiliser `sequenceA` est cool quand on a une liste de fonctions et qu'on veut
+leur donner la même entrée et voir une liste des résultats. Par exemple, si
+l'on a un nombre et qu'on se demande s'il satisfait tous les prédicats d'une
+liste. Un moyen de faire serait le suivant :
+
+> ghci> map (\f -> f 7) [(>4),(<10),odd]
+> [True,True,True]
+> ghci> and $ map (\f -> f 7) [(>4),(<10),odd]
+> True
+
+Souvenez-vous, `and` prend une liste de booléens et ne retourne `True` que
+s'ils sont tous `True`. Un autre moyen de faire ceci, avec `sequenceA` :
+
+> ghci> sequenceA [(>4),(<10),odd] 7
+> [True,True,True]
+> ghci> and $ sequenceA [(>4),(<10),odd] 7
+> True
+
+`sequenceA [(>4),(<10),odd]` crée une fonction qui prendra un nombre et le
+donnera à tous les prédicats de la liste `[(>4),(<10),odd]`, et retournera une
+liste de booléens. Elle transforme une liste ayant pour type `(Num a) => [a ->
+Bool]` en une fonction ayant pour type `(Num a) => a -> [Bool]`. Plutôt joli,
+hein ?
+
+Parce que les listes sont homogènes, toutes les fonctions de la liste doivent
+avoir le même type, évidemment. Vous ne pouvez pas avoir une liste comme `[ord,
+(+3)]`, parce qu'`ord` prend un caractère et retourne un nombre, alors que
+`(+3)` prend un nombre et retourne un nombre.
+
+Quand on l'utilise avec `[]`, `sequenceA` prend une liste de listes et retourne
+une liste de listes. Hmm, intéressant. Elle crée en fait des listes contenant
+toutes les combinaisons possibles des éléments. Par exemple, voici ceci réalisé
+avec `sequenceA` puis avec une liste en compréhension :
+
+> ghci> sequenceA [[1,2,3],[4,5,6]]
+> [[1,4],[1,5],[1,6],[2,4],[2,5],[2,6],[3,4],[3,5],[3,6]]
+> ghci> [[x,y] | x <- [1,2,3], y <- [4,5,6]]
+> [[1,4],[1,5],[1,6],[2,4],[2,5],[2,6],[3,4],[3,5],[3,6]]
+> ghci> sequenceA [[1,2],[3,4]]
+> [[1,3],[1,4],[2,3],[2,4]]
+> ghci> [[x,y] | x <- [1,2], y <- [3,4]]
+> [[1,3],[1,4],[2,3],[2,4]]
+> ghci> sequenceA [[1,2],[3,4],[5,6]]
+> [[1,3,5],[1,3,6],[1,4,5],[1,4,6],[2,3,5],[2,3,6],[2,4,5],[2,4,6]]
+> ghci> [[x,y,z] | x <- [1,2], y <- [3,4], z <- [5,6]]
+> [[1,3,5],[1,3,6],[1,4,5],[1,4,6],[2,3,5],[2,3,6],[2,4,5],[2,4,6]]
+
+C'est peut-être un peu dur à saisir, mais en jouant un peu avec, vous verrez
+comment ça marche. Mettons qu'on fasse `sequenceA [[1,2],[3,4]]`. Pour voir ce
+qu'il se passe, utilisons la définition `sequenceA (x:xs) = (:) <$> x <*>
+sequenceA xs` de `sequenceA` et son cas de base `sequenceA [] = pure []`. Vous
+n'êtes pas obligé de suivre cette évaluation, mais cela peut vous aider si vous
+avez du mal à imaginer comment `sequenceA` fonctionne sur des listes de listes,
+car ça peut être un peu gratiné.
+
+* On commence avec `sequenceA [[1,2],[3,4]]`
+
+* Ceci est évalué en `(:) <$> [1,2] <*> sequenceA [[3,4]]`
+
+* En développant le `sequenceA`, on obtient `(:) <$> [1,2] <*> ((:) <$> [3,4]
+<*> sequenceA [])`
+
+* On a atteint le cas de base, cela donne donc `(:) <$> [1,2] <*> ((:) <$>
+[3,4] <*> [[]])`
+
+* On évalue maintenant la partie `(:) <$> [3,4] <*> [[]]`, qui va utiliser `:`
+sur toutes les valeurs possibles le la liste de gauche (`3` et `4` sont
+possibles) et avec chaque valeur possible de la liste de droite (seule `[]` est
+possible), ce qui donne `[3:[], 4:[]]`, autrement dit `[[3],[4]]`. On a donc
+`(:) <$> [1,2] <*> [[3],[4]]`
+
+* Maintenant, `:` est utilisée sur toutes les valeurs possibles de la liste de
+gauche (`1` et `2`) avec chaque valeur possible de la liste de droite (`[3]` et
+`[4]`), ce qui donne `[1:[3], 1:[4], 2:[3], 2:[4]]`, qui est juste
+`[[1,3],[1,4],[2,3],[2,4]`
+
+Faire `(+) <$> [1,2] <*> [4,5,6]` retourne un calcul non déterministe `x + y`
+où `x` prend toute valeur de `[1, 2]` et `y` prend toute valeur de `[4, 5, 6]`.
+On représente ceci comme une liste contenant tous les résultats possibles. De
+façon similaire, quand on fait `sequence [[1,2],[3,4],[5,6],[7,8]]`, le
+résultat est un calcul non déterministe `[x, y, z, w]`, où `x` prend toute
+valeur de `[1, 2]`, `y` prend toute valeur de `[3, 4]` et ainsi de suite. Pour
+représenter le résultat de ce calcul non déterministe, on utilise une liste,
+dans laquelle chaque élément est une des listes possibles. C'est pourquoi le
+résultat est une liste de listes.
+
+Quand on l'utilise avec des actions I/O, `sequenceA` est équivalent à
+`sequence` ! Elle prend une liste d'actions I/O et retourne une action I/O qui
+exécutera chacune de ces actions et aura pour résultat une liste des résultats
+de ces actions I/O. Ceci parce que, pour changer une valeur `[IO a]` en une
+valeur `IO [a]`, c'est-à-dire créer une action I/O qui retourne une liste de
+tous les résultats, il faut ordonnancer les action I/O afin qu'elles soient
+effectuées l'une après l'autre lorsque l'évaluation sera forcée. On ne peut en
+effet pas obtenir le résultat d'une action I/O dans l'exécuter.
+
+> ghci> sequenceA [getLine, getLine, getLine]  
+> heyh  
+> ho  
+> woo  
+> ["heyh","ho","woo"] 
+
+Comme les foncteurs ordinaires, les foncteurs applicatifs viennent avec
+quelques lois. La plus importante est celle qu'on a déjà mentionnée, qui dit
+que <span class="law">pure f <*> x = fmap f x</span>. En exercice, vous pouvez
+prouver cette loi pour quelques uns des foncteurs applicatifs vus dans ce
+chapitre. Les autres lois des foncteurs applicatifs sont :
+
+* <span class="law">pure id <*> v = v</span>
+
+* <span class="law">pure (.) <*> u <*> v <*> w = u <*> (v <*> w)</span>
+
+* <span class="law">pure f <*> pure x = pure (f x)</span>
+
+* <span class="law">u <*> pure y = pure ($ y) <*> u</span>
+
+On ne va pas les regarder en détail pour l'instant, parce que cela prendrait
+trop de pages et serait probablement ennuyeux, mais si vous vous sentez
+d'attaque, regardez-les et voyez si elles tiennent pour certaines instances.
+
+En conclusion, les foncteurs applicatifs ne sont pas seulement intéressants,
+mais également utiles, parce qu'ils nous permettent de combiner différents
+calculs, comme les entrées-sorties, les calculs non déterministes, les calculs
+pouvant échouer, etc. en utilisant le style applicatif. Simplement en utilisant
+`<$>` et `<*>`, on peut utiliser des fonctions ordinaires pour opérer
+uniformément sur n'importe quel nombre de foncteurs applicatifs, et profiter de
+la sémantique de chacun d'entre eux.
+
+<h2 id="le-mot-clé-newtype">
+Le mot-clé newtype
+</h2>
+
+<img src="img/maoi.png" alt="maoi" class="left"/>
+
+Jusqu'ici, nous avons appris comment créer nos propres types de données
+algébriques en utilisant le mot-clé **data**. On a aussi appris comment donner
+des synonymes à des types avec le mot-clé **type**. Dans cette section, on va
+regarder comment créer de nouveaux types à partir de types existants, et
+pourquoi on voudrait pouvoir faire cela.
+
+Dans la section précédente, on a vu qu'il y a plusieurs manières de définir un
+foncteur applicatif pour le type des listes. L'une d'elles fait prendre à `<*>`
+chaque fonction d'une liste passée en paramètre de gauche et la lui fait
+appliquer à chaque valeur d'une liste passee en paramètre de droite, retournant
+toutes les combinaisons possibles d'application de fonctions de la liste de
+gauche sur des valeurs de la liste de droite.
+
+> ghci> [(+1),(*100),(*5)] <*> [1,2,3]  
+> [2,3,4,100,200,300,5,10,15]  
+
+La deuxième manière consiste à prendre la première fonction de la liste à
+gauche de `<*>`, et de l'appliquer à la première valeur de la liste de droite,
+puis prendre la deuxième fonction à gauche et l'appliquer à la deuxième valeur
+à droite, et ainsi de suite. Finalement, c'est comme zipper les deux listes
+ensemble. Mais les listes sont déjà des instances d'`Applicative`, alors
+comment les faire aussi instances d'`Applicative` de l'autre manière ? Si vous
+vous souvenez, on a dit que la type `ZipList a` était introduit pour cette
+raison, avec un seul constructeur de valeurs, `ZipList`, contenant un seul
+champ. On place la liste qu'on enveloppe dans ce champ. Ainsi, `ZipList` est
+fait instance d'`Applicative`, de manière à ce que si l'on souhaite utiliser
+des listes comme foncteurs applicatifs de la manière zip, on ait juste à
+envelopper la liste dans le constructeur `ZipList`, puis, une fois les calculs
+terminés, là sortir avec `getZipList` :
+
+> ghci> getZipList $ ZipList [(+1),(*100),(*5)] <*> ZipList [1,2,3]  
+> [2,200,15]  
+
+Donc, que fait le nouveau mot-clé *newtype* ? Eh bien, réfléchissez à la façon
+dont vous écririez la déclaration *data* du type `ZipList a`. Une façon de
+l'écrire serait :
+
+> data ZipList a = ZipList [a] 
+
+Un type qui n'a qu'un constructeur de valeurs, et ce constructeur de valeurs
+n'a qu'un champ, qui est une liste de choses. On aurait aussi pu vouloir
+utiliser la syntaxe des enregistrements pour obtenir automatiquement une
+fonction qui extrait une liste d'une `ZipList` :
+
+> data ZipList a = ZipList { getZipList :: [a] } 
+
+Cela a l'air correct, et fonctionnerait en fait plutôt bien. Puisqu'on avait
+deux manières de faire d'un type existant une instance d'une classe de types,
+on a utilisé le mot clé *data* pour juste envelopper ce type dans un autre
+type, et fait de ce second type une instance de la seconde manière.
+
+Le mot-cle *newtype* en Haskell est fait exactement pour ces cas où l'on veut
+juste prendre un type et l'encapsuler dans quelque chose pour le présenter
+comme un nouveau type. Dans la bibliothèque, `ZipList a` est définie comme :
+
+> newtype ZipList a = ZipList { getZipList :: [a] } 
+
+Plutôt que d'utiliser le mot-clé *data*, on utilise le mot-clé *newtype*.
+Pourquoi cela ? Eh bien, premièrement, *newtype* est plus rapide. Quand vous
+utilisez le mot-clé *data* pour envelopper un type, il y aura un coût à
+l'exécution pour faire l'encapsulage et le décapsulage. Alors qu'avec le
+mot-cle *newtype*, Haskell sait que vous utilisez cela juste pour encapsuler un
+type existant dans un nouveau type (d'où le nom du mot-clé), parce que vous
+voulez la même chose en interne, mais un nom (type) différent. Avec cela en
+tête, Haskell peut se débarasser de l'emballage et du déballage une fois qu'il
+a tenu compte du type de chaque valeur pour savoir quelle instance utiliser.
+
+Pourquoi ne pas utiliser *newtype* tout le temps plutôt que *data* dans ce cas
+?
 
 <div class="prev-toc-next">
 <ul>
