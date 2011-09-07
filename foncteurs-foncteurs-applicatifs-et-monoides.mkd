@@ -61,7 +61,7 @@ aux éléments dans la boîte.
 <div class="hintbox">
 
 **Un conseil.** Souvent, l'analogie de la boîte aide à se faire une intuition
-de la façon font fonctionnent les foncteurs, et plus tard, on utilisera
+de la façon dont fonctionnent les foncteurs, et plus tard, on utilisera
 probablement la même analogie pour les foncteurs applicatifs et les monades.
 C'est une analogie correcte pour aider les débutants à comprendre les
 foncteurs, mais ne la prenez pas trop littéralement, parce que pour certains
