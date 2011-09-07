@@ -70,6 +70,16 @@ Apprenez Haskell pour le meilleur !
     + [Chaînes d'octets](entrees-et-sorties#chaines-d-octets)
     + [Exceptions](entrees-et-sorties#exceptions)
 
+#. [Résoudre des problèmes fonctionnellement](resoudre-des-problemes-fonctionnellement)
+    + [Calculatrice de notation polonaise inverse](resoudre-des-problemes-fonctionnellement#calculatrice-de-notation-polonaise-inverse)
+    + [D'Heathrow à Londres](resoudre-des-problemes-fonctionnellement#d-heathrow-a-londres)
+
+#. [Foncteurs, foncteurs applicatifs et monoïdes](foncteurs-foncteurs-applicatifs-et-monoides)
+    + [Foncteurs revisités](foncteurs-foncteurs-applicatifs-et-monoides#foncteurs-revisités)
+    + [Foncteurs applicatifs](foncteurs-foncteurs-applicatifs-et-monoides#foncteurs-applicatifs)
+    + [Le mot-clé newtype](foncteurs-foncteurs-applicatifs-et-monoides#le-mot-clé-newtype)
+    + [Monoïdes](foncteurs-foncteurs-applicatifs-et-monoides#monoides)
+
 Ce travail est une traduction de [Learn You a Haskell For Great
 Good!](http://learnyouahaskell.com/). Le texte original est de Miran Lipovača,
 la traduction a été réalisée par Valentin Robert. Le texte original est

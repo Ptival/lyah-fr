@@ -4,7 +4,8 @@ h1 {font-size: 60px; line-height: 60px; font-family: georgia, Arial, serif;
     margin: 0 0 15px 0; font-weight: normal;}
 h2 {clear: left;}
 pre {background-color: black; padding: 4px 4px 4px 4px; clear: both;}
-code {background-color: #DDD; font-weight: bold; padding: 0 2px 0 2px;}
+code {background-color: #DDD; font-weight: bold; padding: 0 2px 0 2px;
+    white-space: nowrap;}
 ol {list-style-type: decimal; font-family: arial,serif; font-size: 24px;
     padding-left: 25px; margin: 0px; color: #408156; margin-bottom: 25px;}
 ol > li > a:hover {color: #BD2A33;}
