@@ -559,7 +559,7 @@ l'exception que tout est dans l'autre sens.
 Finalement, on retourne `newPathToA` et `newPathToB` sous forme de paire.
 
 Testons cette fonction sur la première section d'`heathrowToLondon`. Puisque
-c'est la première section, les paramètre contenant les meilleurs chemins
+c'est la première section, les paramètres contenant les meilleurs chemins
 jusqu'à l'intersection précédente sur A et sur B sera une paire de listes
 vides.
 
