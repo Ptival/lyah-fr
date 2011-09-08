@@ -171,8 +171,8 @@ Si une fonction prend deux paramètres, on peut aussi l'appeler de façon infixe
 en l'entourant d'apostrophes renversées. Par exemple, la fonction `div` prend
 deux entiers et effectue leur division entière. Faire `div 92 10` retourne 9.
 Mais quand on l'appelle de cette façon, on peut se demander quel nombre est
-divisé par quel nombre. On peut donc l'écrire plutôt `92 \`div\` 10`, ce qui
-est tout de suite plus clair.
+divisé par quel nombre. On peut donc l'écrire plutôt <code>92 \`div\`
+10</code>, ce qui est tout de suite plus clair.
 
 Beaucoup de personnes venant de langages impératifs ont pour habitude de penser
 que les parenthèses indiquent l'application de fonctions. Par exemple, en C, on

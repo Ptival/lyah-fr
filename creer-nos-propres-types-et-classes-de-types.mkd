@@ -1073,8 +1073,8 @@ champs. Le premier de type `a` et le second de type `List a`.
 > Cons 3 (Cons 4 (Cons 5 Empty))
 
 On a appelé notre constructeur `Cons` de façon infixe pour souligner sa
-similarité avec `:`. `Empty` est similaire à `[]` et `4 \`Cons\` (5 \`Cons\`
-Empty)` est similaire à `4:(5:[])`.
+similarité avec `:`. `Empty` est similaire à `[]` et <code>4 \`Cons\` (5
+\`Cons\` Empty)</code> est similaire à `4:(5:[])`.
 
 On peut définir des fonctions comme automatiquement infixes en ne les nommant
 qu'avec des caractères spéciaux. On peut aussi faire de même avec les

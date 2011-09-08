@@ -625,9 +625,9 @@ d'écrire les fonctions d'égalité pour les fonctions en *By* consiste à impor
 > on :: (b -> b -> c) -> (a -> b) -> a -> a -> c
 > f `on` g = \x y -> f (g x) (g y)
 
-Ainsi, faire `(==) \`on\` (> 0)` retourne une fonction d'égalité qui ressemble
-à `\x y -> (x > 0) == (y > 0)`. `on` est très utilisée avec les fonctions *By*
-parce qu'avec elle, on peut faire :
+Ainsi, faire <code>(==) \`on\` (> 0)</code> retourne une fonction d'égalité qui
+ressemble à `\x y -> (x > 0) == (y > 0)`. `on` est très utilisée avec les
+fonctions *By* parce qu'avec elle, on peut faire :
 
 > ghci> groupBy ((==) `on` (> 0)) values
 > [[-4.3,-2.4,-1.2],[0.4,2.3,5.9,10.5,29.1,5.3],[-2.4,-14.5],[2.9,2.3]]
@@ -655,13 +655,14 @@ utilisera la fonction `sortBy`.
 > ghci> sortBy (compare `on` length) xs
 > [[],[2],[2,2],[1,2,3],[3,5,4,3],[5,4,5,4,4]]
 
-Génial ! `compare \`on\` length`… man, on dirait presque de l'anglais naturel !
-Si vous n'êtes pas certain de ce que fait `on` ici, `compare \`on\` length` est
-équivalent à `\x y -> length x \`compare\` length y`. Quand vous utilisez des
-fonctions en *By* qui attendent une fonction d'égalité, vous ferez souvent
-`(==) \`on\` something`, et quand vous utilisez des fonctions en *By* qui
-attendent une fonction de comparaison, vous ferez souvent `compare \`on\`
-length`.
+Génial ! <code>compare \`on\` length</code>… man, on dirait presque de
+l'anglais naturel !  Si vous n'êtes pas certain de ce que fait `on` ici,
+<code>compare \`on\` length</code> est équivalent à <code>\x y -> length x
+\`compare\` length y</code>. Quand vous utilisez des fonctions en *By* qui
+attendent une fonction d'égalité, vous ferez souvent <code>(==) \`on\`
+something</code>, et quand vous utilisez des fonctions en *By* qui attendent
+une fonction de comparaison, vous ferez souvent <code>compare \`on\`
+length</code>.
 
 <h2 id="data-char">
 Data.Char

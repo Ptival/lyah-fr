@@ -2427,11 +2427,11 @@ Mettons notre nouvelle amie `catch` à l'essai !
 
 Tout d'abord, vous verrez qu'on a mis des apostrophes renversées autour de
 `catch` pour l'utiliser de manière infixe, parce qu'elle prend deux paramètres.
-L'utiliser de manière infixe la rend plus lisible. Donc, `toTry \`catch\`
-handler` est la même chose que `catch toTry handler`, qui correspond bien à son
-type. `toTry` est une action I/O qu'on essaie d'exécuter, et `handler` est la
-fonction qui prend une `IOError` et retourne une action à exécuter en cas
-d'exception.
+L'utiliser de manière infixe la rend plus lisible. Donc, <code>toTry \`catch\`
+handler</code> est la même chose que `catch toTry handler`, qui correspond bien
+à son type. `toTry` est une action I/O qu'on essaie d'exécuter, et `handler`
+est la fonction qui prend une `IOError` et retourne une action à exécuter en
+cas d'exception.
 
 Essayons :
 
@@ -2485,8 +2485,9 @@ a pour type `IO a`, parce qu'elle ne retourne jamais de résultat, donc elle
 peut se faire passer pour une `IO anything`.
 
 Donc, si l'exception levée dans l'action I/O `toTry` qu'on a collée avec un
-bloc *do* n'est pas causée par l'inexistence du fichier, `toTry \`catch\`
-handler` va attraper cette exception et la lever à nouveau. Plutôt cool, hein ?
+bloc *do* n'est pas causée par l'inexistence du fichier, <code>toTry \`catch\`
+handler</code> va attraper cette exception et la lever à nouveau. Plutôt cool,
+hein ?
 
 Il y a plusieurs prédicats qui agissent sur des `IOError`, et lorsqu'une garde
 n'est pas évaluée comme `True`, l'évaluation passe à la prochaine garde. Les

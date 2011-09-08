@@ -1892,8 +1892,9 @@ Quand on a plusieurs listes et qu'on les `mappend` (ou `++`) ensemble, peu
 importe l'ordre dans lequel l'opération est effectuée, parce qu'au final, elles
 sont toutes à la suite l'une de l'autre de toute façon. De plus, la liste vide
 se comporte bien comme un élément neutre, donc tout va bien. Remarquez que les
-monoïdes ne nécessitent pas que `a \`mappend\` b` soit égal à `b \`mappend\`
-a`. Dans le cas des listes, clairement ce n'est pas le cas.
+monoïdes ne nécessitent pas que <code>a \`mappend\` b</code> soit égal à
+<code>b \`mappend\` a</code>. Dans le cas des listes, clairement ce n'est pas
+le cas.
 
 > ghci> "one" `mappend` "two"
 > "onetwo"
@@ -1994,10 +1995,10 @@ Quant à l'instance :
 >         mempty = Any False
 >         Any x `mappend` Any y = Any (x || y)
 
-Il s'appelle `Any` parce que `x \`mappend\` y` sera `True` si n'importe
-laquelle (NDT : en anglais, *any*) de ses valeurs est `True`. Même si trois ou
-plus `Bool` enveloppés dans `Any` sont `mappend` ensemble, le résultat sera
-toujours `True` lorsque n'importe lequel d'entre eux est `True` :
+Il s'appelle `Any` parce que <code>x \`mappend\` y</code> sera `True` si
+n'importe laquelle (NDT : en anglais, *any*) de ses valeurs est `True`. Même si
+trois ou plus `Bool` enveloppés dans `Any` sont `mappend` ensemble, le résultat
+sera toujours `True` lorsque n'importe lequel d'entre eux est `True` :
 
 > ghci> getAny $ Any True `mappend` Any False
 > True
@@ -2088,10 +2089,11 @@ l'identité, on peut remarquer que si l'on glissait la même lettre à la même
 position dans les deux mots, leur ordre lexicographique ne changerait pas.
 `"oix"` est toujours lexicographiquement supérieur à `"oin"`.
 
-Il est important de noter que dans l'instance de `Monoid` pour `Ordering`, `x
-\`mappend\` y` n'est pas égal à `y \`mappend\` x`. Puisque le premier paramètre
-est conservé à moins d'être `EQ`, `LT \`mappend\` GT` retourne `LT`, alors que
-`GT \`mappend\` LT` retournera `GT` :
+Il est important de noter que dans l'instance de `Monoid` pour `Ordering`,
+<code>x \`mappend\` y</code> n'est pas égal à <code>y \`mappend\` x</code>.
+Puisque le premier paramètre est conservé à moins d'être `EQ`, <code>LT
+\`mappend\` GT</code> retourne `LT`, alors que <code>GT \`mappend\` LT</code>
+retournera `GT` :
 
 > ghci> LT `mappend` GT
 > LT

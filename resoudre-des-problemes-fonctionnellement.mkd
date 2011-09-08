@@ -28,10 +28,10 @@ Calculatrice de notation polonaise inverse
 Généralement, lorsqu'on écrit des expressions mathématiques à l'école, on les
 écrit de manière infixe. Par exemple, on écrit `10 - (4 + 3) * 2`. `+`, `*` et
 `-` sont des opérateurs infixes, tout comme les fonctions infixes qu'on a
-rencontrées en Haskell (`+`, `\`elem\``, etc.). C'est pratique puisqu'en tant
-qu'humains, il nous est facile de décomposer cette expression dans notre
-esprit. L'inconvénient, c'est qu'on a besoin de parenthèses pour indiquer la
-précédence.
+rencontrées en Haskell (`+`, <code>\`elem\`</code>, etc.). C'est pratique
+puisqu'en tant qu'humains, il nous est facile de décomposer cette expression
+dans notre esprit. L'inconvénient, c'est qu'on a besoin de parenthèses pour
+indiquer la précédence.
 
 La [notation polonaise
 inverse](http://fr.wikipedia.org/wiki/Notation_polonaise_inverse) est une autre
