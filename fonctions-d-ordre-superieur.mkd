@@ -894,10 +894,11 @@ peut par exemple mapper l'application de fonction sur une liste de fonctions.
 Composition de fonctions
 </h2>
 
-En mathématique, la composition de fonctions est définie ainsi : TODO, ce qui
-signifie que deux fonctions produisent une nouvelle fonction qui, lorsqu'elle
-est appelée avec un paramètre, disons x, est équivalent à l'appel de g sur x,
-puis l'appel de f sur le résultat.
+En mathématique, la composition de fonctions est définie ainsi : ![composition
+de fonctions](img/composition.png), ce qui signifie que deux fonctions
+produisent une nouvelle fonction qui, lorsqu'elle est appelée avec un
+paramètre, disons x, est équivalent à l'appel de g sur x, puis l'appel de f sur
+le résultat.
 
 En Haskell, la composition de fonction est plutôt identique. On utilise la
 fonction `.`, définie ainsi :
