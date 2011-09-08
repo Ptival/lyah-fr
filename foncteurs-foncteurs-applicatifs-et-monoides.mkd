@@ -2309,7 +2309,7 @@ une structure de données un peu plus complexe.
 
 Vous rappelez-vous la structure de donnée arborescente du chapitre [Créer nos
 propres types et classes de
-types](creer-nos-propres-types-et-classes-de-typesi#structures-de-donnees-recursives)
+types](creer-nos-propres-types-et-classes-de-types#structures-de-donnees-recursives)
 ? On l'avait définie ainsi :
 
 > data Tree a = Empty | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
