@@ -1701,7 +1701,7 @@ l'envelopper dans un nouveau type pour en faire une instance d'une classe de
 types, vous voulez sûrement un *newtype*. Et si vous voulez créer quelque chose
 de neuf, les chances sont bonnes que le mot-clé *data* soit ce qu'il vous faut.
 
-<h2 id="monoids">
+<h2 id="monoides">
 Monoïdes
 </h2>
 
