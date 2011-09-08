@@ -9,7 +9,7 @@
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-<a href="une-poignee-de-monades" class="nextlink">Une poignée de monades</a>
+<a href="pour-une-poignee-de-monades" class="nextlink">Pour une poignée de monades</a>
 </li>
 </ul>
 </div>
@@ -2443,7 +2443,7 @@ aux arbres, elles fonctionnent pour toute instance de `Foldable`.
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-<a href="une-poignee-de-monades" class="nextlink">Une poignée de monades</a>
+<a href="pour-une-poignee-de-monades" class="nextlink">Pour une poignée de monades</a>
 </li>
 </ul>
 </div>
