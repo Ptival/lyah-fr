@@ -551,17 +551,18 @@ Instances dérivées
 
 <img src="img/gob.png" alt="marin" class="right"/>
 
-Dans la section [Classes de types 101](TODO), nous avons vu les bases des
-classes de types. Nous avons dit qu'une classe de types est une sorte
-d'interface qui définit un comportement. Un type peut devenir une
-**instance** d'une classe de types s'il supporte ce comportement. Par exemple :
-le type `Int` est une instance d'`Eq` parce que cette classe définit le
-comportement de ce qui peut être testé pour l'égalité. Et puisqu'on peut tester
-l'égalité de deux entiers, `Int` est membre de la classe `Eq`. La vraie utilité
-vient des fonctions qui agissent comme l'interface d'`Eq`, à savoir `==` et
-`/=`. Si un type est membre d'`Eq`, on peut utiliser les fonctions `==` et `/=`
-avec des valeurs de ce type. C'est pourquoi des expressions comme `4 == 4` et
-`"foo" /= "bar"` sont correctement typées.
+Dans la section [Classes de types
+101](types-et-classes-de-types#classes-de-types-101), nous avons vu les bases
+des classes de types. Nous avons dit qu'une classe de types est une sorte
+d'interface qui définit un comportement. Un type peut devenir une **instance**
+d'une classe de types s'il supporte ce comportement. Par exemple : le type
+`Int` est une instance d'`Eq` parce que cette classe définit le comportement de
+ce qui peut être testé pour l'égalité. Et puisqu'on peut tester l'égalité de
+deux entiers, `Int` est membre de la classe `Eq`. La vraie utilité vient des
+fonctions qui agissent comme l'interface d'`Eq`, à savoir `==` et `/=`. Si un
+type est membre d'`Eq`, on peut utiliser les fonctions `==` et `/=` avec des
+valeurs de ce type. C'est pourquoi des expressions comme `4 == 4` et `"foo" /=
+"bar"` sont correctement typées.
 
 Nous avons aussi mentionné qu'elles sont souvent confondues avec les classes de
 langages comme Java, Python, C++ et autres, ce qui sème la confusion dans

@@ -375,9 +375,10 @@ qui est plus lisible en fonction du code et du contexte. L'équivalent pour
 compréhension est soit en filtrant plusieurs fois d'affilée, soit en fusionnant
 des prédicats à l'aide de `&&`.
 
-Vous souvenez-vous de la fonction quicksort du [chapitre précédent](TODO) ?
-Nous avions utilisé des listes en compréhension pour filtrer les éléments plus
-petits que le pivot. On peut faire de même avec `filter` :
+Vous souvenez-vous de la fonction quicksort du [chapitre
+précédent](recursivite) ?  Nous avions utilisé des listes en compréhension pour
+filtrer les éléments plus petits que le pivot. On peut faire de même avec
+`filter` :
 
 > quicksort :: (Ord a) => [a] -> [a]
 > quicksort [] = []

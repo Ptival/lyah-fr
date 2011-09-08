@@ -542,7 +542,7 @@ car c'est plus simple à lire.
 > False
 
 C'était un premier tour des fonctions qui opérent sur des listes. Nous en
-verrons d'autres [plus tard](TODO).
+verrons d'autres [plus tard](modules#data-list).
 
 <h2 id="texas-rangees">
 Texas rangées

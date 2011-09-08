@@ -261,12 +261,13 @@ GHCi et qu'on tape Entrée, il va l'évaluer (autant que nécessaire) et appeler
 terminal en appelant implicitement `putStrLn`.
 
 Vous vous souvenez des liaisons *let* ? Si ce n'est pas le cas,
-rafraîchissez-vous l'esprit en lisant [cette section](TODO). Elles sont de la
-forme `let bindings in expression`, où `bindings` sont les noms à donner aux
-expressions et `expression` est l'expression évaluée qui peut voir ces
-liaisons. On a aussi dit que dans les listes en compréhension, la partie *in*
-n'était pas nécessaire. Eh bien, on peut aussi les utiliser dans les blocs *do*
-comme on le faisait dans les listes en compréhension. Regardez :
+rafraîchissez-vous l'esprit en lisant [cette
+section](syntaxe-des-fonctions#let-it-be). Elles sont de la forme `let bindings
+in expression`, où `bindings` sont les noms à donner aux expressions et
+`expression` est l'expression évaluée qui peut voir ces liaisons. On a aussi
+dit que dans les listes en compréhension, la partie *in* n'était pas
+nécessaire. Eh bien, on peut aussi les utiliser dans les blocs *do* comme on le
+faisait dans les listes en compréhension. Regardez :
 
 > import Data.Char
 >
@@ -1024,8 +1025,9 @@ lisez ceci tout haut, cela donne : `openFile` prend un chemin vers un fichier
 et un `IOMode` et retourne une action I/O qui va ouvrir le fichier et encapsule
 pour résultat la poignée vers le fichier associé.
 
-`FilePath` est juste un [synonyme du type](TODO) `String`, simplement défini
-comme :
+`FilePath` est juste un [synonyme du
+type](creer-nos-propres-types-et-classes-de-types#synonymes-de-types) `String`,
+simplement défini comme :
 
 > type FilePath = String
 
@@ -2473,13 +2475,14 @@ est un prédicat sur les `IOError`, ce qui signifie que c'est une fonction
 prenant une `IOError` et retournant `True` ou `False`, ayant donc pour type
 `isDoesNotExistError :: IOError -> Bool`. On utilise cette fonction sur
 l'exception que notre gestionnaire reçoit pour savoir si c'est une erreur
-causée par l'inexistence du fichier. On utilise la syntaxe des [gardes](TODO)
-ici, mais on aurait aussi pu utiliser un *if else*. Si ce n'était pas causé par
-un fichier inexistant, on lève à nouveau l'exception passée au gestionnaire à
-l'aide de la fonction `ioError`. Elle a pour type `ioError :: IOError -> IO a`,
-donc elle prend une `IOError` et produit une action I/O qui va lever cette
-exception. L'action I/O a pour type `IO a`, parce qu'elle ne retourne jamais de
-résultat, donc elle peut se faire passer pour une `IO anything`.
+causée par l'inexistence du fichier. On utilise la syntaxe des
+[gardes](syntaxe-des-fonctions#gardes-gardes) ici, mais on aurait aussi pu
+utiliser un *if else*. Si ce n'était pas causé par un fichier inexistant, on
+lève à nouveau l'exception passée au gestionnaire à l'aide de la fonction
+`ioError`. Elle a pour type `ioError :: IOError -> IO a`, donc elle prend une
+`IOError` et produit une action I/O qui va lever cette exception. L'action I/O
+a pour type `IO a`, parce qu'elle ne retourne jamais de résultat, donc elle
+peut se faire passer pour une `IO anything`.
 
 Donc, si l'exception levée dans l'action I/O `toTry` qu'on a collée avec un
 bloc *do* n'est pas causée par l'inexistence du fichier, `toTry \`catch\`

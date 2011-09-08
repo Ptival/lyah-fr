@@ -75,9 +75,9 @@ Apprenez Haskell pour le meilleur !
     + [D'Heathrow à Londres](resoudre-des-problemes-fonctionnellement#d-heathrow-a-londres)
 
 #. [Foncteurs, foncteurs applicatifs et monoïdes](foncteurs-foncteurs-applicatifs-et-monoides)
-    + [Foncteurs revisités](foncteurs-foncteurs-applicatifs-et-monoides#foncteurs-revisités)
+    + [Foncteurs revisités](foncteurs-foncteurs-applicatifs-et-monoides#foncteurs-revisites)
     + [Foncteurs applicatifs](foncteurs-foncteurs-applicatifs-et-monoides#foncteurs-applicatifs)
-    + [Le mot-clé newtype](foncteurs-foncteurs-applicatifs-et-monoides#le-mot-clé-newtype)
+    + [Le mot-clé newtype](foncteurs-foncteurs-applicatifs-et-monoides#le-mot-cle-newtype)
     + [Monoïdes](foncteurs-foncteurs-applicatifs-et-monoides#monoides)
 
 Ce travail est une traduction de [Learn You a Haskell For Great

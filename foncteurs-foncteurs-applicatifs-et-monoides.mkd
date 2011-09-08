@@ -40,7 +40,7 @@ Dans ce chapitre, on va regarder les foncteurs d'un peu plus près, ainsi que
 des versions plus fortes et utiles de foncteurs, appelés foncteurs applicatifs.
 On va aussi s'intéresser aux monoïdes, qui sont un peu comme des chaussettes.
 
-<h2 id="foncteurs-revisités">
+<h2 id="foncteurs-revisites">
 Foncteurs revisités
 </h2>
 
@@ -1362,7 +1362,7 @@ pouvant échouer, etc. en utilisant le style applicatif. Simplement en utilisant
 uniformément sur n'importe quel nombre de foncteurs applicatifs, et profiter de
 la sémantique de chacun d'entre eux.
 
-<h2 id="le-mot-clé-newtype">
+<h2 id="le-mot-cle-newtype">
 Le mot-clé newtype
 </h2>
 
