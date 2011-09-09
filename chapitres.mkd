@@ -80,6 +80,29 @@ Apprenez Haskell pour le meilleur !
     + [Le mot-clé newtype](foncteurs-foncteurs-applicatifs-et-monoides#le-mot-cle-newtype)
     + [Monoïdes](foncteurs-foncteurs-applicatifs-et-monoides#monoides)
 
+#. [Pour une poignée de monades](pour-une-poignee-de-monades)
+    + [Trempons-nous les pieds avec Maybe](pour-une-poignee-de-monades#trempons-nous-les-pieds-avec-maybe)
+    + [La classe de types Monad](pour-une-poignee-de-monades#la-classe-de-types-monad)
+    + [Le funambule](pour-une-poignee-de-monades#le-funambule)
+    + [Notation do](pour-une-poignee-de-monades#notation-do)
+    + [La monade liste](pour-une-poignee-de-monades#la-monade-liste)
+    + [Les lois des monades](pour-une-poignee-de-monades#les-lois-des-monades)
+
+#. [Et pour quelques monades de plus](et-pour-quelques-monades-de-plus)
+    + [Lui écrire ? Je la connais à peine !](et-pour-quelques-monades-de-plus#lui-ecrire-je-la-connais-a-peine)
+    + [La lire ? Pas cette blague encore.](et-pour-quelques-monades-de-plus#la-lire-pas-cette-blague-encore)
+    + [Calcul à états dans tous ses états](et-pour-quelques-monades-de-plus#calcul-a-etats-dans-tous-ses-etats)
+    + [Erreur, erreur, ma belle erreur](et-pour-quelques-monades-de-plus#erreur-erreur-ma-belle-erreur)
+    + [Quelques fonctions monadiques utiles](et-pour-quelques-monades-de-plus#quelques-fonctions-monadiques-utiles)
+    + [Créer des monades](et-pour-quelques-monades-de-plus#creer-des-monades)
+
+#. [Zippeurs](zippeurs)
+    + [Une petite balade](zippeurs#une-petite-balade)
+    + [Une traînée de miettes](zippeurs#une-trainee-de-miettes)
+    + [Concentrons-nous sur les listes](zippeurs#concentrons-nous-sur-les-listes)
+    + [Un système de fichiers élémentaire](zippeurs#un-systeme-de-fichiers-elementaire)
+    + [Attention à la marche](zippeurs#attention-a-la-marche)
+
 Ce travail est une traduction de [Learn You a Haskell For Great
 Good!](http://learnyouahaskell.com/). Le texte original est de Miran Lipovača,
 la traduction a été réalisée par Valentin Robert. Le texte original est

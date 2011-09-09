@@ -709,8 +709,8 @@ applicatif (i.e. quand vous les utilisez avec `<*>`), sinon utilisez `Just`.
 Les quatre premières lignes entrées montrent comment la fonction extraite est
 mappée, mais dans ces exemples, elle aurait tout aussi bien pu être mappée
 immédiatement sur les foncteurs. La dernière ligne est intéressante parce qu'on
-essaie d'extraire une fonction d'un `Nothin` et de le mapper sur quelque chose,
-ce qui résulte en un `Nothing` évidemment.
+essaie d'extraire une fonction d'un `Nothing` et de le mapper sur quelque
+chose, ce qui résulte en un `Nothing` évidemment.
 
 Avec des foncteurs normaux, on peut juste mapper une fonction sur un foncteur,
 et on ne peut plus récupérer ce résultat hors du foncteur de manière générale,
@@ -2364,7 +2364,7 @@ créant des monoïdes, donc si notre arbre est vide, la valeur monoïdale sera
 
 Le cas d'un nœud non vide est un peu plus intéressant. Il contient deux
 sous-arbres ainsi qu'une valeur. Dans ce cas, on `foldMap` récursivement la
-même fonction `f` sur les sous-arbres gauche et droite. Souvenez-vous, notre
+même fonction `f` sur les sous-arbres gauche et droit. Souvenez-vous, notre
 `foldMap` retourne une simple valeur monoïdale. On applique également la
 fonction `f` à la valeur du nœud. À présent, nous avons trois valeurs
 monoïdales (deux venant des sous-arbres et une venant de l'application de `f`
