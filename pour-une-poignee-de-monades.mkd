@@ -117,7 +117,7 @@ Trempons-nous les pieds avec Maybe
 Maintenant qu'on a une vague idée de ce que sont les monades, voyons si l'on
 peut éclaircir cette notion un tant soit peu.
 
-Sans surprises, `Maybe` est une monade, alors explorons cela encore un peu et
+Sans surprise, `Maybe` est une monade, alors explorons cela encore un peu et
 voyons si l'on peut combiner cela avec ce qu'on sait des monades.
 
 <div class="hintbox">
@@ -1157,16 +1157,16 @@ sous forme de liste en compréhension :
 <h3>La quête d'un cavalier</h3>
 
 Voici un problème qui se prête particulièrement bien à une résolution non
-déterministe. Disons que vous ayez un plateau d'échecs, et seulement un
-cavalier placé dessus. On souhaite savoir si le cavalier peut atteindre une
-position donnée en trois mouvements. On utilisera simplement une paire de
-nombres pour représenter la position du cavalier sur le plateau. Le premier
-nombre détermine la colonne, et le second la ligne.
+déterministe. Disons que vous ayez un échiquier, et seulement un cavalier placé
+dessus. On souhaite savoir si le cavalier peut atteindre une position donnée en
+trois mouvements. On utilisera simplement une paire de nombres pour représenter
+la position du cavalier sur l'échiquier. Le premier nombre détermine la
+colonne, et le second la ligne.
 
 <img src="img/chess.png" alt="hu je suis un cheval" class="center"/>
 
-Créons un synonyme de type pour la position actuelle du cavalier sur le plateau
-:
+Créons un synonyme de type pour la position actuelle du cavalier sur
+l'échiquier :
 
 > type KnightPos = (Int,Int)
 
@@ -1189,8 +1189,8 @@ prochaines positions :
 Le cavalier peut toujours avancer d'une case horizontalement et de deux
 verticalement, ou bien de deux cases horizontalement et d'une verticalement.
 `(c', r')` prend chaque valeur de la liste des mouvements, puis `guard`
-s'assure que le déplacement obtenu `(c', r')`, reste bien dans les limites du
-plateau. Si ce n'est pas le cas, elle produit une liste vide qui cause un
+s'assure que le déplacement obtenu `(c', r')`, reste bien dans les limites de
+l'échiquier. Si ce n'est pas le cas, elle produit une liste vide qui cause un
 échec, et `return (c', r')` n'est pas exécutée pour cette position là.
 
 Cette fonction peut être réécrite sans utiliser les listes comme des monades,

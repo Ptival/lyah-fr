@@ -91,7 +91,7 @@ Apprenez Haskell pour le meilleur !
 #. [Et pour quelques monades de plus](et-pour-quelques-monades-de-plus)
     + [Lui écrire ? Je la connais à peine !](et-pour-quelques-monades-de-plus#lui-ecrire-je-la-connais-a-peine)
     + [La lire ? Pas cette blague encore.](et-pour-quelques-monades-de-plus#la-lire-pas-cette-blague-encore)
-    + [Calcul à états dans tous ses états](et-pour-quelques-monades-de-plus#calcul-a-etats-dans-tous-ses-etats)
+    + [Calculs à états dans tous leurs états](et-pour-quelques-monades-de-plus#calculs-a-etats-dans-tous-leurs-etats)
     + [Erreur, erreur, ma belle erreur](et-pour-quelques-monades-de-plus#erreur-erreur-ma-belle-erreur)
     + [Quelques fonctions monadiques utiles](et-pour-quelques-monades-de-plus#quelques-fonctions-monadiques-utiles)
     + [Créer des monades](et-pour-quelques-monades-de-plus#creer-des-monades)
