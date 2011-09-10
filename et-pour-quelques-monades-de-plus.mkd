@@ -23,8 +23,8 @@ valeurs dans un contexte et appliquer des fonctions dessus, et comment utiliser
 elles-même pendant que le contexte était géré pour nous.
 
 Nous avons croisé la monade `Maybe` et avons vu comment elle ajoutait un
-contexte d'échec potentiel. Nous avons appris la monade liste et vu comment
-elle nous permettait d'introduire aisément du non déterminisme dans nos
+contexte d'échec potentiel. Nous avons appris la monade des listes et vu
+comment elle nous permettait d'introduire aisément du non déterminisme dans nos
 programmes. Nous avons aussi appris comment travailler dans la monade `IO`,
 avant même de savoir ce qu'était une monade !
 
@@ -1871,11 +1871,11 @@ d'`id` on utilise `return`. On n'a même pas à remplacer `foldr` par `foldM`
 puisque la fonction `<=<` s'occupe de gérer la composition de manière
 monadique.
 
-Quand on s'habituait à la monade liste dans le [chapitre
-précédent](pour-une-poignee-de-monades#la-monade-liste), on l'utilisait pour
-trouver si un cavalier pouvait aller d'une position d'un échiquier à une autre
-en exactement trois mouvements. On avait une fonction nommée `moveKnight` qui
-prenait la position du cavalier sur l'échiquier et retournait tous les
+Quand on s'habituait à la monade des listes dans le [chapitre
+précédent](pour-une-poignee-de-monades#la-monade-des-listes), on l'utilisait
+pour trouver si un cavalier pouvait aller d'une position d'un échiquier à une
+autre en exactement trois mouvements. On avait une fonction nommée `moveKnight`
+qui prenait la position du cavalier sur l'échiquier et retournait tous les
 déplacements possibles au prochain tour. Puis, pour générer toutes les
 positions possibles après trois mouvements, on a créé la fonction suivante :
 
@@ -2082,9 +2082,9 @@ résultante, chaque probabilité résultant de la fonction serait multipliée pa
 la probabilité `1%1` créée par `return`, donc le contexte serait inaffecté. Le
 raisonnement montrant que `m >>= return` est égal à `m` est similaire. La
 troisième loi dit que `f <=< (g <=< h)` devrait être égal à `(f <=< g) <=< h`.
-Elle tient aussi, parce qu'elle tient pour la monade liste qui est la base de
-la monade de probabilité, et parce que la multiplication est associative. `1%2
-* (1%3 * 1%5)` est égal à `(1%2 * 1%3) * 1%5`.
+Elle tient aussi, parce qu'elle tient pour la monade des listes qui est la base
+de la monade de probabilité, et parce que la multiplication est associative.
+`1%2 * (1%3 * 1%5)` est égal à `(1%2 * 1%3) * 1%5`.
 
 À présent qu'on a une monade, que peut-on en faire ? Eh bien, elle peut nous
 aider à faire des calculs avec des probabilités. On peut traiter des évènements

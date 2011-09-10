@@ -85,7 +85,7 @@ Apprenez Haskell pour le meilleur !
     + [La classe de types Monad](pour-une-poignee-de-monades#la-classe-de-types-monad)
     + [Le funambule](pour-une-poignee-de-monades#le-funambule)
     + [Notation do](pour-une-poignee-de-monades#notation-do)
-    + [La monade liste](pour-une-poignee-de-monades#la-monade-liste)
+    + [La monade des listes](pour-une-poignee-de-monades#la-monade-des-listes)
     + [Les lois des monades](pour-une-poignee-de-monades#les-lois-des-monades)
 
 #. [Et pour quelques monades de plus](et-pour-quelques-monades-de-plus)

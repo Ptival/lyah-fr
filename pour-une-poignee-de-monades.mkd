@@ -911,8 +911,8 @@ comprenant le motif était remplacée par `Nothing`. Essayons :
 Le motif échoué a provoqué l'échec dans le conxtexte de la monade plutôt que
 de provoquer un échec du programme entier, ce qui est plutôt sympa.
 
-<h2 id="la-monade-liste">
-La monade liste
+<h2 id="la-monade-des-listes">
+La monade des listes
 </h2>
 
 <img src="img/deadcat.png" alt="chat mort" class="left"/>
@@ -1079,7 +1079,7 @@ contiennent le chiffre `7` :
 On applique `show` à `x` pour transformer notre nombre en chaîne de caractères,
 et on vérifie si le caractère `7` fait partie de cette chaîne. Plutôt malin.
 Pour voir comment le filtrage dans les listes en compréhension se traduit dans
-la monade liste, il nous faut regarder la fonction `guard` et la classe de
+la monade des listes, il nous faut regarder la fonction `guard` et la classe de
 types `MonadPlus`. La classe de type `MonadPlus` est pour les monades qui
 peuvent aussi se comporter en monoïdes. Voici sa définition :
 
@@ -1116,8 +1116,8 @@ crée une valeur monadique échouée. La voici en action :
 > ghci> guard (1 > 2) :: [()]
 > []
 
-Ça a l'air intéressant, mais comment est-ce utile ? Dans la monade liste, on
-l'utilise pour filtrer des calculs non déterministes. Observez :
+Ça a l'air intéressant, mais comment est-ce utile ? Dans la monade des listes,
+on l'utilise pour filtrer des calculs non déterministes. Observez :
 
 > ghci> [1..50] >>= (\x -> guard ('7' `elem` show x) >> return x)
 > [7,17,27,37,47]
@@ -1315,7 +1315,7 @@ connaît sa valeur. Voici `return` utilisé avec `Maybe` :
 > ghci> (\x -> Just (x+100000)) 3
 > Just 100003
 
-Pour la monade liste, `return` place une valeur dans une liste singleton.
+Pour la monade des listes, `return` place une valeur dans une liste singleton.
 L'implémentation de `>>=` prend chaque valeur de la liste et applique la
 fonction dessus, mais puisqu'il n'y a qu'une valeur dans une liste singleton,
 c'est la même chose que d'appliquer la fonction à la valeur :
@@ -1455,8 +1455,8 @@ return</span> est égal à <span class="law">f</span> et celle à droite dit que
 class="law">f</span>.
 
 Dans ce chapitre, on a vu quelques bases des monades et appris comment la
-monade `Maybe` et la monade liste fonctionnent. Dans le prochain chapitre, nous
-regarderons tout un tas d'autre monades cool, et on apprendra à créer les
+monade `Maybe` et la monade des listes fonctionnent. Dans le prochain chapitre,
+nous regarderons tout un tas d'autre monades cool, et on apprendra à créer les
 nôtres.
 
 <div class="prev-toc-next">
