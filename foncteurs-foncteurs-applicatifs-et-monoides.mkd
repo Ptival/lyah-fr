@@ -44,6 +44,9 @@ On va aussi s'intéresser aux monoïdes, qui sont un peu comme des chaussettes.
 Foncteurs revisités
 </h2>
 
+<img src="img/frogtor.png" alt="les grenouilles n'ont même pas besoin d'argent"
+class="right"/>
+
 On a déjà parlé des foncteurs dans [leur propre petite
 section](creer-nos-propres-types-et-classes-de-types#la-classe-de-types-functor).
 Si vous ne l'avez pas encore lue, vous devriez probablement le faire à présent,
@@ -1505,6 +1508,8 @@ et donc, si l'on considère `fmap` comme vu des `Maybe`, elle se comporte ainsi 
 
 > fmap :: (a -> b) -> Maybe a -> Maybe b
 
+<img src="img/krakatoa.png" alt="wow, super méchant" class="right"/>
+
 N'est-ce pas chouette ? Maintenant, si l'on voulait faire des tuples une
 instance de `Functor` de manière à ce que si l'on applique `fmap` sur un tuple,
 elle est appliquée à la première composante du tuple ? Ainsi, faire `fmap (+3)
@@ -1781,7 +1786,7 @@ peuvent agir comme des monoïdes. Voyons comment la classe de types est définie
 >     mconcat :: [m] -> m
 >     mconcat = foldr mappend mempty
 
-<img src="img/balloondog" alt="chien en ballons" class="right"/>
+<img src="img/balloondog.png" alt="chien en ballons" class="right"/>
 
 La classe de types `Monoid` est définie dans `Data.Monoid`. Prenons un peu de
 temps pour la découvrir.
