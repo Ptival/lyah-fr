@@ -686,7 +686,7 @@ votre tête. De rien !
 La lire ? Pas cette blague encore.
 </h2>
 
-<img src="revolver.png" alt="pan t'es mort" class="left"/>
+<img src="img/revolver.png" alt="pan t'es mort" class="left"/>
 
 Dans le [chapitre sur les foncteurs
 applicatifs](foncteurs-foncteurs-applicatifs-et-monoides), on a vu que le type
