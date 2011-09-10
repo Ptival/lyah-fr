@@ -14,7 +14,7 @@
 </ul>
 </div>
 
-La combinaison de la pureté, des fonctions d'ordre supérieur, des type de
+La combinaison de la pureté, des fonctions d'ordre supérieur, des types de
 données algébriques paramétrés, et des classes de types que propose Haskell
 nous permet d'implémenter du polymorphisme à un niveau bien plus élevé que dans
 la plupart des autres langages. On n'a pas besoin de penser aux types comme
@@ -28,7 +28,7 @@ Les classes de types sont ouvertes, ce qui veut dire qu'on peut définir nos
 propres types de données, réfléchir à ce qu'ils peuvent faire, et les connecter
 aux classes de types qui définissent ses comportements. Grâce à cela, et au
 système de types d'Haskell qui nous permet de savoir beaucoup de choses sur une
-fonction rien qu'en regardant sa déclaration de types, on peut définir des
+fonction rien qu'en regardant sa déclaration de type, on peut définir des
 classes de types qui définissent des comportements très généraux et abstraits.
 On a vu des classes de types définissant des opérateurs pour tester l'égalité
 ou comparer des choses. Ce sont des comportements assez abstraits et élégants,
@@ -149,7 +149,7 @@ type `IO String` et mapper `reverse` sur elle nous donne une action I/O qui va
 aller dans le monde réel et récupérer une ligne, puis appliquer `reverse`
 dessus. Tout comme on peut appliquer une fonction à quelque chose enfermé dans
 une boîte `Maybe`, on peut appliquer une fonction à quelque chose enfermé dans
-une boît `IO`, seulement la boîte doit toujours aller dans le monde réel pour
+une boîte `IO`, seulement la boîte doit toujours aller dans le monde réel pour
 obtenir quelque chose. Ensuite, lorsqu'on la lie à quelque chose avec `<-`, le
 nom sera lié au résultat auquel `reverse` aura déjà été appliquée.
 
@@ -185,17 +185,17 @@ C'est comme écrire `(\xs -> intersperse '-' (reverse (map toUpper xs)))`, mais
 plus joli.
 
 Une autre instance de `Functor` qu'on a utilisée tout du long sans se douter
-qu'elle était un foncteur est `(->) r`. Vous êtes sûrement confus à présent,
-qu'est-ce que ça veut dire `(->) r` ? Le type de fonctions `r -> a` peut être
-réécrit `(->) r a`, tout comme `2 + 3` peut être réécrit `(+) 2 3`. Quand on
-regarde `(->) r a`, on peut voir `(->)` sous un nouveau jour, et s'apercevoir
-que c'est juste un constructeur de types qui prend deux paramètres de types,
-tout comme `Either`. Mais souvenez-vous, on a dit qu'un constructeur de types
-doit prendre exactement un paramètre pour être une instance de `Functor`. C'est
-pourquoi `(->)` ne peut pas être une instance de `Functor`, mais si on
-l'applique partiellement en `(->) r`, ça ne pose plus de problème. Si la
-syntaxe nous permettait d'appliquer partiellement les constructeurs de type
-avec des sections (comme l'on peut partiellement appliquer `+` en faisant
+qu'elle était un foncteur est `(->) r`. Vous êtes sûrement un peu perdu à
+présent, qu'est-ce que ça veut dire `(->) r` ? Le type de fonctions `r -> a`
+peut être réécrit `(->) r a`, tout comme `2 + 3` peut être réécrit `(+) 2 3`.
+Quand on regarde `(->) r a`, on peut voir `(->)` sous un nouveau jour, et
+s'apercevoir que c'est juste un constructeur de types qui prend deux paramètres
+de types, tout comme `Either`. Mais souvenez-vous, on a dit qu'un constructeur
+de types doit prendre exactement un paramètre pour être une instance de
+`Functor`. C'est pourquoi `(->)` ne peut pas être une instance de `Functor`,
+mais si on l'applique partiellement en `(->) r`, ça ne pose plus de problème.
+Si la syntaxe nous permettait d'appliquer partiellement les constructeurs de
+types avec des sections (comme l'on peut partiellement appliquer `+` en faisant
 `(2+)`, qui est équivalent à `(+) 2`), vous pourriez réécrire `(->) r` comme
 `(r ->)`. Comment est-ce que les fonctions sont-elles des foncteurs ? Eh bien,
 regardons l'implémentation, qui se trouve dans `Control.Monad.Instances`.
@@ -229,12 +229,12 @@ fonctions. On a donc `fmap :: (a -> b) -> (r -> a) -> (r -> b)`.
 Hmmm OK. Mapper une fonction sur une fonction produit une fonction, tout comme
 mapper une fonction sur un `Maybe` produit un `Maybe` et mapper une fonction
 sur une liste produit une liste. Qu'est-ce que le type `fmap :: (a -> b) -> (r
--> a) -> (r -> b)` nous indique ? Eh bien, on voit qu'elle prend une fonction
-de `a` vers `b` et une fonction de `r` vers `a`, et retourne une fonction de
-`r` vers `b`. Cela ne vous rappelle rien ? Oui ! La composition de fonctions !
-On connecte la sortie de `r -> a` à l'entrée de `a -> b` pour obtenir une
-fonction `r -> b`, ce qui est exactement ce que fait la composition de
-fonctions. Si vous regardez comment l'instance est définie plus ci-dessus, vous
+-> a) -> (r -> b)` nous indique-t-il ? Eh bien, on voit que la fonction prend
+une fonction de `a` vers `b` et une fonction de `r` vers `a`, et retourne une
+fonction de `r` vers `b`. Cela ne vous rappelle rien ? Oui ! La composition de
+fonctions !  On connecte la sortie de `r -> a` à l'entrée de `a -> b` pour
+obtenir une fonction `r -> b`, ce qui est exactement ce que fait la composition
+de fonctions. Si vous regardez comment l'instance est définie ci-dessus, vous
 verrez qu'on a juste composé les fonctions. Une autre façon d'écrire cette
 instance serait :
 
@@ -274,8 +274,8 @@ fonctions.
 
 Le fait que `fmap` soit la composition de fonctions quand elle est utilisée sur
 des fonctions n'est pas très utile pour l'instant, mais c'est tout du moins
-intéressant. Cela tord également notre esprit un peu et nous fait voir comment
-des choses agissant plutôt comme des calculs que comme des boîtes (tel `IO` et
+intéressant. Cela tord aussi un peu notre esprit et nous fait voir comment des
+choses agissant plutôt comme des calculs que comme des boîtes (tel `IO` et
 `(->) r`) peuvent elles aussi être des foncteurs. La fonction mappée sur un
 calcul agit comme ce calcul, mais modifie son résultat avec cette fonction.
 
@@ -361,12 +361,12 @@ il faut donc les tester soi-même.
 **La première loi des foncteurs dit que si l'on mappe la fonction `id` sur un
 foncteur, le foncteur retourné doit être identique au foncteur original.** Si
 on écrit cela plus formellement, cela signifie que <span class="law">fmap id =
-id</span>. En gros, cela dit que si l'on fait `fmap id` sur un foncteur, cela
-doit être pareil que de faire simplement `id` sur ce foncteur. Souvenez-vous,
-`id` est la fonction identité, qui retourne son paramètre à l'identique. Elle
-peut également être écrite `\x -> x`. Si l'on voit le foncteur comme quelque
-chose sur laquelle on peut mapper, alors la loi <span class="law">fmap
-id</span> peut sembler triviale ou évidente.
+id</span>. En gros, cela signifie que si l'on fait `fmap id` sur un foncteur,
+cela doit être pareil que de faire simplement `id` sur ce foncteur.
+Souvenez-vous, `id` est la fonction identité, qui retourne son paramètre à
+l'identique. Elle peut également être écrite `\x -> x`. Si l'on voit le
+foncteur comme quelque chose sur laquelle on peut mapper, alors la loi <span
+class="law">fmap id</span> peut sembler triviale ou évidente.
 
 Voyons si cette loi tient pour quelques foncteurs.
 
@@ -409,13 +409,13 @@ class="law">fmap (f . g) = fmap f . fmap g</span>. Ou, d'une autre façon, pour
 tout foncteur F, on souhaite : <span class="law">fmap (f . g) F = fmap f (fmap
 g F)</span>.
 
-Si l'on peut montrer qu'un type obéit ces deux lois des foncteurs, alors on
+Si l'on peut montrer qu'un type obéit à ces deux lois des foncteurs, alors on
 peut avoir l'assurance qu'il aura les mêmes propriétés fondamentales vis-à-vis
 du mappage. On sait que lorsque l'on fait `fmap` sur ce type, il ne se passera
 rien d'autre qu'un mappage, et il se comportera comme une chose sur laquelle on
 mappe, i.e. un foncteur. On peut voir si un type respecte la seconde loi en
 regardant l'implémentation de `fmap` pour ce type, et en utilisant la même
-méthode qu'on a utilisé pour voir si `Maybe` obéissait à la première loi.
+méthode qu'on a utilisée pour voir si `Maybe` obéissait à la première loi.
 
 Si vous le voulez, on peut vérifier que la seconde loi des foncteurs est
 vérifiée par `Maybe`. Si on fait `fmap (f . g)` sur `Nothing`, on obtient
@@ -495,7 +495,7 @@ pas le cas, il nous suffit de trouver un contre-exemple.
 Ah ! La première loi dit que mapper `id` sur un foncteur équivaut à appeler
 `id` sur ce même foncteur, mais dans cet exemple, ce n'est pas vrai pour notre
 foncteur `CMaybe`. Bien qu'il soit membre de la classe `Functor`, il n'obéit
-pas les lois des foncteurs, et n'est donc pas un foncteur. Si quelqu'un
+pas aux lois des foncteurs, et n'est donc pas un foncteur. Si quelqu'un
 utilisait notre type `CMaybe` comme un foncteur, il s'attendrait à ce qu'il
 obéisse aux lois des foncteurs, comme tout bon foncteur. Mais `CMaybe` échoue à
 être un foncteur bien qu'il puisse faire semblant d'en être un, et l'utiliser
@@ -508,7 +508,7 @@ faudrait que le champ `Int` ne soit pas modifié lors d'un `fmap`.
 
 Au départ, les lois des foncteurs peuvent sembler un peu déroutantes et peu
 nécessaires, mais on finit par s'apercevoir que si un type obéit à ces lois,
-alors on peut présumer de son comportement. Si un type obéit aux lois des
+alors on peut présumer son comportement. Si un type obéit aux lois des
 foncteurs, on sait qu'appeler `fmap` sur une valeur va seulement mapper la
 fonction, rien de plus. Cela amène à un code plus abstrait et extensible, parce
 qu'on peut utiliser ces lois pour raisonner sur le comportement de n'importe
@@ -544,7 +544,7 @@ sur des fonctions consiste juste à composer les fonctions (`fmap (+3) (*3)` est
 égal à `(+3) . (*3)`, qui est égal à `\x -> ((x*3)+3)`), parce qu'on prend une
 fonction comme `(*3)` et qu'on attache la transformation `(+3)` à sa sortie. Le
 résultat est toujours une fonction, seulement quand on lui donne une valeur,
-elle sera multipliée par trois, puis passera par la transformation attaché où
+elle sera multipliée par trois, puis passera par la transformation attachée où
 on lui ajoutera trois. C'est ce qui se passe avec la composition.
 
 <h2 id="foncteurs-applicatifs">
@@ -598,7 +598,7 @@ deuxième `a` doit également être un `Char`.
 On voit qu'en mappant des fonctions à plusieurs paramètres sur des foncteurs,
 on obtient des foncteurs qui contiennent des fonctions. Que peut-on faire de
 ceux-ci ? Pour commencer, on peut mapper sur ceux-ci des fonctions qui prennent
-en paramètres une fonction, parce que ce qui est dans le foncteur sera donné à
+en paramètre une fonction, parce que ce qui est dans le foncteur sera donné à
 la fonction mappée comme paramètre.
 
 > ghci> let a = fmap (*) [1,2,3,4]
@@ -638,7 +638,7 @@ type est membre d'`Applicative`, alors c'est aussi un `Functor`, et on peut
 donc utiliser `fmap` sur lui.
 
 La première méthode qu'elle définie est appelée `pure`. Sa déclaration de type
-est `pure :: a -> f a`. `f` jouer le rôle de notre instance de foncteur
+est `pure :: a -> f a`. `f` joue le rôle de notre instance de foncteur
 applicatif. Puisqu'Haskell a un très bon système de types, et puisqu'une
 fonction ne peut que prendre des paramètres et retourner une valeur, on peut
 dire beaucoup de choses avec une déclaration de type, et ceci n'est pas une
@@ -659,7 +659,7 @@ La fonction `<*>` est très intéressante. Sa déclaration de type est `f (a -> 
 et un foncteur, et applique cette fonction à l'intérieur du foncteur, `<*>`
 prend un foncteur contenant une fonction et un autre foncteur, et d'une
 certaine façon extrait la fonction du premier foncteur pour la mapper sur
-l'autre foncteur. Quand je dit *extrait*, je veux en fait presque dire
+l'autre foncteur. Quand je dis *extrait*, je veux en fait presque dire
 *exécute* puis extrait, peut-être même *séquence*. On verra pourquoi bientôt.
 
 Regardons l'implémentation de l'instance d'`Applicative` de `Maybe`.
@@ -770,7 +770,7 @@ définition :
 paramètres ou des noms des valeurs en général. Le `f` de la déclaration de la
 fonction ici est une variable de type avec une contrainte de classe disant que
 tout type remplaçant `f` doit être membre de la classe `Functor`. Le `f` dans
-le coprs de la fonction dénote une fonction qu'on mappe sur `x`. Le fait que
+le corps de la fonction dénote une fonction qu'on mappe sur `x`. Le fait que
 `f` soit utilisé pour représenter ces deux choses ne signifie pas qu'elles
 représentent la même chose.
 
@@ -851,7 +851,7 @@ fonction de la liste de gauche sur une valeur de la liste de droite.
 
 La liste de gauche contient trois fonctions, et la liste de droite contient
 trois valeurs, donc la liste résultante contient neuf éléments. Chaque fonction
-de la liste de gauche est appliqué à chaque valeur de la liste de droite. Si
+de la liste de gauche est appliquée à chaque valeur de la liste de droite. Si
 l'on a une liste de fonctions qui prennent deux paramètres, on peut les
 appliquer entre deux listes.
 
@@ -882,7 +882,7 @@ somme de deux calculs non déterministes avec `+`, qui produit ainsi un nouveau
 calcul non déterministe encore moins certain de son résultat.
 
 Le style applicatif sur les listes est souvent un bon remplaçant des listes en
-compréhensions. Dans le deuxième chapitre, on souhaitait connaître tous les
+compréhension. Dans le deuxième chapitre, on souhaitait connaître tous les
 produits possibles de `[2, 5, 10]` et `[8, 10, 11]`, donc on a fait :
 
 > ghci> [ x*y | x <- [2,5,10], y <- [8,10,11]]
@@ -997,8 +997,8 @@ Lorsqu'on encapsule une valeur dans un foncteur applicatif avec `pure`, le
 résultat retourné doit être cette valeur. Il nous faut un contexte minimal
 retournant cette valeur. C'est pourquoi, dans l'instance des fonctions, `pure`
 prend une valeur, et crée une fonction qui ignore le paramètre qu'elle reçoit
-pour retourner plutôt cette valeur là. Le type de `pure` spécialisée pour
-l'instance `(->) r` serait `pure :: a -> (r -> a)`.
+pour retourner plutôt cette valeur là. Le type de `pure` si elle était
+spécialisée pour l'instance `(->) r` serait `pure :: a -> (r -> a)`.
 
 > ghci> (pure 3) "blah"
 > 3
@@ -1061,8 +1061,7 @@ liste et une liste de valeurs retourne une liste de toutes les combinaisons
 possibles d'application d'une fonction de la liste de gauche sur une valeur de
 la liste de droite. Si l'on fait `[(+3),(*2)] <*> [1,2]`, `(+3)` est appliquée
 à la fois sur `1` et sur `2`, et `(*2)` est également appliquée avec `1` et
-`2`, ce qui nous donne une liste à quatre éléments, `[4, 5, 2, 4]`.  de
-fonctions et une liste de valeurs
+`2`, ce qui nous donne une liste à quatre éléments, `[4, 5, 2, 4]`.
 
 Cependant, `[(+3),(*2)] <*> [1,2]` pourrait aussi fonctionner de manière à ce
 que la première fonction de la liste de gauche soit appliquée avec la première
@@ -1147,7 +1146,9 @@ promeut en une fonction binaire sur deux foncteurs.
 
 Voici un concept intéressant : on peut prendre deux foncteurs applicatifs, et
 les combiner en un foncteur applicatif qui contient en lui les résultats de ces
-deux foncteurs applicatifs, sous forme d'une liste. Par exemple, on a `Just 3` et `Just 4`. Imaginons que ce deuxième a une liste singleton en lui, c'est très simple à réaliser :
+deux foncteurs applicatifs, sous forme d'une liste. Par exemple, on a `Just 3`
+et `Just 4`. Imaginons que ce deuxième a une liste singleton en lui, puisque
+c'est très simple à réaliser :
 
 > ghci> fmap (\x -> [x]) (Just 4)
 > Just [4]
@@ -1191,8 +1192,8 @@ cette expression se réduit en `(:) <$> Just 1 <*> ((:) <$> Just 2 <*> Just
 [])`, puis en `(:) <$> Just 1 <*> Just [2]` et finalement en `Just [1,2]` !
 
 Un autre moyen d'implémenter `sequenceA` est à l'aide d'un pli. Souvenez-vous,
-presque toute fonction parcourant une liste d'élément en accumulant un résultat
-peut être implémentée comme un pli.
+presque toute fonction parcourant une liste d'éléments en accumulant un
+résultat peut être implémentée comme un pli.
 
 > sequenceA :: (Applicative f) => [f a] -> f [a]
 > sequenceA = foldr (liftA2 (:)) (pure [])
@@ -1304,7 +1305,7 @@ car ça peut être un peu gratiné.
 [3,4] <*> [[]])`
 
 * On évalue maintenant la partie `(:) <$> [3,4] <*> [[]]`, qui va utiliser `:`
-sur toutes les valeurs possibles le la liste de gauche (`3` et `4` sont
+sur toutes les valeurs possibles de la liste de gauche (`3` et `4` sont
 possibles) et avec chaque valeur possible de la liste de droite (seule `[]` est
 possible), ce qui donne `[3:[], 4:[]]`, autrement dit `[[3],[4]]`. On a donc
 `(:) <$> [1,2] <*> [[3],[4]]`
@@ -1331,7 +1332,7 @@ de ces actions I/O. Ceci parce que, pour changer une valeur `[IO a]` en une
 valeur `IO [a]`, c'est-à-dire créer une action I/O qui retourne une liste de
 tous les résultats, il faut ordonnancer les action I/O afin qu'elles soient
 effectuées l'une après l'autre lorsque l'évaluation sera forcée. On ne peut en
-effet pas obtenir le résultat d'une action I/O dans l'exécuter.
+effet pas obtenir le résultat d'une action I/O sans l'exécuter.
 
 > ghci> sequenceA [getLine, getLine, getLine]
 > heyh
@@ -1380,7 +1381,7 @@ pourquoi on voudrait pouvoir faire cela.
 Dans la section précédente, on a vu qu'il y a plusieurs manières de définir un
 foncteur applicatif pour le type des listes. L'une d'elles fait prendre à `<*>`
 chaque fonction d'une liste passée en paramètre de gauche et la lui fait
-appliquer à chaque valeur d'une liste passee en paramètre de droite, retournant
+appliquer à chaque valeur d'une liste passée en paramètre de droite, retournant
 toutes les combinaisons possibles d'application de fonctions de la liste de
 gauche sur des valeurs de la liste de droite.
 
@@ -1422,7 +1423,7 @@ deux manières de faire d'un type existant une instance d'une classe de types,
 on a utilisé le mot clé *data* pour juste envelopper ce type dans un autre
 type, et fait de ce second type une instance de la seconde manière.
 
-Le mot-cle *newtype* en Haskell est fait exactement pour ces cas où l'on veut
+Le mot-clé *newtype* en Haskell est fait exactement pour ces cas où l'on veut
 juste prendre un type et l'encapsuler dans quelque chose pour le présenter
 comme un nouveau type. Dans la bibliothèque, `ZipList a` est définie comme :
 
@@ -1434,9 +1435,10 @@ utilisez le mot-clé *data* pour envelopper un type, il y aura un coût à
 l'exécution pour faire l'encapsulage et le décapsulage. Alors qu'avec le
 mot-cle *newtype*, Haskell sait que vous utilisez cela juste pour encapsuler un
 type existant dans un nouveau type (d'où le nom du mot-clé), parce que vous
-voulez la même chose en interne, mais un nom (type) différent. Avec cela en
-tête, Haskell peut se débarasser de l'emballage et du déballage une fois qu'il
-a tenu compte du type de chaque valeur pour savoir quelle instance utiliser.
+voulez la même chose en interne, mais avec un nom (type) différent. Avec cela
+en tête, Haskell peut se débarasser de l'emballage et du déballage une fois
+qu'il a tenu compte du type de chaque valeur pour savoir quelle instance
+utiliser.
 
 Pourquoi ne pas utiliser *newtype* tout le temps plutôt que *data* dans ce cas
 ? Eh bien, quand vous créez un nouveau type à partir d'un type existant en
@@ -1459,7 +1461,7 @@ fait avec *data*. On peut dériver les instances d'`Eq`, `Ord`, `Enum`,
 `Bounded`, `Show` et `Read`. Si l'on souhaite dériver une instance d'une classe
 de types, le type qu'on enveloppe doit lui-même être membre de cette classe.
 C'est logique, parce que *newtype* ne fait qu'envelopper ce type. On peut donc
-afficher et testé l'égalité de valeurs de notre nouveau type en faisant :
+afficher et tester l'égalité de valeurs de notre nouveau type en faisant :
 
 > newtype CharList = CharList { getCharList :: [Char] } deriving (Eq, Show)
 
@@ -1477,8 +1479,8 @@ Pour ce *newtype*, le constructeur de valeurs a pour type :
 > CharList :: [Char] -> CharList
 
 Il prend une valeur `[Char]`, comme `"my sharona"`, et retourne une valeur
-`CharList`. Des exemples ci-dessus où l'on utilisait le constructeur de valeurs
-`CharList`, on voit que c'est le cas. Réciproquement, la fonction
+`CharList`. Dans les exemples ci-dessus où l'on utilisait le constructeur de
+valeurs `CharList`, on voit que c'est le cas. Réciproquement, la fonction
 `getCharList`, qui a été générée lorsqu'on a utilisé la syntaxe des
 enregistrements dans notre *newtype*, a pour type :
 
@@ -1816,7 +1818,7 @@ monoïdales et en retourne une troisième.
 La dernière fonction de la définition de la classe de types est `mconcat`. Elle
 prend une liste de valeurs monoïdales et les réduit à une unique valeur en
 faisant `mappend` entre les éléments de la liste. Elle a une implémentation par
-défaut, qui prend `mempty` comme valeur initiale et plis la liste depuis la
+défaut, qui prend `mempty` comme valeur initiale et plie la liste depuis la
 droite avec `mappend`. Puisque l'implémentation par défaut convient pour la
 plupart des instances, on ne se souciera pas trop de `mconcat` pour l'instant.
 Quand on crée une instance de `Monoid`, il suffit d'implémenter `mempty` et
@@ -1827,7 +1829,7 @@ pour la plupart des instances, l'implémentation par défaut convient.
 Avant de voir des instances spécifiques de `Monoid`, regardons brièvement les
 lois des monoïdes. On a mentionné qu'il devait exister une valeur neutre
 vis-à-vis de la fonction binaire, et que la fonction binaire devait être
-associative. Il est possible de créer des instanes de `Monoid` ne suivant pas
+associative. Il est possible de créer des instances de `Monoid` ne suivant pas
 ces règles, mais ces instances ne servent à personne parce que, quand on
 utilise la classe de types `Monoid`, on se repose sur le fait que ses instances
 agissent comme des monoïdes. Sinon, à quoi cela servirait-il ? C'est pourquoi,
@@ -1988,7 +1990,7 @@ légitimes est `Bool`. La première façon utilise la fonction *ou* `||` comme
 fonction binaire, avec `False` pour élément neutre. En logique, *ou* est `True`
 si n'importe lequel de ses paramètres est `True`, sinon c'est `False`. Ainsi,
 en utilisant `False` comme élément neutre, on retourne bien `False` en faisant
-*ou* a vec `False`, et `True` en faisant *ou* avec `True`. Le *newtype* `Any`
+*ou* avec `False`, et `True` en faisant *ou* avec `True`. Le *newtype* `Any`
 est une instance de monoïde de cette manière. Il est défini ainsi :
 
 > newtype Any = Any { getAny :: Bool }
@@ -2029,8 +2031,8 @@ Et l'instance :
 >         All x `mappend` All y = All (x && y)
 
 Quand on `mappend` des valeurs de type `All`, le résultat sera `True` seulement
-si toutes (NDT : en anglais, *all*), les valeurs passée à `mappend` sont `True`
-:
+si toutes (NDT : en anglais, *all*), les valeurs passées à `mappend` sont
+`True` :
 
 > ghci> getAll $ mempty `mappend` All True
 > True
@@ -2062,10 +2064,10 @@ signifient *inférieur*, *égal* et *supérieur* respectivement :
 > GT
 
 Avec les listes, les nombres et les valeurs booléennes, on voit que trouver des
-monoïdes est juste une question de regarder ce qu'on utilisait déjà afin de
-voir si ces choses présentent un comportement monoïdal. Pour `Ordering`, il
-faut y regarder à deux fois avant de reconnaître le monoïde, mais il s'avère
-que sont instance de `Monoid` est tout aussi intuitive que celles recontrées
+monoïdes est juste l'affaire de regarder ce qu'on utilisait déjà afin de voir
+si ces choses présentent un comportement monoïdal. Pour `Ordering`, il faut y
+regarder à deux fois avant de reconnaître le monoïde, mais il s'avère que sont
+instance de `Monoid` est tout aussi intuitive que celles recontrées
 précédemment, et plutôt utile également :
 
 > instance Monoid Ordering where
@@ -2076,7 +2078,7 @@ précédemment, et plutôt utile également :
 
 <img src="img/bear.png" alt="ours" class="right"/>
 
-L'instance est crée de la sorte : quand on `mappend` deux valeurs `Ordering`,
+L'instance est créée de la sorte : quand on `mappend` deux valeurs `Ordering`,
 celle de gauche est préservée, à moins que la valeur à gauche soit `EQ`, auquel
 cas celle de droite est le résultat. Le neutre est `EQ`. Au départ, ça peut
 sembler arbitraire, mais cela ressemble en fait beaucoup à la façon donc on
@@ -2109,7 +2111,7 @@ retournera `GT` :
 > ghci> mempty `mappend` GT
 > GT
 
-OK, comment est-ce que ce monoïde est utile ? Mettons que vous soyiez en train
+OK, comment est-ce que ce monoïde est utile ? Mettons que vous soiyez en train
 d'écrire une fonction qui prend deux chaînes de caractères, compare leur
 longueur, et retourne un `Ordering`. Mais si les chaînes sont de même longueur,
 au lieu de retourner `EQ` immédiatement, vous voulez les comparer
@@ -2198,7 +2200,7 @@ d'instance :
 Remarquez la contrainte de classe. Elle dit que `Maybe a` est une instance de
 `Monoid` seulement si `a` est une instance de `Monoid`. Si l'on `mappend`
 quelque chose avec `Nothing`, le résultat est cette chose. Si on `mappend` deux
-valeurs `Just`, le contenu des `Just` est `mappend` et enveloppé de nouveau
+valeurs `Just`, le contenu des `Just` est `mappend` et est enveloppé de nouveau
 dans un `Just`. On peut faire cela parce que la contrainte de classe nous
 garantit que le type à l'intérieur du `Just` est une instance de `Monoid`.
 
@@ -2234,7 +2236,7 @@ On prend un `Maybe a` et on l'enveloppe avec un *newtype*. L'instance de
 >     First Nothing `mappend` x = x
 
 Comme on l'a dit. `mempty` est `Nothing` emballé dans un constructeur de
-*newtype* `First`. Si le premire paramètre de `mappend` est une valeur `Just`,
+*newtype* `First`. Si le premier paramètre de `mappend` est une valeur `Just`,
 on ignore le second. Si le premier est `Nothing`, alors on retourne l'autre,
 qu'il soit un `Just` ou un `Nothing`.
 
@@ -2268,15 +2270,15 @@ Une des façons les plus intéressantes de mettre les monoïdes à l'usage est d
 les utiliser pour nous aider à définir des plis sur diverses structures de
 données. Jusqu'ici, nous n'avons fait que des plis sur des listes, mais les
 listes ne sont pas les seules structures de données pliables. On peut définir
-des plis sur presque toute structure de donnée. Les arbres se prêtent
+des plis sur presque toute structure de données. Les arbres se prêtent
 particulièrement bien à l'exercice du pli.
 
 Puisqu'il y a tellement de structures de données qui fonctionnent bien avec les
 plis, la classe de types `Foldable` a été introduite. Comme `Functor` est pour
 les choses sur lequelles on peut mapper, `Foldable` est pour les choses qui
 peuvent être pliées ! Elle est trouvable dans `Data.Foldable` et puisqu'elle
-exporte des fonctions dont les noms sont en collision avec ceux du `Predule`,
-elle est préférablement importée qualifié (et servie avec du basilic) :
+exporte des fonctions dont les noms sont en collision avec ceux du `Prelude`,
+elle est préférablement importée qualifiée (et servie avec du basilic) :
 
 > import qualified Foldable as F
 
@@ -2314,7 +2316,7 @@ quand il s'agit de se plier, elle se comporte comme une liste avec un élément
 si c'est un `Just`, et comme une liste vide si c'est `Nothing`. Examinons donc
 une structure de données un peu plus complexe.
 
-Vous rappelez-vous la structure de donnée arborescente du chapitre [Créer nos
+Vous rappelez-vous la structure de données arborescente du chapitre [Créer nos
 propres types et classes de
 types](creer-nos-propres-types-et-classes-de-types#structures-de-donnees-recursives)
 ? On l'avait définie ainsi :
@@ -2375,9 +2377,9 @@ fonction `f` à la valeur du nœud. À présent, nous avons trois valeurs
 monoïdales (deux venant des sous-arbres et une venant de l'application de `f`
 sur la valeur du nœud) et il suffit de les écraser en une seule valeur. Pour ce
 faire, on utilise `mappend`, et naturellement, le sous-arbre gauche vient avant
-la valeur du nœud, et enfin le sous-arbre droit.
+la valeur du nœud, suivi du sous-arbre droit.
 
-Remarquez qu'on a pas eu besoin d'écrire la fonction qui prend une valeur et
+Remarquez qu'on n'a pas eu besoin d'écrire la fonction qui prend une valeur et
 retourne une valeur monoïdale. On la reçoit en paramètre de la fonction
 `foldMap` et tout ce qu'on a besoin de décider est où l'appliquer et comment
 joindre les monoïdes qui en résultent.
@@ -2406,9 +2408,9 @@ tous les plis qu'on fait sur des listes :
 > 64800
 
 `foldMap` ne sert pas qu'à créer les instances de `Foldable`, elle sert
-également à réduire une structur à une simple valeur monoïdale. Par exemple, si
-l'on voulait savoir si n'importe quel nombre de notre arbre est égal à `3`, on
-pourrait faire :
+également à réduire une structure à une simple valeur monoïdale. Par exemple,
+si l'on voulait savoir si n'importe quel nombre de notre arbre est égal à `3`,
+on pourrait faire :
 
 > ghci> getAny $ F.foldMap (\x -> Any $ x == 3) testTree  
 > True
