@@ -161,7 +161,7 @@ tout l'arbre depuis le début à nouveau ! La barbe !
 Une traînée de miettes
 </h2>
 
-<img src="bread.png" alt="whoop dee doo" class="right"/>
+<img src="img/bread.png" alt="whoop dee doo" class="right"/>
 
 Ok, donc pour se concentrer sur un sous-arbre, on veut quelque chose de mieux
 qu'une liste de directions qu'on suit toujours depuis la racine de notre arbre.
@@ -300,7 +300,7 @@ fonction `goUp`&nbsp;
 > goUp (t, LeftCrumb x r:bs) = (Node x t r, bs)
 > goUp (t, RightCrumb x l:bs) = (Node x l t, bs)
 
-<img src="asstronaut.png" alt="asstronaute" class="left"/>
+<img src="img/asstronaut.png" alt="asstronaute" class="left"/>
 
 On se focalise sur l'arbre `t`, et on vérifie ce qu'était le dernier `Crumb`.
 Si c'était un `LeftCrumb`, alors on construit un nouvel arbre où notre arbre
