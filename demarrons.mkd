@@ -768,7 +768,7 @@ elles sont imbriquées.
 Tuples
 </h2>
 
-<img src="img.tuple.png" alt="tuple" class="right"/>
+<img src="img/tuple.png" alt="tuple" class="right"/>
 
 D'une façon, les tuples sont comme des listes - ils permettent de stocker
 plusieurs valeurs dans une seule. Cependant, il y a des différences

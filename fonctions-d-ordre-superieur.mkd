@@ -727,7 +727,7 @@ problème, c'est que `++` est beaucoup plus coûteux que `:`, donc généralemen
 on utilise des plis à droite lorsqu'on construit des nouvelles listes à partir
 d'une liste.
 
-<img src="img/washmachine.png" alt="machine à laver" class="left"/>
+<img src="img/washmachine.png" alt="machine à laver" class="right"/>
 
 Si vous renversez une liste, vous pouvez faire un pli droit sur une liste comme
 vous auriez fait un pli gauche sur la liste originale, et vice versa.  Parfois,
