@@ -3,13 +3,17 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
+
 <a href="recursivite" class="prevlink">Récursivité</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
+
 <a href="modules" class="nextlink">Modules</a>
+
 </li>
 </ul>
 </div>
@@ -25,7 +29,9 @@ que des étapes qui changent un état et bouclent. Elles sont un moyen très
 puissant de résoudre des problèmes et de réflexion sur les programmes.
 
 <h2 id="fonctions-curryfiees">
+
 Fonctions curryfiées
+
 </h2>
 
 En Haskell, toutes les fonctions ne prennent en fait qu'un unique paramètre.
@@ -38,7 +44,7 @@ de retourner le plus grand des deux. Faire `max 4 5` crée une fonction qui
 prend un paramètre, et retourne soit `4`, soit ce paramètre. On applique alors
 cette fonction à la valeur `5` pour produire le résultat attendu. On ne dirait
 pas comme ça, mais c'est en fait assez cool. Les deux appels suivants sont
-ainsi équivalents :
+ainsi équivalents&nbsp;:
 
 > ghci> max 4 5
 > 5
@@ -50,10 +56,10 @@ ainsi équivalents :
 Mettre un espace entre deux choses consiste à **appliquer une fonction**.
 L'espace est en quelque sorte un opérateur, et il a la plus grande précédence.
 Examinons le type de `max`. C'est `max :: (Ord a) => a -> a -> a`. On peut
-aussi écrire ceci : `max :: (Ord a) => a -> (a -> a)`. Et le lire ainsi : `max`
-prend un `a` et retourne (c'est le premier `->`)) une fonction qui prend un `a`
-et retourne un `a`. C'est pourquoi le type de retour et les paramètres d'une
-fonction sont séparés par des flèches.
+aussi écrire ceci&nbsp;: `max :: (Ord a) => a -> (a -> a)`. Et le lire
+ainsi&nbsp;: `max` prend un `a` et retourne (c'est le premier `->`)) une
+fonction qui prend un `a` et retourne un `a`. C'est pourquoi le type de retour
+et les paramètres d'une fonction sont séparés par des flèches.
 
 En quoi cela nous aide-t-il ? Pour faire simple, si on appelle une fonction
 avec trop peu de paramètres, on obtient une fonction **appliquée
@@ -63,7 +69,7 @@ peu de paramètres) est un moyen grâcieux de créer des fonctions à la volée 
 de les passer à d'autres fonctions pour qu'elle les complète avec d'autres
 données.
 
-Regardons cette fonction violemment simple :
+Regardons cette fonction violemment simple&nbsp;:
 
 > multThree :: (Num a) => a -> a -> a -> a
 > multThree x y z = x * y * z
@@ -80,7 +86,7 @@ après est son unique type retourné. Donc, notre fonction prend un `a` et
 retourne une fonction qui a pour type `(Num a) => a -> (a -> a)`.  De façon
 similaire, cette fonction prend un `a` et retourne une fonction qui a pour type
 `(Num a) => a -> a`. Et cette fonction, prend un `a` et retourne un `a`.
-Regardez ça :
+Regardez ça&nbsp;:
 
 > ghci> let multTwoWithNine = multThree 9
 > ghci> multTwoWithNine 2 3
@@ -91,7 +97,7 @@ Regardez ça :
 
 En appelant des fonctions avec trop peu de paramètres, en quelque sorte, on
 crée de nouvelles fonctions à la volée. Comment créer une fonction qui prend un
-nombre, et le compare à `100` ? Comme ça :
+nombre, et le compare à `100` ? Comme ça&nbsp;:
 
 > compareWithHundred :: (Num a, Ord a) => a -> Ordering
 > compareWithHundred x = compare 100 x
@@ -100,7 +106,7 @@ Si on l'appelle avec `99`, elle retourne `GT`. Simple. Remarquez-vous le `x`
 tout à droite des deux côtés de l'équation ? Réfléchissons à présent à ce que
 `compare 100` retourne. Cela retourne une fonction qui prend un nombre, et le
 compare à 100. Ouah ! Est-ce que ce n'était pas la fonction qu'on voulait ? On
-devrait réécrire cela :
+devrait réécrire cela&nbsp;:
 
 > reWithHundred :: (Num a, Ord a) => a -> Ordering
 > compareWithHundred = compare 100
@@ -122,14 +128,14 @@ Les fonctions infixes peuvent aussi être appliquées partiellement à l'aide de
 sections. Sectionner une fonction infixe revient à l'entourer de parenthèses et
 à lui fournir un paramètre sur l'un de ses côtés. Cela crée une fonction qui
 attend l'autre paramètre et l'applique du côté où il lui manquait une opérande.
-Une fonction insultante de trivialité :
+Une fonction insultante de trivialité&nbsp;:
 
 > divideByTen :: (Floating a) => a -> a
 > divideByTen = (/10)
 
 Appeler, disons, `divideByTen 200` est équivalent à faire `200 / 10`, ce qui
 est aussi équivalent à `(/10) 200`. Maintenant, une fonction qui vérifie si un
-caractère est en majuscule :
+caractère est en majuscule&nbsp;:
 
 > isUpperAlphanum :: Char -> Bool
 > isUpperAlphanum = (`elem` ['A'..'Z'])
@@ -138,7 +144,7 @@ La seule chose spéciale à propos des sections, c'est avec `-`. Par définition
 des sections, (-4) devrait être la fonction qui attend un nombre, et lui
 soustrait 4. Cependant, par habitude, `(-4)` signifie la valeur moins quatre.
 Pour créer une fonction qui soustrait 4 du nombre en paramètre, appliquez
-plutôt partiellement la fonction `subtract` ainsi : `(subtract 4)`.
+plutôt partiellement la fonction `subtract` ainsi&nbsp;: `(subtract 4)`.
 
 Que se passe-t-il si on tape `multThree 3 4` directement dans GHCi sans la lier
 avec un *let* ou la passer à une autre fonction ?
@@ -159,7 +165,9 @@ puis appelle `show` sur `2` pour obtenir une représentation textuelle de ce
 nombre. La représentation de `2` est `"2"`, et c'est ce qu'il nous affiche.
 
 <h2 id="a-l-ordre-du-jour-de-l-ordre-superieur">
-À l'ordre du jour : de l'ordre supérieur
+
+À l'ordre du jour&nbsp;: de l'ordre supérieur
+
 </h2>
 
 Les fonctions peuvent prendre des fonctions en paramètres et retourner des
@@ -185,10 +193,10 @@ soit. Mais alors, le second paramètre doit être du type correspondant.
 
 <div class="hintbox">
 
-**Note :** à partir de maintenant, nous dirons qu'une fonction prend plusieurs
-paramètres malgré le fait qu'elle ne prend en réalité qu'un paramètre et
-retourne une fonction appliquée partiellement jusqu'à finalement arriver à une
-valeur solide. Donc, pour simplifier, on dira que `a -> a -> a` prend deux
+**Note&nbsp;:** à partir de maintenant, nous dirons qu'une fonction prend
+plusieurs paramètres malgré le fait qu'elle ne prend en réalité qu'un paramètre
+et retourne une fonction appliquée partiellement jusqu'à finalement arriver à
+une valeur solide. Donc, pour simplifier, on dira que `a -> a -> a` prend deux
 paramètres, bien que l'on sache ce qui se trame en réalité sous la couverture.
 
 </div>
@@ -196,7 +204,7 @@ paramètres, bien que l'on sache ce qui se trame en réalité sous la couverture
 Le corps de la fonction est plutôt simple. On utilise le paramètre `f` comme
 une fonction, on applique cette fonction à `x` en les séparant par un espace,
 puis on applique `f` au résultat une nouvelle fois. Jouons un peu avec la
-fonction :
+fonction&nbsp;:
 
 > ghci> applyTwice (+3) 10
 > 16
@@ -218,7 +226,7 @@ Maintenant, nous allons profiter de la programmation d'ordre supérieur pour
 implémenter une fonction très utile de la bibliothèque standard. Elle s'appelle
 `zipWith`. Elle prend une fonction, et deux listes, et zippe les deux listes à
 l'aide de la fonction, en l'appliquant aux éléments correspondants. Voici une
-implémentation :
+implémentation&nbsp;:
 
 > zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
 > zipWith' _ [] _ = []
@@ -245,7 +253,7 @@ corps de la fonction pour le dernier motif est également similaire à `zip`,
 seulement à la place de faire `(x, y)`, elle fait `f x y`. Une même fonction
 d'ordre supérieur peut être utilisée pour une multitude de différentes tâches
 si elle est assez générale. Voici une petite démonstration de toutes les
-différentes choses que `zipWith'` peut faire :
+différentes choses que `zipWith'` peut faire&nbsp;:
 
 > ghci> zipWith' (+) [4,2,5,6] [2,6,2,3]
 > [6,8,7,9]
@@ -271,7 +279,7 @@ de solutions et éliminer celles qui ne vous intéressent pas.
 Nous allons encore implémenter une fonction de la bibliothèque standard,
 `flip`. Elle prend une fonction et retourne une fonction qui est comme la
 fonction initiale, mais dont les deux premiers arguments ont échangé leur
-place. On peut l'implémenter ainsi :
+place. On peut l'implémenter ainsi&nbsp;:
 
 > flip' :: (a -> b -> c) -> (b -> a -> c)
 > flip' f = g
@@ -304,7 +312,9 @@ d'ordre supérieur en réfléchissant à ce que leur résultat serait si elles
 > [5,4,3,2,1]
 
 <h2 id="maps-et-filtres">
+
 Maps et filtres
+
 </h2>
 
 `map` prend une fonction et une liste, et applique la fonction à tous les
@@ -320,7 +330,7 @@ et retourne une liste de `b`. Il est intéressant de voir que rien qu'en
 regardant la signature d'une fonction, vous pouvez parfois dire exactement ce
 qu'elle fait. `map` est une de ces fonctions d'ordre supérieur extrèmement
 utile qui peut être utilisée de milliers de façons différentes. La voici en
-action :
+action&nbsp;:
 
 > ghci> map (+3) [1,5,3,1,6]
 > [4,8,6,4,9]
@@ -343,7 +353,7 @@ crochets s'entassent de manière déplaisante.
 `filter` est une fonction qui prend un prédicat (un prédicat est une fonction
 qui dit si quelque chose est vrai ou faux, une fonction qui retourne une valeur
 booléenne) et une liste, et retourne la liste des éléments qui satisfont le
-prédicat. La signature et l'implémentation :
+prédicat. La signature et l'implémentation&nbsp;:
 
 > filter :: (a -> Bool) -> [a] -> [a]
 > filter _ [] = []
@@ -352,7 +362,7 @@ prédicat. La signature et l'implémentation :
 >     | otherwise = filter p xs
 
 Plutôt simple. Si `p x` vaut `True`, l'élément est inclus dans la nouvelle
-liste. Sinon, il reste dehors. Quelques exemples d'utilisation :
+liste. Sinon, il reste dehors. Quelques exemples d'utilisation&nbsp;:
 
 > ghci> filter (>3) [1,5,3,2,1,6,4,3,2,1]
 > [5,6,4]
@@ -378,7 +388,7 @@ des prédicats à l'aide de `&&`.
 Vous souvenez-vous de la fonction quicksort du [chapitre
 précédent](recursivite) ?  Nous avions utilisé des listes en compréhension pour
 filtrer les éléments plus petits que le pivot. On peut faire de même avec
-`filter` :
+`filter`&nbsp;:
 
 > quicksort :: (Ord a) => [a] -> [a]
 > quicksort [] = []
@@ -432,7 +442,7 @@ mille.  D'abord, on va commencer par mapper `(^2)` sur la liste infinie
 `[1..]`.  Ensuite, on va filtrer pour garder les nombres impairs. Puis, on
 prendra des éléments de cette liste tant qu'ils restent inférieurs à 10 000.
 Enfin, on va sommer cette liste. On n'a même pas besoin d'une fonction pour ça,
-une ligne dans GHCi suffit :
+une ligne dans GHCi suffit&nbsp;:
 
 > ghci> sum (takeWhile (<10000) (filter odd (map (^2) [1..])))
 > 166650
@@ -440,7 +450,7 @@ une ligne dans GHCi suffit :
 Génial ! On commence avec une donnée initiale (la liste infinie de tous les
 entiers naturels) et on mappe par dessus, puis on filtre et on coupe jusqu'à
 avoir ce que l'on désire, et on somme le tout. On aurait pu écrire ceci à
-l'aide de listes en compréhension :
+l'aide de listes en compréhension&nbsp;:
 
 > ghci> sum (takeWhile (<10000) [n^2 | n <- [1..], odd (n^2)])
 > 166650
@@ -459,13 +469,13 @@ prend un entier naturel. Si cet entier est pair, on le divise par deux. S'il
 est impair, on le multiplie par 3 puis on ajoute 1. On prend ce nombre, et on
 recommence, ce qui produit un nouveau nombre, et ainsi de suite. On obtient
 donc une chaîne de nombres. On pense que, quel que soit le nombre de départ, la
-chaîne termine, avec pour valeur 1. Si on prend 13, on obtient la suite : *13,
-40, 20, 10, 5, 16, 8, 4, 2, 1*. 13 fois 3 plus 1 vaut 40. 40 divisé par 2 vaut
-20, etc. On voit que la chaîne contient 10 termes.
+chaîne termine, avec pour valeur 1. Si on prend 13, on obtient la suite&nbsp;:
+*13, 40, 20, 10, 5, 16, 8, 4, 2, 1*. 13 fois 3 plus 1 vaut 40. 40 divisé par 2
+vaut 20, etc. On voit que la chaîne contient 10 termes.
 
-Maintenant on cherche à savoir : **pour tout nombre de départ compris entre 1
-et 100, combien de chaînes ont une longueur supérieure à 15 ?** D'abord, on va
-écrire une fonction qui produit ces chaînes :
+Maintenant on cherche à savoir&nbsp;: **pour tout nombre de départ compris
+entre 1 et 100, combien de chaînes ont une longueur supérieure à 15 ?**
+D'abord, on va écrire une fonction qui produit ces chaînes&nbsp;:
 
 > chain :: (Integral a) => a -> [a]
 > chain 1 = [1]
@@ -484,7 +494,7 @@ récursive assez simple.
 > [30,15,46,23,70,35,106,53,160,80,40,20,10,5,16,8,4,2,1]
 
 Yay ! Ça a l'air de marcher correctement. À présent, la fonction qui nous donne
-notre réponse :
+notre réponse&nbsp;:
 
 > ngChains :: Int
 > numLongChains = length (filter isLong (map chain [1..100]))
@@ -498,10 +508,10 @@ de chaînes dans la liste finale.
 
 <div class="hintbox">
 
-**Note :** Cette fonction a pour type `numLongChains :: Int` parce que `length`
-a pour type `Int` au lieu de `Num a`, pour des raisons historiques. Si nous
-voulions retourner `Num a`, on aurait pu utiliser `fromIntegral` sur le nombre
-retourné.
+**Note&nbsp;:** Cette fonction a pour type `numLongChains :: Int` parce que
+`length` a pour type `Int` au lieu de `Num a`, pour des raisons historiques. Si
+nous voulions retourner `Num a`, on aurait pu utiliser `fromIntegral` sur le
+nombre retourné.
 
 </div>
 
@@ -529,7 +539,9 @@ Demander l'élément d'index `4` de notre liste retourne une fonction équivalen
 5` ou juste `4 * 5`.
 
 <h2 id="lambdas">
+
 Lambdas
+
 </h2>
 
 <img src="img/lambda.png" alt="lambda" class="right"/>
@@ -546,7 +558,7 @@ possible vers la droite.
 Si vous regardez 10cm plus haut, vous verrez qu'on a utilisé une liaison
 *where* dans `numLongChains` pour créer la fonction `isLong`, avec pour seul
 but de passer cette fonction à `filter`. Au lieu de faire ça, on pourrait
-utiliser une lambda :
+utiliser une lambda&nbsp;:
 
 > numLongChains :: Int
 > numLongChains = length (filter (\xs -> length xs > 15) (map chain [1..100]))
@@ -582,8 +594,8 @@ attention en filtrant dans les lambdas.
 
 Les lambdas sont habituellement entourées de parenthèses à moins qu'on veuille
 qu'elles s'étendent le plus possible à droite. Voilà quelque chose
-d'intéressant : vu la façon dont sont curryfiées les fonctions par défaut, ces
-deux codes sont équivalents :
+d'intéressant&nbsp;: vu la façon dont sont curryfiées les fonctions par défaut,
+ces deux codes sont équivalents&nbsp;:
 
 > addThree :: (Num a) => a -> a -> a -> a
 > addThree x y z = x + y + z
@@ -597,7 +609,7 @@ sûr, la première façon d'écrire est bien plus lisible, la seconde ne sert qu
 illustrer la curryfication.
 
 Cependant, cette notation s'avère parfois pratique. Je trouve la fonction
-`flip` plus lisible définie ainsi :
+`flip` plus lisible définie ainsi&nbsp;:
 
 > flip' :: (a -> b -> c) -> b -> a -> c
 > flip' f = \x y -> f y x
@@ -611,7 +623,9 @@ fait que cette fonction est généralement appliquée partiellement avant d'êtr
 passée à une autre comme paramètre.
 
 <h2 id="plie-mais-ne-rompt-pas">
+
 Plie mais ne rompt pas
+
 </h2>
 
 <img src="img/origami.png" alt="origami" class="right"/>
@@ -621,7 +635,7 @@ récurrent dans nos fonctions récursives qui opéraient sur des listes. Nous
 introduisions un motif `x:xs` et nous faisions quelque chose avec la tête et
 quelque chose avec la queue. Il s'avère que c'est un motif très commun, donc il
 existe quelques fonctions très utiles qui l'encapsulent. Ces fonctions sont
-appelées des *folds* (NDT : des plis). Elles sont un peu comme la fonction
+appelées des *folds* (NDT&nbsp;: des plis). Elles sont un peu comme la fonction
 `map`, seulement qu'elles réduisent une liste à une simple valeur.
 
 Un *fold* prend une fonction binaire, une valeur de départ (que j'aime appeler
@@ -645,7 +659,7 @@ qu'une récursivité explicite.
 > sum' :: (Num a) => [a] -> a
 > sum' xs = foldl (\acc x -> acc + x) 0 xs
 
-Un, deux, trois, test :
+Un, deux, trois, test&nbsp;:
 
 > ghci> sum' [3,5,2,1]
 > 11
@@ -664,9 +678,9 @@ produit `11`. Bravo, vous venez d'achever votre premier pli !
 Le diagramme professionnel sur la gauche illustre la façon dont le pli se
 déroule, étape par étape (jour après jour !). Le nombre vert kaki est
 l'accumulateur. Vous pouvez voir comme la liste est consommée par la gauche par
-l'accumulateur. Om nom nom nom ! (NDT : "Miam miam miam !") Si on prend en
+l'accumulateur. Om nom nom nom ! (NDT&nbsp;: "Miam miam miam !") Si on prend en
 compte le fait que les fonctions sont curryfiées, on peut écrire cette
-implémentation encore plus rapidement :
+implémentation encore plus rapidement&nbsp;:
 
 > sum' :: (Num a) => [a] -> a
 > sum' = foldl (+) 0
@@ -751,7 +765,7 @@ Les fonctions `foldl1` et `foldr1` fonctionnent quasiment comme `foldl` et
 `foldr`, mais n'ont pas besoin d'une valeur de départ. Elles considèrent que le
 premier (ou le dernier respectivement) élément de la liste est la valeur de
 départ, et commencent à plier à partir de l'élément suivant. Avec cela en tête,
-la fonction `sum` peut être implémentée : `sum = foldl1 (+)`. Puisqu'elles
+la fonction `sum` peut être implémentée&nbsp;: `sum = foldl1 (+)`. Puisqu'elles
 dépendent du fait que les listes qu'elles essaient de plier aient au moins un
 élément, elles peuvent provoquer des erreurs à l'exécution si on les appelle
 sur des listes vides. `foldl` et `foldr`, d'un autre côté, fonctionnent bien
@@ -761,7 +775,7 @@ vide, vous pouvez probablement utiliser `foldl1` et `foldr1` pour
 l'implémenter.
 
 Histoire de vous montrer la puissance des plis, on va implémenter un paquet de
-fonctions de la bibliothèque standard avec eux :
+fonctions de la bibliothèque standard avec eux&nbsp;:
 
 > maximum' :: (Ord a) => [a] -> a
 > maximum' = foldr1 (\x acc -> if x > acc then x else acc)
@@ -791,18 +805,18 @@ paramètres dans l'autre sens. C'est pourquoi, on aurait pu écrire reverse comm
 `foldl (flip (:)) []`.
 
 Une autre façon de se représenter les plis à droite et à gauche consiste à se
-dire : mettons qu'on a un pli à droite et une fonction binaire `f`, et une
+dire&nbsp;: mettons qu'on a un pli à droite et une fonction binaire `f`, et une
 valeur initiale `z`. Si l'on plie à droite la liste `[3, 4, 5, 6]`, on fait en
-gros cela : `f 3 (f 4 (f 5 (f 6 z)))`. `f` est appelé avec le dernier élément
-de la liste et l'accumulateur, cette valeur est donnée comme accumulateur à la
-prochaine valeur, etc. Si on prend pour `f` la fonction `+` et pour
-accumulateur de départ `0`, ça donne `3 + (4 + (5 + (6 + 0)))`. Ou, avec un `+`
-préfixe, `(+) 3 ((+) 4 ((+) 5 ((+) 6 0)))`. De façon similaire, un pli à gauche
-avec la fonction binaire `g` et l'accumulateur `z` est équivalent p `g (g (g (g
-z 3) 4) 5) 6`. Si on utilise `flip (:)` comme fonction binaire, et `[]` comme
-accumulateur (de manière à renverser la liste), c'est équivalent à `flip (:)
-(flip (:) (flip (:) (flip (:) [] 3) 4) 5) 6`. Et pour sûr, évaluer cette
-expression renvoie `[6, 5, 4, 3]`.
+gros cela&nbsp;: `f 3 (f 4 (f 5 (f 6 z)))`. `f` est appelé avec le dernier
+élément de la liste et l'accumulateur, cette valeur est donnée comme
+accumulateur à la prochaine valeur, etc. Si on prend pour `f` la fonction `+`
+et pour accumulateur de départ `0`, ça donne `3 + (4 + (5 + (6 + 0)))`. Ou,
+avec un `+` préfixe, `(+) 3 ((+) 4 ((+) 5 ((+) 6 0)))`. De façon similaire, un
+pli à gauche avec la fonction binaire `g` et l'accumulateur `z` est équivalent
+p `g (g (g (g z 3) 4) 5) 6`. Si on utilise `flip (:)` comme fonction binaire,
+et `[]` comme accumulateur (de manière à renverser la liste), c'est équivalent
+à `flip (:) (flip (:) (flip (:) (flip (:) [] 3) 4) 5) 6`. Et pour sûr, évaluer
+cette expression renvoie `[6, 5, 4, 3]`.
 
 `scanl` et `scanr` sont comme `foldl` et `foldr`, mais rapportent tous les
 résultats intermédiaires de l'accumulateur sous forme d'une liste. Il existe
@@ -821,16 +835,16 @@ En utilisant un `scanl`, le résultat final sera dans le dernier élément de la
 liste retournée, alors que pour un `scanr`, il sera en tête.
 
 Les scans sont utilisés pour surveiller la progression d'une fonction
-implémentable comme un pli. Répondons à cette question : **Combien d'entiers
-naturels croissants faut-il pour que la somme de leurs racines carrées dépasse
-100 ?** Pour récupérer les racines carrées de tous les entiers naturels, on
-fait `map sqrt [1..]`. Maintenant, pour obtenir leur somme, on pourrait faire
-un pli, mais puisqu'on s'intéresse à la progression de la somme, on va plutôt
-faire un scan. Une fois le scan fait, on compte juste le nombre de sommes qui
-sont inférieures à 1000. La première somme sera normalement égale à 1. La
-deuxième, à 1 plus racine de 2. La troisième à cela plus racine de 3. Si X de
-ces sommes sont inférieures à 1000, alors il faut X+1 éléments pour dépasser
-1000.
+implémentable comme un pli. Répondons à cette question&nbsp;: **Combien
+d'entiers naturels croissants faut-il pour que la somme de leurs racines
+carrées dépasse 100 ?** Pour récupérer les racines carrées de tous les entiers
+naturels, on fait `map sqrt [1..]`. Maintenant, pour obtenir leur somme, on
+pourrait faire un pli, mais puisqu'on s'intéresse à la progression de la somme,
+on va plutôt faire un scan. Une fois le scan fait, on compte juste le nombre de
+sommes qui sont inférieures à 1000. La première somme sera normalement égale à
+1. La deuxième, à 1 plus racine de 2. La troisième à cela plus racine de 3. Si
+X de ces sommes sont inférieures à 1000, alors il faut X+1 éléments pour
+dépasser 1000.
 
 > sqrtSums :: Int
 > sqrtSums = length (takeWhile (<1000) (scanl1 (+) (map sqrt [1..]))) + 1
@@ -848,11 +862,13 @@ croissante, `filter` ne le sait pas, donc on utilise `takeWhile` pour arrêter
 de scanner dès qu'une somme est plus grande que 1000.
 
 <h2 id="appliquer-des-fonctions">
+
 Appliquer des fonctions avec $
+
 </h2>
 
 Bien, maintenant, découvrons la fonction `$`, aussi appelée *application de
-fonction*. Voyons sa définition :
+fonction*. Voyons sa définition&nbsp;:
 
 > ($) :: (a -> b) -> a -> b
 > f $ x = f x
@@ -891,17 +907,19 @@ peut par exemple mapper l'application de fonction sur une liste de fonctions.
 > [7.0,30.0,9.0,1.7320508075688772]
 
 <h2 id="composition-de-fonctions">
+
 Composition de fonctions
+
 </h2>
 
-En mathématique, la composition de fonctions est définie ainsi : ![composition
-de fonctions](img/composition.png), ce qui signifie que deux fonctions
-produisent une nouvelle fonction qui, lorsqu'elle est appelée avec un
+En mathématique, la composition de fonctions est définie ainsi&nbsp;:
+![composition de fonctions](img/composition.png), ce qui signifie que deux
+fonctions produisent une nouvelle fonction qui, lorsqu'elle est appelée avec un
 paramètre, disons x, est équivalent à l'appel de g sur x, puis l'appel de f sur
 le résultat.
 
 En Haskell, la composition de fonction est plutôt identique. On utilise la
-fonction `.`, définie ainsi :
+fonction `.`, définie ainsi&nbsp;:
 
 > (.) :: (b -> c) -> (a -> b) -> a -> c
 > f . g = \x -> f (g x)
@@ -920,25 +938,25 @@ volée pour les passer à d'autre fonctions. Bien sûr, on peut utiliser des
 lambdas à cet effet, mais souvent, la composition de fonctions est plus claire
 et concise. Disons qu'on a une liste de nombres, et qu'on veut tous les rendre
 négatifs. Un moyen de procéder serait de prendre la valeur absolue de chacun
-d'entre eux, et de renvoyer son opposé :
+d'entre eux, et de renvoyer son opposé&nbsp;:
 
 > ghci> map (\x -> negate (abs x)) [5,-3,-6,7,-3,2,-19,24]
 > [-5,-3,-6,-7,-3,-2,-19,-24]
 
 Remarquez la lambda-expression, comme elle ressemble à une composition de
-fonctions. Avec la composition, on peut écrire :
+fonctions. Avec la composition, on peut écrire&nbsp;:
 
 > ghci> map (negate . abs) [5,-3,-6,7,-3,2,-19,24]
 > [-5,-3,-6,-7,-3,-2,-19,-24]
 
 Fabuleux ! La composition est associative à droite, donc on peut composer
-plusieurs fonctions à la fois. L'expression `f (g (z x))` est équivalente à
-`(f . g . z) x`. Avec ça en tête, on peut transformer :
+plusieurs fonctions à la fois. L'expression `f (g (z x))` est équivalente à `(f
+. g . z) x`. Avec ça en tête, on peut transformer&nbsp;:
 
 > ghci> map (\xs -> negate (sum (tail xs))) [[1..5],[3..6],[1..7]]
 > [-14,-15,-27]
 
-en :
+en&nbsp;:
 
 > ghci> map (negate . sum . tail) [[1..5],[3..6],[1..7]]
 > [-14,-15,-27]
@@ -947,12 +965,12 @@ Mais qu'en est-il des fonctions à plusieurs paramètres ? Pour les utiliser dan
 de la composition de fonctions, il faut les avoir partiellement appliquées
 jusqu'à ce qu'elles ne prennent plus qu'un paramètre. `sum (replicate 5 (max
 6.7 8.9))` peut être réécrit `(sum . replicate 5 . max 6.7) 8.9` ou bien `sum .
-replicate 5 . max 6.7 $ 8.9`. Ce qui se passe ici : une fonction qui prend la
-même chose que `max 6.7` et applique `replicate 5` à celle-ci est créée.
+replicate 5 . max 6.7 $ 8.9`. Ce qui se passe ici&nbsp;: une fonction qui prend
+la même chose que `max 6.7` et applique `replicate 5` à celle-ci est créée.
 Ensuite, une fonction qui prend ça et applique `sum` est créée. Finalement,
-cette fonction est appelée avec `8.9`. Vous liriez normalement comme cela :
-prend `8.9` et applique `max 6.7`, puis applique `replicate 5` à ça, et
-applique `sum` à ça. Si vous voulez réécrire une expression pleine de
+cette fonction est appelée avec `8.9`. Vous liriez normalement comme
+cela&nbsp;: prend `8.9` et applique `max 6.7`, puis applique `replicate 5` à
+ça, et applique `sum` à ça. Si vous voulez réécrire une expression pleine de
 parenthèses avec de la composition de fonctions, vous pouvez commencer par
 mettre le dernier paramètre de la dernière fonction à la suite d'un `$`, et
 ensuite composer les appels successifs, en les écrivant sans leur dernier
@@ -964,7 +982,7 @@ réécriture contiendra probablement trois opérateurs de composition.
 
 Une autre utilisation courante de la composition de fonctions consiste à
 définir des fonctions avec un style dit sans point (certains disent même sans
-but !). Prenez par exemple la fonction définie auparavant :
+but !). Prenez par exemple la fonction définie auparavant&nbsp;:
 
 > sum' :: (Num a) => [a] -> a
 > sum' xs = foldl (+) 0 xs
@@ -979,7 +997,7 @@ est dit dans le style sans point. Comment écrire ceci en style sans point ?
 On ne peut pas se débarasser du `x` des deux côtés. Le `x` du côté du corps de
 la fonction a des parenthèses après lui. `cos (max 50)` ne voudrait rien dire.
 On ne peut pas prendre le cosinus d'une fonction. On peut cependant exprimer
-`fn` comme une composition de fonctions :
+`fn` comme une composition de fonctions&nbsp;:
 
 > fn = ceiling . negate . tan . cos . max 50
 
@@ -1003,13 +1021,13 @@ la forme d'une fonction.
 > oddSquareSum :: Integer
 > oddSquareSum = sum (takeWhile (<10000) (filter odd (map (^2) [1..])))
 
-Étant un fan de composition, j'aurais probablement écrit :
+Étant un fan de composition, j'aurais probablement écrit&nbsp;:
 
 > oddSquareSum :: Integer
 > oddSquareSum = sum . takeWhile (<10000) . filter odd . map (^2) $ [1..]
 
 Cependant, s'il était possible que quelqu'un doive lire ce code, j'aurais
-plutôt écrit :
+plutôt écrit&nbsp;:
 
 > oddSquareSum :: Integer
 > oddSquareSum =
@@ -1023,13 +1041,17 @@ Je ne gagnerai pas de compétition de golf ainsi, mais quelqu'un qui aura à lir
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
+
 <a href="recursivite" class="prevlink">Récursivité</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
+
 <a href="modules" class="nextlink">Modules</a>
+
 </li>
 </ul>
 </div>

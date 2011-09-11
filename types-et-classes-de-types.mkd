@@ -3,13 +3,17 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
+
 <a href="demarrons" class="prevlink">Démarrons</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
+
 <a href="syntaxe-des-fonctions" class="nextlink">Syntaxe des fonctions</a>
+
 </li>
 </ul>
 </div>
@@ -74,7 +78,7 @@ généralement considéré comme une bonne pratique, sauf quand on écrit des
 fonctions courtes. À présent, nous donnerons aux fonctions que nous déclarerons
 des déclarations de type. Vous souvenez-vous de la compréhension de liste que
 nous avions écrite, qui filtre une chaîne de caractères pour ne garder que ceux
-en majuscule ? Voici sa déclaration de type :
+en majuscule ? Voici sa déclaration de type&nbsp;:
 
 > removeNonUppercase :: [Char] -> [Char]
 > removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
@@ -87,7 +91,8 @@ type `[Char]` est synonyme de `String`, donc il est plus clair d'écrire
 fonction de déclaration de type car le compilateur pouvait inférer lui-même que
 la fonction allait de chaîne de caractères à chaîne de caractères, mais on l'a
 quand même fait. Mais comment écrire le type d'une fonction qui prend plusieurs
-paramètres ? Voici une simple fonction qui prend trois entiers et les somme :
+paramètres ? Voici une simple fonction qui prend trois entiers et les
+somme&nbsp;:
 
 > addThree :: Int -> Int -> Int -> Int
 > addThree x y z = x + y + z
@@ -137,8 +142,8 @@ veux dire, vraiment énormes. `Int` est cependant plus efficace.
 > ghci> circumference' 4.0
 > 25.132741228718345
 
-`Bool` est un type booléen. Il ne peut prendre que deux valeurs : `True` et
-`False`.
+`Bool` est un type booléen. Il ne peut prendre que deux valeurs&nbsp;: `True`
+et `False`.
 
 `Char` représente un caractère. Il est dénoté par des apostrophes. Une liste de
 caractères est une chaîne de caractères.
@@ -146,7 +151,7 @@ caractères est une chaîne de caractères.
 Les tuples sont des types mais dépendent de la taille et du type de leurs
 composantes, donc il existe théoriquement une infinité de types de tuples, ce
 qui fait trop pour être contenu dans ce tutoriel. Remarquez que le tuple vide
-`()` est aussi un type, qui ne contient qu'une seule valeur : `()`.
+`()` est aussi un type, qui ne contient qu'une seule valeur&nbsp;: `()`.
 
 <h2 id="variables-de-type">
 Variables de type
@@ -208,9 +213,9 @@ Quelle est la signature de type de `==` ?
 
 <div class="hintbox">
 
-**Note :** l'opérateur d'égalité, `==` est une fonction. De même pour `+`, `*`,
-`-`, `/` et quasiment tous les opérateurs. Si une fonction ne contient que des
-caractères spéciaux, elle est considérée infixe par défaut. Si nous voulons
+**Note&nbsp;:** l'opérateur d'égalité, `==` est une fonction. De même pour `+`,
+`*`, `-`, `/` et quasiment tous les opérateurs. Si une fonction ne contient que
+des caractères spéciaux, elle est considérée infixe par défaut. Si nous voulons
 examiner son type, la passer à une autre fonction, ou l'appeler de façon
 préfixe, nous devons l'entourer de parenthèses.
 
@@ -218,9 +223,9 @@ préfixe, nous devons l'entourer de parenthèses.
 
 Intéressant. Nous voyons quelque chose de nouveau ici, le symbole `=>`. Tout ce
 qui se situe avant le `=>` est appelé une **contrainte de classe**. On peut
-lire la déclaration de type précédente ainsi : la fonction d'égalité prend deux
-valeurs du même type et retourne un `Bool`. Le type de ces valeurs doit être
-membre de la classe `Eq` (ceci est la contrainte de classe).
+lire la déclaration de type précédente ainsi&nbsp;: la fonction d'égalité prend
+deux valeurs du même type et retourne un `Bool`. Le type de ces valeurs doit
+être membre de la classe `Eq` (ceci est la contrainte de classe).
 
 La classe de types `Eq` offre une interface pour tester l'égalité. Tout type
 pour lequel tester l'égalité de deux valeurs a du sens devrait être membre de
@@ -232,7 +237,7 @@ La fonction `elem` a pour type `(Eq a) => a -> [a] -> Bool` car elle utilise
 `==` sur les éléments de la liste pour vérifier si la valeur qu'on cherche est
 dedans.
 
-Quelques classes de types de base :
+Quelques classes de types de base&nbsp;:
 
 `Eq` est utilisé pour les types qui supportent un test d'égalité. Ses membres
 doivent implémenter les fonctions `==` ou `/=` dans leur définition. Donc, si
@@ -325,7 +330,7 @@ l'utiliser ensuite, il n'a aucun moyen de savoir de quel type il s'agit. Pour
 remédier à cela, on peut utiliser des **annotations de type** explicites. Les
 annotations de type sont un moyen d'exprimer explicitement le type qu'une
 expression doit avoir. On le fait en ajoutant `::` à la fin de l'expression et
-en spécifiant un type. Observez :
+en spécifiant un type. Observez&nbsp;:
 
 > ghci> read "5" :: Int
 > 5
@@ -343,15 +348,15 @@ type tout seul. Mais parfois, le compilateur ne sait pas s'il doit plutôt
 retourner une valeur de type `Int` ou `Float` pour une expression comme `read
 "5"`. Pour voir le type, Haskell devrait évaluer `read "5"`. Mais puisqu'il est
 statiquement typé, il doit connaître les types avant de compiler le code (ou,
-dans le cas de GHCi, de l'évaluer). Donc nous devons dire à Haskell : "Hé,
+dans le cas de GHCi, de l'évaluer). Donc nous devons dire à Haskell&nbsp;: "Hé,
 cette expression devrait avoir ce type, au cas où tu ne saurais pas !".
 
 Les membres d'`Enum` sont des types ordonnés séquentiellement - on peut les
 énumérer. L'avantage de la classe de types `Enum` est qu'on peut l'utiliser ses
 types dans les progressions. Elle définit aussi un successeur et un
 prédécesseur, qu'on peut obtenir à l'aide des fonctions `succ` et `pred`. Les
-types membres de cette classe sont : `()`, `Bool`, `Char`, `Ordering`, `Int`,
-`Integer`, `Float` et `Double`.
+types membres de cette classe sont&nbsp;: `()`, `Bool`, `Char`, `Ordering`,
+`Int`, `Integer`, `Float` et `Double`.
 
 > ghci> ['a'..'e']
 > "abcde"
@@ -438,13 +443,17 @@ séparées par des virgules dans les parenthèses.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
+
 <a href="demarrons" class="prevlink">Démarrons</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
+
 <a href="syntaxe-des-fonctions" class="nextlink">Syntaxe des fonctions</a>
+
 </li>
 </ul>
 </div>

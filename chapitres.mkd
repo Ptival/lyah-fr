@@ -99,7 +99,7 @@ Apprenez Haskell pour le meilleur !
 #. [Zippeurs](zippeurs)
     + [Une petite balade](zippeurs#une-petite-balade)
     + [Une traînée de miettes](zippeurs#une-trainee-de-miettes)
-    + [Concentrons-nous sur les listes](zippeurs#concentrons-nous-sur-les-listes)
+    + [Se focaliser sur des listes](zippeurs#se-focaliser-sur-des-listes)
     + [Un système de fichiers élémentaire](zippeurs#un-systeme-de-fichiers-elementaire)
     + [Attention à la marche](zippeurs#attention-a-la-marche)
 

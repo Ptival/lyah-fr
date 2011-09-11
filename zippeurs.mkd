@@ -3,7 +3,10 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-<a href="et-pour-quelques-monades-de-plus" class="prevlink">Et pour quelques monades de plus</a>
+
+<a href="et-pour-quelques-monades-de-plus" class="prevlink">Et pour quelques
+monades de plus</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
@@ -48,7 +51,7 @@ Une petite balade
 
 Comme on l'a appris en cours de biologie, il y a beaucoup de sortes différentes
 d'arbres, alors choisissons une graine qu'on utilisera pour planter le nôtre.
-La voici :
+La voici&nbsp;
 
 > data Tree a = Empty | Node a (Tree a) (Tree a) deriving (Show)
 
@@ -80,7 +83,7 @@ gratuitement !
 >             )
 >         )
 
-Et voici ce même arbre représenté graphiquement :
+Et voici ce même arbre représenté graphiquement&nbsp;
 
 <img src="img/pollywantsa.png" alt="polly dit qu'elle a mal au dos"
 class="center"/>
@@ -89,7 +92,7 @@ Remarquez-vous le `W` dans cet arbre ? Disons qu'on souhaite le changer en un
 `P`. Comment ferions-nous cela ? Eh bien, une façon de faire consisterait à
 filtrer par motif sur notre arbre jusqu'à ce qu'on trouve l'élément situé en
 allant d'abord à droite puis à gauche, et qu'on change cet élément. Voici le
-code faisant cela :
+code faisant cela&nbsp;
 
 > changeToP :: Tree Char -> Tree Char
 > changeToP (Node x l (Node y (Node _ m n) r)) = Node x l (Node y (Node 'P' m n) r)
@@ -105,7 +108,7 @@ sous-arbre qui contenait le `'W'` a maintenant pour racine `'P'`.
 Y a-t-il un meilleur moyen de faire ceci ? Pourquoi ne pas créer une fonction
 qui prenne un arbre ainsi qu'une liste de directions ? Les directions seront
 soit `L` soit `R`, représentant respectivement la gauche et la droite, et on
-changera l'élément sur lequel on tombe en suivant ces directions. Voici :
+changera l'élément sur lequel on tombe en suivant ces directions. Voici&nbsp;
 
 > data Direction = L | R deriving (Show)
 >     type Directions = [Direction]
@@ -124,7 +127,7 @@ signifie qu'on est arrivé à destination, on retourne donc un arbre qui est
 comme celui en entrée, mais avec `'P'` à sa racine.
 
 Pour éviter d'afficher l'arbre entier, créons une fonction qui prend une liste
-de directions et nous dit quel est l'élément à la destination :
+de directions et nous dit quel est l'élément à la destination&nbsp;
 
 > elemAt :: Directions -> Tree a -> a
 > elemAt (L:ds) (Node _ l _) = elemAt ds l
@@ -134,7 +137,7 @@ de directions et nous dit quel est l'élément à la destination :
 La fonction est en fait assez similaire à `changeToP`, seulement au lieu de se
 souvenir des choses en chemin et de reconstruire l'arbre, elle ignore
 simplement tout sauf sa destination. Ici on change le `'W'` en `'P'` et on
-vérifie si le changement a bien eu lieu dans le nouvel arbre :
+vérifie si le changement a bien eu lieu dans le nouvel arbre&nbsp;
 
 > ghci> let newTree = changeToP [R,L] freeTree
 > ghci> elemAt [R,L] newTree
@@ -172,26 +175,26 @@ Pour représenter nos miettes de pain, on va aussi utiliser une liste de
 `Direction` (soit `L`, soit `R`), seulement au lieu de l'appeler `Directions`,
 on l'appellera `Breadcrumbs`, puisque nos directions seront à présent
 renversées puisqu'on jette les miettes au fur et à mesure qu'on avance dans
-l'arbre :
+l'arbre&nbsp;
 
 > type Breadcrumbs = [Direction]
 
 Voici une fonction qui prend un arbre et des miettes et se déplace dans le
 sous-arbre gauche tout en ajoutant `L` dans la liste qui représente nos miettes
-de pain :
+de pain&nbsp;
 
 > goLeft :: (Tree a, Breadcrumbs) -> (Tree a, Breadcrumbs)
 > goLeft (Node _ l _, bs) = (l, L:bs)
 
 On ignore l'élément à la racine ainsi que le sous-arbre droit, et on retourne
 juste le sous-arbre gauche ainsi que l'ancienne traînée de miettes, avec `L`
-placé à sa tête. Voici une fonction pour aller à droite :
+placé à sa tête. Voici une fonction pour aller à droite&nbsp;
 
 > goRight :: (Tree a, Breadcrumbs) -> (Tree a, Breadcrumbs)
 > goRight (Node _ _ r, bs) = (r, R:bs)
 
 Elle fonctionne de façon similaire. Utilisons ces fonctions pour prendre notre
-`freeTree` et aller à droite puis à gauche :
+`freeTree` et aller à droite puis à gauche&nbsp;
 
 > ghci> goLeft (goRight (freeTree, []))
 > (Node 'W' (Node 'C' Empty Empty) (Node 'R' Empty Empty),[L,R])
@@ -204,7 +207,7 @@ miettes de pain sont `[L, R]` parce qu'on est d'abord allé à droite, puis à
 gauche.
 
 Pour rendre plus clair le déplacement dans notre arbre, on peut réutiliser la
-fonction `-:` qu'on avait définie ainsi :
+fonction `-:` qu'on avait définie ainsi&nbsp;:
 
 > x -: f = f x
 
@@ -212,7 +215,7 @@ Ce qui nous permet d'appliquer des fonctions à des valeurs en écrivant d'abord
 la valeur, puis `-:` et enfin la fonction. Ainsi, au lieu d'écrire `goRight
 (freeTree, [])`, on peut écrire `(freeTree, []) -: goRight`. En utilisant ceci,
 on peut réécrire le code ci-dessus de façon à faire mieux apparaître qu'on va
-en premier à droite, et ensuite à gauche :
+en premier à droite, et ensuite à gauche&nbsp;
 
 > ghci> (freeTree, []) -: goRight -: goLeft
 > (Node 'W' (Node 'C' Empty Empty) (Node 'R' Empty Empty),[L,R])
@@ -237,7 +240,7 @@ s'il était aussi dans la miette, il y aurait une duplication de l'information.
 
 Modifions notre miette de pain afin qu'elle contienne aussi l'information sur
 tout ce qu'on a ignoré précédemment quand on a choisi d'aller à gauche ou à
-droite. Au lieu de `Direction`, définissons un nouveau type de données :
+droite. Au lieu de `Direction`, définissons un nouveau type de données&nbsp;
 
 > data Crumb a = LeftCrumb a (Tree a) | RightCrumb a (Tree a) deriving (Show)
 
@@ -260,13 +263,14 @@ trouve le trou. Dans le cas d'un `LeftCrumb`, on sait qu'on est allé à gauche,
 donc le sous-arbre manquant est le sous-arbre gauche.
 
 Changeons également notre synonyme de type `Breadcrumbs` pour refléter le
-changement :
+changement&nbsp;
 
 > type Breadcrumbs a = [Crumb a]
 
 À présent, on doit modifier les fonctions `goLeft` et `goRight` afin qu'elles
 stockent l'information sur les chemins que l'on n'a pas pris dans nos miettes,
-au lieu de tout ignorer comme elles le faisaient auparavant. Voici `goLeft` :
+au lieu de tout ignorer comme elles le faisaient auparavant. Voici
+`goLeft`&nbsp;
 
 > goLeft :: (Tree a, Breadcrumbs a) -> (Tree a, Breadcrumbs a)
 > goLeft (Node x l r, bs) = (l, LeftCrumb x r:bs)
@@ -282,7 +286,7 @@ pas `Empty`. Un arbre vide n'a pas de sous-arbres, donc si l'on essaie d'aller
 à gauche dans un arbre vide, une erreur aura lieu parce que le filtrage par
 motif sur `Node` échouera, et parce qu'on n'a pas mis de motif pour `Empty`.
 
-`goRight` est similaire :
+`goRight` est similaire&nbsp;
 
 > goRight :: (Tree a, Breadcrumbs a) -> (Tree a, Breadcrumbs a)
 > goRight (Node x l r, bs) = (r, RightCrumb x l:bs)
@@ -290,7 +294,7 @@ motif sur `Node` échouera, et parce qu'on n'a pas mis de motif pour `Empty`.
 Précédemment, nous étions capable d'aller à gauche ou à droite. Ce qu'on a
 gagné, c'est la possibilité de rebrousser chemin, en se souvenant de ce à quoi
 ressemblaient les nœuds parents et les chemins qu'on n'a pas visités. Voici la
-fonction `goUp` :
+fonction `goUp`&nbsp;
 
 > goUp :: (Tree a, Breadcrumbs a) -> (Tree a, Breadcrumbs a)
 > goUp (t, LeftCrumb x r:bs) = (Node x t r, bs)
@@ -316,7 +320,7 @@ ses sous-arbres. Ce mécanisme nous permet de facilement nous déplacer à gauch
 à droite, et vers le haut. Une telle paire contenant une partie focalisée d'une
 structure de données, et ses alentours, est appelée un zipper, parce que
 changer de point focal vers le haut et vers le bas fait penser à une braguette
-qui monte et descend. Il est donc pratique de créer un synonyme de types :
+qui monte et descend. Il est donc pratique de créer un synonyme de types&nbsp;
 
 > type Zipper a = (Tree a, Breadcrumbs a)
 
@@ -329,7 +333,7 @@ donc à `Zipper`.
 
 À présent qu'on sait se déplacer de haut en bas, créons une fonction qui
 modifie l'élément à la racine de l'arbre sur lequel on est actuellement
-focalisé :
+focalisé&nbsp;
 
 > modify :: (a -> a) -> Zipper a -> Zipper a
 > modify f (Node x l r, bs) = (Node (f x) l r, bs)
@@ -339,21 +343,21 @@ Si l'on se focalise sur un nœud, on modifie son élément racine avec la foncti
 `f`. Si on se focalise sur un arbre vide, on ne fait rien. Désormais, on peut
 démarrer avec un arbre, se déplacer où l'on veut, et modifier l'élément à cet
 endroit, tout en restant focalisé sur cet élément de façon à pouvoir facilement
-se déplacer de haut en bas par la suite. Un exemple :
+se déplacer de haut en bas par la suite. Un exemple&nbsp;
 
 > ghci> let newFocus = modify (\_ -> 'P') (goRight (goLeft (freeTree,[])))
 
 On va à gauche, puis à droite, et on modifie l'élément racine en le remplaçant
-par un `'P'`. C'est encore plus lisible avec `-:` :
+par un `'P'`. C'est encore plus lisible avec `-:`&nbsp;
 
 > ghci> let newFocus = (freeTree,[]) -: goLeft -: goRight -: modify (\_ -> 'P')
 
 On peut ensuite remonter si l'on veut, et remplacer un élément par un
-mystérieux `'X'` :
+mystérieux `'X'`&nbsp;
 
 > ghci> let newFocus2 = modify (\_ -> 'X') (goUp newFocus)
 
-Ou avec `-:` :
+Ou avec `-:`&nbsp;
 
 > ghci> let newFocus2 = newFocus -: goUp -: modify (\_ -> 'X')
 
@@ -367,7 +371,7 @@ dans le bon sens et sous notre focalisation.
 Chaque nœud a deux sous-arbres, même si ces sous-arbres sont vides. Ainsi, si
 l'on se focalise sur un arbre vide, on peut le remplacer par un sous-arbre non
 vide, en lui attachant un arbre comme feuille. Le code pour faire cela est
-simple :
+simple&nbsp;
 
 > attach :: Tree a -> Zipper a -> Zipper a
 > attach t (_, bs) = (t, bs)
@@ -376,7 +380,7 @@ On prend un arbre et un zipper, et on retourne un nouveau zipper, dont le point
 focal est remplacé par l'arbre en question. Non seulement peut-on étendre des
 arbres ainsi, en remplaçant des sous-arbres vides par d'autres arbres, mais on
 peut aussi complètement remplacer des sous-arbres existants. Attachons un arbre
-tout à gauche de notre `freeTree` :
+tout à gauche de notre `freeTree`&nbsp;
 
 > ghci> let farLeft = (freeTree,[]) -: goLeft -: goLeft -: goLeft -: goLeft
 > ghci> let newFocus = farLeft -: attach (Node 'Z' Empty Empty)
@@ -390,7 +394,7 @@ exactement comme `freeTree`, mais avec un `'Z'` en plus tout à gauche.
 clean!</h3>
 
 Créer une fonction qui remonte tout en haut de notre arbre, peu importe
-l'endroit sur lequel on s'est focalisé, est assez facile. La voilà :
+l'endroit sur lequel on s'est focalisé, est assez facile. La voilà&nbsp;
 
 > topMost :: Zipper a -> Zipper a
 > topMost (t,[]) = (t,[])
@@ -415,7 +419,8 @@ sur les sous-listes d'une liste. Après tout, les listes sont un peu comme des
 arbres, seulement là où le nœud d'un arbre a un élément (ou pas) et plusieurs
 sous-arbres, un nœud d'une liste n'a qu'un élément et qu'une sous-liste. Quand
 on avait [implémenté nos propres
-listes](creer-nos-propres-types-et-classes-de-types#structures-de-donnees-recursives), on avait défini le type de données ainsi :
+listes](creer-nos-propres-types-et-classes-de-types#structures-de-donnees-recursives),
+on avait défini le type de données ainsi&nbsp;
 
 > data List a = Empty | Cons a (List a) deriving (Show, Read, Eq, Ord)
 
@@ -452,13 +457,13 @@ précédent était `2`, on peut rebrousser chemin en plaçant simplement cet
 
 Puisqu'une miette de pain est juste un élément dans ce cas, on n'a pas vraiment
 besoin de la placer dans un type de données, comme on l'avait fait avec `Crumb`
-pour notre zipper d'arbres :
+pour notre zipper d'arbres&nbsp;
 
 > type ListZipper a = ([a],[a])
 
 La première liste représente la liste sur laquelle on se focalise, et la
 seconde est la liste des miettes. Créons des fonctions pour avancer et reculer
-dans des listes :
+dans des listes&nbsp;
 
 > goForward :: ListZipper a -> ListZipper a
 > goForward (x:xs, bs) = (xs, x:bs)
@@ -470,7 +475,7 @@ Quand on avance, on se focalise sur la queue de la liste actuelle et on laisse
 la tête comme miette. Quand on rebrousse chemin, on prend la dernière miette,
 et on la replace en tête de liste.
 
-Voici les deux fonctions en action :
+Voici les deux fonctions en action&nbsp;
 
 > ghci> let xs = [1,2,3,4]
 > ghci> goForward (xs,[])
@@ -513,7 +518,7 @@ fichiers et peuvent contenir d'autres dossiers. Disons donc qu'un élément d'un
 système de fichiers est soit un fichier, avec son nom et ses données, soit un
 dossier, qui a un nom et tout un tas d'autres éléments pouvant être eux-mêmes
 des fichiers ou des dossiers. Voici le type de données qu'on utilisera et
-quelques synonymes de types pour savoir qui est quoi :
+quelques synonymes de types pour savoir qui est quoi&nbsp;
 
 > type Name = String
 > type Data = String
@@ -524,7 +529,7 @@ les données qu'il contient. Un dossier vient avec une chaîne de caractères, q
 est son nom, et une liste d'éléments. Si cette liste est vide, on a un dossier
 vide.
 
-Voici un dossier avec des fichiers et des sous-dossiers :
+Voici un dossier avec des fichiers et des sous-dossiers&nbsp;
 
 > myDisk :: FSItem
 > myDisk =
@@ -580,17 +585,17 @@ avant et celle des éléments venant après, on sait exactement où placer
 l'élément sur lequel on était focalisé quand on retourne en arrière. Ainsi, on
 sait où se trouve le trou.
 
-Voici notre type miette pour le système de fichiers :
+Voici notre type miette pour le système de fichiers&nbsp;
 
 > data FSCrumb = FSCrumb Name [FSItem] [FSItem] deriving (Show)
 
-Et voici un synonyme de type pour notre zipper :
+Et voici un synonyme de type pour notre zipper&nbsp;
 
 > type FSZipper = (FSItem, [FSCrumb])
 
 Remonter d'un cran dans la hiérarchie est très simple. On prend simplement la
 dernière miette et on assemble le nouveau point focal à partir du précédent et
-de la miette. Ainsi :
+de la miette. Ainsi&nbsp;
 
 > fsUp :: FSZipper -> FSZipper
 > fsUp (item, FSCrumb name ls rs:bs) = (Folder name (ls ++ [item] ++ rs), bs)
@@ -605,7 +610,7 @@ miette qu'on laissera devra inclure le nom `"root"` ainsi que les éléments
 précédant `"dijon_poupon.doc"` et ceux qui viennent après.
 
 Voici une fonction qui, étant donné un nom, se focalise sur un fichier ou un
-dossier situé dans le dossier courant :
+dossier situé dans le dossier courant&nbsp;
 
 > import Data.List (break)
 >
@@ -654,7 +659,7 @@ Partons de la racine et dirigeons-nous vers le fichier `"skull_man(scary).bmp"`
 
 `newFocus` est à présent un zipper qui est focalisé sur le fichier
 `"skull_man(scary).bmp"`. Récupérons le premier élément du zipper (le point
-focal lui-même) et vérifions si c'est bien vrai :
+focal lui-même) et vérifions si c'est bien vrai&nbsp;
 
 > ghci> fst newFocus
 > File "skull_man(scary).bmp" "Yikes!"
@@ -669,20 +674,20 @@ Remontons d'un cran pour nous focaliser sur son voisin `"watermelon_smash.gif"`
 <h3>Manipuler notre système de fichiers</h3>
 
 À présent qu'on sait naviguer dans notre système de fichiers, le manipuler est
-très simple. Voici une fonction qui renomme le fichier ou dossier courant :
+très simple. Voici une fonction qui renomme le fichier ou dossier courant&nbsp;
 
 > fsRename :: Name -> FSZipper -> FSZipper
 > fsRename newName (Folder name items, bs) = (Folder newName items, bs)
 > fsRename newName (File name dat, bs) = (File newName dat, bs)
 
-On peut maintenant renommer `"pics"` en `"cspi"` :
+On peut maintenant renommer `"pics"` en `"cspi"`&nbsp;
 
 > ghci> let newFocus = (myDisk,[]) -: fsTo "pics" -: fsRename "cspi" -: fsUp
 
 On est descendu jusqu'au dossier `"pics"`, on l'a renommé, et on est remonté.
 
 Pourquoi pas une fonction qui prend un nouvel élément, et l'ajoute au dossier
-courant ? Admirez :
+courant ? Admirez&nbsp;
 
 > fsNewFile :: FSItem -> FSZipper -> FSZipper
 > fsNewFile item (Folder folderName items, bs) =
@@ -691,7 +696,7 @@ courant ? Admirez :
 C'était du gâteau. Remarquez que ceci planterait si l'on essayait d'ajouter un
 élément alors que notre point focal était un fichier plutôt qu'un dossier.
 
-Ajoutons un fichier au dossier `"pics"` et retournons ensuite à la racine :
+Ajoutons un fichier au dossier `"pics"` et retournons ensuite à la racine&nbsp;
 
 > ghci> let newFocus = (myDisk,[]) -: fsTo "pics" -: fsNewFile (File "heh.jpg" "lol") -: fsUp
 
@@ -716,7 +721,7 @@ Jusqu'ici, lorsqu'on traversait nos structures de données, qu'elles soient des
 arbres binaires, des listes ou des systèmes de fichiers, on ne se préoccupait
 pas trop d'avancer un pas trop loin et de tomber dans le vide. Par exemple,
 notre fonction `goLeft` prend un zipper et un arbre binaire et déplace le point
-focal vers son sous-arbre gauche :
+focal vers son sous-arbre gauche&nbsp;
 
 > goLeft :: Zipper a -> Zipper a
 > goLeft (Node x l r, bs) = (l, LeftCrumb x r:bs)
@@ -745,7 +750,7 @@ nos mouvements. On va prendre les fonctions qui marchent sur notre zipper
 d'arbres binaires et les rendre monadiques. D'abord, occupons-nous des échecs
 possibles de `goLeft` et `goRight`. Jusqu'ici, l'échec de fonctions pouvant
 échouer était toujours reflété dans leur résultat, il en va de même ici. Voici
-`goLeft` et `goRight` pouvant échouer :
+`goLeft` et `goRight` pouvant échouer&nbsp;
 
 > goLeft :: Zipper a -> Maybe (Zipper a)
 > goLeft (Node x l r, bs) = Just (l, LeftCrumb x r:bs)
@@ -766,13 +771,13 @@ obtient `Nothing` !
 Ça a l'air bon ! Et pour rebrousser chemin ? Le problème avait lieu lorsqu'on
 essayait de remonter alors qu'on n'avait plus de miettes, ce qui signifiait
 qu'on était déjà à la racine de notre arbre. Voici la fonction `goUp` qui lance
-une erreur si l'on ne reste pas dans les limites de notre arbre :
+une erreur si l'on ne reste pas dans les limites de notre arbre&nbsp;
 
 > goUp :: Zipper a -> Zipper a
 > goUp (t, LeftCrumb x r:bs) = (Node x t r, bs)
 > goUp (t, RightCrumb x l:bs) = (Node x l t, bs)
 
-Modifions-là pour échouer gracieusement :
+Modifions-là pour échouer gracieusement&nbsp;
 
 > goUp :: Zipper a -> Maybe (Zipper a)
 > goUp (t, LeftCrumb x r:bs) = Just (Node x t r, bs)
@@ -782,8 +787,8 @@ Modifions-là pour échouer gracieusement :
 Si l'on a des miettes, tout va bien et on retourne un nouveau point focal
 réussi, mais si ce n'est pas le cas, on retourne un échec.
 
-Auparavant, ces fonctions prenaient des zippers et retournaient des zippers,
-ce qui signifiant qu'on pouvais les chaîner ainsi pour se balader :
+Auparavant, ces fonctions prenaient des zippers et retournaient des zippers, ce
+qui signifiant qu'on pouvais les chaîner ainsi pour se balader&nbsp;
 
 > gchi> let newFocus = (freeTree,[]) -: goLeft -: goRight
 
@@ -803,7 +808,7 @@ qui prend une valeur dans un contexte (dans notre cas, un `Maybe (Zipper a)`,
 qui a un contexte d'échec potentiel) et la donne à une fonction en s'assurant
 que le contexte est bien géré. Ainsi, tout comme avec notre funambule, on va
 échanger nos `-:` contre des `>>=`. Très bien, on peut à nouveau chaîner nos
-fonctions ! Observez :
+fonctions ! Observez&nbsp;
 
 > ghci> let coolTree = Node 1 Empty (Node 3 Empty Empty)
 > ghci> return (coolTree,[]) >>= goRight
@@ -817,7 +822,7 @@ On a utilisé `return` pour placer un zipper dans un `Just`, puis utilisé `>>=`
 pour donner cela à notre fonction `goRight`. D'abord, on crée un arbre qui a un
 sous-arbre gauche vide, et un sous-arbre droit avec deux sous-arbres. Quand on
 essaie d'aller à droite une fois, c'est un succès, parce que l'opération est
-logique. Aller deux fois à droite est aussi correct ; on se retrouve avec un
+logique. Aller deux fois à droite est aussi correct, on se retrouve avec un
 sous-arbre vide en point focal. Mais aller à droite trois fois n'a pas de sens,
 parce qu'on ne peut pas aller à droite dans un sous-arbre vide, c'est pourquoi
 le résultat est `Nothing`.
@@ -833,7 +838,10 @@ gracieusement en utilisant la monade `Maybe`.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-<a href="et-pour-quelques-monades-de-plus" class="prevlink">Et pour quelques monades de plus</a>
+
+<a href="et-pour-quelques-monades-de-plus" class="prevlink">Et pour quelques
+monades de plus</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)

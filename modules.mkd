@@ -3,13 +3,19 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-<a href="fonctions-d-ordre-superieur" class="prevlink">Fonctions d'ordre supérieur</a>
+
+<a href="fonctions-d-ordre-superieur" class="prevlink">Fonctions d'ordre
+supérieur</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-<a href="creer-nos-propres-types-et-classes-de-types" class="nextlink">Créer nos propres types et classes de types</a>
+
+<a href="creer-nos-propres-types-et-classes-de-types" class="nextlink">Créer
+nos propres types et classes de types</a>
+
 </li>
 </ul>
 </div>
@@ -61,7 +67,7 @@ fonction équivalente à `\xs -> length (nub xs)`.
 
 Vous pouvez aussi importer des fonctions d'un module dans l'espace de nommage
 global de GHCi. Si vous êtes dans GHCi, et que vous désirez appeler des
-fonctions exportées par `Data.List`, faites :
+fonctions exportées par `Data.List`, faites&nbsp;:
 
 > ghci> :m + Data.List
 
@@ -75,7 +81,7 @@ besoin d'utiliser `:m +` pour accéder à ces modules.
 
 Si vous n'avez besoin que de quelques fonctions d'un module, vous pouvez
 importer sélectivement juste ces fonctions. Si nous ne voulions que `nub` et
-`sort` de `Data.List`, on ferait :
+`sort` de `Data.List`, on ferait&nbsp;:
 
 > import Data.List (nub, sort)
 
@@ -83,7 +89,7 @@ Vous pouvez aussi choisir d'importer toutes les fonctions d'un module, sauf
 certaines. C'est souvent utile quand plusieurs modules exportent des fonctions
 qui ont le même nom et que vous voulez vous débarasser de celles qui ne vous
 concernent pas. Mettons qu'on ait défini une fonction `nub` et qu'on veuille
-importer toutes les fonctions de `Data.List` à part `nub` :
+importer toutes les fonctions de `Data.List` à part `nub`&nbsp;:
 
 > import Data.List hiding (nub)
 
@@ -92,7 +98,7 @@ qualifiés. Le module `Data.Map`, qui offre une structure de donnée pour trouve
 des valeurs grâce à une clé, exporte un paquet de fonctions qui ont les mêmes
 noms que celles du `Prelude`, comme `filter` ou `null`. Donc, quand on importe
 `Data.Map` et qu'on appelle `filter`, Haskell ne sait pas de laquelle on parle.
-Voici comment on résout cela :
+Voici comment on résout cela&nbsp;:
 
 > import qualified Data.Map
 
@@ -100,7 +106,7 @@ Cela nous force à écrire `Data.Map.filter` pour désigner la fonction `filter`
 de `Data.Map`, alors que `filter` tout court correpond à la fonction du
 `Prelude` qu'on connaît et qu'on aime tous. Mais écrire `Data.Map` devant
 chaque fonction du module est un peu fastidieux. C'est pourquoi on peut
-renommer les imports qualifiés :
+renommer les imports qualifiés&nbsp;:
 
 > import qualified Data.Map as M
 
@@ -133,7 +139,7 @@ manière qualifiée, il n'a de collision avec aucun nom du `Prelude`, à part
 Intéressons-nous à d'autres fonctions que nous n'avions pas encore vues.
 
 `intersperse` prend un élément et une liste, et place cet élément entre chaque
-paire d'éléments de la liste. Démonstration :
+paire d'éléments de la liste. Démonstration&nbsp;:
 
 > ghci> intersperse '.' "MONKEY"
 > "M.O.N.K.E.Y"
@@ -159,8 +165,8 @@ vice versa.
 
 Mettons qu'on ait les polynômes *3x² + 5x + 9*, *10x + 9* et *8x³ + 5x² + x -
 1*, et que l'on souhaite les additionner. On peut utiliser les listes `[0, 3,
-5, 9]`, `[10, 0, 0, 9]` et `[8, 5, 1, -1]` pour les représenter en Haskell.
-Maintenant, pour les sommer, il suffit de faire :
+    5, 9]`, `[10, 0, 0, 9]` et `[8, 5, 1, -1]` pour les représenter en Haskell.
+    Maintenant, pour les sommer, il suffit de faire&nbsp;:
 
 > ghci> map sum $ transpose [[0,3,5,9],[10,0,0,9],[8,5,1,-1]]
 > [18,8,6,17]
@@ -177,10 +183,10 @@ souvent avoir des erreurs de débordement de pile. Le coupable est la nature
 paresseuse des plis, la valeur de l'accumulateur n'étant pas réellement mise à
 jour pendant la phase de pli. Ce qui se passe en réalité, c'est que
 l'accumulateur fait en quelque sorte la promesse qu'il se rappellera comment
-calculer sa valeur quand on la lui demandera (NDT : pour cela, ce qu'on appelle
-un glaçon, traduction de *thunk*, est créé). Cela a lieu pour chaque
-accumulateur intermédiaire, et tous les glaçons sont empilés sur votre pile, et
-finissent par la faire déborder.  Les plis stricts ne sont pas de vils
+calculer sa valeur quand on la lui demandera (NDT&nbsp;: pour cela, ce qu'on
+        appelle un glaçon, traduction de *thunk*, est créé). Cela a lieu pour
+chaque accumulateur intermédiaire, et tous les glaçons sont empilés sur votre
+pile, et finissent par la faire déborder.  Les plis stricts ne sont pas de vils
 paresseux, et calculent les valeurs intermédiaires en route au lieu de remplir
 votre pile de glaçons.  Donc, si jamais vous rencontrez des problèmes de
 débordement de pile en faisant des plis paresseux, essayez d'utiliser plutôt
@@ -264,10 +270,10 @@ utile.
 > "This"
 
 Si l'on cherchait la somme de toutes les puissances de 3 inférieures à 10 000,
-on ne pourrait pas mapper `(^3)` à `[1..]`, puis appliquer un filtre et sommer
-le résultat, parce que `filter` ne termine pas sur des listes infinies. Vous
-savez peut-être que les éléments sont croissants, mais Haskell ne le sait pas.
-Vous pouvez donc faire ça :
+   on ne pourrait pas mapper `(^3)` à `[1..]`, puis appliquer un filtre et
+   sommer le résultat, parce que `filter` ne termine pas sur des listes
+   infinies. Vous savez peut-être que les éléments sont croissants, mais
+   Haskell ne le sait pas.  Vous pouvez donc faire ça&nbsp;:
 
 > ghci> sum $ takeWhile (<10000) $ map (^3) [1..]
 > 53361
@@ -336,7 +342,7 @@ compte de chaque élément.
 > [(1,4),(2,7),(3,2),(5,1),(6,1),(7,1)]
 
 `inits` et `tails` sont comme `init` et `tail`, mais appliquent ces fonctions
-récursivement tant que faire se peut. Observez :
+récursivement tant que faire se peut. Observez&nbsp;:
 
 > ghci> inits "w00t"
 > ["","w","w0","w00","w00t"]
@@ -390,7 +396,7 @@ seconde tous les autres.
 > ghci> partition (>3) [1,3,5,6,3,2,1,0,3,7]
 > ([5,6,7],[1,3,3,2,1,0,3])
 
-Il est important de saisir la différence avec `span` et `break` :
+Il est important de saisir la différence avec `span` et `break`&nbsp;:
 
 > ghci> span (`elem` ['A'..'Z']) "BOBsidneyMORGANeddy"
 > ("BOB","sidneyMORGANeddy")
@@ -403,11 +409,12 @@ toute la liste et la découpe conformément au prédicat.
 liste satisfaisant le prédicat. Mais il retourne ce prédicat encapsulé dans une
 valeur de type `Maybe`. Nous couvrirons les types de données algébriques plus
 en profondeur dans le prochain chapitre, mais pour l'instant, voilà ce que vous
-avez besoin de savoir : une valeur `Maybe` peut soit être `Just something`, soit
-`Nothing`. Tout comme une liste peut être soit la liste vide, soit une liste
-avec des éléments, une valeur `Maybe` peut contenir soit aucun, soit un élement.
-Et comme le type d'une liste d'entiers est par exemple `[Int]`, le type d'un
-éventuel entier est `Maybe Int`. Bon, faisons un tour de `find` :
+avez besoin de savoir&nbsp;: une valeur `Maybe` peut soit être `Just
+something`, soit `Nothing`. Tout comme une liste peut être soit la liste vide,
+    soit une liste avec des éléments, une valeur `Maybe` peut contenir soit
+    aucun, soit un élement.  Et comme le type d'une liste d'entiers est par
+    exemple `[Int]`, le type d'un éventuel entier est `Maybe Int`. Bon, faisons
+    un tour de `find`&nbsp;:
 
 > ghci> find (>4) [1,2,3,4,5,6]
 > Just 5
@@ -570,8 +577,8 @@ que celui passé en paramètre, et va alors insérer ce dernier devant l'autre.
 Le `4` est inséré juste après le `3` et juste avant le `5` dans le premier
 exemple, et entre le `3` et le `4` dans le second.
 
-Propriété intéressante : si l'on utilise `insert` pour insérer dans une liste
-triée, la liste reste triée.
+Propriété intéressante&nbsp;: si l'on utilise `insert` pour insérer dans une
+liste triée, la liste reste triée.
 
 > ghci> insert 4 [1,2,3,5,6,7]
 > [1,2,3,4,5,6,7]
@@ -620,20 +627,20 @@ s'ils sont tous les deux positifs ou tous les deux négatifs. Elle pourrait
 aussi être écrite `\x y -> (x > 0) && (y > 0) || (x <= 0) && (y <= 0)`, bien
 que je trouve la première version plus lisible. Une manière encore plus claire
 d'écrire les fonctions d'égalité pour les fonctions en *By* consiste à importer
-`on` depuis `Data.Function`. `on` est définie ainsi :
+`on` depuis `Data.Function`. `on` est définie ainsi&nbsp;:
 
 > on :: (b -> b -> c) -> (a -> b) -> a -> a -> c
 > f `on` g = \x y -> f (g x) (g y)
 
 Ainsi, faire <code>(==) \`on\` (> 0)</code> retourne une fonction d'égalité qui
 ressemble à `\x y -> (x > 0) == (y > 0)`. `on` est très utilisée avec les
-fonctions *By* parce qu'avec elle, on peut faire :
+fonctions *By* parce qu'avec elle, on peut faire&nbsp;:
 
 > ghci> groupBy ((==) `on` (> 0)) values
 > [[-4.3,-2.4,-1.2],[0.4,2.3,5.9,10.5,29.1,5.3],[-2.4,-14.5],[2.9,2.3]]
 
-Super lisible, non ? Vous pouvez le lire tout haut : groupe ceci par égalité
-sur le fait que les éléments soient plus grands que zéro.
+Super lisible, non ? Vous pouvez le lire tout haut&nbsp;: groupe ceci par
+égalité sur le fait que les éléments soient plus grands que zéro.
 
 De façon similaire, les fonctions `sort`, `insert`, `maximum` et `minimum` ont
 aussi un équivalent plus général. Les fonctions comme `groupBy` prenaient une
@@ -675,11 +682,11 @@ agissent sur des caractères. Et qui servent aussi pour filtrer ou mapper sur
 des chaînes de caractères, puisque ce ne sont que des listes de caractères.
 
 `Data.Char` exporte tout un tas de prédicats sur les caractères. C'est-à-dire,
-des fonctions qui prennent un caractère et nous indiquent s'il satisfait une
-condition. Les voici :
+    des fonctions qui prennent un caractère et nous indiquent s'il satisfait
+    une condition. Les voici&nbsp;:
 
-`isControl` vérifie si c'est un caractère de contrôle (NDT : caractères non
-affichables du sous-ensemble Latin-1 d'Unicode).
+`isControl` vérifie si c'est un caractère de contrôle (NDT&nbsp;: caractères
+        non affichables du sous-ensemble Latin-1 d'Unicode).
 
 `isSpace` vérifie si c'est un caractère d'espacement. Cela inclue les espaces,
 les tabulations, les nouvelles lignes, etc.
@@ -873,7 +880,7 @@ pouvoir récupérer le bon numéro de téléphone pour une personne donnée.
 La façon la plus évidente de représenter des listes associatives en Haskell est
 sous forme de listes de paires. La première composante de la paire serait la
 clé, la seconde serait la valeur. Voici un exemple de liste associative de
-numéros de téléphone :
+numéros de téléphone&nbsp;:
 
 > phoneBook =
 >     [("betty","555-2938")
@@ -922,11 +929,11 @@ pli.
 
 <div class="hintbox">
 
-**Note :** il est généralement mieux d'utiliser des plis pour effectuer de la
-récursivité standard sur les listes plutôt que d'écrire explicitement la
+**Note&nbsp;:** il est généralement mieux d'utiliser des plis pour effectuer de
+la récursivité standard sur les listes plutôt que d'écrire explicitement la
 récursivité, car c'est plus simple à lire et à identifier. Tout le monde
 connaît les plis et sait en identifier un lorsqu'il voit un appel à `foldr`,
-mais cela prend plus de temps de déchiffrer une récursivité explicite.
+    mais cela prend plus de temps de déchiffrer une récursivité explicite.
 
 </div>
 
@@ -967,8 +974,8 @@ map avec les mêmes associations.
 > ghci> Map.fromList [(1,2),(3,4),(3,2),(5,5)]
 > fromList [(1,2),(3,2),(5,5)]
 
-S'il y a des clés en doublon dans la liste originale, les doublons sont ignorés.
-Voici la signature de type de `fromList` :
+S'il y a des clés en doublon dans la liste originale, les doublons sont
+ignorés.  Voici la signature de type de `fromList`&nbsp;:
 
 > Map.fromList :: (Ord k) => [(k, v)] -> Map.Map k v
 
@@ -1002,7 +1009,7 @@ identique à l'ancienne, avec en plus la nouvelle clé-valeur insérée.
 > fromList [(3,100),(4,200),(5,600)]
 
 On peut implémenter notre propre `fromList` en utilisant la map vide, `insert`
-et un pli. Observez :
+et un pli. Observez&nbsp;:
 
 > fromList' :: (Ord k) => [(k,v)] -> Map.Map k v
 > fromList' = foldr (\(k,v) acc -> Map.insert k v acc) Map.empty
@@ -1063,7 +1070,7 @@ dans la map.
 `fromList`, mais elle ne jette pas les clés en double, et utilise une fonction
 passée en paramètre pour décider quoi faire d'elles. Disons qu'une fille peut
 avoir plusieurs numéros de téléphone, et qu'on a une liste associative comme
-celle-ci :
+celle-ci&nbsp;:
 
 > phoneBook =
 >     [("betty","555-2938")
@@ -1079,7 +1086,7 @@ celle-ci :
 >     ]
 
 Maintenant, si on utilise seulement `fromList` pour transformer cela en map, on
-va perdre quelques numéros ! Voilà ce qu'on va faire :
+va perdre quelques numéros ! Voilà ce qu'on va faire&nbsp;:
 
 > phoneBookToMap :: (Ord k) => [(k, String)] -> Map.Map k String
 > phoneBookToMap xs = Map.fromListWith (\number1 number2 -> number1 ++ ", " ++ number2) xs
@@ -1143,7 +1150,7 @@ liste.
 Les noms dans `Data.Set` collisionnent beaucoup avec le `Prelude` et
 `Data.List`, on fait donc un import qualifié.
 
-Placez cette déclaration dans un script :
+Placez cette déclaration dans un script&nbsp;:
 
 > import qualified Data.Set as Set
 
@@ -1282,7 +1289,7 @@ spécifions les fonctions qu'il exporte, et après cela, on peut commencer à
 > ) where
 
 Comme vous pouvez le voir, nous allons faire des aires et des volumes de
-sphères, de cubes et de pavés droits. Définissons nos fonctions :
+sphères, de cubes et de pavés droits. Définissons nos fonctions&nbsp;:
 
 > module Geometry
 > ( sphereVolume
@@ -1332,7 +1339,7 @@ ces fonctions complètement ou de les effacer dans une nouvelle version (on
 pourrait supprimer `rectangleArea` et utiliser `*` à la place) et personne ne
 s'en souciera parce qu'on ne les avait pas exportées.
 
-Pour utiliser notre module, on fait juste :
+Pour utiliser notre module, on fait juste&nbsp;:
 
 > import Geometry
 
@@ -1345,8 +1352,9 @@ Découpons ces fonctions de manière à ce que `Geometry` soit un module avec
 trois sous-modules, un pour chaque type d'objet.
 
 D'abord, créons un dossier `Geometry`. Attention à la majuscule à G. Dans ce
-dossier, placez trois dossiers : `Sphere.hs`, `Cuboid.hs` et `Cube.hs` (NDT :
-"Cuboid" signifie pavé droit). Voici ce que les fichiers contiennent :
+dossier, placez trois dossiers&nbsp;: `Sphere.hs`, `Cuboid.hs` et `Cube.hs`
+(NDT&nbsp;: "Cuboid" signifie pavé droit). Voici ce que les fichiers
+contiennent&nbsp;:
 
 `Sphere.hs`
 
@@ -1402,14 +1410,14 @@ fonctions ayant le même nom que celles de `Geometry.Cube`. C'est pourquoi
 l'import est qualifié, et tout va bien.
 
 Donc maintenant, si l'on se trouve dans un fichier qui se trouve au même niveau
-que le dossier `Geometry`, on peut par exemple :
+que le dossier `Geometry`, on peut par exemple&nbsp;:
 
 > import Geometry.Sphere
 
 Et maintenant, on peut utiliser `area` et `volume`, qui nous donneront l'aire
 et le volume d'une sphère. Et si l'on souhaite jongler avec deux ou plus de ces
 modules, on doit utiliser des imports qualifiés car ils exportent des fonctions
-avec des noms identiques. Tout simplement :
+avec des noms identiques. Tout simplement&nbsp;:
 
 > import qualified Geometry.Sphere as Sphere
 > import qualified Geometry.Cuboid as Cuboid
@@ -1427,13 +1435,19 @@ autre programme.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-<a href="fonctions-d-ordre-superieur" class="prevlink">Fonctions d'ordre supérieur</a>
+
+<a href="fonctions-d-ordre-superieur" class="prevlink">Fonctions d'ordre
+supérieur</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-<a href="creer-nos-propres-types-et-classes-de-types" class="nextlink">Créer nos propres types et classes de types</a>
+
+<a href="creer-nos-propres-types-et-classes-de-types" class="nextlink">Créer
+nos propres types et classes de types</a>
+
 </li>
 </ul>
 </div>

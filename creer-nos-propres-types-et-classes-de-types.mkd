@@ -3,13 +3,17 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
+
 <a href="modules" class="prevlink">Modules</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
+
 <a href="entrees-et-sorties" class="nextlink">Entrées et sorties</a>
+
 </li>
 </ul>
 </div>
@@ -32,11 +36,11 @@ type `Bool` est défini dans la bibliothèque standard.
 `data` signifie qu'on crée un nouveau type de données. La partie avant le `=`
 dénote le type, ici `Bool`. Les choses après le `=` sont des **constructeurs de
 valeurs**. Ils spécifient les différentes valeurs que peut prendre ce type. Le
-`|` se lit comme un *ou*. On peut donc lire cette déclaration : le type `Bool`
-peut avoir pour valeur `True` ou `False`. Le nom du type tout comme les noms
-des constructeurs de valeurs doivent commencer par une majuscule.
+`|` se lit comme un *ou*. On peut donc lire cette déclaration&nbsp;: le type
+`Bool` peut avoir pour valeur `True` ou `False`. Le nom du type tout comme les
+noms des constructeurs de valeurs doivent commencer par une majuscule.
 
-De manière similaire, on peut imaginer `Int` défini ainsi :
+De manière similaire, on peut imaginer `Int` défini ainsi&nbsp;:
 
 > data Int = -2147483648 | -2147483647 | ... | -1 | 0 | 1 | 2 | ... | 2147483647
 
@@ -53,7 +57,7 @@ possibilité serait d'utiliser des tuples. Un cercle pourrait être `(43.1, 55.0
 la troisième le rayon. Ça a l'air raisonnable, mais ça pourrait tout aussi bien
 représenter un vecteur 3D ou je ne sais quoi. Une meilleure solution consiste à
 créer notre type pour représenter les données. Disons qu'une forme puisse être
-un cercle ou un rectangle. Voilà :
+un cercle ou un rectangle. Voilà&nbsp;:
 
 > data Shape = Circle Float Float Float | Rectangle Float Float Float Float
 
@@ -105,14 +109,14 @@ afficher ce type de données sous une forme littérale. Rappelez-vous, quand on
 essaie d'afficher une valeur dans l'invite, Haskell exécute la fonction `show`
 sur cette valeur pour obtenir une représentation en chaîne de caractères, puis
 affiche celle-ci dans le terminal. Pour rendre `Shape` membre de la classe de
-types `Show`, on peut le modifier ainsi :
+types `Show`, on peut le modifier ainsi&nbsp;:
 
 > data Shape = Circle Float Float Float | Rectangle Float Float Float Float deriving (Show)
 
 On ne s'intéressera pas trop à la dérivation pour l'instant. Disons seulement
 qu'en ajoutant `deriving (Show)` à la fin d'une déclaration *data*, Haskell
 rend magiquement ce type membre de la classe de types `Show`. Ainsi, on peut à
-présent faire :
+présent faire&nbsp;:
 
 > ghci> Circle 10 20 5
 > Circle 10.0 20.0 5.0
@@ -121,7 +125,7 @@ présent faire :
 
 Les constructeurs de valeurs sont des fonctions, on peut donc les mapper, les
 appliquer partiellement, etc. Si l'on veut créer une liste de cercles
-concentriques de différents rayons, on peut faire :
+concentriques de différents rayons, on peut faire&nbsp;:
 
 > ghci> map (Circle 10 20) [4,5,6,6]
 > [Circle 10.0 20.0 4.0,Circle 10.0 20.0 5.0,Circle 10.0 20.0 6.0,Circle 10.0 20.0 6.0]
@@ -189,7 +193,7 @@ constructeurs de valeurs que vous voulez exporter, séparés par des virgules. S
 vous voulez exporter tous les constructeurs, vous pouvez écrire `..`.
 
 Si on voulait exporter les fonctions et types définis ici dans un module, on
-pourrait commencer ainsi :
+pourrait commencer ainsi&nbsp;:
 
 > module Shapes
 > ( Point(..)
@@ -229,7 +233,7 @@ Syntaxe des enregistrements
 <img src="img/record.png" alt="enregistrement" class="right"/>
 
 OK, on vient de nous donner la tâche de créer un type de données pour décrire
-une personne. Les informations à stocker pour décrire une personne sont :
+une personne. Les informations à stocker pour décrire une personne sont&nbsp;:
 prénom, nom de famille, âge, poids, numéro de téléphone, et parfum de glace
 préféré. Je ne sais pas pour vous, mais c'est tout ce que je souhaite savoir à
 propos d'une personne. Allons-y !
@@ -245,7 +249,7 @@ personne.
 
 Plutôt cool, bien qu'un peu illisible. Comment faire une fonction pour
 récupérer juste une information sur la personne ? Une pour son prénom, une pour
-son nom, etc. Nous devrions les définir ainsi :
+son nom, etc. Nous devrions les définir ainsi&nbsp;:
 
 > firstName :: Person -> String
 > firstName (Person firstname _ _ _ _ _) = firstname
@@ -298,7 +302,7 @@ autres et de les séparer par des espaces, on peut utiliser des accolades. On
 appelé Paamayim Nekudotayim, haha) puis on spécifie son type. Le type de
 données résultant est exactement le même. Le principal avantage est que cela
 crée les fonctions pour examiner chaque champ du type de données. En utilisant
-la syntaxe des enregistrements, Haskell a automatiquement créé ces fonctions :
+la syntaxe des enregistrements, Haskell a automatiquement créé ces fonctions&nbsp;:
 `firstName`, `lastName`, `age`, `height`, `phoneNumber` et `flavor`.
 
 > ghci> :t flavor
@@ -409,21 +413,21 @@ utiliser a un sens. Généralement, on les utilise quand notre type de données
 fonctionne sans se soucier du type de ce qu'il contient en lui, comme pour
 notre type `Maybe a`. Si notre type se comporte comme une sorte de boîte, il
 est bien de les utiliser. On pourrait changer notre type de données `Car` de
-ceci :
+ceci&nbsp;:
 
 > data Car = Car { company :: String
 >                , model :: String
 >                , year :: Int
 >                } deriving (Show)
 
-en cela :
+en cela&nbsp;:
 
 > data Car a b c = Car { company :: a
 >                      , model :: b
 >                      , year :: c
 >                      } deriving (Show)
 
-Mais y gagnerait-on vraiment ? La réponse est : probablement pas, parce qu'on
+Mais y gagnerait-on vraiment ? La réponse est&nbsp;: probablement pas, parce qu'on
 finirait par définir des fonctions qui ne fonctionnent que sur le type `Car
 String String Int`. Par exemple, vu notre première définition de `Car`, on
 pourrait écrire une fonction qui affiche les propriétés de la voiture avec un
@@ -475,7 +479,7 @@ un bon exemple d'endroit où les types paramétrés sont très utiles. Avoir des
 maps paramétrées nous permet de créer des maps de n'importe quel type vers
 n'importe quel autre type, du moment que le type de la clé soit membre de la
 classe de types `Ord`. Si nous étions en train de définir un type de map, on
-pourrait ajouter la contrainte de classe dans la déclaration *data* :
+pourrait ajouter la contrainte de classe dans la déclaration *data*&nbsp;:
 
 > data (Ord k) => Map k v = ...
 
@@ -495,7 +499,7 @@ dans sa déclaration *data*, le type de `ToList` devrait être `toList :: (Ord k
 => Map k a -> [(k, a)]`, alors que cette fonction ne fait aucune comparaison de
 clés selon leur ordre.
 
-Conclusion : ne mettez pas de contraintes de classe dans les déclarations
+Conclusion&nbsp;: ne mettez pas de contraintes de classe dans les déclarations
 *data* même lorsqu'elles ont l'air sensées, parce que de toute manière, vous
 devrez les écrire dans les fonctions qui en dépendent.
 
@@ -555,7 +559,7 @@ Dans la section [Classes de types
 101](types-et-classes-de-types#classes-de-types-101), nous avons vu les bases
 des classes de types. Nous avons dit qu'une classe de types est une sorte
 d'interface qui définit un comportement. Un type peut devenir une **instance**
-d'une classe de types s'il supporte ce comportement. Par exemple : le type
+d'une classe de types s'il supporte ce comportement. Par exemple&nbsp;: le type
 `Int` est une instance d'`Eq` parce que cette classe définit le comportement de
 ce qui peut être testé pour l'égalité. Et puisqu'on peut tester l'égalité de
 deux entiers, `Int` est membre de la classe `Eq`. La vraie utilité vient des
@@ -577,12 +581,12 @@ S'il peut être ordonné, on le rend instance de la classe `Ord`.
 Dans la prochaine section, nous verrons comment créer manuellement nos
 instances d'une classe de types en implémentant les fonctions définies par
 cette classe. Pour l'instant, voyons comment Haskell peut magiquement faire de
-nos types des instances de n'importe laquelle des classes de types suivantes :
+nos types des instances de n'importe laquelle des classes de types suivantes&nbsp;:
 `Eq`, `Ord`, `Enum`, `Bounded`, `Show` et `Read`. Haskell peut dériver le
 comportement de nos types dans ces contextes si l'on utilise le mot clé
 *deriving* lors de la création du type de données.
 
-Considérez ce type de données :
+Considérez ce type de données&nbsp;:
 
 > data Person = Person { firstName :: String
 >                      , lastName :: String
@@ -679,7 +683,7 @@ type ayant été construites par deux constructeurs différents, la valeur
 construite par le constructeur défini en premier sera considérée plus petite.
 Par exemple, considérez le type `Bool`, qui peut avoir pour valeur `False` ou
 `True`. Pour comprendre comment il fonctionne lorsqu'il est comparé, on peut
-l'imaginer défini comme :
+l'imaginer défini comme&nbsp;:
 
 > data Bool = False | True deriving (Ord)
 
@@ -713,7 +717,7 @@ sont des fonctions, qui ne sont pas des instances d'`Ord`.
 
 On peut facilement utiliser des types de données algébriques pour créer des
 énumérations, et les classes de types `Enum` et `Bounded` nous aident dans la
-tâche. Considérez les types de données suivants :
+tâche. Considérez les types de données suivants&nbsp;:
 
 > data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
 
@@ -851,7 +855,7 @@ fonctions.
 
 Les synonymes de types peuvent aussi être paramétrés. Si on veut un type qui
 représente le type des listes associatives de façon assez générale pour être
-utilisé quelque que soit le type des clés et des valeurs, on peut faire :
+utilisé quelque que soit le type des clés et des valeurs, on peut faire&nbsp;:
 
 > type AssocList k v = [(k,v)]
 
@@ -862,7 +866,7 @@ type concret, comme `AssocList Int String` par exemple.
 
 <div class="hintbox">
 
-**Fonzie dit** : Hey ! Quand je parle de *types concrets*, je veux dire genre
+**Fonzie dit**&nbsp;: Hey ! Quand je parle de *types concrets*, je veux dire genre
 des types appliqués complètement comme `Map Int String`, ou si on se frotte à
 une de ces fonctions polymorphes, `[a]` ou `(Ord a) => Maybe a` et tout ça. Et
 tu vois, parfois moi et mes potes on dit que `Maybe` c'est un type, mais bon,
@@ -880,11 +884,11 @@ pour obtenir de nouveaux constructeurs de types. Tout comme on appelle une
 fonctions avec trop peu de paramètres, on peut spécifier trop peu de paramètres
 de types à un constructeur de types et obtenir un constructeur de types
 partiellement appliqué. Si l'on voulait un type qui représente une map (de
-`Data.Map`) qui va des entiers vers quelque chose, on pourrait faire soit :
+`Data.Map`) qui va des entiers vers quelque chose, on pourrait faire soit&nbsp;:
 
 > type IntMap v = Map Int v
 
-Ou bien :
+Ou bien&nbsp;:
 
 > type IntMap = Map Int
 
@@ -915,7 +919,7 @@ situe après un `::`. Le `::` peut être dans des déclarations de types ou pour
 des annotations de types.
 
 Un autre type de données cool qui prend deux types en paramètres est `Either a
-b`. Voici grossièrement sa définition :
+b`. Voici grossièrement sa définition&nbsp;:
 
 > data Either a b = Left a | Right b deriving (Eq, Ord, Read, Show)
 
@@ -949,7 +953,7 @@ fonction a échoué ou pourquoi, on utilise généralement le type `Either a b`,
 erreurs utilisent le constructeur de valeurs `Left`, alors que les résultats
 utilisent le constructeur de valeurs `Right`.
 
-Exemple : un lycée a des casiers dans lesquels les étudiants peuvent ranger
+Exemple&nbsp;: un lycée a des casiers dans lesquels les étudiants peuvent ranger
 leurs posters de Guns'n'Roses. Chaque casier a une combinaison. Quand un
 étudiant veut un nouveau casier, il indique au superviseur des casiers le
 numéro de casier qu'il voudrait, et celui-ci lui donne le code. Cependant, si
@@ -992,7 +996,7 @@ s'il est utilisé. Si c'est le cas, on retourne `Left` en indiquant qu'il est
 déjà pris. Autrement, on retourne une valeur de type `Right Code`, dans
 laquelle on donne le code dudit casier. En fait, c'est un `Right String`, mais
 on a introduit un synonyme de types pour introduire un peu de documentation
-dans la déclaration de types. Voici une map à titre d'exemple :
+dans la déclaration de types. Voici une map à titre d'exemple&nbsp;:
 
 > lockers :: LockerMap
 > lockers = Map.fromList
@@ -1034,7 +1038,7 @@ sont de ce même type ! Ainsi, on peut créer des types de données récursifs, 
 une valeur d'un type peut contenir des valeurs de ce même type, qui à leur tour
 peuvent contenir encore plus de valeurs de ce type, et ainsi de suite.
 
-Pensez à cette liste : `[5]`. C'est juste un sucre syntaxique pour `5:[]`. À
+Pensez à cette liste&nbsp;: `[5]`. C'est juste un sucre syntaxique pour `5:[]`. À
 gauche de `:`, il y a une valeur, et à droite, il y a une liste. Dans ce cas,
 c'est une liste vide. Maintenant, qu'en est-il de `[4, 5]` ? Eh bien, ça se
 désucre en `4:(5:[])`. En considérant le premier `:`, on voit qu'il prend aussi
@@ -1095,7 +1099,7 @@ plus grande fixité, et ainsi `5 * 4 + 3` est équivalent à `(5 * 4) + 3`.
 
 À part ce détail, on a juste écrit `a :-: (List a)` à la place de `Cons a (List
 a)`. Maintenant, on peut écrire des listes qui ont notre type de listes de la
-sorte :
+sorte&nbsp;:
 
 > ghci> 3 :-: 4 :-: 5 :-: Empty
 > (:-:) 3 ((:-:) 4 ((:-:) 5 Empty))
@@ -1108,7 +1112,7 @@ constructeur comme une fonction préfixe, d'où le parenthésage autour de
 l'opérateur (rappelez-vous, `4 + 3` est juste `(+) 4 3`).
 
 Créons une fonction qui somme deux de nos listes ensemble. `++` est défini
-ainsi pour des listes normales :
+ainsi pour des listes normales&nbsp;:
 
 > infixr 5  ++
 > (++) :: [a] -> [a] -> [a]
@@ -1146,7 +1150,7 @@ caractères respectivement.
 <img src="img/binarytree.png" alt="arbre binaire" class="left"/>
 
 À présent, implémentons un **arbre binaire de recherche**. Si vous ne
-connaissez pas les arbres binaires de recherche, voici en quoi ils consistent :
+connaissez pas les arbres binaires de recherche, voici en quoi ils consistent&nbsp;:
 chaque élément pointe vers deux éléments, son fils gauche et son fils droit. Le
 fils gauche a une valeur inférieure à celle de l'élément, le fils droit a une
 valeur supérieure. Chacun des fils peut à son tour pointer vers zéro, un ou
@@ -1164,7 +1168,7 @@ si 8 est là ou pas.
 Les ensembles de `Data.Set` et les maps de `Data.Map` sont implémentés à l'aide
 d'arbres binaires de recherche équilibrés, qui sont toujours bien équilibrés.
 
-Voilà ce qu'on va dire : un arbre est soit vide, soit un élément contenant une
+Voilà ce qu'on va dire&nbsp;: un arbre est soit vide, soit un élément contenant une
 valeur et deux arbres. Ça sent le type de données algébrique à plein nez !
 
 > data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
@@ -1281,7 +1285,7 @@ instances de ces classes en demandant à Haskell de les dériver pour nous. Dans
 cette section, on va créer nos propres classes de types, et nos propres
 instances, le tout à la main.
 
-Bref récapitulatif sur les classes de types : elles sont comme des interfaces.
+Bref récapitulatif sur les classes de types&nbsp;: elles sont comme des interfaces.
 Une classe de types définit un comportement (tester l'égalité, comparer
 l'ordre, énumérer), puis les types qui peuvent se comporter de la sorte sont
 fait instances de ces classes. Le comportement des classes de types est défini
@@ -1300,7 +1304,7 @@ Par exemple, la classe `Eq` est pour les choses qui peuvent être testées
 `Car`) et que comparer deux voitures avec `==` a un sens, alors il est sensé de
 rendre `Car` instance d'`Eq`.
 
-Voici comment `Eq` est définie dans le prélude :
+Voici comment `Eq` est définie dans le prélude&nbsp;:
 
 > class Eq a where
 >     (==) :: a -> a -> Bool
@@ -1341,7 +1345,7 @@ type de cette fonction, celui-ci sera `(Eq a) => a -> a -> Bool`.
 
 Maintenant qu'on a une classe, que faire avec ? Eh bien, pas grand chose,
 vraiment. Mais une fois qu'on a des instances, on commence à bénéficier de
-fonctionnalités sympathiques. Regardez donc ce type :
+fonctionnalités sympathiques. Regardez donc ce type&nbsp;:
 
 > data TrafficLight = Red | Yellow | Green
 
@@ -1370,7 +1374,7 @@ automatiquement. On dit que c'est une définition complète minimale d'une class
 de types - un des plus petits ensembles de fonctions à implémenter pour que le
 type puisse se comporter comme une instance de la classe. Pour remplir la
 définition complète minimale d'`Eq`, il faut redéfinir soit `==`, soit `/=`.
-Cependant, si `Eq` était définie seulement ainsi :
+Cependant, si `Eq` était définie seulement ainsi&nbsp;:
 
 > class Eq a where
 >     (==) :: a -> a -> Bool
@@ -1378,7 +1382,7 @@ Cependant, si `Eq` était définie seulement ainsi :
 
 alors nous aurions dû implémenter ces deux fonctions lors de la création d'une
 instance, car Haskell ne saurait pas comment elles sont reliées. La définition
-complète minimale serait alors : `==` et `/=`.
+complète minimale serait alors&nbsp;: `==` et `/=`.
 
 Vous pouvez voir qu'on a implémenté `==` par un simple filtrage par motif.
 Puisqu'il y a beaucoup de cas où deux lumières sont différentes, on a spécifié
@@ -1395,7 +1399,7 @@ prend une valeur et retourne une chaîne de caractères.
 >     show Green = "Green light"
 
 Encore une fois, nous avons utilisé le filtrage par motif pour arriver à nos
-fins. Voyons cela en action :
+fins. Voyons cela en action&nbsp;:
 
 > ghci> Red == Red
 > True
@@ -1413,7 +1417,7 @@ light"`, il faut faire la déclaration d'instance à la main.
 
 Vous pouvez également créer des classes de types qui sont des sous-classes
 d'autres classes de types. La déclaration de classe de `Num` est un peu longue,
-mais elle débute ainsi :
+mais elle débute ainsi&nbsp;:
 
 > class (Eq a) => Num a where
 >    ...
@@ -1435,7 +1439,7 @@ de classes de types ? Ce qui rend `Maybe` différent de, par exemple,
 `TrafficLight`, c'est que `Maybe` tout seul n'est pas un type concret, mais un
 constructeur de types qui prend un type en paramètre (comme `Char` ou un autre)
 pour produire un type concret (comme `Maybe Char`). Regardons à nouveau la
-classe de types `Eq` :
+classe de types `Eq`&nbsp;:
 
 > class Eq a where
 >     (==) :: a -> a -> Bool
@@ -1447,7 +1451,7 @@ De ces déclarations de types, on voit que `a` est utilisé comme un type concre
 car tous les types entre les flèches d'une fonction doivent être concrets
 (souvenez-vous, on ne peut avoir de fonction de type `a -> Maybe`, mais on peut
 avoir des fonctions `a -> Maybe a` ou `Maybe Int -> Maybe String`). C'est
-pour cela qu'on ne peut pas faire :
+pour cela qu'on ne peut pas faire&nbsp;:
 
 > instance Eq Maybe where
 >     ...
@@ -1456,7 +1460,7 @@ Parce que, comme on l'a vu, `a` doit être un type concret, et `Maybe` ne l'est
 pas. C'est un constructeur de types qui prend un paramètre pour produire un
 type concret. Il serait également très fastidieux d'écrire des instances
 `instance Eq (Maybe Int) where`, `instance Eq (Maybe Char) where`, etc. pour
-chaque type qu'on utilise. Ainsi, on peut écrire :
+chaque type qu'on utilise. Ainsi, on peut écrire&nbsp;:
 
 > instance Eq (Maybe m) where
 >     Just x == Just y = x == y
@@ -1475,7 +1479,7 @@ d'en faire une instance d'`Eq`.
 Il y a un problème à cela tout de même. Le voyez-vous ? On utilise `==` sur le
 contenu de `Maybe`, mais on n'a pas de garantie que ce que contient `Maybe` est
 membre d'`Eq` ! C'est pourquoi nous devons modifier la déclaration d'*instance*
-ainsi :
+ainsi&nbsp;:
 
 > instance (Eq m) => Eq (Maybe m) where
 >     Just x == Just y = x == y
@@ -1483,7 +1487,7 @@ ainsi :
 >     _ == _ = False
 
 On a dû ajouter une contrainte de classe ! Avec cette déclaration d'*instance*,
-on dit ceci : nous voulons que tous les types de la forme `Maybe m` soient
+on dit ceci&nbsp;: nous voulons que tous les types de la forme `Maybe m` soient
 membres de la classe `Eq`, à condition que le type `m` (celui dans le `Maybe`)
 soit lui-même membre d'`Eq`. C'est ce qu'Haskell dériverait d'ailleurs.
 
@@ -1530,7 +1534,7 @@ Une classe de types oui-non
 
 En JavaScript et dans d'autres langages à typage faible, on peut mettre
 quasiment ce que l'on veut dans une expression *if*. Par exemple, tout ceci est
-valide : `if (0) alert ("YEAH") else alert("NO!")`, `if ("") alert ("YEAH")
+valide&nbsp;: `if (0) alert ("YEAH") else alert("NO!")`, `if ("") alert ("YEAH")
 else alert("NO!")`, `if (false) alert ("YEAH") else alert("NO!")`, etc. et tout
 cela lancera une alerte `NO!`. Si vous faites `if ("WHAT") alert ("YEAH") else
 alert("NO!")`, une alerte `"YEAH!"` sera lancée parce que JavaScript considère
@@ -1678,7 +1682,7 @@ type dans la classe de type était un type concret, comme le `a` dans `(==) ::
 (Eq a) => a -> a -> Bool`. Mais maintenant, le `f` n'est pas un type concret
 (un type qui peut contenir des valeurs, comme `Int`, `Bool` ou `Maybe String`),
 mais un constructeur de types qui prend un paramètre de type. Petit
-rafraîchissement par l'exemple : `Maybe Int` est un type concret, mais `Maybe`
+rafraîchissement par l'exemple&nbsp;: `Maybe Int` est un type concret, mais `Maybe`
 est un constructeur qui prend un type en paramètre. Bon, on voit que `fmap`
 prend une fonction d'un type vers un autre type et un foncteur appliqué au
 premier type, et retourne un foncteur appliqué au second type.
@@ -1777,7 +1781,7 @@ La classe de types `Functor` veut des constructeurs de types à un paramètre de
 type, mais `Either` en prend deux. Hmmm ! Je sais, on va partiellement
 appliquer `Either` en lui donnant un paramètre de type, de façon à ce qu'il
 n'ait plus qu'un paramètre libre. Voici comment `Either a` est fait foncteur
-dans la bibliothèque standard :
+dans la bibliothèque standard&nbsp;:
 
 > instance Functor (Either a) where
 >     fmap f (Right x) = Right (f x)
@@ -1790,7 +1794,7 @@ types qui attend un paramètre, alors qu'`Either` en attend deux. Si `fmap`
 Either a b -> Either a c`, parce que c'est identique à `(b -> c) -> (Either a)
 b -> (Either a) c`. Dans l'implémentation, on a mappé sur le constructeur de
 valeurs `Right`, mais pas sur `Left`. Pourquoi cela ? Eh bien, si on retourne
-à la définition d'`Either a b`, c'est un peu comme :
+à la définition d'`Either a b`, c'est un peu comme&nbsp;:
 
 > data Either a b = Left a | Right b
 
@@ -1932,7 +1936,7 @@ l'appliquer partiellement parce que `Functor` voulait des types qui attendent
 un paramètre, alors qu'`Either` en prend deux. En d'autres mots, `Functor` veut
 des types de sorte `* -> *` et nous avons dû appliquer partiellement `Either`
 pour obtenir un type de sorte `* -> *` au lieu de sa sorte originale `* -> * ->
-*`. Si on regarde à nouveau la définition de `Functor` :
+*`. Si on regarde à nouveau la définition de `Functor`&nbsp;:
 
 > class Functor f where
 >     fmap :: (a -> b) -> f a -> f b
@@ -1944,7 +1948,7 @@ que les types qui peuvent être amis avec `Functor` doivent avoir pour sorte `*
 -> *`.
 
 Maintenant, faisons un peu de type-fu. Regardez cette classe de types que je
-vais inventer maintenant :
+vais inventer maintenant&nbsp;:
 
 > class Tofu t where
 >     tofu :: j a -> t a j
@@ -2003,7 +2007,7 @@ remplaçait `j` par `Frank`, le type résultant serait `Frank Int Maybe`.
 > Frank {frankField = ["HELLO"]}
 
 Pas très utile, mais bon pour l'entraînement de nos muscles de types. Encore un
-peu de type-fu. Mettons qu'on ait ce type de données :
+peu de type-fu. Mettons qu'on ait ce type de données&nbsp;:
 
 > data Barry t k p = Barry { yabba :: p, dabba :: t k }
 
@@ -2022,7 +2026,7 @@ Vérifions avec GHCi.
 Ah, on avait raison. Comme c'est satisfaisant. Maintenant, pour rendre ce type
 membre de `Functor` il nous faut appliquer partiellement les deux premiers
 paramètres de type de façon à ce qu'il nous reste un `* -> *`. Cela veut dire
-que le début de la déclaration d'instance sera : `instance Functor (Barry a b)
+que le début de la déclaration d'instance sera&nbsp;: `instance Functor (Barry a b)
 where`. Si on regarde `fmap` comme si elle était faite spécifiquement pour
 `Barry`, elle aurait pour type `fmap :: (a -> b) -> Barry c d a -> Barry c d
 b`, parce qu'on remplace juste les `f` de `Functor` par `Barry c d`. Le
@@ -2053,13 +2057,17 @@ de types d'Haskell.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
+
 <a href="modules" class="prevlink">Modules</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
+
 <a href="entrees-et-sorties" class="nextlink">Entrées et sorties</a>
+
 </li>
 </ul>
 </div>

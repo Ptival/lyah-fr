@@ -3,13 +3,18 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-<a href="pour-une-poignee-de-monades" class="prevlink">Pour une poignée de monades</a>
+
+<a href="pour-une-poignee-de-monades" class="prevlink">Pour une poignée de
+monades</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
+
 <a href="zippeurs" class="nextlink">Zippeurs</a>
+
 </li>
 </ul>
 </div>
@@ -58,21 +63,21 @@ registre qui reste attaché au résultat.
 Par exemple, on peut vouloir munir nos valeurs d'une chaîne de caractères
 décrivant ce qui se passe, probablement pour déboguer notre programme.
 Considérez une fonction qui prend un nombre de bandits d'un gang et nous dit si
-c'est un gros gang ou pas. C'est une fonction très simple :
+c'est un gros gang ou pas. C'est une fonction très simple&nbsp;
 
 > isBigGang :: Int -> Bool
 > isBigGang x = x > 9
 
 Maintenant, et si au lieu de nous répondre seulement `True` ou `False`, on
 voulait aussi retourner une chaîne de caractères indiquant ce qu'on a fait ?
-Eh bien, il suffit de créer une chaîne et la retourner avec le `Bool` :
+Eh bien, il suffit de créer une chaîne et la retourner avec le `Bool`&nbsp;
 
 > isBigGang :: Int -> (Bool, String)
 > isBigGang x = (x > 9, "Compared gang size to 9.")
 
 À présent, au lieu de retourner juste un `Bool`, on retourne un tuple dont la
 première composante est la vraie valeur de retour, et la seconde est la chaîne
-accompagnant la valeur. Il y a un contexte additionnel à présent. Testons :
+accompagnant la valeur. Il y a un contexte additionnel à présent. Testons&nbsp;
 
 > ghci> isBigGang 3
 > (False,"Compared gang size to 9.")
@@ -86,9 +91,9 @@ Jusqu'ici, tout va bien. `isBigGang` prend une valeur normale et retourne une
 valeur dans un contexte. Comme on vient de le voir, lui donner une valeur
 normale n'est pas un problème. Et si l'on avait déjà une valeur avec un
 registre attaché, comme `(3, "Smallish gang.")`, et qu'on voulait la donner à
-`isBigGang` ? Il semblerait qu'on se retrouve à nouveau face à la question : si
-l'on a une fonction qui prend une valeur normale et retourne une valeur dans un
-contexte, comment lui passer une valeur dans un contexte ?
+`isBigGang` ? Il semblerait qu'on se retrouve à nouveau face à la
+question&nbsp; si l'on a une fonction qui prend une valeur normale et retourne
+une valeur dans un contexte, comment lui passer une valeur dans un contexte ?
 
 Quand on explorait la monade `Maybe`, on a créé une fonction `applyMaybe`, qui
 prenait un `Maybe a` et une fonction de type `a -> Maybe b` et on donnait la
@@ -106,7 +111,7 @@ String)`, et qui donne cette valeur à cette fonction. On va l'appeler
 d'échec potentiel, mais plutôt un contexte de valeur additionnelle, `applyLog`
 va s'assurer que le registre de la valeur originale n'est pas perdu, mais est
 accolé au registre de la valeur résultant de la fonction. Voici
-l'implémentation d'`applyLog` :
+l'implémentation d'`applyLog`&nbsp;
 
 > applyLog :: (a,String) -> (a -> (b,String)) -> (b,String)
 > applyLog (x,log) f = let (y,newLog) = f x in (y,log ++ newLog)
@@ -124,7 +129,7 @@ si l'on retournait cela en résultat, on aurait oublié l'ancien registre, ainsi
 on retourne une paire `(y, log ++ newLog)`. On utilise `++` pour juxtaposer le
 nouveau registre et l'ancien.
 
-Voici `applyLog` en action :
+Voici `applyLog` en action&nbsp;
 
 > ghci> (3, "Smallish gang.") `applyLog` isBigGang
 > (False,"Smallish gang.Compared gang size to 9")
@@ -133,7 +138,7 @@ Voici `applyLog` en action :
 
 Les résultats sont similaires aux précédents, seulement le nombre de personne
 dans le gang avait un registre l'accompagnant, et ce registre a été inclus dans
-le registre résultant. Voici d'autres exemples d'utilisation d'`applyLog` :
+le registre résultant. Voici d'autres exemples d'utilisation d'`applyLog`&nbsp;
 
 > ghci> ("Tobin","Got outlaw name.") `applyLog` (\x -> (length x, "Applied length."))
 > (5,"Got outlaw name.Applied length.")
@@ -160,7 +165,7 @@ Pour l'instant, `applyLog` prend des valeurs de type `(a, String)`, mais y
 a-t-il une raison à ce que le registre soit une `String` ? On utilise `++` pour
 juxtaposer les registres, ne devrait-ce donc pas marcher pour n'importe quel
 type de liste, pas seulement des listes de caractères ? Bien sûr que oui. On
-peut commencer par changer son type en :
+peut commencer par changer son type en&nbsp;
 
 > applyLog :: (a,[c]) -> (a -> (b,[c])) -> (b,[c])
 
@@ -175,7 +180,7 @@ chaînes d'octets. Mais attendez ! Les listes et les chaînes d'octets sont des
 monoïdes. En tant que tels, elles sont toutes deux des instances de la classe
 de types `Monoid`, ce qui signifie qu'elles implémentent la fonction `mappend`.
 Et pour les listes autant que les chaînes d'octets, `mappend` sert à
-concaténer. Regardez :
+concaténer. Regardez&nbsp;
 
 > ghci> [1,2,3] `mappend` [4,5,6]
 > [1,2,3,4,5,6]
@@ -184,7 +189,7 @@ concaténer. Regardez :
 
 Cool ! Maintenant, `applyLog` peut fonctionner sur n'importe quel monoïde. On
 doit changer son type pour refléter cela, ainsi que son implémentation pour
-remplacer `++` par `mappend` :
+remplacer `++` par `mappend`&nbsp;
 
 > applyLog :: (Monoid m) => (a,m) -> (a -> (b,m)) -> (b,m)
 > applyLog (x,log) f = let (y,newLog) = f x in (y,log `mappend` newLog)
@@ -195,7 +200,7 @@ un tuple valeur et valeur monoïdale. Par exemple, on peut avoir un tuple
 contenant un nom d'objet et un prix en tant que valeur monoïdale. On utilise le
 *newtype* `Sum` pour s'assurer que les prix sont bien additionnés lorsqu'on
 opère sur les objets. Voici une fonction qui ajoute des boissons à de la
-nourriture de cow-boy :
+nourriture de cow-boy&nbsp;
 
 > import Data.Monoid
 >
@@ -210,7 +215,7 @@ nourriture de cow-boy :
 On utilise des chaînes de caractères pour représenter la nourriture, et un
 `Int` dans un *newtype* `Sum` pour tracer le nombre de centimes que quelque
 chose coûte. Juste un rappel, faire `mappend` sur des `Sum` résulte en la somme
-des valeurs enveloppées :
+des valeurs enveloppées&nbsp;
 
 > ghci> Sum 3 `mappend` Sum 9
 > Sum {getSum = 12}
@@ -218,9 +223,9 @@ des valeurs enveloppées :
 La fonction `addDrink` est plutôt simple. Si l'on mange des haricots, elle
 retourne `"milk"` ainsi que `Sum 25`, donc 25 centimes encapsulés dans un
 `Sum`. Si l'on mange du bœuf séché, on boit du whisky, et si l'on mange quoi
-que ce soit d'autre, on boit une bière. Appliquer normalement une fonction à
-de la nourriture ne serait pas très intéressant ici, mais utiliser `applyLog`
-pour donner une nourriture qui a un prix à cette fonction est intéressant :
+que ce soit d'autre, on boit une bière. Appliquer normalement une fonction à de
+la nourriture ne serait pas très intéressant ici, mais utiliser `applyLog` pour
+donner une nourriture qui a un prix à cette fonction est intéressant&nbsp;
 
 > ghci> ("beans", Sum 10) `applyLog` addDrink
 > ("milk",Sum {getSum = 35})
@@ -238,7 +243,8 @@ présent, les nombres sont sommés.
 
 Puisque la valeur qu'`addDrink` retourne est un tuple `(Food, Price)`, on peut
 donner ce résultat à `addDrink` à nouveau, pour qu'elle nous dise ce qu'on
-devrait boire avec notre boisson et combien le tout nous coûterait. Essayons :
+devrait boire avec notre boisson et combien le tout nous coûterait.
+Essayons&nbsp;
 
 > ghci> ("dogmeat", Sum 5) `applyLog` addDrink `applyLog` addDrink
 > ("beer",Sum {getSum = 65})
@@ -257,7 +263,7 @@ valeur monadique, examinons l'instance de `Monad` pour de tels types. Le module
 
 D'abord, examinons le type lui-même. Pour attacher un monoïde à une valeur, on
 doit simplement les placer ensemble dans un tuple. Le type `Writer w a` est
-juste un enrobage *newtype* de cela. Sa définition est très simple :
+juste un enrobage *newtype* de cela. Sa définition est très simple&nbsp;
 
 > newtype Writer w a = Writer { runWriter :: (a, w) }
 
@@ -266,7 +272,7 @@ séparer ce type des tuples ordinaires. Le paramètre de type `a` représente le
 type de la valeur, alors que le paramètre de type `w` est la valeur monoïdale
 attachée.
 
-Son instance de `Monad` est définie de la sorte :
+Son instance de `Monad` est définie de la sorte&nbsp;
 
 > instance (Monoid w) => Monad (Writer w) where
 >     return x = Writer (x, mempty)
@@ -296,7 +302,7 @@ valeur. Ainsi, si l'on utilise `return` pour créer une valeur `Writer` et qu'on
 utilise `>>=` pour donner cette valeur à une fonction, la valeur monoïdale
 résultante sera uniquement ce que la fonction retourne. Utilisons `return` sur
 le nombre `3` quelques fois, en lui attachant un monoïde différent à chaque
-fois :
+fois&nbsp;
 
 > ghci> runWriter (return 3 :: Writer String Int)
 > (3,"")
@@ -343,7 +349,7 @@ singleton qui dit simplement qu'on a ce nombre. `multWithLog` est une valeur
 inclus dans le registre final. On utilise `return` pour présenter `a*b` comme
 résultat. Puisque `return` prend simplement quelque chose et le place dans un
 contexte minimal, on peut être sûr de ne rien avoir ajouté au registre. Voici
-ce qu'on voit en évaluant ceci :
+ce qu'on voit en évaluant ceci&nbsp;
 
 > ghci> runWriter multWithLog
 > (15,["Got number: 3","Got number: 5"])
@@ -355,7 +361,7 @@ monoïdale, comme `["This is going on"]` et crée une valeur `Writer` qui
 présente la valeur factice `()` comme son résultat, mais avec notre valeur
 monoïdale attachée. Quand on a une valeur monoïdale qui a un `()` en résultat,
 on ne le lie pas à une variable. Voici `multWithLog` avec un message
-supplémentaire rapporté dans le registre :
+supplémentaire rapporté dans le registre&nbsp;
 
 > multWithLog :: Writer [String] Int
 > multWithLog = do
@@ -368,7 +374,7 @@ Il est important que `return (a*b)` soit la dernière ligne, parce que le
 résultat de la dernière ligne d'une expression `do` est le résultat de
 l'expression entière. Si l'on avait placé `tell` à la dernière ligne, `()`
 serait le résultat de l'expression `do`. On aurait perdu le résultat de la
-multiplication. Cependant, le registre serait le même. Place à l'action :
+multiplication. Cependant, le registre serait le même. Place à l'action&nbsp;
 
 > ghci> runWriter multWithLog
 > (15,["Got number: 3","Got number: 5","Gonna multiply these two"])
@@ -379,7 +385,7 @@ L'algorithme d'Euclide est un algorithme qui prend deux nombres et calcule leur
 plus grand commun diviseur. C'est-à-dire, le plus grand nombre qui divise à la
 fois ces deux nombres. Haskell contient déjà la fonction `gcd`, qui calcule
 exactement ceci, mais implémentons la nôtre avec des capacités de registre.
-Voici l'algorithme normal :
+Voici l'algorithme normal&nbsp;
 
 > gcd' :: Int -> Int -> Int
 > gcd' a b
@@ -397,7 +403,7 @@ diviseur de 3 et 2. 2 est différent de 0, on obtient donc 2 et 1. Le second
 nombre n'est toujours pas 0, alors on lance l'algorithme à nouveau sur 1 et 0,
 puisque diviser 2 par 1 nous donne un reste de 0. Finalement, puisque le second
 nombre est 0, alors le premier est le résultat final, c'est-à-dire 1. Voyons si
-le code est d'accord :
+le code est d'accord&nbsp;
 
 > ghci> gcd' 8 3
 > 1
@@ -405,12 +411,12 @@ le code est d'accord :
 C'est le cas. Très bien ! Maintenant, on veut munir notre résultat d'un
 contexte, et ce contexte sera une valeur monoïdale agissant comme un registre.
 Comme auparavant, on utilisera une liste de chaînes de caractères pour notre
-monoïde. Le type de notre nouvelle fonction `gcd'` devrait donc être :
+monoïde. Le type de notre nouvelle fonction `gcd'` devrait donc être&nbsp;
 
 > gcd' :: Int -> Int -> Writer [String] Int
 
 Il ne reste plus qu'à munir notre fonction de valeurs avec registres. Voici le
-code :
+code&nbsp;
 
 > import Control.Monad.Writer
 >
@@ -429,7 +435,7 @@ vaut `0`, plutôt que de donner simplement le `a` en résultat, on utilise une
 expression `do` pour le placer dans une valeur `Writer` en résultat. On utilise
 d'abord `tell` pour rapporter qu'on a terminé, puis `return` pour présenter `a`
 comme résultat de l'expression `do`. Au lieu de cette expression `do`, on
-aurait aussi pu écrire :
+aurait aussi pu écrire&nbsp;
 
 > Writer (a, ["Finished with " ++ show a])
 
@@ -449,13 +455,15 @@ devrait être.
 
 Essayons notre nouvelle fonction `gcd'`. Son résultat est une valeur `Writer
 [String] Int` et si on l'extrait de son *newtype*, on obtient un tuple. La
-première composante de cette paire est le résultat. Voyons si c'est le cas :
+première composante de cette paire est le résultat. Voyons si c'est le
+cas&nbsp;
 
 > ghci> fst $ runWriter (gcd' 8 3)
 > 1
 
 Bien ! Qu'en est-il du registre ? Puisqu'il n'est qu'une liste de chaînes de
-caractères, utilisons `mapM_ putStrLn` pour afficher ces chaînes à l'écran :
+caractères, utilisons `mapM_ putStrLn` pour afficher ces chaînes à
+l'écran&nbsp;
 
 > ghci> mapM_ putStrLn $ snd $ runWriter (gcd' 8 3)
 > 8 mod 3 = 2
@@ -481,7 +489,7 @@ lent. C'est parce que les listes utilisent `++` pour `mappend`, et utiliser
 la liste est très longue.
 
 Dans notre fonction `gcd'`, la construction du registre est rapide parce que la
-concaténation se déroule ainsi :
+concaténation se déroule ainsi&nbsp;
 
 > a ++ (b ++ (c ++ (d ++ (e ++ f))))
 
@@ -489,7 +497,7 @@ Les listes sont des structures de données construites de la gauche vers la
 droite, et ceci est efficace parce que l'on construit d'abord entièrement la
 partie de gauche d'une liste, et ensuite on ajoute une liste plus longue à
 droite. Mais si l'on ne fait pas attention, utiliser la monade `Writer` peut
-produire une concaténation comme celle-ci :
+produire une concaténation comme celle-ci&nbsp;
 
 > ((((a ++ b) ++ c) ++ d) ++ e) ++ f
 
@@ -517,7 +525,7 @@ Elle effectue l'appel récursif d'abord, et lie le résultat au nom `result`.
 Puis, elle ajoute l'étape courante au registre, mais celle-ci vient donc
 s'ajouter à la fin du registre produit par l'appel récursif. Finalement, elle
 présente le résultat de l'appel récursif comme résultat final. La voici en
-action :
+action&nbsp;
 
 > ghci> mapM_ putStrLn $ snd $ runWriter (gcdReverse 8 3)
 > Finished with 1
@@ -546,7 +554,7 @@ concaténation efficace. Quand on concatène deux listes normales avec `++`, ell
 doit traverser la liste de la gauche jusqu'à sa fin pour coller la liste de
 droite à cet endroit. Mais qu'en est-il avec l'approche des listes
 différentielles ? Eh bien, concaténer deux listes différentielles peut être
-fait ainsi :
+fait ainsi&nbsp;
 
 > f `append` g = \xs -> f (g xs)
 
@@ -554,7 +562,7 @@ Souvenez-vous, `f` et `g` sont des fonctions qui prennent une liste, et leur
 prépose quelque chose. Par exemple, si `f` est la fonction `("dog"++)` (qui est
 juste une autre façon d'écrire `\xs -> "dog" ++ xs`) et `g` est la fonction
 `("meat"++)`, alors <code>f \`append\` g</code> crée une nouvelle fonction
-équivalente à :
+équivalente à&nbsp;
 
 > \xs -> "dog" ++ ("meat" ++ xs)
 
@@ -563,14 +571,14 @@ nouvelle fonction qui applique d'abord une liste différentielle sur une liste,
 puis applique l'autre liste différentielle au résultat.
 
 Créons un emballage *newtype* pour nos listes différentielles de façon à
-pouvoir les doter d'une instance de monoïde :
+pouvoir les doter d'une instance de monoïde&nbsp;
 
 > newtype DiffList a = DiffList { getDiffList :: [a] -> [a] }
 
 Le type que l'on enveloppe est `[a] -> [a]` parce qu'une liste différentielle
 est simplement une fonction qui prend une liste et en retourne une autre.
 Convertir des listes normales en listes différentielles et vice versa est très
-facile :
+facile&nbsp;
 
 > toDiffList :: [a] -> DiffList a
 > toDiffList xs = DiffList (xs++)
@@ -584,20 +592,22 @@ Puisqu'une liste différentielle est une fonction qui prépose une autre liste �
 la liste qu'elle représente, pour obtenir cette liste, il suffit de l'appliquer
 à une liste vide !
 
-Voici l'instance de `Monoid` :
+Voici l'instance de `Monoid`&nbsp;
 
 > instance Monoid (DiffList a) where
 >     mempty = DiffList (\xs -> [] ++ xs)
 >     (DiffList f) `mappend` (DiffList g) = DiffList (\xs -> f (g xs))
 
 Remarquez comme pour ces listes, `mempty` est juste la fonction `id` et
-`mappend` est simplement la composition de fonctions. Voyons si cela marche :
+`mappend` est simplement la composition de fonctions. Voyons si cela
+marche&nbsp;
 
 > ghci> fromDiffList (toDiffList [1,2,3,4] `mappend` toDiffList [1,2,3])
 > [1,2,3,4,1,2,3]
 
 Tip top ! On peut maintenant améliorer l'efficacité de `gcdReverse` en lui
-faisant utiliser des listes différentielles plutôt que des listes normales :
+faisant utiliser des listes différentielles plutôt que des listes
+normales&nbsp;
 
 > import Control.Monad.Writer
 >
@@ -614,7 +624,7 @@ faisant utiliser des listes différentielles plutôt que des listes normales :
 On a simplement dû changer le type du monoïde de `[String]` en `DiffList
 String`, et changer nos listes normales en listes différentielles avec
 `toDiffList` quand on utilisait `tell`. Voyons si le registre est assemblé
-correctement :
+correctement&nbsp;
 
 > ghci> mapM_ putStrLn . fromDiffList . snd . runWriter $ gcdReverse 110 34
 > Finished with 2
@@ -633,7 +643,7 @@ Pour vous faire une idée de l'ordre de grandeur de l'amélioration des
 performances en utilisant les listes différentielles, considérez cette fonction
 qui décompte à partir d'un nombre jusqu'à zéro, et produit son registre dans le
 sens inverse, comme `gcdReverse`, de manière à ce que le registre compte les
-nombres dans l'ordre croissant :
+nombres dans l'ordre croissant&nbsp;
 
 > finalCountDown :: Int -> Writer (DiffList String) ()
 > finalCountDown 0 = do
@@ -650,7 +660,7 @@ registre.
 
 Si vous chargez cete fonction dans GHCi et que vous l'appliquez à un nombre
 gros, comme `500000`, vous verrez qu'elle compte rapidement depuis `0` vers
-l'avant :
+l'avant&nbsp;
 
 > ghci> mapM_ putStrLn . fromDiffList . snd . runWriter $ finalCountDown 500000
 > 0
@@ -659,7 +669,7 @@ l'avant :
 > ...
 
 Cependant, si on la change pour utiliser des listes normales plutôt que des
-listes différentielles, de cette manière :
+listes différentielles, de cette manière&nbsp;
 
 > finalCountDown :: Int -> Writer [String] ()
 > finalCountDown 0 = do
@@ -668,7 +678,7 @@ listes différentielles, de cette manière :
 >     finalCountDown (x-1)
 >     tell [show x]
 
-Et qu'on demande à GHCi de compter :
+Et qu'on demande à GHCi de compter&nbsp;
 
 > ghci> mapM_ putStrLn . snd . runWriter $ finalCountDown 500000
 
@@ -694,7 +704,7 @@ des fonctions, `(->) r`, était une instance de `Functor`. Mapper une fonction
 `f` sur une fonction `g` crée une fonction qui prend la même chose que `g`,
 applique `g` dessus puis applique `f` au résultat. En gros, on crée une
 nouvelle fonction qui est comme `g`, mais qui applique `f` avant de renvoyer
-son résultat. Par exemple :
+son résultat. Par exemple&nbsp;
 
 > ghci> let f = (*5)
 > ghci> let g = (+3)
@@ -703,7 +713,7 @@ son résultat. Par exemple :
 
 Nous avons aussi vu que les fonctions étaient des foncteurs applicatifs. Elles
 nous permettaient d'opérer sur les résultats à terme de fonctions comme si l'on
-avait déjà ces résultats. Par exemple :
+avait déjà ces résultats. Par exemple&nbsp;
 
 > ghci> let f = (+) <$> (*2) <*> (+10)
 > ghci> f 3
@@ -725,7 +735,7 @@ sur quelque chose pour obtenir la valeur résultante.
 Puisqu'on a déjà vu comment les fonctions fonctionnent comme des foncteurs et
 des foncteurs applicatifs, plongeons immédiatement dans le grand bassin et
 voyons l'instance de `Monad`. Elle est située dans `Control.Monad.Instances` et
-ressemble à ça :
+ressemble à ça&nbsp;
 
 > instance Monad ((->) r) where
 >     return x = \_ -> x
@@ -751,7 +761,7 @@ cas, donc on l'applique également à `w`.
 
 Si vous ne comprenez pas comment `>>=` marche ici, ne vous inquiétez pas, avec
 les exemples on va voir que c'est simplement une monade comme une autre. Voici
-une expression `do` qui utilise cette monade :
+une expression `do` qui utilise cette monade&nbsp;
 
 > import Control.Monad.Instances
 >
@@ -770,7 +780,7 @@ sur ce nombre, ce qui résulte en `a`. `(+10)` est également appliquée au mêm
 nombre que celui donné à `(*2`, et le résultat devient `b`. `return`, comme
 dans les autres monades, n'a pas d'autre effet que de créer une valeur
 monadique présentée en résultat. Elle présente ici `a + b` comme le résultat de
-cette fonction. Si on essaie, on obtient le même résultat qu'avant :
+cette fonction. Si on essaie, on obtient le même résultat qu'avant&nbsp;
 
 > ghci> addStuff 3
 > 19
@@ -780,7 +790,7 @@ cette fonction. Si on essaie, on obtient le même résultat qu'avant :
 toujours `a+b` en résultat. Pour cette raison, la monade des fonctions est
 aussi appelée la monade de lecture. Toutes les fonctions lisent en effet la
 même source. Pour illustrer cela encore mieux, on peut réécrire `addStuff`
-ainsi :
+ainsi&nbsp;
 
 > addStuff :: Int -> Int
 > addStuff x = let
@@ -822,7 +832,7 @@ aléatoire et un nouveau générateur aléatoire. Si l'on voulait générer plus
 nombres aléatoires, nous avions toujours un générateur obtenu en résultat en
 même temps que le nombre aléatoire précédent. Quand on avait écrit une fonction
 prenant un `StdGen` et jetant trois fois une pièce en se basant sur un
-générateur, on avait fait :
+générateur, on avait fait&nbsp;
 
 > threeCoins :: StdGen -> (Bool, Bool, Bool)
 > threeCoins gen =
@@ -849,7 +859,7 @@ cool.
 
 Donc, pour nous aider à mieux comprendre le concept de calculs à états, donnons
 leur un type. On dira qu'un calcul à états est une fonction qui prend un état
-et retourne une valeur et un nouvel état. Le type de la fonction serait :
+et retourne une valeur et un nouvel état. Le type de la fonction serait&nbsp;
 
 > s -> (a,s)
 
@@ -885,10 +895,10 @@ en bas de la pile, il faut d'abord dépiler tout ce qui est au dessus.
 
 Nous utiliserons une liste pour notre pile et la tête de la liste sera le
 sommet de la pile. Pour nous aider dans notre tâche, nous créerons deux
-fonctions : `pop` et `push`. `pop` prend une pile, dépile un élément, et
+fonctions&nbsp; `pop` et `push`. `pop` prend une pile, dépile un élément, et
 retourne l'élément en résultat ainsi que la nouvelle pile sans cet élément.
 `push` prend un élément et une pile et empile l'élément sur la pile. Elle
-retourne `()` en résultat, ainsi qu'une nouvelle pile. Voici :
+retourne `()` en résultat, ainsi qu'une nouvelle pile. Voici&nbsp;
 
 > type Stack = [Int]
 >
@@ -906,7 +916,7 @@ son type.
 
 Écrivons un petit bout de code qui simule une pile en utilisant ces fonctions.
 On va prendre une pile, empiler `3` et dépiler deux éléments, juste pour voir.
-Voici :
+Voici&nbsp;
 
 > stackManip :: Stack -> (Int, Stack)
 > stackManip stack = let
@@ -920,7 +930,7 @@ pile, qu'on appelle `newStack1`. Ensuite, on dépile un nombre de `newStack1`,
 ce qui retourne un nombre `a` (qui est `3`) et une nouvelle pile qu'on appelle
 `newStack2`. Puis, on dépile un nombre de `newStack2` et obtient un nombre `b`
 et une nouvelle pile `newStack3`. Le tuple de ce nombre et cette pile est
-retourné. Essayons :
+retourné. Essayons&nbsp;
 
 > ghci> stackManip [5,8,2,1]
 > (5,[8,2,1])
@@ -932,7 +942,7 @@ Cool, le résultat est `5` et la nouvelle pile est `[8, 2, 1]`. Remarquez comme
 Le code ci-dessus de `stackManip` est un peut fastidieux puisqu'on donne
 manuellement l'état à chaque calcul à états, puis on récupère un nouvel état
 qu'on donne à nouveau au prochain calcul. Ce serait mieux si, au lieu de donner
-les piles manuellement à chaque fonction, on pouvait écrire :
+les piles manuellement à chaque fonction, on pouvait écrire&nbsp;
 
 > stackManip = do
 >     push 3
@@ -946,7 +956,7 @@ préoccuper de la gestion de l'état manuellement.
 <h3>La monade State</h3>
 
 Le module `Control.Monad.State` fournit un *newtype* qui enveloppe des calculs
-à états. Voici sa définition :
+à états. Voici sa définition&nbsp;
 
 > newtype State s a = State { runState :: s -> (a,s) }
 
@@ -955,7 +965,7 @@ retourne un résultat de type `a`.
 
 Maintenant qu'on a vu ce que sont des calculs à états et comment ils pouvaient
 être vus comme des valeurs avec des contextes, regardons leur instance de
-`Monad` :
+`Monad`&nbsp;
 
 > instance Monad (State s) where
 >     return x = State $ \s -> (x,s)
@@ -979,20 +989,21 @@ commence donc à écrire le *newtype* `State` et une lambda. Cette lambda doit
 extraire le résultat du premier calcul à états d'une manière ou d'une autre.
 Puisqu'on se trouve dans un calcul à états, on peut donner au calcul à états
 `h` notre état actuel `s`, ce qui retourne une paire d'un résultat et d'un
-nouvel état : `(a, newState)`. À chaque fois qu'on a implémenté `>>=`, après
-avoir extrait le résultat de la valeur monadique, on appliquait la fonction `f`
-dessus pour obtenir une nouvelle valeur monadique. Dans `Writer`, après avoir
-fait cela et obtenu la nouvelle valeur monadique, on devait ne pas oublier de
-tenir compte du contexte en faisant `mappend` entre l'ancienne valeur monoïdale
-et la nouvelle. Ici, on fait `f a` et on obtient un nouveau calcul à états `g`.
-Maintenant qu'on a un calcul à états et un état (qui s'appelle `newState`) on
-applique simplement le calcul à états `g` à l'état `newState`. Le résultat est
-un tuple contenant le résultat final et l'état final !
+nouvel état&nbsp; `(a, newState)`. À chaque fois qu'on a implémenté `>>=`,
+après avoir extrait le résultat de la valeur monadique, on appliquait la
+fonction `f` dessus pour obtenir une nouvelle valeur monadique. Dans `Writer`,
+après avoir fait cela et obtenu la nouvelle valeur monadique, on devait ne pas
+oublier de tenir compte du contexte en faisant `mappend` entre l'ancienne
+valeur monoïdale et la nouvelle. Ici, on fait `f a` et on obtient un nouveau
+calcul à états `g`.  Maintenant qu'on a un calcul à états et un état (qui
+s'appelle `newState`) on applique simplement le calcul à états `g` à l'état
+`newState`. Le résultat est un tuple contenant le résultat final et l'état
+final !
 
 Ainsi, avec `>>=`, on colle ensemble deux calculs à états, seulement le second
 est caché dans une fonction qui prend le résultat du premier. Puisque `pop` et
 `push` sont déjà des calculs à états, il est facile de les envelopper dans un
-`State`. Regardez :
+`State`. Regardez&nbsp;
 
 > import Control.Monad.State
 >
@@ -1004,7 +1015,7 @@ est caché dans une fonction qui prend le résultat du premier. Puisque `pop` et
 
 `pop` est déjà un calcul à états et `push` prend un `Int` et retourne un calcul
 à états. Maintenant, on peut réécrire l'exemple précédent où l'on empilait `3`
-sur la pile avant de dépiler deux nombres ainsi :
+sur la pile avant de dépiler deux nombres ainsi&nbsp;
 
 > import Control.Monad.State
 >
@@ -1016,13 +1027,13 @@ sur la pile avant de dépiler deux nombres ainsi :
 
 Voyez-vous comme on a collé ensemble un empilement et deux dépilements en un
 calcul à états ? Quand on sort ce calcul de son *newtype*, on obtient une
-fonction à laquelle on peut fournir un état initial :
+fonction à laquelle on peut fournir un état initial&nbsp;
 
 > ghci> runState stackManip [5,8,2,1]
 > (5,[8,2,1])
 
 On n'avait pas eu besoin de lier le premier `pop` à `a` vu qu'on n'utilise pas
-ce `a`. On aurait pu écrire :
+ce `a`. On aurait pu écrire&nbsp;
 
 > stackManip :: State Stack Int
 > stackManip = do
@@ -1030,9 +1041,9 @@ ce `a`. On aurait pu écrire :
 >     pop
 >     pop
 
-Plutôt cool. Mais et si l'on voulait faire ceci : dépiler un nombre de la pile,
-puis si ce nombre est `5`, l'empiler à nouveau et sinon, empiler `3` et `8`
-plutôt ? Voici le code :
+Plutôt cool. Mais et si l'on voulait faire ceci&nbsp; dépiler un nombre de la
+pile, puis si ce nombre est `5`, l'empiler à nouveau et sinon, empiler `3` et
+`8` plutôt ? Voici le code&nbsp;
 
 > stackStuff :: State Stack ()
 > stackStuff = do
@@ -1066,18 +1077,18 @@ et ne fait rien.
 
 Le module `Control.Monad.State` fournit une classe de types appelée
 `MonadState` qui contient deux fonctions assez utiles, j'ai nommé `get` et
-`put`. Pour `State`, la fonction `get` est implémentée ainsi :
+`put`. Pour `State`, la fonction `get` est implémentée ainsi&nbsp;
 
 > get = State $ \s -> (s,s)
 
 Elle prend simplement l'état courant et le présente en résultat. La fonction
 `put` prend un état et crée une fonction à états qui remplace l'état courant
-par celui-ci :
+par celui-ci&nbsp;
 
 > put newState = State $ \s -> ((),newState)
 
 Avec ces deux fonctions, on peut voir la pile courante ou la remplacer par une
-toute nouvelle pile. Comme ça :
+toute nouvelle pile. Comme ça&nbsp;
 
 > stackyStack :: State Stack ()
 > stackyStack = do
@@ -1087,7 +1098,7 @@ toute nouvelle pile. Comme ça :
 >         else put [9,2,1]
 
 Il est intéressant d'examiner le type qu'aurait `>>=` si elle était restreinte
-aux valeurs `State` :
+aux valeurs `State`&nbsp;
 
 > (>>=) :: State s a -> (a -> State s b) -> State s b
 
@@ -1095,7 +1106,7 @@ Remarquez que le type de l'état `s` reste le même, mais le type du résultat
 peut changer de `a` en `b`. Cela signifie que l'on peut coller ensemble des
 calculs à états dont les résultats sont de différents types, mais le type des
 états doit être le même. Pourquoi cela ? Eh bien, par exemple, pour `Maybe`,
-`>>=` a ce type :
+`>>=` a ce type&nbsp;
 
 > (>>=) :: Maybe a -> (a -> Maybe b) -> Maybe b
 
@@ -1112,14 +1123,14 @@ et retourne un nombre aléatoire ainsi qu'un nouveau générateur, qui devait
 ensuite être utilisé à la place du précédent pour générer de nouveaux nombres
 aléatoires. La monade d'états rend cela bien plus facile.
 
-La fonction `random` de `System.Random` a pour type :
+La fonction `random` de `System.Random` a pour type&nbsp;
 
 > random :: (RandomGen g, Random a) => g -> (a, g)
 
 Signifiant qu'elle prend un générateur aléatoire et produit un nombre aléatoire
 et un nouveau générateur. On peut voir que c'est un calcul à états, on peut
-donc l'envelopper dans le constructeur de *newtype* `State` et l'utiliser
-comme une valeur monadique afin que la gestion de l'état soit fait pour nous :
+donc l'envelopper dans le constructeur de *newtype* `State` et l'utiliser comme
+une valeur monadique afin que la gestion de l'état soit fait pour nous&nbsp;
 
 > import System.Random
 > import Control.Monad.State
@@ -1128,7 +1139,7 @@ comme une valeur monadique afin que la gestion de l'état soit fait pour nous :
 > randomSt = State random
 
 À présent, si l'on souhaite lancer trois pièces (`True` pour pile, `False` pour
-face), on peut faire :
+face), on peut faire&nbsp;
 
 > import System.Random
 > import Control.Monad.State
@@ -1144,7 +1155,7 @@ face), on peut faire :
 initial, il le passe au premier `randomSt`, qui produit un nombre et un nouveau
 générateur, qui est passé au prochain et ainsi de suite. On utilise `return (a,
 b, c)` pour présenter `(a, b, c)` comme le résultat sans changer le générateur
-le plus récent. Essayons :
+le plus récent. Essayons&nbsp;
 
 > ghci> runState threeCoins (mkStdGen 33)
 > ((True,False,True),680029187 2103410263)
@@ -1164,7 +1175,7 @@ Le type `Either e a` au contraire, nous permet d'incorporer un contexte d'échec
 afin de décrire ce qui s'est mal passé et de fournir d'autres informations
 intéressantes concernant l'échec. Une valeur `Either e a` peut être ou bien une
 valeur `Right`, indiquant la bonne réponse et un succès, ou une valeur `Left`,
-indiquant l'échec. Par exemple :
+indiquant l'échec. Par exemple&nbsp;
 
 > ghci> :t Right 4
 > Right 4 :: (Num t) => Either a t
@@ -1177,7 +1188,7 @@ d'échec éventuel, seulement maintenant il y a une valeur attachée à cette
 erreur.
 
 Son instance de `Monad` est similaire à celle de `Maybe` et peut être trouvée
-dans `Control.Monad.Error` :
+dans `Control.Monad.Error`&nbsp;
 
 > instance (Error e) => Monad (Either e) where
 >     return x = Right x
@@ -1190,10 +1201,10 @@ défaut minimal. Elle enveloppe notre valeur dans le constructeur `Right` parce
 qu'on utilise `Right` pour représenter un calcul réussi pour lequel un résultat
 est présent. C'est presque comme le `return` de `Maybe`.
 
-`>>=` examine deux cas possibles : un `Left` ou un `Right`. Dans le cas d'un
-`Right`, la fonction `f` est appliquée à la valeur à l'intérieur, comme pour
-`Just`. Dans le cas d'une erreur, la valeur `Left` est conservée ainsi que son
-contenu qui décrit l'erreur.
+`>>=` examine deux cas possibles&nbsp; un `Left` ou un `Right`. Dans le cas
+d'un `Right`, la fonction `f` est appliquée à la valeur à l'intérieur, comme
+pour `Just`. Dans le cas d'une erreur, la valeur `Left` est conservée ainsi que
+son contenu qui décrit l'erreur.
 
 L'instance de `Monad` d'`Either e a` a un pré-requis additionnel, qui est que
 le type de la valeur contenur dans `Left`, celui indexé par le paramètre de
@@ -1202,7 +1213,7 @@ types `Error` est pour les types dont les valeurs peuvent être vues comme des
 messages d'erreur. Elle définit une fonction `strMsg`, qui prend une erreur
 sous la forme d'une chaîne de caractères et retourne une telle valeur. Un bon
 exemple d'instance d'`Error` est, eh bien, le type `String` ! Dans le cas de
-`String`, la fonction `strMsg` retourne simplement ce qu'elle a reçu :
+`String`, la fonction `strMsg` retourne simplement ce qu'elle a reçu&nbsp;
 
 > ghci> :t strMsg
 > strMsg :: (Error a) => String -> a
@@ -1214,7 +1225,7 @@ utilise `Either`, on n'a pas trop à s'en soucier. Quand un filtrage par motif
 échoue dans la notation *do*, une valeur `Left` est utilisée pour indiquer cet
 échec.
 
-Voici quelques exemples d'utilisation :
+Voici quelques exemples d'utilisation&nbsp;
 
 > ghci> Left "boom" >>= \x -> return (x+1)
 > Left "boom"
@@ -1242,7 +1253,7 @@ Haskell dit qu'il ne sait pas quel type choisir pour la partie `e` de notre
 valeur `Either e a`, bien qu'on n'ait seulement affiché la partie `Right`. Ceci
 est dû à la contrainte `Error e` de l'instance de `Monad`. Ainsi, si vous
 obtenez une telle erreur de type en utilisant la monade `Either`, ajoutez une
-signature de type explicite :
+signature de type explicite&nbsp;
 
 > ghci> Right 3 >>= \x -> return (x + 100) :: Either String Int
 > Right 103
@@ -1290,12 +1301,12 @@ foncteur applicatif, elle ne l'a pas, parce que la classe de types `Monad` a
 
 Mais bien que chaque monade soit un foncteur, on n'a pas besoin que son type
 soit une instance de `Functor` grâce à la fonction `liftM`. `liftM` prend une
-fonction et une valeur monadique et mappe la fonction sur la valeur. C'est
-donc comme `fmap` ! Voici le type de `liftM` :
+fonction et une valeur monadique et mappe la fonction sur la valeur. C'est donc
+comme `fmap` ! Voici le type de `liftM`&nbsp;
 
 > liftM :: (Monad m) => (a -> b) -> m a -> m b
 
-Et le type de `fmap` :
+Et le type de `fmap`&nbsp;
 
 > fmap :: (Functor f) => (a -> b) -> f a -> f b
 
@@ -1304,7 +1315,7 @@ lois respectives, alors ces deux fonctions doivent être identiques (c'est le
 cas pour toutes les monades qu'on a vues jusqu'ici). Un peu comme `pure` et
 `return` font la même chose, seulement que la première a une contrainte de
 classe `Applicative` alors que l'autre a une contrainte `Monad`. Testons
-`liftM` :
+`liftM`&nbsp;
 
 > ghci> liftM (*3) (Just 8)
 > Just 24
@@ -1326,12 +1337,12 @@ composante du tuple, qui est le résultat. Daire `fmap` ou `liftM` sur un calcul
 modifié par la fonction passée en argument. Si l'on avait pas mappé `(+100)`
 sur `pop`, elle aurait retourné `(1,[2,3,4])`.
 
-Voici comment `liftM` est implémentée :
+Voici comment `liftM` est implémentée&nbsp;
 
 > liftM :: (Monad m) => (a -> b) -> m a -> m b
 > liftM f m = m >>= (\x -> return (f x))
 
-Ou, en notation *do* :
+Ou, en notation *do*&nbsp;
 
 > liftM :: (Monad m) => (a -> b) -> m a -> m b
 > liftM f m = do
@@ -1349,7 +1360,7 @@ fortes que les foncteurs normaux.
 
 La classe de types `Applicative` nous permet d'appliquer des fonctions entre
 des valeurs dans des contextes comme si elles étaient des valeurs normales.
-Comme cela :
+Comme cela&nbsp;
 
 > ghci> (+) <$> Just 3 <*> Just 5
 > Just 8
@@ -1358,7 +1369,7 @@ Comme cela :
 
 Utiliser ce style applicatif rend les choses plutôt faciles. `<$>` est juste
 `fmap` et `<*>` est une fonction de la classe de types `Applicative` qui a pour
-type :
+type&nbsp;
 
 > (<*>) :: (Applicative f) => f (a -> b) -> f a -> f b
 
@@ -1372,7 +1383,7 @@ valeurs applicatives.
 Il s'avère que tout comme `fmap`, `<*>` peut aussi être implémentée uniquement
 avec ce que la classe de types `Monad` nous donne. La fonction `ap` est
 simplement `<*>`, mais avec une contrainte de classe `Monad` plutôt
-qu'`Applicative`. Voici sa définition :
+qu'`Applicative`. Voici sa définition&nbsp;
 
 > ap :: (Monad m) => m (a -> b) -> m a -> m b
 > ap mf m = do
@@ -1384,7 +1395,7 @@ qu'`Applicative`. Voici sa définition :
 fonction est dans un contexte comme la valeur, on récupère la fonction de son
 contexte et on l'appelle `f`, puis on récupère la valeur qu'on appelle `x` et
 finalement on applique la fonction avec la valeur et on présente le résultat.
-Voici un exemple rapide :
+Voici un exemple rapide&nbsp;
 
 > ghci> Just (+3) <*> Just 4
 > Just 7
@@ -1404,7 +1415,7 @@ De façon similaire, si vous avec une instance de `Monad`, vous pouvez faire une
 instance de `Functor` en disant que `fmap` est `liftM`.
 
 La fonction `liftA2` est pratique pour appliquer une fonction entre deux
-valeurs applicatives. Elle est simplement définie comme :
+valeurs applicatives. Elle est simplement définie comme&nbsp;
 
 > liftA2 :: (Applicative f) => (a -> b -> c) -> f a -> f b -> f c
 > liftA2 f x y = f <$> x <*> y
@@ -1421,19 +1432,19 @@ applicatifs.
 
 <h3>La fonction `join`</h3>
 
-Voici de quoi faire travailler vos neurones : si le résultat d'une valeur
+Voici de quoi faire travailler vos neurones&nbsp; si le résultat d'une valeur
 monadique est une autre valeur monadique, autrement dit si une valeur monadique
 est imbriquée dans une autre, peut-on les aplatir en une valeur monadique
 simple ? Par exemple, si l'on a `Just (Just 9)`, peut on en faire un `Just 9` ?
 Il s'avère que toute valeur monadique imbriquée peut être aplatie et ceci est
 une propriété unique des monades. Pour cela, la fonction `join` existe. Son
-type est :
+type est&nbsp;
 
 > join :: (Monad m) => m (m a) -> m a
 
 Ainsi, elle prend une valeur monadique dans une valeur monadique et retourne
 simplement une valeur monadique, donc en quelque sorte elle l'aplatit. La voici
-en action sur diverses valeurs `Maybe` :
+en action sur diverses valeurs `Maybe`&nbsp;
 
 > ghci> join (Just (Just 9))
 > Just 9
@@ -1451,7 +1462,7 @@ soit `Just`. S'il y avait un seul échec parmi elles, le résultat était un
 échec. Il en va de même ici. À la troisième ligne, on essaie d'aplatir ce qui
 est déjà un échec, le résultat reste un échec.
 
-Aplatir les listes est intuitif :
+Aplatir les listes est intuitif&nbsp;
 
 > ghci> join [[1,2,3],[4,5,6]]
 > [1,2,3,4,5,6]
@@ -1468,7 +1479,7 @@ juxtaposée. Intuitivement, pour examiner la valeur d'un `Writer`, il faut que
 sa valeur monoïdale soit mise au registre d'abord, et seulement ensuite peut-on
 examiner ce qu'elle contient.
 
-Aplatir des valeurs `Either` est similaire au cas des valeurs `Maybe` :
+Aplatir des valeurs `Either` est similaire au cas des valeurs `Maybe`&nbsp;
 
 > ghci> join (Right (Right 9)) :: Either String Int
 > Right 9
@@ -1479,7 +1490,7 @@ Aplatir des valeurs `Either` est similaire au cas des valeurs `Maybe` :
 
 Si on applique `join` à un calcul à états dont le résultat est un calcul à
 états, le résultat est un calcul à états qui lance d'abord le calcul extérieur
-et ensuite le calcul intérieur. Regardez :
+et ensuite le calcul intérieur. Regardez&nbsp;
 
 > ghci> runState (join (State $ \s -> (push 10,1:2:s))) [0,0,0]
 > ((),[10,1,2,0,0,0])
@@ -1489,7 +1500,7 @@ La lambda ici prend un état et place `2` et `1` dans la pile et présente `push
 elle empile d'abord `2` et `1` puis `push 10` est exécuté, empilant un `10` en
 sommet de pile.
 
-L'implémentation de `join` est comme suit :
+L'implémentation de `join` est comme suit&nbsp;
 
 > join :: (Monad m) => m (m a) -> m a
 > join mm = do
@@ -1502,7 +1513,7 @@ ici est que lorsqu'on fait `m <- mm`, le contexte de la monade en question est
 pris en compte. C'est pourquoi, par exemple, des valeurs `Maybe` résultent en
 des `Just` seulement si les valeurs intérieures et extérieures sont toutes deux
 des valeurs `Just`. Voici à quoi cela ressemblait si `mm` était fixé à l'avance
-à la valeur `Just (Just 8)` :
+à la valeur `Just (Just 8)`&nbsp;
 
 > joinedMaybes :: Maybe Int
 > joinedMaybes = do
@@ -1533,7 +1544,7 @@ imbriquée plutôt que de trouver comment implémenter `>>=`.
 La fonction `filter` est le pain quotidien de la programmation en Haskell
 (`map` étant le beurre sur la tartine). Elle prend un prédicat et une liste à
 filtrer et retourne une nouvelle liste dans laquelle tous les éléments
-satisfaisant le précidat ont été gardés. Son type est :
+satisfaisant le précidat ont été gardés. Son type est&nbsp;
 
 > filter :: (a -> Bool) -> [a] -> [a]
 
@@ -1550,7 +1561,7 @@ résultante ait également un contexte attaché, autrement, le contexte de chaqu
 `Bool` serait perdu.
 
 La fonction `filterM` de `Control.Monad` fait exactement ce que l'on souhaite !
-Son type est :
+Son type est&nbsp;
 
 > filterM :: (Monad m) => (a -> m Bool) -> [a] -> m [a]
 
@@ -1561,14 +1572,14 @@ contexte est reflété dans le résultat final, celui-ci est aussi une valeur
 monadique.
 
 Prenons une liste et gardons seulement les valeurs inférieures à 4. Pour
-commencer, on va utiliser la fonction `filter` ordinaire :
+commencer, on va utiliser la fonction `filter` ordinaire&nbsp;
 
 > ghci> filter (\x -> x < 4) [9,1,5,2,10,3]
 > [1,2,3]
 
 C'était plutôt simple. Maintenant, créons un prédicat qui, en plus de retourner
 `True` ou `False`, fournisse également un registre de ce qu'il a fait. Bien
-sûr, on va utiliser la monade `Writer` à cet effet :
+sûr, on va utiliser la monade `Writer` à cet effet&nbsp;
 
 > keepSmall :: Int -> Writer [String] Bool
 > keepSmall x
@@ -1608,7 +1619,7 @@ Une astuce Haskell très cool est d'utiliser `filterM` pour obtenir l'ensemble
 des parties d'une liste (en imaginant la liste comme un ensemble pour le
 moment). L'ensemble des parties d'un ensemble est l'ensemble des sous-ensembles
 de cet ensemble. Si l'on a un ensemble comme `[1, 2, 3]`, l'ensemble de ses
-parties contient les ensembles suivants :
+parties contient les ensembles suivants&nbsp;
 
 > [1,2,3]
 > [1,2]
@@ -1626,10 +1637,11 @@ cet ensemble. `[2, 3]` est comme l'ensemble original, mais on a exclu le nombre
 
 Pour créer une fonction renvoyant l'ensemble des parties d'une liste, on va
 s'appuyer sur le non déterminisme. On prend une liste `[1, 2, 3]` et on regarde
-son premier élément, qui est `1`, et on se demande : devrait-on le garder ou le
-jeter ? Eh bien, on aimerait faire les deux en réalité. On va donc filtrer une
-liste à l'aide d'un prédicat qui gardera et jettera chaque élément de façon non
-déterministe. Voici notre fonction des sous-parties d'un ensemble :
+son premier élément, qui est `1`, et on se demande&nbsp; devrait-on le garder
+ou le jeter ? Eh bien, on aimerait faire les deux en réalité. On va donc
+filtrer une liste à l'aide d'un prédicat qui gardera et jettera chaque élément
+de façon non déterministe. Voici notre fonction des sous-parties d'un
+ensemble&nbsp;
 
 > powerset :: [a] -> [[a]]
 > powerset xs = filterM (\x -> [True, False]) xs
@@ -1637,7 +1649,7 @@ déterministe. Voici notre fonction des sous-parties d'un ensemble :
 Quoi, c'est tout ? Yup. On choisit de jeter et de garder chaque élément, peu
 importe lequel c'est. Nous avons un prédicat non déterministe, donc la liste
 résultante sera aussi une valeur non déterministe, et donc une liste de listes.
-Essayons :
+Essayons&nbsp;
 
 > ghci> powerset [1,2,3]
 > [[1,2,3],[1,2],[1,3],[1],[2,3],[2],[3],[]]
@@ -1656,17 +1668,17 @@ plis](fonctions-d-ordre-superieur#plie-mais-ne-rompt-pas), vous savez que
 plier, et plie la liste en partant de la gauche avec la fonctions binaire pour
 n'en faire plus qu'une valeur. `foldM` fait la même chose, mais prend une
 fonction qui produit une valeur monadique pour plier la liste. Sans surprise,
-la valeur résultante est également monadique. Le type de `foldl` est :
+la valeur résultante est également monadique. Le type de `foldl` est&nbsp;
 
 > foldl :: (a -> b -> a) -> a -> [b] -> a
 
-Alors que `foldM` a pour type :
+Alors que `foldM` a pour type&nbsp;
 
 > foldM :: (Monad m) => (a -> b -> m a) -> a -> [b] -> m a
 
 La valeur que la fonction binaire retourne est monadique, et donc le résultat
 du pli entier est aussi monadique. Sommons une liste de nombres à l'aide d'un
-pli :
+pli&nbsp;
 
 > ghci> foldl (\acc x -> acc + x) 0 [2,8,3,1]
 > 14
@@ -1682,7 +1694,7 @@ semble logique d'utiliser une fonction binaire qui vérifie si le nombre à
 ajouter est plus grand que `9`, échoue le cas échéant, et continue son petit
 bonhomme de chemin si ce n'est pas le cas. À cause de cette possibilité d'échec
 additionnelle, faisons retourner à notre fonction un `Maybe` accumulateur
-plutôt qu'un accumulateur normal. Voici la fonction binaire :
+plutôt qu'un accumulateur normal. Voici la fonction binaire&nbsp;
 
 > binSmalls :: Int -> Int -> Maybe Int
 > binSmalls acc x
@@ -1690,7 +1702,8 @@ plutôt qu'un accumulateur normal. Voici la fonction binaire :
 >     | otherwise = Just (acc + x)
 
 Puisque notre fonction binaire est maintenant une fonction monadique, on ne
-peut plus utiliser le `foldl` normal, mais on doit utiliser `foldM`. Voici :
+peut plus utiliser le `foldl` normal, mais on doit utiliser `foldM`.
+Voici&nbsp;
 
 > ghci> foldM binSmalls 0 [2,8,3,1]
 > Just 14
@@ -1721,7 +1734,7 @@ avec une pile vide et en utilisant une fonction binaire de pli qui empile les
 nombres ou manipule ceux au sommet de la pile pour les ajouter ou les diviser,
 etc.
 
-Ceci était le corps de notre fonction principale :
+Ceci était le corps de notre fonction principale&nbsp;
 
 > import Data.List
 >
@@ -1730,7 +1743,7 @@ Ceci était le corps de notre fonction principale :
 
 On transformait l'expression en une liste de chaînes de caractères, qu'on
 pliait avec notre fonction de pli, et il ne nous restait plus qu'un élément
-dans la pile, qu'on retournait comme réponse. La fonction de pli était :
+dans la pile, qu'on retournait comme réponse. La fonction de pli était&nbsp;
 
 > foldingFunction :: [Double] -> String -> [Double]
 > foldingFunction (x:y:ys) "*" = (x * y):ys
@@ -1747,7 +1760,7 @@ convertissait cette chaîne en un vrai nombre et retournait une nouvelle pile
 comme l'ancienne, mais avec ce nombre empilé.
 
 Rendons d'abord notre fonction de pli capable d'échouer gracieusement. Son type
-va changer de ce qu'il était en :
+va changer de ce qu'il était en&nbsp;
 
 > foldingFunction :: [Double] -> String -> Maybe [Double]
 
@@ -1760,13 +1773,13 @@ alors elle retourne une liste vide. À part retourner la valeur qu'elle a lue,
 elle retourne également le morceau de chaîne de caractères qu'elle n'a pas
 consommé. On va dire qu'il faut qu'elle consomme l'entrée en entier pour que
 cela marche, et on va créer une fonction `readMaybe` pour notre convenance. La
-voici :
+voici&nbsp;
 
 > readMaybe :: (Read a) => String -> Maybe a
 > readMaybe st = case reads st of [(x,"")] -> Just x
 >                                 _ -> Nothing
 
-Testons :
+Testons&nbsp;
 
 > ghci> readMaybe "1" :: Maybe Int
 > Just 1
@@ -1774,7 +1787,7 @@ Testons :
 > Nothing
 
 Ok, ça a l'air de marcher. Donc, transformons notre fonction de pli en une
-fonction monadique pouvant échouer :
+fonction monadique pouvant échouer&nbsp;
 
 > foldingFunction :: [Double] -> String -> Maybe [Double]
 > foldingFunction (x:y:ys) "*" = return ((x * y):ys)
@@ -1788,7 +1801,8 @@ aurait tout aussi bien pu écrire `Just`). Dans le dernier cas, on fait
 `readMaybe numberString` et on mappe ensuite `(:xs)` dessus. Donc, si la pile
 `xs` est `[1.0, 2.0]` et si `readMaybe numberString` résulte en `Just 3.0`, le
 résultat est `Just [3.0, 1.0, 2.0]`. Si `readMaybe numberString` résulte en
-`Nothing`, alors le résultat est `Nothing`. Essayons la fonction de pli seule :
+`Nothing`, alors le résultat est `Nothing`. Essayons la fonction de pli
+seule&nbsp;
 
 > ghci> foldingFunction [3,2] "*"
 > Just [6.0]
@@ -1823,7 +1837,7 @@ valeur, ou bien aucune, le filtrage par motif échoue et `Nothing` est produit.
 À la dernière ligne, on fait simplement `return result` pour présenter le
 résultat du calcul NPI comme le résultat de la valeur `Maybe`.
 
-Mettons-là à l'essai :
+Mettons-là à l'essai&nbsp;
 
 > ghci> solveRPN "1 2 * 4 +"
 > Just 6.0
@@ -1843,7 +1857,7 @@ lieu parce que `readMaybe` retourne `Nothing`.
 Lorsque nous étudiions les lois des monades, nous avions dit que la fonction
 `<=<` était comme la composition, mais qu'au lieu de travailler sur des
 fonctions ordinaires comme `a -> b`, elle travaillait sur des fonctions comme
-`a -> m b`. Par exemple :
+`a -> m b`. Par exemple&nbsp;
 
 > ghci> let f = (+1) . (*100)
 > ghci> f 4
@@ -1858,7 +1872,7 @@ et donné `Just 4` à la fonction résultante à l'aide de `>>=`.
 
 Si l'on a tout un tas de fonctions dans une liste, on peut les composer en une
 unique énorme fonction en utilisant `id` comme accumulateur initial et `.`
-comme fonction binaire. Voici un exemple :
+comme fonction binaire. Voici un exemple&nbsp;
 
 > ghci> let f = foldr (.) id [(+1),(*100),(+1)]
 > ghci> f 1
@@ -1877,12 +1891,13 @@ pour trouver si un cavalier pouvait aller d'une position d'un échiquier à une
 autre en exactement trois mouvements. On avait une fonction nommée `moveKnight`
 qui prenait la position du cavalier sur l'échiquier et retournait tous les
 déplacements possibles au prochain tour. Puis, pour générer toutes les
-positions possibles après trois mouvements, on a créé la fonction suivante :
+positions possibles après trois mouvements, on a créé la fonction
+suivante&nbsp;
 
 > in3 start = return start >>= moveKnight >>= moveKnight >>= moveKnight
 
 Et pour vérifier s'il pouvait aller de `start` à `end` en trois mouvements, on
-faisait :
+faisait&nbsp;
 
 > canReachIn3 :: KnightPos -> KnightPos -> Bool
 > canReachIn3 start end = end `elem` in3 start
@@ -1893,7 +1908,7 @@ cavalier après trois mouvements, on peut le faire pour un nombre de mouvements
 arbitraires. Si vous regardez `in3`, vous voyez qu'on utilise `moveKnight`
 trois fois, et à chaque fois, on utilise `>>=` pour lui donner toutes les
 positions précédentes. Rendons cela plus général à présent. Voici comment
-procéder :
+procéder&nbsp;
 
 > import Data.List
 >
@@ -1908,7 +1923,7 @@ placer la position initiale dans une liste singleton avec `return` et de la
 donner à notre fonction.
 
 On peut maintenant changer la fonctions `canReachIn3` pour être également plus
-générale :
+générale&nbsp;
 
 > canReachIn :: Int -> KnightPos -> KnightPos -> Bool
 > canReachIn x start end = end `elem` inMany x start
@@ -1941,7 +1956,7 @@ lieu, alors que `5` et `9` n'ont chacun que 25% de chances ? Essayons d'y
 arriver !
 
 Mettons que chaque élément de la liste vienne avec une valeur supplémentaire,
-une probabilité. Il peut sembler logique de le présenter ainsi :
+une probabilité. Il peut sembler logique de le présenter ainsi&nbsp;
 
 > [(3,0.5),(5,0.25),(9,0.25)]
 
@@ -1953,7 +1968,7 @@ devenir bordéliques parce qu'ils ont tendance à perdre en précision, ainsi
 Haskell propose un type de donnée pour les nombres rationnels qui ne perdent
 pas en précision. Ce type s'appelle `Rational` et vit dans `Data.Ratio`. Pour
 créer un `Rational`, on l'écrit comme si c'était une fraction. Le numérateur et
-le dénominateur sont séparés par un `%`. Voici quelques exemples :
+le dénominateur sont séparés par un `%`. Voici quelques exemples&nbsp;
 
 > ghci> 1%4
 > 1 % 4
@@ -1965,7 +1980,8 @@ le dénominateur sont séparés par un `%`. Voici quelques exemples :
 La première ligne est juste un quart. À la deuxième ligne, on additionne deux
 moitiés, ce qui nous donne un tout, et à la troisième ligne on additione un
 tiers et cinq quarts et on obtient dix-neuf douzièmes. Jetons ces nombres à
-virgule flottante et utilisons plutôt des `Rational` pour nos probabilités :
+virgule flottante et utilisons plutôt des `Rational` pour nos
+probabilités&nbsp;
 
 > ghci> [(3,1%2),(5,1%4),(9,1%4)]
 > [(3,1 % 2),(5,1 % 4),(9,1 % 4)]
@@ -1984,16 +2000,16 @@ bientôt créer des instances.
 
 Bien. Est-ce un foncteur ? Eh bien, la liste étant un foncteur, ceci devrait
 probablement être également un foncteur, parce qu'on a juste rajouté quelque
-chose à la liste. Lorsqu'on mappe une fonction sur une liste, on l'applique
-à chaque élément. Ici, on va l'appliquer à chaque élément également, et on
-laissera les probabilités comme elles étaient. Créons une instance :
+chose à la liste. Lorsqu'on mappe une fonction sur une liste, on l'applique à
+chaque élément. Ici, on va l'appliquer à chaque élément également, et on
+laissera les probabilités comme elles étaient. Créons une instance&nbsp;
 
 > instance Functor Prob where
 >     fmap f (Prob xs) = Prob $ map (\(x,p) -> (f x,p)) xs
 
 On sort la paire du *newtype* en filtrant par motif, on applique la fonction
 `f` aux valeurs en gardant les probabilités telles quelles, et on réencapsule
-le tout. Voyons si cela marche :
+le tout. Voyons si cela marche&nbsp;
 
 > ghci> fmap negate (Prob [(3,1%2),(5,1%4),(9,1%4)])
 > Prob {getProb = [(-3,1 % 2),(-5,1 % 4),(-9,1 % 4)]}
@@ -2021,7 +2037,7 @@ probabilités. Comme exemple, considérons une liste où il y a exactement 25% d
 chances que `'a'` ou `'b'` ait lieu. `a` et `b` ont la même probabilité.
 Également, il y a 75% de chances que `c` ou `d` ait lieu. `'c'` et `'d'` ont
 également la même probabilité. Voici une image de la liste de probabilités qui
-modèle ce scénario :
+modèle ce scénario&nbsp;
 
 <img src="img/prob.png" alt="probas" class="left"/>
 
@@ -2035,7 +2051,7 @@ quarts multipliés par un demi donnent trois huitièmes `'d'` aurait aussi lieu
 trois fois sur huit. Si l'on somme toutes les probabilités, la somme vaut
 toujours un.
 
-Voici cette situation exprimée comme une liste de probabilités :
+Voici cette situation exprimée comme une liste de probabilités&nbsp;
 
 > thisSituation :: Prob (Prob Char)
 > thisSituation = Prob
@@ -2047,7 +2063,7 @@ Remarquez que son type est `Prob (Prob Char)`. Maintenant qu'on a trouvé
 comment aplatir une liste de probabilités imbriquée, il nous suffit d'écrire le
 code correspondant, et on peut alors écrire `>>=` comme `join (fmap f m)` et
 avoir notre monade ! Voici `flatten`, qu'on nomme ainsi parce que le nom `join`
-est déjà pris :
+est déjà pris&nbsp;
 
 > flatten :: Prob (Prob a) -> Prob a
 > flatten (Prob xs) = Prob $ concat $ map multAll xs
@@ -2095,7 +2111,7 @@ Mettons qu'on ait deux pièces normales et une pièce pipée qui donne pile un
 nombre ahurissant de neuf fois sur dix, et face seulement une fois sur dix. Si
 l'on jette les trois pièces à la fois, quelles sont les chances qu'elles
 atterrissent toutes sur pile ? D'abord, créont des valeurs de probabilités pour
-un lancer de pièce normale et un lancer de pièce pipée :
+un lancer de pièce normale et un lancer de pièce pipée&nbsp;
 
 > data Coin = Heads | Tails deriving (Show, Eq)
 >
@@ -2105,7 +2121,7 @@ un lancer de pièce normale et un lancer de pièce pipée :
 > loadedCoin :: Prob Coin
 > loadedCoin = Prob [(Heads,1%10),(Tails,9%10)]
 
-Et finalement, le lancer de pièces en action :
+Et finalement, le lancer de pièces en action&nbsp;
 
 > import Data.List (all)
 >
@@ -2117,7 +2133,8 @@ Et finalement, le lancer de pièces en action :
 >     return (all (==Tails) [a,b,c])
 
 En l'essayant, on voit que les chances que les trois pièces atterrissent sur
-pile ne sont pas très bonnes, en dépit d'avoir triché avec notre pièce pipée :
+pile ne sont pas très bonnes, en dépit d'avoir triché avec notre pièce
+pipée&nbsp;
 
 > ghci> getProb flipThree
 > [(False,1 % 40),(False,9 % 40),(False,1 % 40),(False,9 % 40),
@@ -2139,13 +2156,18 @@ assez bonne compréhension de ce que sont les monades.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-<a href="pour-une-poignee-de-monades" class="prevlink">Pour une poignée de monades</a>
+
+<a href="pour-une-poignee-de-monades" class="prevlink">Pour une poignée de
+monades</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
+
 <a href="zippeurs" class="nextlink">Zippeurs</a>
+
 </li>
 </ul>
 </div>

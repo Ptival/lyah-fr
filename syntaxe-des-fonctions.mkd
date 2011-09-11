@@ -3,13 +3,18 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-<a href="types-et-classes-de-types" class="prevlink">Types et classes de types</a>
+
+<a href="types-et-classes-de-types" class="prevlink">Types et classes de
+types</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
+
 <a href="recursivite" class="nextlink">Récursivité</a>
+
 </li>
 </ul>
 </div>
@@ -41,10 +46,10 @@ sera utilisé. Ici, le seul moyen pour un nombre de correspondre au premier
 motif est pour lui d'être le nombre 7. Si ce n'est pas le cas, on passe au
 second motif, qui accepte tout paramètre et l'attache au nom `x`. Cette
 fonction aurait pu être implémentée à l'aide d'une construction *if*. Mais, si
-l'on voulait que la fonction énonce les nombres entre 1 et 5, et déclare
-`"Not between 1 and 5"` pour tout autre nombre ? Sans filtrage par motif, nous
+l'on voulait que la fonction énonce les nombres entre 1 et 5, et déclare `"Not
+between 1 and 5"` pour tout autre nombre ? Sans filtrage par motif, nous
 devrions utiliser un arbre de constructions *if then else* plutôt alambiqué.
-Cependant, avec le filtrage :
+Cependant, avec le filtrage&nbsp;:
 
 > sayMe :: (Integral a) => a -> String
 > sayMe 1 = "One!"
@@ -64,7 +69,7 @@ Nous l'avions défini pour un nombre `n` comme `product [1..n]`. On peut
 également la définir de manière *récursive*, comme en mathématiques. On
 commence par dire que la factorielle de 0 est 1. Puis, on dit que la
 factorielle d'un entier positif est égale au produit de cet entier et de la
-factorielle de son prédécesseur. En Haskell :
+factorielle de son prédécesseur. En Haskell&nbsp;:
 
 > factorial :: (Integral a) => a -> a
 > factorial 0 = 1
@@ -84,14 +89,15 @@ important dans la spécification des motifs, et il est toujours préférable de
 préciser les motifs les plus spécifiques en premier, et les plus généraux
 ensuite.
 
-Le filtrage par motif peut aussi échouer. Si l'on définit une fonction :
+Le filtrage par motif peut aussi échouer. Si l'on définit une fonction&nbsp;:
 
 > charName :: Char -> String
 > charName 'a' = "Albert"
 > charName 'b' = "Broseph"
 > charName 'c' = "Cecil"
 
-et qu'on essaie de l'appeler avec une entrée inattendue, voilà ce qui arrive :
+et qu'on essaie de l'appeler avec une entrée inattendue, voilà ce qui
+arrive&nbsp;:
 
 > ghci> charName 'a'
 > "Albert"
@@ -107,7 +113,7 @@ reste de façon à ce que le programme ne plante pas sur une entrée inattendue.
 Le filtrage de motifs s'utilise aussi sur les tuples. Comment écrire une
 fonction qui prend deux vecteurs en 2D (sous forme de paire) et les somme ?
 Pour sommer les deux vecteurs, on somme séparément les composantes en x et les
-composantes en y. Voilà ce que nous aurions fait sans filtrage par motif :
+composantes en y. Voilà ce que nous aurions fait sans filtrage par motif&nbsp;:
 
 > addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)
 > addVectors a b = (fst a + fst b, snd a + snd b)
@@ -141,7 +147,7 @@ qu'on se fiche complètement de ce que cette partie est, donc on met juste un
 `_`.
 
 Ce qui me fait penser, vous pouvez aussi utiliser des motifs dans les listes en
-compréhension. Voyez par vous-même :
+compréhension. Voyez par vous-même&nbsp;:
 
 > ghci> let xs = [(1,3), (4,3), (2,4), (5,3), (5,6), (3,1)]
 > ghci> [a+b | (a,b) <- xs]
@@ -157,7 +163,7 @@ ce premier. Un motif de la forme `x:xs` attachera la tête à `x` et le reste à
 
 <div class="hintbox">
 
-**Note :** Le motif `x:xs` est très utilisé, particulièrement dans les
+**Note&nbsp;:** Le motif `x:xs` est très utilisé, particulièrement dans les
 fonctions récursives. Mais les motifs qui ont un `:` ne peuvent valider que des
 listes de longueur 1 ou plus.
 
@@ -174,7 +180,7 @@ implémentons notre fonction `head`.
 > head' [] = error "Can't call head on an empty list, dummy!"
 > head' (x:_) = x
 
-Vérifions :
+Vérifions&nbsp;:
 
 > ghci> head' [4,5,6]
 > 4
@@ -206,7 +212,7 @@ parenthèses). On ne peut pas réécrire `(x:y:_)` de manière analogue car le
 motif attrape toutes les listes de taille supérieure à 2.
 
 Nous avons déjà implémenté `length` à l'aide d'une liste en compréhension.
-Utilisons à présent du filtrage par motif et de la récursivité :
+Utilisons à présent du filtrage par motif et de la récursivité&nbsp;:
 
 > length' :: (Num b) => [a] -> b
 > length' [] = 0
@@ -231,7 +237,7 @@ l'instant, nous avons `1 + (1 + length' "m")`. `length' "m"` vaut `1 + length'
 
 Implémentons `sum`. On sait que la somme d'une liste vide est 0. On l'écrit
 comme un motif. Ensuite, on sait que la somme d'une liste est égale à la tête
-plus la somme du reste. Cela donne :
+plus la somme du reste. Cela donne&nbsp;:
 
 > sum' :: (Num a) => [a] -> a
 > sum' [] = 0
@@ -243,7 +249,7 @@ pratique de détruire quelque chose selon un motif tout en gardant une référen
 Par exemple, le motif `xs@(x:y:ys)`. Ce motif acceptera exactement les mêmes
 choses que `x:y:ys`, mais vous pourrez facilement désigner la liste complète
 via `xs` au lieu de réécrire `x:y:ys` dans le corps de la fonction. Exemple
-simple :
+simple&nbsp;:
 
 > capital :: String -> String
 > capital "" = "Empty string, whoops!"
@@ -344,9 +350,9 @@ Beaucoup de débutants font des erreurs de syntaxe en le mettant ici.
 
 </div>
 
-Un autre exemple simple : implémentons notre propre fonction `max`. Si vous
-vous souvenez, elle prend deux choses comparables et retourne la plus grande
-d'entre elles.
+Un autre exemple simple&nbsp;: implémentons notre propre fonction `max`. Si
+vous vous souvenez, elle prend deux choses comparables et retourne la plus
+grande d'entre elles.
 
 > max' :: (Ord a) => a -> a -> a
 > max' a b
@@ -355,13 +361,13 @@ d'entre elles.
 
 Vous pouvez aussi écrire les gardes sur la même ligne, bien que je le
 déconseille car c'est moins lisible, même pour des fonctions courtes. À titre
-d'exemple, on aurait pu écrire :
+d'exemple, on aurait pu écrire&nbsp;:
 
 > max' :: (Ord a) => a -> a -> a
 > max' a b | a > b = a | otherwise = b
 
-Erf ! Pas très lisible tout ça ! Passons : implémentons notre propre `compare`
-à l'aide de gardes.
+Erf ! Pas très lisible tout ça ! Passons&nbsp;: implémentons notre propre
+`compare` à l'aide de gardes.
 
 > myCompare :: (Ord a) => a -> a -> Ordering
 > a `myCompare` b
@@ -372,15 +378,15 @@ Erf ! Pas très lisible tout ça ! Passons : implémentons notre propre `compare
 > ghci> 3 `myCompare` 2
 > GT
 
-Note : Non seulement pouvons-nous appeler des fonctions de manière infixe avec
-des apostrophes renversées, on peut également les définir de cette manière.
-Parfois, c'est plus simple à lire comme ça.
+Note&nbsp;: Non seulement pouvons-nous appeler des fonctions de manière infixe
+avec des apostrophes renversées, on peut également les définir de cette
+manière.  Parfois, c'est plus simple à lire comme ça.
 
 <h2 id="ou">
 Où !?
 </h2>
 
-Dans la section précédente, nous définissions le calculateur d'IMC ainsi :
+Dans la section précédente, nous définissions le calculateur d'IMC ainsi&nbsp;:
 
 > bmiTell :: (RealFloat a) => a -> a -> String
 > bmiTell weight height
@@ -394,7 +400,7 @@ répéter (trois fois) lorsqu'on programme est aussi souhaitable qu'un coup de
 pied dans la tronche. Plutôt que de répéter la même expression trois fois, il
 serait idéal de la calculer une fois, de lier le résultat à un nom, et
 d'utiliser ce nom partout en lieu et place de l'expression. Eh bien, on peut
-modifier la fonction ainsi :
+modifier la fonction ainsi&nbsp;:
 
 > bmiTell :: (RealFloat a) => a -> a -> String
 > bmiTell weight height
@@ -411,7 +417,7 @@ donne l'avantage de ne pas avoir à nous répéter. Si on décide de calculer l'
 différemment, il suffit de changer la formule à un endroit. Cela facilite aussi
 la lisibilité en donnant des noms aux choses, et peut rendre votre programme
 plus rapide puisque la variable `bmi` est ici calculée une unique fois. On
-pourrait faire un peu plus de zèle et écrire :
+pourrait faire un peu plus de zèle et écrire&nbsp;:
 
 > bmiTell :: (RealFloat a) => a -> a -> String
 > bmiTell weight height
@@ -435,7 +441,7 @@ de différentes fonctions. Si vous voulez que plusieurs fonctions aient accès a
 même nom, il faut le définir globalement.
 
 Vous pouvez aussi utiliser les liaisons *where* pour du **filtrage par motif**
-! On aurait pu réécrire la section *where* précédente comme :
+! On aurait pu réécrire la section *where* précédente comme&nbsp;:
 
 > …
 > where bmi = weight / height ^ 2
@@ -483,7 +489,7 @@ elles-mêmes des expressions, mais très locales, donc elles ne sont pas visible
 à travers les gardes. Comme toutes les constructions Haskell qui lient des
 valeurs à des noms, elles supportent le filtrage par motif. Voyons plutôt en
 action ! Voici comment l'on définit une fonction qui nous donne la surface d'un
-cylindre à partir de sa hauteur et de son rayon :
+cylindre à partir de sa hauteur et de son rayon&nbsp;:
 
 > cylinder :: (RealFloat a) => a -> a -> a
 > cylinder r h =
@@ -511,7 +517,7 @@ Il en va de même des liaisons *let*.
 > ghci> 4 * (let a = 9 in a + 1) + 2
 > 42
 
-On peut aussi introduire des fonctions à visibilité locale :
+On peut aussi introduire des fonctions à visibilité locale&nbsp;:
 
 > ghci> [let square x = x * x in (square 5, square 3, square 2)]
 > [(25,9,4)]
@@ -526,7 +532,7 @@ comme séparateurs.
 Le point-virgule situé après la dernière liaison n'est pas nécessaire, mais
 peut être écrit à votre convenance. Comme on l'a vu, vous pouvez utiliser du
 filtrage par motif. C'est très utile pour démanteler rapidement un tuple en ses
-composantes et donner un nom à chacune d'elles :
+composantes et donner un nom à chacune d'elles&nbsp;:
 
 > ghci> (let (a,b,c) = (1,2,3) in a+b+c) * 100
 > 600
@@ -544,7 +550,7 @@ seulement qu'il ne filtre pas la liste, mais lie des noms. Les noms définis
 dans le *let* dans la compréhension sont visibles de la fonction de retour (
 celle qui est avant le `|`) et de tous les prédicats et sections qui viennent
 après la liaison. On pourrait faire une fonction qui ne retourne que les IMC
-des personnes obèses :
+des personnes obèses&nbsp;:
 
 > calcBmis :: (RealFloat a) => [(a, a)] -> [a]
 > calcBmis xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2, bmi >= 25.0]
@@ -597,7 +603,7 @@ faire du filtrage par motif. Hmmm, prendre une variable, la filtrer par motif,
 pas déjà fait ça auparavant ? Bien sûr, le filtrage par motif des paramètres
 d'une définition de fonction ! Eh bien, il s'agit en fait seulement d'un sucre
 syntaxique pour les expressions *case*. Ainsi, ces deux bouts de code sont
-parfaitement interchangeables :
+parfaitement interchangeables&nbsp;:
 
 > head' :: [a] -> a
 > head' [] = error "No head for empty lists!"
@@ -616,13 +622,13 @@ Comme vous pouvez le voir, la syntaxe des expressions *case* est plutôt simple
 >                    …
 
 `expression` est testée contre les motifs. L'action de filtrage est comme
-attendue : le premier motif qui correspond est utilisé. Si l'on parcourt toute
-l'expression *case* sans trouver de motif validé, une erreur d'exécution a
-lieu.
+attendue&nbsp;: le premier motif qui correspond est utilisé. Si l'on parcourt
+toute l'expression *case* sans trouver de motif validé, une erreur d'exécution
+a lieu.
 
 Alors que le filtrage par motif sur les paramètres d'une fonction ne peut se
 faire que dans la définition, les expressions *case* peuvent être utilisées à
-peu près partout. Par exemple :
+peu près partout. Par exemple&nbsp;:
 
 > describeList :: [a] -> String
 > describeList xs = "The list is " ++ case xs of [] -> "empty."
@@ -632,7 +638,7 @@ peu près partout. Par exemple :
 Elles sont utiles pour faire du filtrage par motif sur des choses en plein
 milieu d'une expression. Du fait que le filtrage par motif dans les définitions
 de fonction est seulement du sucre syntaxique pour des expressions *case*, on
-aurait aussi pu définir :
+aurait aussi pu définir&nbsp;:
 
 > describeList :: [a] -> String
 > describeList xs = "The list is " ++ what xs
@@ -643,13 +649,18 @@ aurait aussi pu définir :
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-<a href="types-et-classes-de-types" class="prevlink">Types et classes de types</a>
+
+<a href="types-et-classes-de-types" class="prevlink">Types et classes de
+types</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
+
 <a href="recursivite" class="nextlink">Récursivité</a>
+
 </li>
 </ul>
 </div>

@@ -9,7 +9,9 @@
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
+
 <a href="demarrons" class="nextlink">Démarrons</a>
+
 </li>
 </ul>
 </div>
@@ -49,11 +51,12 @@ gentils, patients et compréhensifs envers les débutants.
 J'ai échoué dans mon apprentissage de Haskell à peu près deux fois avant
 d'arriver à le saisir, car cela me semblait trop bizarre et je ne comprenais
 pas. Mais alors, j'ai eu le déclic, et après avoir passé cet obstacle initial,
-le reste est venu plutôt facilement. Ce que j'essaie de vous dire : Haskell est
-génial, et si vous êtes intéressés par la programmation, vous devriez
-l'apprendre même si cela semble bizarre au début. Apprendre Haskell est très
-similaire à l'apprentissage de la programmation la première fois - c'est fun !
-Ca vous force à penser différemment, ce qui nous amène à la section suivante…
+le reste est venu plutôt facilement. Ce que j'essaie de vous dire&nbsp;:
+Haskell est génial, et si vous êtes intéressés par la programmation, vous
+devriez l'apprendre même si cela semble bizarre au début. Apprendre Haskell est
+très similaire à l'apprentissage de la programmation la première fois - c'est
+fun !  Ca vous force à penser différemment, ce qui nous amène à la section
+suivante…
 
 <h2 id="donc-qu-est-ce-qu-haskell">
 Donc, qu'est-ce qu'Haskell ?
@@ -78,9 +81,9 @@ chose plus tard, car vous venez de dire qu'il était égal à 5. Quoi, vous ête
 un menteur ? Donc, dans les langages purement fonctionnels, une fonction n'a
 pas d'effets de bord. La seule chose qu'une fonction puisse faire, c'est
 calculer quelque chose et retourner le résultat. Au départ, cela semble plutôt
-limitant, mais il s'avère que ça a de très intéressantes conséquences : si une
-fonction est appelée deux fois, avec les mêmes paramètres, alors il est garanti
-qu'elle renverra le même résultat. On appelle ceci la transparence
+limitant, mais il s'avère que ça a de très intéressantes conséquences&nbsp;: si
+une fonction est appelée deux fois, avec les mêmes paramètres, alors il est
+garanti qu'elle renverra le même résultat. On appelle ceci la transparence
 référentielle, et cela permet non seulement au compilateur de raisonner à
 propos du comportement du programme, mais également à vous de déduire
 facilement (et même de prouver) qu'une fonction est correcte, puis de
@@ -177,7 +180,9 @@ faire à présent.
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
+
 <a href="demarrons" class="nextlink">Démarrons</a>
+
 </li>
 </ul>
 </div>

@@ -3,13 +3,18 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
+
 <a href="syntaxe-des-fonctions" class="prevlink">Syntaxe des fonctions</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-<a href="fonctions-d-ordre-superieur" class="nextlink">Fonctions d'ordre supérieur</a>
+
+<a href="fonctions-d-ordre-superieur" class="nextlink">Fonctions d'ordre
+supérieur</a>
+
 </li>
 </ul>
 </div>
@@ -80,10 +85,11 @@ liste ! Et voilà ! Implémentons ça en Haskell.
 Comme vous le voyez, le filtrage par motif va bien de pair avec la récursivité
 ! La plupart des langages impératifs ne proposent pas de filtrage par motif,
 donc vous êtes obligé d'utiliser plein de *if else* pour tester les cas de
-base. Ici, on les met simplement dans des motifs. La première condition dit :
-si la liste est vide, plante ! Raisonnable, après tout quel est le maximum
-d'une liste vide ? Je ne sais pas. Le deuxième motif est aussi un cas de base.
-Il dit que pour une liste singleton, il suffit de retourner son unique élément.
+base. Ici, on les met simplement dans des motifs. La première condition
+dit&nbsp;: si la liste est vide, plante ! Raisonnable, après tout quel est le
+maximum d'une liste vide ? Je ne sais pas. Le deuxième motif est aussi un cas
+de base.  Il dit que pour une liste singleton, il suffit de retourner son
+unique élément.
 
 Maintenant, le troisième motif est là où se passe l'action. On utilise du
 filtrage par motif pour séparer la tête et la queue de la liste. C'est un
@@ -93,21 +99,21 @@ de la liste. Ensuite, on vérifie si la tête est plus grande que le maximum du
 reste de la liste. Si c'est le cas, la tête est retournée. Sinon, le maximum du
 reste de la liste est retourné.
 
-Prenons par exemple une liste de nombres et voyons comment cela marche : `[2,
-5, 1]`. Si on appelle `maximum'` dessus, les deux premiers motifs ne vont pas
-correspondre. Le troisième marchera, et coupera le `2` du `[5, 1]`. La clause
-*where* veut connaître le maximum de `[5, 1]`, donc on suit cette route. Elle
-la compare avec succès au troisième motif à nouveau, et `[5, 1]` est coupé en
-`5` et `[1]`. À nouveau, la clause *where* veut connaître le maximum de `[1]`.
-C'est un cas de base, on retourne donc `1`. Enfin ! En remontant d'une étape,
-`5` est comparé au maximum de `[1]` (qui est `1`), et retourne `5`. On sait à
-présent que le maximum de `[5, 1]` est `5`. Une étape plus haut, nous
+Prenons par exemple une liste de nombres et voyons comment cela marche&nbsp;:
+`[2, 5, 1]`. Si on appelle `maximum'` dessus, les deux premiers motifs ne vont
+pas correspondre. Le troisième marchera, et coupera le `2` du `[5, 1]`. La
+clause *where* veut connaître le maximum de `[5, 1]`, donc on suit cette route.
+Elle la compare avec succès au troisième motif à nouveau, et `[5, 1]` est coupé
+en `5` et `[1]`. À nouveau, la clause *where* veut connaître le maximum de
+`[1]`.  C'est un cas de base, on retourne donc `1`. Enfin ! En remontant d'une
+étape, `5` est comparé au maximum de `[1]` (qui est `1`), et retourne `5`. On
+sait à présent que le maximum de `[5, 1]` est `5`. Une étape plus haut, nous
 comparions `2` au maximum de `[5, 1]`, qui est `5`, et on choisit donc `5`.
 
 Une manière encore plus claire d'écrire cette fonction est d'utiliser `max`. Si
 vous vous souvenez, `max` est une fonction qui prend deux nombres et retourne
 le plus grand d'entre eux. Ici, nous pourrions réécrire `maximum'` en utilisant
-`max` :
+`max`&nbsp;:
 
 > maximum' :: (Ord a) => [a] -> a
 > maximum' [] = error "maximum of empty list"
@@ -145,10 +151,10 @@ fonction à atteindre son cas de base.
 
 <div class="hintbox">
 
-**Note :** `Num` n'est pas une sous-classe d'`Ord`. Cela signifie qu'un nombre
-n'a pas forcément besoin d'être ordonnable. C'est pourquoi on doit spécifier à
-la fois `Num` et `Ord` en contraintes de classe pour pouvoir faire à la fois
-des additions, des soustractions et des comparaisons.
+**Note&nbsp;:** `Num` n'est pas une sous-classe d'`Ord`. Cela signifie qu'un
+nombre n'a pas forcément besoin d'être ordonnable. C'est pourquoi on doit
+spécifier à la fois `Num` et `Ord` en contraintes de classe pour pouvoir faire
+à la fois des additions, des soustractions et des comparaisons.
 
 </div>
 
@@ -157,7 +163,7 @@ liste.  Par exemple, `take 3 [5, 4, 3, 2, 1]` retourne `[5, 4, 3]`. Si on
 essaie de prendre 0 ou moins éléments d'une liste, on récupère une liste vide.
 Également, si l'ont essaie de prendre quoi que ce soit d'une liste vide, on
 récupère une liste vide. Remarquez que ce sont nos deux cas de base. Écrivons
-tout cela :
+tout cela&nbsp;:
 
 > take' :: (Num i, Ord i) => i -> [a] -> [a]
 > take' n _
@@ -258,10 +264,10 @@ que tout le monde le fait déjà pour montrer comme Haskell est élégant.
 
 Donc, la signature de type sera `quicksort :: (Ord a) => [a] -> [a]`. Pas de
 surprise ici. Le cas de base ? La liste vide, bien sûr. Une liste vide triée
-est une liste vide. Maintenant, voilà l'algorithme : **une liste triée est une
-liste pour laquelle on a pris tous les éléments plus petits que la tête, qu'on
-les a triés, et placés à l'avant, puis on a mis la tête, et à la suite on a
-placé tous les éléments plus grands que la tête, après les avoir aussi
+est une liste vide. Maintenant, voilà l'algorithme&nbsp;: **une liste triée est
+une liste pour laquelle on a pris tous les éléments plus petits que la tête,
+qu'on les a triés, et placés à l'avant, puis on a mis la tête, et à la suite on
+a placé tous les éléments plus grands que la tête, après les avoir aussi
 triés"**. Remarquez comme on a dit deux fois *trier* dans la définition, donc
 il y aura probablement deux appels récursifs ! Remarquez aussi qu'on a utilisé
 le verbe être pour définir l'algorithme, et pas une suite de *faire ceci, puis
@@ -293,7 +299,8 @@ nombres à sa gauche sont plus petits que lui, et les 3 à sa droite sont plus
 grands. Maintenant, si l'on trie récursivement `[1, 4, 3]` et `[9, 6, 7]`, la
 liste entière est triée ! On les trie à l'aide de la même fonction. Finalement,
 on va tellement réduire les listes qu'il ne restera que des listes vides, qui
-sont triées par définition, puisqu'elles sont vides. Voilà une illustration :
+sont triées par définition, puisqu'elles sont vides. Voilà une
+illustration&nbsp;:
 
 <img src="img/quicksort.png" alt="quicksort" class="center"/>
 
@@ -329,7 +336,7 @@ de la liste. Et cætera, et cætera…
 Bien sûr, il y a aussi les cas de base. Généralement, le cas de base est un
 scénario pour lequel un appel récursif n'a plus de sens. Pour des listes, le
 plus souvent c'est la liste vide. Si vous traitez des arbres, ce sera
-généralement une feuille, i.e. un noeud qui n'a pas d'enfants.
+généralement une feuille, i.e. un nœud qui n'a pas d'enfants.
 
 C'est la même chose pour traiter des nombres récursivement. Généralement, on a
 un nombre et une fonction appliquée à une modification de ce nombre. La
@@ -354,13 +361,18 @@ récursif.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
+
 <a href="syntaxe-des-fonctions" class="prevlink">Syntaxe des fonctions</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-<a href="fonctions-d-ordre-superieur" class="nextlink">Fonctions d'ordre supérieur</a>
+
+<a href="fonctions-d-ordre-superieur" class="nextlink">Fonctions d'ordre
+supérieur</a>
+
 </li>
 </ul>
 </div>

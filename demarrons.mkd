@@ -3,13 +3,18 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
+
 <a href="introduction" class="prevlink">Introduction</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-<a href="types-et-classes-de-types" class="nextlink">Types et classes de types</a>
+
+<a href="types-et-classes-de-types" class="nextlink">Types et classes de
+types</a>
+
 </li>
 </ul>
 </div>
@@ -83,7 +88,7 @@ de `True` et `False` (NdT: respectivement vrai et faux).
 > ghci> not (True && True)
 > False
 
-Un test d'égalité s'écrit ainsi :
+Un test d'égalité s'écrit ainsi&nbsp;:
 
 > ghci> 5 == 5
 > True
@@ -114,8 +119,8 @@ pas. Là où `+` ne fonctionne que sur ce qui est considéré comme un nombre, `
 marche sur n'importe quelles deux choses qui peuvent être comparées. Le piège,
 c'est qu'elles doivent être toutes les deux du même type de choses. On ne
 compare pas des pommes et des oranges. Nous nous intéresserons de plus près aux
-types plus tard. Notez : vous pouvez tout de même faire `5 + 4.0` car `5` est
-vicieux et peut se faire passer pour un entier ou pour un nombre à virgule
+types plus tard. Notez&nbsp;: vous pouvez tout de même faire `5 + 4.0` car `5`
+est vicieux et peut se faire passer pour un entier ou pour un nombre à virgule
 flottante. `4.0` ne peut pas se faire passer pour un entier, donc c'est à `5`
 de s'adapter à lui.
 
@@ -144,7 +149,7 @@ successeur. Comme vous pouvez le voir, on sépare le nom de la fonction du
 paramètre par un espace. Appeler une fonction avec plusieurs paramètres est
 aussi simple. Les fonctions `min` et `max` prennent deux choses qu'on peut
 ordonner (comme des nombres !). `min` retourne la plus petite, `max` la plus
-grande. Voyez vous-mêmes :
+grande. Voyez vous-mêmes&nbsp;:
 
 > ghci> min 9 10
 > 9
@@ -234,7 +239,7 @@ baby` dans GHCi).
 
 Comme attendu, vous pouvez appeler vos propres fonctions depuis les autres
 fonctions que vous aviez créées. Avec cela en tête, redéfinissons `doubleUs`
-ainsi :
+ainsi&nbsp;:
 
 > doubleUs x y = doubleMe x + doubleMe y
 
@@ -283,7 +288,7 @@ caractère valide à utiliser dans un nom de fonction. On utilise généralement
 `'` pour indiquer la version stricte d'une fonction (une version qui n'est pas
 paresseuse) ou pour la version légèrement modifiée d'une fonction ou d'une
 variable. Puisque `'` est un caractère valide dans le nom d'une fonction, on
-peut écrire :
+peut écrire&nbsp;:
 
 > conanO'Brien = "It's a-me, Conan O'Brien!"
 
@@ -317,8 +322,8 @@ des entiers et des caractères. Place à une liste !
 
 <div class="hintbox">
 
-**Note :** Nous utilisons le mot-clé `let` pour définir un nom directement dans
-GHCi. Écrire `let a = 1` dans GHCi est équivalent à écrire `a = 1` dans un
+**Note&nbsp;:** Nous utilisons le mot-clé `let` pour définir un nom directement
+dans GHCi. Écrire `let a = 1` dans GHCi est équivalent à écrire `a = 1` dans un
 script puis charger ce script.
 
 </div>
@@ -349,9 +354,9 @@ réalisé à l'aide de l'opérateur `++`.
 
 Attention lors de l'utilisation répétée de l'opérateur `++` sur de longues
 chaînes. Lorsque vous accolez deux listes (et même si vous accolez une liste
-singleton à une autre liste, par exemple : `[1, 2, 3] ++ [4]`), en interne,
-Haskell doit parcourir la liste de gauche en entier. Ceci ne pose pas de
-problème tant que les listes restent de taille raisonnable. Mais accoler une
+singleton à une autre liste, par exemple&nbsp;: `[1, 2, 3] ++ [4]`), en
+interne, Haskell doit parcourir la liste de gauche en entier. Ceci ne pose pas
+de problème tant que les listes restent de taille raisonnable. Mais accoler une
 liste à la fin d'une liste qui contient cinquante millions d'éléments risque de
 prendre du temps. Cependant, placer quelque chose au début d'une liste en
 utilisant l'opérateur `:` (aussi appelé l'opérateur cons) est instantané.
@@ -372,10 +377,10 @@ encore `2` devant, elle devient `[2, 3]`, etc.
 
 <div class="hintbox">
 
-**Note :** `[]`, `[[]]` et `[[], [], []]` sont trois choses différentes. La
-première est une liste vide, la deuxième est une liste qui contient un élément,
-cet élément étant une liste vide, la troisième est une liste qui contient trois
-éléments, qui sont tous des listes vides.
+**Note&nbsp;:** `[]`, `[[]]` et `[[], [], []]` sont trois choses différentes.
+La première est une liste vide, la deuxième est une liste qui contient un
+élément, cet élément étant une liste vide, la troisième est une liste qui
+contient trois éléments, qui sont tous des listes vides.
 
 </div>
 
@@ -553,9 +558,9 @@ Texas rangées
 Que faire si l'on veut la liste des nombres de 1 à 20 ? Bien sûr, on pourrait
 les taper un par un, mais ce n'est pas une solution pour des gentlemen qui
 demandent l'excellence de leurs langages de programmation. Nous utiliserons
-plutôt des progressions (NDT : qui sont appelées "ranges" en anglais, d'où le
-titre de cette section). Les progressions sont un moyen de créer des listes qui
-sont des suites arithmétiques d'éléments qui peuvent être énumérés.  Les
+plutôt des progressions (NDT&nbsp;: qui sont appelées "ranges" en anglais, d'où
+le titre de cette section). Les progressions sont un moyen de créer des listes
+qui sont des suites arithmétiques d'éléments qui peuvent être énumérés.  Les
 nombres peuvent être énumérés. Un, deux, trois, quatre, etc. Les caractères
 peuvent aussi être énumérés. L'alphabet est une énumération des caractères de A
 à Z.  Les noms ne peuvent pas être énumérés. Qu'est-ce qui suit "John" ? Je ne
@@ -605,13 +610,13 @@ Vous pouvez aussi utiliser les progressions pour définir des listes infinies,
 simplement en ne précisant pas de borne supérieure. Nous verrons les détails
 des listes infinies un peu plus tard. Pour l'instant, examinons comment l'on
 pourrait obtenir les 24 premiers multiples de 13. Bien sûr, vous pourriez
-écrire `[13, 26..24*13]`. Mais il y a une meilleure façon de faire : `take 24
-[13, 26..]`. Puisqu'Haskell est paresseux, il ne va pas essayer d'évaluer la
+écrire `[13, 26..24*13]`. Mais il y a une meilleure façon de faire&nbsp;: `take
+24 [13, 26..]`. Puisqu'Haskell est paresseux, il ne va pas essayer d'évaluer la
 liste infinie immédiatement et ne jamais terminer. Il va plutôt attendre de
 voir ce que vous voulez obtenir de cette liste infinie. Ici, il voit que vous
 ne voulez que les 24 premiers éléments, et il s'exécute poliment.
 
-Une poignée de fonctions produit des listes infinies :
+Une poignée de fonctions produit des listes infinies&nbsp;:
 
 `cycle` prend une liste et la cycle en une liste infinie. Si vous essayiez
 d'afficher le résultat, cela continuerait à jamais, donc il faut la couper
@@ -693,7 +698,7 @@ est inclus dans la liste seulement si tous les prédicats sont évalués à `Tru
 > ["BOOM!","BOOM!","BANG!","BANG!"]
 
 On peut inclure plusieurs prédicats. Si nous voulions tous les nombres de 10 à
-20 qui sont différents de 13, 15 et 19, on pourrait faire :
+20 qui sont différents de 13, 15 et 19, on pourrait faire&nbsp;:
 
 > ghci> [ x | x <- [10..20], x /= 13, x /= 15, x /= 19]
 > [10,11,12,14,16,17,18,20]
@@ -707,7 +712,7 @@ que l'on fournit. Une liste produite par une compréhension qui pioche dans deux
 listes de longueur 4 aura donc pour longueur 16, si tant est qu'on ne filtre
 pas d'élément. Si l'on a deux listes, `[2, 5, 10]` et `[8, 10, 11]`, et qu'on
 veut les produits possibles des combinaisons de deux nombres de chacune de ces
-listes, voilà ce qu'on écrit :
+listes, voilà ce qu'on écrit&nbsp;:
 
 > ghci> [ x*y | x <- [2,5,10], y <- [8,10,11]]
 > [16,20,22,40,50,55,80,100,110]
@@ -736,14 +741,14 @@ que d'y donner un nom qu'on n'utilisera pas, on écrit `_`. Cette fonction
 remplace chaque élément de la liste par un `1`, et somme cette liste. La somme
 résultante sera donc la longueur de la liste.
 
-Un rappel amical : puisque les chaînes de caractères sont des listes, on peut
-utiliser les listes en compréhension pour traiter et produire des chaînes de
-caractères. Voici une fonction qui prend une chaîne de caractères et supprime
-tout sauf les caractères en majuscule.
+Un rappel amical&nbsp;: puisque les chaînes de caractères sont des listes, on
+peut utiliser les listes en compréhension pour traiter et produire des chaînes
+de caractères. Voici une fonction qui prend une chaîne de caractères et
+supprime tout sauf les caractères en majuscule.
 
 > removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
 
-Testons :
+Testons&nbsp;:
 
 > ghci> removeNonUppercase "Hahaha! Ahahaha!"
 > "HA"
@@ -792,9 +797,9 @@ de nombres, mais ça n'a pas vraiment de sens. Alors qu'un tuple de taille deux
 (aussi appelé une paire) est un type propre, ce qui signifie qu'une liste ne
 peut pas avoir quelques paires puis un triplet (tuple de taille trois),
 utilisons donc cela en lieu et place. Plutôt que d'entourer nos vecteurs de
-crochets, on utilise des parenthèses : `[(1, 2), (8, 11), (4, 5)]`. Et si l'on
-essayait d'entrer la forme `[(1, 2), (8, 11, 5), (4, 5)]` ? Eh bien, on aurait
-cette erreur :
+crochets, on utilise des parenthèses&nbsp;: `[(1, 2), (8, 11), (4, 5)]`. Et si
+l'on essayait d'entrer la forme `[(1, 2), (8, 11, 5), (4, 5)]` ? Eh bien, on
+aurait cette erreur&nbsp;:
 
 > Couldn't match expected type `(t, t1)'
 > against inferred type `(t2, t3, t4)'
@@ -808,7 +813,7 @@ liste `[(1, 2), ("One", 2)]` car le premier élément de cette liste est une
 paire de nombres alors que le second est une paire d'une chaîne de caractères
 et d'un nombre. Les tuples peuvent aussi être utilisés pour représenter un
 grand éventail de données. Par exemple, si nous voulions représenter le nom et
-l'âge d'une personne en Haskell, on pourrait utiliser le triplet :
+l'âge d'une personne en Haskell, on pourrait utiliser le triplet&nbsp;:
 `("Christopher", "Walken", 55)`. Comme dans l'exemple, les tuples peuvent aussi
 contenir des listes.
 
@@ -826,7 +831,7 @@ seulement la valeur qu'il contient, et n'aurait donc pas d'intérêt.
 Comme les listes, les tuples peuvent être comparés entre eux si leurs
 composantes peuvent être comparées. Seulement, vous ne pouvez pas comparer des
 tuples de tailles différentes, alors que vous pouvez comparer des listes de
-tailles différentes. Deux fonctions utiles qui opérent sur des paires :
+tailles différentes. Deux fonctions utiles qui opérent sur des paires&nbsp;:
 
 `fst` prend une paire et renvoie sa première composante.
 
@@ -844,13 +849,13 @@ tailles différentes. Deux fonctions utiles qui opérent sur des paires :
 
 <div class="hintbox">
 
-**Note :** ces deux fonctions opèrent seulement sur des paires. Elles ne
+**Note&nbsp;:** ces deux fonctions opèrent seulement sur des paires. Elles ne
 marcheront pas sur des triplets, des quadruplets, etc. Nous verrons comment
 extraire des données de tuples de différentes façons un peu plus tard.
 
 </div>
 
-Une fonction cool qui produit une liste de paires : `zip`. Elle prend deux
+Une fonction cool qui produit une liste de paires&nbsp;: `zip`. Elle prend deux
 listes et les zippe ensemble en joignant les éléments correspondants en des
 paires. C'est une fonction très simple, mais elle sert beaucoup. C'est
 particulièrement utile pour combiner deux listes d'une façon ou traverser deux
@@ -872,17 +877,17 @@ se passe-t-il si les longueurs des listes ne correspondent pas ?
 
 La liste la plus longue est simplement coupée pour correspondre à la longueur
 de la plus courte. Puisqu'Haskell est paresseux, on peut zipper des listes
-finies avec des listes infinies :
+finies avec des listes infinies&nbsp;:
 
 > ghci> zip [1..] ["apple", "orange", "cherry", "mango"]
 > [(1,"apple"),(2,"orange"),(3,"cherry"),(4,"mango")]
 
 <img src="img/pythag.png" alt="pythagore" class="center"/>
 
-Voici un problème qui combine tuples et listes en compréhensions : quel
+Voici un problème qui combine tuples et listes en compréhensions&nbsp;: quel
 triangle rectangle a des côtés tous entiers, tous inférieurs ou égaux à 10, et
 a un périmètre de 24 ? Premièrement, essayons de générer tous les triangles
-dont les côtés sont inférieurs ou égaux à 10 :
+dont les côtés sont inférieurs ou égaux à 10&nbsp;:
 
 > ghci> let triangles = [ (a,b,c) | c <- [1..10], b <- [1..10], a <- [1..10] ]
 
@@ -909,13 +914,18 @@ transformations sur ces solutions et les filtrez jusqu'à obtenir les bonnes.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
+
 <a href="introduction" class="prevlink">Introduction</a>
+
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-<a href="types-et-classes-de-types" class="nextlink">Types et classes de types</a>
+
+<a href="types-et-classes-de-types" class="nextlink">Types et classes de
+types</a>
+
 </li>
 </ul>
 </div>

@@ -1,9 +1,11 @@
 body {background-image: url(img/bg.png); font-size: 100%; line-height: 25px;
-    font-family: Arial, sans-serif; margin: 0}
+    font-size: 14px; font-family: Arial, sans-serif; margin: 0}
 h1 {font-size: 60px; line-height: 60px; font-family: georgia, Arial, serif;
     margin: 0 0 15px 0; font-weight: normal;}
 h2 {clear: left;}
-pre {background-color: black; padding: 4px 4px 4px 4px; clear: both;}
+pre {background-color: black; padding: 10px; margin: 0px 0 25px 0 !important;
+    font-size: 14px; line-height: 18px; width: auto !important;
+    overflow-x: auto; overflow-y: auto;}
 code {background-color: #DDD; font-weight: bold; padding: 0 2px 0 2px;
     white-space: nowrap;}
 ol {list-style-type: decimal; font-family: arial,serif; font-size: 24px;
