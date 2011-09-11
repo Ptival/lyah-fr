@@ -16,7 +16,8 @@ all: $(TARGET)
 
 html/%.html:%.mkd
 	cat $< | $(HSCOLOUR) -css | $(RMFIRST9) | $(RMLAST2) \
-	| $(PANDOC) -t html -c hscolour.css -B before.html -A after.html \
+	| $(PANDOC) -t html -c hscolour.css \
+	-B before.html -A after.html -H header.html \
 	| $(UNLIT1) | $(UNLIT2) | $(UNLIT3) > $@
 
 .mkd.tex:
