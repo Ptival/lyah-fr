@@ -20,9 +20,9 @@
 À propos de ce tutoriel
 </h2>
 
-Bienvenue dans **Apprenez Haskell pour le meilleur** ! Si vous lisez ceci, il
-est possible que vous vouliez apprendre Haskell. Vous êtes au bon endroit, mais
-discutons un peu de ce tutoriel avant tout.
+Bienvenue dans **Apprendre Haskell vous fera le plus grand bien !** Si vous
+lisez ceci, il est possible que vous souhaitiez apprendre Haskell. Vous êtes au
+bon endroit, mais discutons un peu de ce tutoriel avant tout.
 
 J'ai décidé d'écrire ce tutoriel parce que je voulais consolider ma propre
 connaissance d'Haskell, et parce que je pensais pouvoir aider les débutants à

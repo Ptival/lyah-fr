@@ -1,6 +1,7 @@
 .SUFFIXES: .mkd .html .tex .pdf
 
-PANDOC := pandoc --no-wrap -s -S -T "Apprenez Haskell pour le meilleur !"
+PANDOC := pandoc --no-wrap -s -S -T \
+	"Apprendre Haskell vous fera le plus grand bien !"
 HSCOLOUR := HsColour -lit
 UNLIT1 := sed "s/<pre><span class='hs-varop'>&gt;<\/span> /<pre>/g"
 UNLIT2 := sed "s/^<span class='hs-varop'>&gt;<\/span> //g"

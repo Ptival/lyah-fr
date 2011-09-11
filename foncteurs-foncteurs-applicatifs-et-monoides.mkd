@@ -99,8 +99,8 @@ ne prend qu'un paramètre de type, alors qu'`Either` en prend deux, et ainsi
 On sait à présent comment plusieurs types (ou plutôt, des constructeurs de
 types) sont des instances de `Functor`, comme `[]`, `Maybe`, `Either a` et un
 type `Tree` qu'on a créé nous-même. On a vu comment l'on pouvait mapper des
-fonctions sur ceux-ci pour le meilleur. Dans cette section, on va découvrir
-deux autres instances de foncteurs, `IO` et `(->) r`.
+fonctions sur ceux-ci pour notre plus grand bien. Dans cette section, on va
+découvrir deux autres instances de foncteurs, `IO` et `(->) r`.
 
 Si une valeur a pour type, mettons, `IO String`, cela signifie que c'est une
 action I/O qui, lorsqu'elle est exécutée, ira dans le monde réel et nous

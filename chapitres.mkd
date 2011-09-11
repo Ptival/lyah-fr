@@ -1,5 +1,5 @@
-Apprenez Haskell pour le meilleur !
-===================================
+Apprendre Haskell vous fera le plus grand bien !
+================================================
 
 #. [Introduction](introduction)
     + [À propos de ce tutoriel](introduction#a-propos-de-ce-tutoriel)
