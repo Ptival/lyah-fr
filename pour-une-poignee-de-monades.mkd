@@ -310,7 +310,7 @@ contexte.
 
 </div>
 
-<img src="img/tur2.jpg" alt="hmmm oui" class="left"/>
+<img src="img/tur2.png" alt="hmmm oui" class="left"/>
 
 La prochaine fonction est `>>=`, ou *bind*. C'est comme une application de
 fonction, mais au lieu de prendre une valeur normale pour la donner à une
