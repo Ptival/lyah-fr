@@ -58,11 +58,11 @@ section](creer-nos-propres-types-et-classes-de-types#la-classe-de-types-functor)
 Si vous ne l'avez pas encore lue, vous devriez probablement le faire à présent,
 ou plus tard, quand vous aurez plus de temps. Ou faire semblant de l'avoir lue.
 
-Ceci étant, un petit rappel&nbsp; les foncteurs sont des choses sur lesquelles
+Ceci étant, un petit rappel&nbsp;: les foncteurs sont des choses sur lesquelles
 on peut mapper, comme des listes, des `Maybe`, des arbres, et d'autres. En
 Haskell, ils sont définis par la classe de types `Functor`, qui n'a qu'une
 méthode de classe de type, `fmap`, ayant pour type `fmap :: (a -> b) -> f a ->
-f b`. Cela dit&nbsp; donne-moi une fonction qui prend un `a` et retourne un
+f b`. Cela dit&nbsp;: donne-moi une fonction qui prend un `a` et retourne un
 `b`, et une boîte avec un (ou plusieurs) `a` à l'intérieur, et je te donnerai
 une boîte avec un (ou plusieurs) `b` à l'intérieur. Elle applique grosso-modo
 la fonction aux éléments dans la boîte.
@@ -133,7 +133,7 @@ fait pas grand chose, mais présente `f result` comme le résultat de l'action
 I/O composée.
 
 On peut jouer un peu avec pour se faire une intuition. C'est en fait assez
-simple. Regardez ce code&nbsp;
+simple. Regardez ce code&nbsp;:
 
 > main = do line <- getLine
 >           let line' = reverse line
@@ -141,7 +141,7 @@ simple. Regardez ce code&nbsp;
 >           putStrLn $ "Yes, you really said" ++ line' ++ " backwards!"
 
 On demande une ligne à l'utilisateur, et on la lui rend, mais renversée. Voici
-comment réécrire ceci en utilisant `fmap`&nbsp;
+comment réécrire ceci en utilisant `fmap`&nbsp;:
 
 > main = do line <- fmap reverse getLine
 >           putStrLn $ "You said " ++ line ++ " backwards!"
@@ -172,7 +172,7 @@ appliquer une fonction à ce nom et lui donner un nouveau nom, utilisez plutôt
 `fmap`, ce sera plus joli. Si vous voulez appliquez des transformations
 multiples à une donnée dans un foncteur, vous pouvez soit déclarer une fonction
 dans l'espace de nom global, soit utiliser une lambda expression, ou
-idéalement, utiliser la composition de fonctions&nbsp;
+idéalement, utiliser la composition de fonctions&nbsp;:
 
 > import Data.Char
 > import Data.List
@@ -217,7 +217,7 @@ lettres pour les variables de type.
 > instance Functor ((->) r) where
 >     fmap f g = (\x -> f (g x))
 
-Si la syntaxe le permettait, on aurait pu écrire&nbsp;
+Si la syntaxe le permettait, on aurait pu écrire&nbsp;:
 
 > instance Functor (r ->) where
 >     fmap f g = (\x -> f (g x))
@@ -242,7 +242,7 @@ fonctions !  On connecte la sortie de `r -> a` à l'entrée de `a -> b` pour
 obtenir une fonction `r -> b`, ce qui est exactement ce que fait la composition
 de fonctions. Si vous regardez comment l'instance est définie ci-dessus, vous
 verrez qu'on a juste composé les fonctions. Une autre façon d'écrire cette
-instance serait&nbsp;
+instance serait&nbsp;:
 
 > instance Functor ((->) r) where
 >     fmap = (.)
@@ -307,7 +307,7 @@ foncteur pour retourner un foncteur, mais plutôt comme une fonction qui prend
 une fonction, et retourne une nouvelle fonction, similaire à l'ancienne, mais
 qui prend et retourne des foncteurs. Elle prend une fonction `a -> b`, et
 retourne une fonction `f a -> f b`. On dit qu'on *lifte* la fonction. Jouons
-avec cette idée en utilisant la commande `:t` de GHCi&nbsp;
+avec cette idée en utilisant la commande `:t` de GHCi&nbsp;:
 
 > ghci> :t fmap (*2)
 > fmap (*2) :: (Num a, Functor f) => f a -> f a
@@ -412,7 +412,7 @@ trivial. De ces deux équations de l'implémentation de `fmap`, on déduit que
 foncteur doit être identique à mapper d'abord une des fonctions sur le
 foncteur, puis mapper l'autre sur le résultat.** Formellement, on veut <span
 class="law">fmap (f . g) = fmap f . fmap g</span>. Ou, d'une autre façon, pour
-tout foncteur F, on souhaite&nbsp; <span class="law">fmap (f . g) F = fmap f
+tout foncteur F, on souhaite&nbsp;: <span class="law">fmap (f . g) F = fmap f
 (fmap g F)</span>.
 
 Si l'on peut montrer qu'un type obéit à ces deux lois des foncteurs, alors on
@@ -446,7 +446,7 @@ sur un tas de valeurs et vous convaincre que le type suit bien les lois.
 
 Intéressons-nous au cas pathologique d'un constructeur de types instance de
 `Functor` mais qui n'est pas vraiment un foncteur, parce qu'il ne satisfait pas
-les lois. Mettons qu'on ait un type&nbsp;
+les lois. Mettons qu'on ait un type&nbsp;:
 
 > data CMaybe a = CNothing | CJust Int a deriving (Show)
 
@@ -481,7 +481,7 @@ incrémenté de 1.
 C'est un peu comme l'implémentation de `Maybe`, à l'exception que lorsqu'on
 fait `fmap` sur une valeur qui n'est pas une boîte vide (donc sur une valeur
 `CJust`), en plus d'appliquer la fonction au contenu, on augmente le compteur
-de 1. Tout va bien pour l'instant, on peut même jouer un peu avec&nbsp;
+de 1. Tout va bien pour l'instant, on peut même jouer un peu avec&nbsp;:
 
 > ghci> fmap (++"ha") (CJust 0 "ho")
 > CJust 1 "hoha"
@@ -629,7 +629,7 @@ Je vous présente la classe de types `Applicative`. Elle réside dans le module
 `Control.Applicative` et définit deux méthodes, `pure` et `<*>`. Elle ne
 fournit pas d'implémentation par défaut pour celles-ci, il faut donc les
 définir toutes deux nous-même si l'on veut faire de quelque chose un foncteur
-applicatif. La classe est définie ainsi&nbsp;
+applicatif. La classe est définie ainsi&nbsp;:
 
 > class (Functor f) => Applicative f where
 >     pure :: a -> f a
@@ -725,7 +725,7 @@ Avec des foncteurs normaux, on peut juste mapper une fonction sur un foncteur,
 et on ne peut plus récupérer ce résultat hors du foncteur de manière générale,
 même lorsque le résultat est une fonction appliquée partiellement. Les
 foncteurs applicatifs, quant à eux, permettent d'opérer sur plusieurs foncteurs
-avec la même fonction. Regardez ce bout de code&nbsp;
+avec la même fonction. Regardez ce bout de code&nbsp;:
 
 > ghci> pure (+) <*> Just 3 <*> Just 5
 > Just 8
@@ -765,14 +765,14 @@ a fait la même chose que de juste mapper cette fonction sur le second foncteur
 applicatif. Plutôt que d'écrire `pure f <*> x <*> y <*> …`, on peut écrire
 `fmap f x <*> y <*> …`. C'est pourquoi `Control.Applicative` exporte une
 fonction `<$>` qui est simplement `fmap` en tant qu'opérateur infixe. Voici sa
-définition&nbsp;
+définition&nbsp;:
 
 > (<$>) :: (Functor f) => (a -> b) -> f a -> f b
 > f <$> x = fmap f x
 
 <div class="hintbox">
 
-**Yo !** Petit rappel&nbsp; les variables de types sont indépendentes des noms
+**Yo !** Petit rappel&nbsp;: les variables de types sont indépendentes des noms
 des paramètres ou des noms des valeurs en général. Le `f` de la déclaration de
 la fonction ici est une variable de type avec une contrainte de classe disant
 que tout type remplaçant `f` doit être membre de la classe `Functor`. Le `f`
@@ -789,13 +789,13 @@ applicatifs mais des valeurs normales, on aurait écrit `f x y z`.
 
 Regardons cela de plus près. On a une valeur `Just "johntra"` et une valeur
 `Just "volta"`, et on veut joindre les deux en une `String` dans un foncteur
-`Maybe`. On fait cela&nbsp;
+`Maybe`. On fait cela&nbsp;:
 
 > ghci> (++) <$> Just "johntra" <*> Just "volta"
 > Just "johntravolta"
 
 Avant qu'on se penche là-dessus, comparez la ligne ci-dessus avec
-celle-ci&nbsp;
+celle-ci&nbsp;:
 
 > ghci> (++) "johntra" "volta"
 > "johntravolta"
@@ -819,7 +819,7 @@ beaucoup d'autres instances d'`Applicative`, alors découvrons en plus !
 
 Les listes (ou plutôt, le constructeur de types listes, `[]`) sont des
 foncteurs applicatifs. Quelle surprise ! Voici l'instance d'`Applicative` de
-`[]`&nbsp;
+`[]`&nbsp;:
 
 > instance Applicative [] where
 >     pure x = [x]
@@ -870,7 +870,7 @@ premier, résultant en une liste équivalente à `[(1+), (2+), (1*), (2*)]`, par
 que chaque fonction à gauche est appliquée sur chaque valeur de droite. Puis,
 `[(1+),(2+),(1*),(2*)] <*> [3,4]` est exécuté, produisant le résultat final.
 
-Utiliser le style applicatif avec les listes est fun ! Regardez&nbsp;
+Utiliser le style applicatif avec les listes est fun ! Regardez&nbsp;:
 
 > ghci> (++) <$> ["ha","heh","hmm"] <*> ["?","!","."]
 > ["ha?","ha!","ha.","heh?","heh!","heh.","hmm?","hmm!","hmm."]
@@ -890,20 +890,20 @@ calcul non déterministe encore moins certain de son résultat.
 
 Le style applicatif sur les listes est souvent un bon remplaçant des listes en
 compréhension. Dans le deuxième chapitre, on souhaitait connaître tous les
-produits possibles de `[2, 5, 10]` et `[8, 10, 11]`, donc on a fait&nbsp;
+produits possibles de `[2, 5, 10]` et `[8, 10, 11]`, donc on a fait&nbsp;:
 
 > ghci> [ x*y | x <- [2,5,10], y <- [8,10,11]]
 > [16,20,22,40,50,55,80,100,110]
 
 On pioche simplement dans deux listes et on applique la fonction à toutes les
-combinaisons d'éléments. Cela peut être fait dans le style applicatif&nbsp;
+combinaisons d'éléments. Cela peut être fait dans le style applicatif&nbsp;:
 
 > ghci> (*) <$> [2,5,10] <*> [8,10,11]
 > [16,20,22,40,50,55,80,100,110]
 
 Cela me paraît plus clair, parce qu'il est plus simple de voir qu'on appelle
 seulement `*` entre deux calculs non déterministes. Si l'on voulait tous les
-produits possibles de deux listes supérieurs à 50, on ferait&nbsp;
+produits possibles de deux listes supérieurs à 50, on ferait&nbsp;:
 
 > ghci> filter (>50) $ (*) <$> [2,5,10] <*> [8,10,11]
 > [55,80,100,110]
@@ -914,7 +914,7 @@ la liste de gauche à chaque valeur de la liste de droite, mais puisqu'il n'y a
 qu'une fonction à gauche, c'est comme mapper.
 
 Une autre instance d'`Applicative` qu'on a déjà rencontrée est `IO`. Voici
-comment son instance est implémentée&nbsp;
+comment son instance est implémentée&nbsp;:
 
 > instance Applicative IO where
 >     pure = return
@@ -927,7 +927,7 @@ comment son instance est implémentée&nbsp;
 
 Puisque `pure` ne fait que mettre des valeurs dans un contexte minimal qui
 puisse toujours renvoyer ce résultat, il est sensé que `pure` soit juste
-`return`, parce que c'est exactement ce que fait `return`&nbsp; elle crée une
+`return`, parce que c'est exactement ce que fait `return`&nbsp;: elle crée une
 action I/O qui ne fait rien, mais retourne la valeur passée en résultat, sans
 rien écrire sur le terminal ni écrire dans un fichier.
 
@@ -949,7 +949,7 @@ actions I/O et qu'on les ordonne, en les collant l'une à l'autre. On doit
 extraire la fonction de la première action I/O, mais pour pouvoir l'extraire,
 il faut exécuter l'action.
 
-Considérez ceci&nbsp;
+Considérez ceci&nbsp;:
 
 > myAction :: IO String
 > myAction = do
@@ -960,7 +960,7 @@ Considérez ceci&nbsp;
 C'est une action I/O qui demande à l'utilisateur d'entrer deux lignes, et
 retourne en résultat ces deux lignes concaténées. Ceci est obtenu en collant
 deux actions I/O `getLine` ensemble avec un `return`, afin que le résultat soit
-`a ++ b`. Une autre façon d'écrire cela en style applicatif serait&nbsp;
+`a ++ b`. Une autre façon d'écrire cela en style applicatif serait&nbsp;:
 
 > myAction :: IO String
 > myAction = (++) <$> getLine <*> getLine
@@ -974,7 +974,7 @@ est un foncteur applicatif, donc tout va bien.
 Le type de l'expression `(++) <$> getLine <*> getLine` est `IO String`, ce qui
 signifie que cette expression est une action I/O comme une autre, qui contient
 également une valeur résultante, comme toutes les actions I/O. C'est pourquoi
-on peut faire&nbsp;
+on peut faire&nbsp;:
 
 > main = do
 >     a <- (++) <$> getLine <*> getLine
@@ -1078,7 +1078,7 @@ pouvez l'imaginer comme `[1 + 3, 2 * 2]`.
 
 Puisqu'un type ne peut pas avoir deux instances de la même classe de types, le
 type `ZipList a` est introduit, et il a pour seul constructeur `ZipList` qui ne
-prend qu'un seul champ, de type liste. Voici son instance&nbsp;
+prend qu'un seul champ, de type liste. Voici son instance&nbsp;:
 
 > instance Applicative ZipList where
 >         pure x = ZipList (repeat x)
@@ -1135,7 +1135,7 @@ nombre arbitraire de listes avec une fonction, c'est plutôt cool.
 
 `Control.Applicative` définit une fonction nommée `liftA2`, qui a pour type
 `liftA2 :: (Applicative f) => (a -> b -> c) -> f a -> f b -> f c`. Elle est
-définie ainsi&nbsp;
+définie ainsi&nbsp;:
 
 > liftA2 :: (Applicative f) => (a -> b -> c) -> f a -> f b -> f c
 > liftA2 f a b = f <$> a <*> b
@@ -1151,11 +1151,11 @@ fonction comme `(a -> b -> c) -> (f a -> f b -> f c)`. Quand on regarde de
 cette façon, on voit que `liftA2` prend une fonction binaire normale, et la
 promeut en une fonction binaire sur deux foncteurs.
 
-Voici un concept intéressant&nbsp; on peut prendre deux foncteurs applicatifs,
+Voici un concept intéressant&nbsp;: on peut prendre deux foncteurs applicatifs,
 et les combiner en un foncteur applicatif qui contient en lui les résultats de
 ces deux foncteurs applicatifs, sous forme d'une liste. Par exemple, on a `Just
 3` et `Just 4`. Imaginons que ce deuxième a une liste singleton en lui, puisque
-c'est très simple à réaliser&nbsp;
+c'est très simple à réaliser&nbsp;:
 
 > ghci> fmap (\x -> [x]) (Just 4)
 > Just [4]
@@ -1249,7 +1249,7 @@ en une liste, qui est le résultat de cette fonction.
 Utiliser `sequenceA` est cool quand on a une liste de fonctions et qu'on veut
 leur donner la même entrée et voir une liste des résultats. Par exemple, si
 l'on a un nombre et qu'on se demande s'il satisfait tous les prédicats d'une
-liste. Un moyen de faire serait le suivant&nbsp;
+liste. Un moyen de faire serait le suivant&nbsp;:
 
 > ghci> map (\f -> f 7) [(>4),(<10),odd]
 > [True,True,True]
@@ -1257,7 +1257,7 @@ liste. Un moyen de faire serait le suivant&nbsp;
 > True
 
 Souvenez-vous, `and` prend une liste de booléens et ne retourne `True` que
-s'ils sont tous `True`. Un autre moyen de faire ceci, avec `sequenceA`&nbsp;
+s'ils sont tous `True`. Un autre moyen de faire ceci, avec `sequenceA`&nbsp;:
 
 > ghci> sequenceA [(>4),(<10),odd] 7
 > [True,True,True]
@@ -1278,7 +1278,7 @@ avoir le même type, évidemment. Vous ne pouvez pas avoir une liste comme `[ord
 Quand on l'utilise avec `[]`, `sequenceA` prend une liste de listes et retourne
 une liste de listes. Hmm, intéressant. Elle crée en fait des listes contenant
 toutes les combinaisons possibles des éléments. Par exemple, voici ceci réalisé
-avec `sequenceA` puis avec une liste en compréhension&nbsp;
+avec `sequenceA` puis avec une liste en compréhension&nbsp;:
 
 > ghci> sequenceA [[1,2,3],[4,5,6]]
 > [[1,4],[1,5],[1,6],[2,4],[2,5],[2,6],[3,4],[3,5],[3,6]]
@@ -1351,7 +1351,7 @@ Comme les foncteurs ordinaires, les foncteurs applicatifs viennent avec
 quelques lois. La plus importante est celle qu'on a déjà mentionnée, qui dit
 que <span class="law">pure f <*> x = fmap f x</span>. En exercice, vous pouvez
 prouver cette loi pour quelques uns des foncteurs applicatifs vus dans ce
-chapitre. Les autres lois des foncteurs applicatifs sont&nbsp;
+chapitre. Les autres lois des foncteurs applicatifs sont&nbsp;:
 
 * <span class="law">pure id <*> v = v</span>
 
@@ -1407,21 +1407,21 @@ champ. On place la liste qu'on enveloppe dans ce champ. Ainsi, `ZipList` est
 fait instance d'`Applicative`, de manière à ce que si l'on souhaite utiliser
 des listes comme foncteurs applicatifs de la manière zip, on ait juste à
 envelopper la liste dans le constructeur `ZipList`, puis, une fois les calculs
-terminés, là sortir avec `getZipList`&nbsp;
+terminés, là sortir avec `getZipList`&nbsp;:
 
 > ghci> getZipList $ ZipList [(+1),(*100),(*5)] <*> ZipList [1,2,3]
 > [2,200,15]
 
 Donc, que fait le nouveau mot-clé *newtype* ? Eh bien, réfléchissez à la façon
 dont vous écririez la déclaration *data* du type `ZipList a`. Une façon de
-l'écrire serait&nbsp;
+l'écrire serait&nbsp;:
 
 > data ZipList a = ZipList [a]
 
 Un type qui n'a qu'un constructeur de valeurs, et ce constructeur de valeurs
 n'a qu'un champ, qui est une liste de choses. On aurait aussi pu vouloir
 utiliser la syntaxe des enregistrements pour obtenir automatiquement une
-fonction qui extrait une liste d'une `ZipList`&nbsp;
+fonction qui extrait une liste d'une `ZipList`&nbsp;:
 
 > data ZipList a = ZipList { getZipList :: [a] }
 
@@ -1433,7 +1433,7 @@ type, et fait de ce second type une instance de la seconde manière.
 Le mot-clé *newtype* en Haskell est fait exactement pour ces cas où l'on veut
 juste prendre un type et l'encapsuler dans quelque chose pour le présenter
 comme un nouveau type. Dans la bibliothèque, `ZipList a` est définie
-comme&nbsp;
+comme&nbsp;:
 
 > newtype ZipList a = ZipList { getZipList :: [a] }
 
@@ -1453,7 +1453,7 @@ Pourquoi ne pas utiliser *newtype* tout le temps plutôt que *data* dans ce cas
 utilisant le mot-clé *newtype*, vous ne pouvez avoir qu'un seul constructeur de
 valeurs, et ce constructeur de valeurs ne peut avoir qu'un seul champ. Alors
 qu'avec *data*, vous pouvez créer des types de données qui ont plusieurs
-constructeurs de valeurs, chacun pouvant avoir zéro ou plusieurs champs&nbsp;
+constructeurs de valeurs, chacun pouvant avoir zéro ou plusieurs champs&nbsp;:
 
 > data Profession = Fighter | Archer | Accountant
 >
@@ -1469,11 +1469,11 @@ fait avec *data*. On peut dériver les instances d'`Eq`, `Ord`, `Enum`,
 `Bounded`, `Show` et `Read`. Si l'on souhaite dériver une instance d'une classe
 de types, le type qu'on enveloppe doit lui-même être membre de cette classe.
 C'est logique, parce que *newtype* ne fait qu'envelopper ce type. On peut donc
-afficher et tester l'égalité de valeurs de notre nouveau type en faisant&nbsp;
+afficher et tester l'égalité de valeurs de notre nouveau type en faisant&nbsp;:
 
 > newtype CharList = CharList { getCharList :: [Char] } deriving (Eq, Show)
 
-Essayons&nbsp;
+Essayons&nbsp;:
 
 > ghci> CharList "this will be shown!"
 > CharList {getCharList = "this will be shown!"}
@@ -1482,7 +1482,7 @@ Essayons&nbsp;
 > ghci> CharList "benny" == CharList "oisters"
 > False
 
-Pour ce *newtype*, le constructeur de valeurs a pour type&nbsp;
+Pour ce *newtype*, le constructeur de valeurs a pour type&nbsp;:
 
 > CharList :: [Char] -> CharList
 
@@ -1490,7 +1490,7 @@ Il prend une valeur `[Char]`, comme `"my sharona"`, et retourne une valeur
 `CharList`. Dans les exemples ci-dessus où l'on utilisait le constructeur de
 valeurs `CharList`, on voit que c'est le cas. Réciproquement, la fonction
 `getCharList`, qui a été générée lorsqu'on a utilisé la syntaxe des
-enregistrements dans notre *newtype*, a pour type&nbsp;
+enregistrements dans notre *newtype*, a pour type&nbsp;:
 
 > getCharList :: CharList -> [Char]
 
@@ -1503,19 +1503,19 @@ comme une conversion d'un type vers l'autre.
 Souvent, on veut faire de nos types des instances de certaines classes de
 types, mais les paramètres de types ne correspondent pas à ce que l'on
 souhaite. Il est facile de faire une instance de `Functor` pour `Maybe`, parce
-que la classe de types `Functor` est définie comme&nbsp;
+que la classe de types `Functor` est définie comme&nbsp;:
 
 > class Functor f where
 >     fmap :: (a -> b) -> f a -> f b
 
-Donc on peut démarrer en faisant&nbsp;
+Donc on peut démarrer en faisant&nbsp;:
 
 > instance Functor Maybe where
 
 Et implémenter `fmap`. Tous les paramètres de type s'alignent parce que `Maybe`
 vient prendre la place de `f` dans la définition de la classe de types
 `Functor` et donc, si l'on considère `fmap` comme vu des `Maybe`, elle se
-comporte ainsi&nbsp;
+comporte ainsi&nbsp;:
 
 > fmap :: (a -> b) -> Maybe a -> Maybe b
 
@@ -1531,12 +1531,12 @@ que seuls les constructeurs de types prenant exactement un paramètre peuvent
 comme `(a, b)` de manière à ce que ce soit `a` qui change quand on utilise
 `fmap`. Pour contourner ce problème, on peut envelopper notre tuple dans un
 *newtype* de manière à ce que le deuxième paramètre de type représente la
-première composante du tuple&nbsp;
+première composante du tuple&nbsp;:
 
 > newtype Pair b a = Pair { getPair :: (a,b) }
 
 À présent, on peut en faire une instance de `Functor` qui mappe la fonction sur
-la première composante&nbsp;
+la première composante&nbsp;:
 
 > instance Functor (Pair c) where
 >     fmap f (Pair (x,y)) = Pair (f x, y)
@@ -1545,18 +1545,19 @@ Comme vous le voyez, on peut filtrer par motif les types définis par *newtype*.
 On filtre par motif pour obtenir le tuple sous-jacent, puis on applique `f` à
 la première composante de ce tuple, et on utilise le constructeur de valeurs
 `Pair` pour convertir à nouveau le tuple en `Pair b a`. Le type de `fmap` si
-elle ne marchait que sur nos paires serait&nbsp;
+elle ne marchait que sur nos paires serait&nbsp;:
 
 > fmap :: (a -> b) -> Pair c a -> Pair c b
 
 À nouveau, on a dit `instance Functor (Pair c) where`, et ainsi, `Pair c` prend
-la place de `f` dans la définition de classe de `Functor`&nbsp;
+la place de `f` dans la définition de classe de `Functor`&nbsp;:
 
 > class Functor f where
 >     fmap :: (a -> b) -> f a -> f b
 
 Maintenant, si l'on convertit un tuple en une `Pair b a`, on peut utiliser
-`fmap` sur celle-ci et la fonction sera mappée sur la première composante&nbsp;
+`fmap` sur celle-ci et la fonction sera mappée sur la première
+composante&nbsp;:
 
 > ghci> getPair $ fmap (*100) (Pair (2,3))
 > (200,3)
@@ -1579,7 +1580,8 @@ fonctions que ceux-ci sont calculés. De plus, seuls les calculs nécessaires
 pour trouver le résultat de notre fonction sont exécutés. La valeur `undefined`
 en Haskell représente un calcul erroné. Si on essaie de l'évaluer
 (c'est-à-dire, de forcer Haskell à la calculer) en l'affichant sur le terminal,
-Haskell piquera une crise (ou en termes techniques, lèvera une exception)&nbsp;
+Haskell piquera une crise (ou en termes techniques, lèvera une
+exception)&nbsp;:
 
 > ghci> undefined
 > *** Exception: Prelude.undefined
@@ -1587,19 +1589,19 @@ Haskell piquera une crise (ou en termes techniques, lèvera une exception)&nbsp;
 Cependant, si on crée une liste qui contient quelques valeurs `undefined` mais
 qu'on ne demande que sa tête, qui n'est pas `undefined`, tout se passera bien
 parce qu'Haskell n'a pas besoin d'évaluer les autres éléments de la liste pour
-trouver son premier élément&nbsp;
+trouver son premier élément&nbsp;:
 
 > ghci> head [3,4,5,undefined,2,undefined]
 > 3
 
-À présent, considérez ce type&nbsp;
+À présent, considérez ce type&nbsp;:
 
 > data CoolBool = CoolBool { getCoolBool :: Bool }
 
 Un type de données algébrique tout droit sorti de l'usine, défini via le
 mot-clé *data*. Il n'a qu'un constructeur de valeurs, qui n'a qu'un champ de
 type `Bool`. Créons une fonction qui filtre par motif un `CoolBool` et retourne
-la valeur `"hello"` quelle que soit la valeur du booléen dans `CoolBool`&nbsp;
+la valeur `"hello"` quelle que soit la valeur du booléen dans `CoolBool`&nbsp;:
 
 > helloMe :: CoolBool -> String
 > helloMe (CoolBool _) = "hello"
@@ -1619,13 +1621,13 @@ la créer. Et lorsqu'on essaie d'évaluer la valeur `undefined`, même un tout
 petit peu, une exception est levée.
 
 Plutôt que le mot-clé *data* pour `CoolBool`, essayons d'utiliser
-*newtype*&nbsp;
+*newtype*&nbsp;:
 
 > newtype CoolBool = CoolBool { getCoolBool :: Bool }
 
 Pas besoin de changer la fonction `helloMe`, parce que la syntaxe de filtrage
 par motif est la même pour *newtype* que pour *data*. Faisons-la même chose ici
-et appliquons `helloMe` à une valeur `undefined`&nbsp;
+et appliquons `helloMe` à une valeur `undefined`&nbsp;:
 
 > ghci> helloMe undefined
 > "hello"
@@ -1659,7 +1661,7 @@ un type en un autre immédiatement.
 
 Le mot-clé **type** crée des synonymes de types. Cela signifie qu'on donne
 simplement un autre nom à un type existant, pour qu'il soit plus simple d'en
-parler. Par exemple, ceci&nbsp;
+parler. Par exemple, ceci&nbsp;:
 
 > type IntList = [Int]
 
@@ -1667,7 +1669,7 @@ Tout ce que cela fait, c'est nous permettre de faire référence à `[Int]` en
 tapant `IntList`. Les deux peuvent être utilisés de manière interchangeable. On
 n'obtient pas de constructeur de valeurs `IntList` ou quoi que ce soit du
 genre. Puisque `[Int]` et `IntList` sont deux façons de parler du même type,
-peu importe laquelle on utilise dans nos annotations de types&nbsp;
+peu importe laquelle on utilise dans nos annotations de types&nbsp;:
 
 > ghci> ([1,2,3] :: IntList) ++ ([1,2,3] :: [Int])
 > [1,2,3,1,2,3]
@@ -1684,7 +1686,7 @@ Le mot-clé **newtype** sert à prendre des types existants et les emballer dans
 de nouveaux types, principalement parce que ça facilite la création d'instances
 de certaines classes de types. Quand on utilise *newtype* pour envelopper un
 type existant, le type qu'on obtient est différent du type original. Si l'on
-crée le nouveau type suivant&nbsp;
+crée le nouveau type suivant&nbsp;:
 
 > newtype CharList = CharList { getCharList :: [Char] }
 
@@ -1697,7 +1699,7 @@ celles-ci, puis les reconvertir en `CharList`.
 
 Quand on utilise la syntaxe des enregistrements dans notre déclaration
 *newtype*, on obtient des fonctions pour convertir entre le type original et le
-nouveau type&nbsp; dans une sens, avec le constructeur de valeurs de notre
+nouveau type&nbsp;: dans une sens, avec le constructeur de valeurs de notre
 *newtype*, et dans l'autre sens, avec la fonction qui extrait la valeur du
 champ. Le nouveau type n'est pas automatiquement fait instance des classes de
 types du type original, donc il faut les dériver ou les écrire manuellement.
@@ -1736,13 +1738,13 @@ classes de types on en fera une instance. Si cela a un sens de tester l'égalit�
 de nos valeurs, alors on crée une instance d'`Eq`. Si l'on voit que notre type
 est un foncteur, alors on crée une instance de `Functor`, et ainsi de suite.
 
-Maintenant, considérez cela&nbsp; `*` est une fonction qui prend deux nombres
+Maintenant, considérez cela&nbsp;: `*` est une fonction qui prend deux nombres
 et les multiplie entre eux. Si l'on multiplie un nombre par `1`, le résultat
 est toujours égal à ce nombre. Peu importe qu'on fasse `1 * x` ou `x * 1`, le
 résultat est toujours `x`. De façon similaire, `++` est aussi une fonction qui
 prend deux choses et en retourne une troisième. Au lieu de les multiplier, elle
 les concatène. Et tout comme `*`, elle a aussi une valeur qui ne change pas
-l'autre quand on la combine avec `++`. Cette valeur est la liste vide&nbsp;
+l'autre quand on la combine avec `++`. Cette valeur est la liste vide&nbsp;:
 `[]`.
 
 > ghci> 4 * 1
@@ -1755,7 +1757,7 @@ l'autre quand on la combine avec `++`. Cette valeur est la liste vide&nbsp;
 > [0.5,2.5]
 
 On dirait que `*` et `1` partagent une propriété commune avec `++` et
-`[]`&nbsp;
+`[]`&nbsp;:
 
 * La fonction prend deux paramètres.
 
@@ -1765,10 +1767,10 @@ On dirait que `*` et `1` partagent une propriété commune avec `++` et
 est appliquée à la fonction binaire.
 
 Autre chose que ces deux opérations ont en commun et qui n'est pas si
-évident&nbsp; lorsqu'on a trois valeurs ou plus et qu'on utilise la fonction
+évident&nbsp;: lorsqu'on a trois valeurs ou plus et qu'on utilise la fonction
 binaire pour les réduire à une seule valeur, l'ordre dans lequel on applique la
 fonction n'importe pas. Peu importe qu'on fasse `(3 * 4) * 5` ou `3 * (4 * 5)`.
-De toute manière, le résultat est `60`. De même pour `++`&nbsp;
+De toute manière, le résultat est `60`. De même pour `++`&nbsp;:
 
 > ghci> (3 * 2) * (8 * 5)
 > 240
@@ -1819,7 +1821,7 @@ Ensuite, on a `mappend`, qui, comme vous l'avez probablement deviné, est la
 fonction binaire. Elle prend deux valeurs du même type et retourne une valeur
 de ce type. Il est bon de mentionner que la décision d'appeler `mappend` de la
 sorte est un peu malheureuse, parce que ce nom semble impliquer qu'on essaie de
-juxtaposer deux choses (NDT&nbsp; en anglais, "append" signifie "juxtaposer").
+juxtaposer deux choses (NDT&nbsp;: en anglais, "append" signifie "juxtaposer").
 Bien que `++` prenne deux listes et les juxtapose, `*` ne juxtapose pas
 vraiment, elle multiplie seulement deux nombres. Quand nous rencontrerons
 d'autres instances de `Monoid`, on verra que la plupart d'entre elles ne
@@ -1845,7 +1847,7 @@ associative. Il est possible de créer des instances de `Monoid` ne suivant pas
 ces règles, mais ces instances ne servent à personne parce que, quand on
 utilise la classe de types `Monoid`, on se repose sur le fait que ses instances
 agissent comme des monoïdes. Sinon, à quoi cela servirait-il ? C'est pourquoi,
-en créant des instances, on doit s'assurer qu'elles obéissent à ces lois&nbsp;
+en créant des instances, on doit s'assurer qu'elles obéissent à ces lois&nbsp;:
 
 * <span class="law">mempty `mappend` x = x</span>
 
@@ -1863,7 +1865,7 @@ programmeur de faire attention à ce que nos instances y obéissent.
 <h3>Les listes sont des monoïdes</h3>
 
 Oui, les listes sont des monoïdes ! Comme on l'a vu, la fonction `++` et la
-liste vide `[]` forment un monoïde. L'instance est très simple&nbsp;
+liste vide `[]` forment un monoïde. L'instance est très simple&nbsp;:
 
 > instance Monoid [a] where
 >     mempty = []
@@ -1874,7 +1876,7 @@ type des éléments qu'elles contiennent. Remarquez qu'on a écrit `instance
 Monoid [a]` et pas `instance Monoid []`, parce que `Monoid` nécessite un type
 concret en instance.
 
-En testant cela, pas de surprises&nbsp;
+En testant cela, pas de surprises&nbsp;:
 
 > ghci> [1,2,3] `mappend` [4,5,6]
 > [1,2,3,4,5,6]
@@ -1952,13 +1954,13 @@ ce nouveau type une autre instance de la même classe de types. On a le beurre
 et l'argent du beurre.
 
 Le module `Data.Monoid` exporte deux types pour cela, `Product` et `Sum`.
-`Product` est défini comme&nbsp;
+`Product` est défini comme&nbsp;:
 
 > newtype Product a =  Product { getProduct :: a }
 >     deriving (Eq, Ord, Read, Show, Bounded)
 
 Simple, un enrobage avec *newtype*, avec un paramètre de type et quelques
-instance dérivées. Son instance de `Monoid` ressemble à&nbsp;
+instance dérivées. Son instance de `Monoid` ressemble à&nbsp;:
 
 > instance Num a => Monoid (Product a) where
 >     mempty = Product 1
@@ -1987,7 +1989,7 @@ verrons comment ces instances de `Monoid` qui peuvent sembler triviales
 s'avèrent pratiques.
 
 `Sum` est défini comme `Product` et l'instance est également similaire. On
-l'utilise ainsi&nbsp;
+l'utilise ainsi&nbsp;:
 
 > ghci> getSum $ Sum 2 `mappend` Sum 9
 > 11
@@ -2004,22 +2006,22 @@ fonction binaire, avec `False` pour élément neutre. En logique, *ou* est `True
 si n'importe lequel de ses paramètres est `True`, sinon c'est `False`. Ainsi,
 en utilisant `False` comme élément neutre, on retourne bien `False` en faisant
 *ou* avec `False`, et `True` en faisant *ou* avec `True`. Le *newtype* `Any`
-est une instance de monoïde de cette manière. Il est défini ainsi&nbsp;
+est une instance de monoïde de cette manière. Il est défini ainsi&nbsp;:
 
 > newtype Any = Any { getAny :: Bool }
 >     deriving (Eq, Ord, Read, Show, Bounded)
 
-Quant à l'instance&nbsp;
+Quant à l'instance&nbsp;:
 
 > instance Monoid Any where
 >         mempty = Any False
 >         Any x `mappend` Any y = Any (x || y)
 
 Il s'appelle `Any` parce que <code>x \`mappend\` y</code> sera `True` si
-n'importe laquelle (NDT&nbsp; en anglais, *any*) de ses valeurs est `True`.
+n'importe laquelle (NDT&nbsp;: en anglais, *any*) de ses valeurs est `True`.
 Même si trois ou plus `Bool` enveloppés dans `Any` sont `mappend` ensemble, le
 résultat sera toujours `True` lorsque n'importe lequel d'entre eux est
-`True`&nbsp;
+`True`&nbsp;:
 
 > ghci> getAny $ Any True `mappend` Any False
 > True
@@ -2033,20 +2035,20 @@ résultat sera toujours `True` lorsque n'importe lequel d'entre eux est
 L'autre façon de faire une instance de `Monoid` pour `Bool` est un peu l'opposé
 : utiliser `&&` comme fonction binaire et `True` comme élément neutre. Le *et*
 logique retourne `True` si ses deux paramètres valent `True`. Voici la
-déclaration *newtype*, rien d'extraordinaire&nbsp;
+déclaration *newtype*, rien d'extraordinaire&nbsp;:
 
 > newtype All = All { getAll :: Bool }
 >         deriving (Eq, Ord, Read, Show, Bounded)
 
-Et l'instance&nbsp;
+Et l'instance&nbsp;:
 
 > instance Monoid All where
 >         mempty = All True
 >         All x `mappend` All y = All (x && y)
 
 Quand on `mappend` des valeurs de type `All`, le résultat sera `True` seulement
-si toutes (NDT&nbsp; en anglais, *all*), les valeurs passées à `mappend` sont
-`True`&nbsp;
+si toutes (NDT&nbsp;: en anglais, *all*), les valeurs passées à `mappend` sont
+`True`&nbsp;:
 
 > ghci> getAll $ mempty `mappend` All True
 > True
@@ -2067,8 +2069,8 @@ respectivement, l'une d'elles est `True` ou toutes sont `True`.
 <h3>Le monoïde `Ordering`</h3>
 
 Hé, vous vous souvenez du type `Ordering` ? C'est le type retourné lorsqu'on
-compare des choses, qui peut avoir trois valeurs&nbsp; `LT`, `EQ` et `GT`, qui
-signifient *inférieur*, *égal* et *supérieur* respectivement&nbsp;
+compare des choses, qui peut avoir trois valeurs&nbsp;: `LT`, `EQ` et `GT`, qui
+signifient *inférieur*, *égal* et *supérieur* respectivement&nbsp;:
 
 > ghci> 1 `compare` 2
 > LT
@@ -2082,7 +2084,7 @@ monoïdes est juste l'affaire de regarder ce qu'on utilisait déjà afin de voir
 si ces choses présentent un comportement monoïdal. Pour `Ordering`, il faut y
 regarder à deux fois avant de reconnaître le monoïde, mais il s'avère que sont
 instance de `Monoid` est tout aussi intuitive que celles recontrées
-précédemment, et plutôt utile également&nbsp;
+précédemment, et plutôt utile également&nbsp;:
 
 > instance Monoid Ordering where
 >     mempty = EQ
@@ -2092,7 +2094,7 @@ précédemment, et plutôt utile également&nbsp;
 
 <img src="img/bear.png" alt="ours" class="right"/>
 
-L'instance est créée de la sorte&nbsp; quand on `mappend` deux valeurs
+L'instance est créée de la sorte&nbsp;: quand on `mappend` deux valeurs
 `Ordering`, celle de gauche est préservée, à moins que la valeur à gauche soit
 `EQ`, auquel cas celle de droite est le résultat. Le neutre est `EQ`. Au
 départ, ça peut sembler arbitraire, mais cela ressemble en fait beaucoup à la
@@ -2115,7 +2117,7 @@ Il est important de noter que dans l'instance de `Monoid` pour `Ordering`,
 <code>x \`mappend\` y</code> n'est pas égal à <code>y \`mappend\` x</code>.
 Puisque le premier paramètre est conservé à moins d'être `EQ`, <code>LT
 \`mappend\` GT</code> retourne `LT`, alors que <code>GT \`mappend\` LT</code>
-retournera `GT`&nbsp;
+retournera `GT`&nbsp;:
 
 > ghci> LT `mappend` GT
 > LT
@@ -2130,7 +2132,7 @@ OK, comment est-ce que ce monoïde est utile ? Mettons que vous soiyez en train
 d'écrire une fonction qui prend deux chaînes de caractères, compare leur
 longueur, et retourne un `Ordering`. Mais si les chaînes sont de même longueur,
 au lieu de retourner `EQ` immédiatement, vous voulez les comparer
-lexicographiquement. Une façon de faire serait&nbsp;
+lexicographiquement. Une façon de faire serait&nbsp;:
 
 > lengthCompare :: String -> String -> Ordering
 > lengthCompare x y = let a = length x `compare` length y
@@ -2142,7 +2144,7 @@ comparaison lexicographique, et si les longueurs s'avèrent égales, on retourne
 l'ordre lexicographique.
 
 Mais, en mettant à profit notre compréhension d'`Ordering` comme un monoïde, on
-peut réécrire cette fonction d'une manière bien plus simple&nbsp;
+peut réécrire cette fonction d'une manière bien plus simple&nbsp;:
 
 > import Data.Monoid
 >
@@ -2150,7 +2152,7 @@ peut réécrire cette fonction d'une manière bien plus simple&nbsp;
 > lengthCompare x y = (length x `compare` length y) `mappend`
 >                     (x `compare` y)
 
-On peut essayer&nbsp;
+On peut essayer&nbsp;:
 
 > ghci> lengthCompare "zen" "ants"
 > LT
@@ -2162,7 +2164,7 @@ gardé à moins d'être `EQ`, auquel cas celui de droite est gardé. C'est pourq
 on a placé la comparaison qu'on considère comme le critère le plus important en
 premier paramètre. Si l'on voulait étendre la fonction pour comparer le nombre
 de voyelles comme deuxième critère en importance, on pourrait modifier la
-fonction ainsi&nbsp;
+fonction ainsi&nbsp;:
 
 > import Data.Monoid
 >
@@ -2204,7 +2206,7 @@ paramètre de type `a` est un monoïde également, et d'implémenter `mappend` d
 façon à ce qu'il utilise l'opération `mappend` des valeurs enveloppées dans le
 `Just`. `Nothing` est l'élément neutre, et ainsi si l'une des deux valeurs
 qu'on `mappend` est `Nothing`, on conserve l'autre valeur. Voici la déclaration
-d'instance&nbsp;
+d'instance&nbsp;:
 
 > instance Monoid a => Monoid (Maybe a) where
 >     mempty = Nothing
@@ -2237,13 +2239,13 @@ fait que le contenu soit un monoïde que lorsque `mappend` est appliqué à deux
 valeurs `Just`. Mais si l'on ne sait pas si le contenu est un monoïde, on ne
 peut pas faire `mappend` sur ces valeurs, donc que faire ? Eh bien, on peut par
 exemple toujours jeter la deuxième valeur et garder la première. Pour cela, le
-type `First a` existe, et voici sa définition&nbsp;
+type `First a` existe, et voici sa définition&nbsp;:
 
 > newtype First a = First { getFirst :: Maybe a }
 >     deriving (Eq, Ord, Read, Show)
 
 On prend un `Maybe a` et on l'enveloppe avec un *newtype*. L'instance de
-`Monoid` est comme suit&nbsp;
+`Monoid` est comme suit&nbsp;:
 
 > instance Monoid (First a) where
 >     mempty = First Nothing
@@ -2264,7 +2266,7 @@ qu'il soit un `Just` ou un `Nothing`.
 
 `First` est utile quand on a plein de valeurs `Maybe` et qu'on souhaite juste
 savoir s'il y a un `Just` dans le tas. La fonction `mconcat` s'avère
-utile&nbsp;
+utile&nbsp;:
 
 > ghci> getFirst . mconcat . map First $ [Nothing, Just 9, Just 10]
 > Just 9
@@ -2273,7 +2275,7 @@ Si l'on veut un monoïde sur `Maybe a` de manière à ce que le deuxième param�
 soit gardé lorsque les deux paramètres de `mappend` sont des valeurs `Just`,
 `Data.Monoid` fournit un type `Last a`, qui fonctionne comme `First a`, à
 l'exception que c'est la dernière valeur différente de `Nothing` qui est gardée
-par `mappend` et `mconcat`&nbsp;
+par `mappend` et `mconcat`&nbsp;:
 
 > ghci> getLast . mconcat . map Last $ [Nothing, Just 9, Just 10]
 > Just 10
@@ -2294,7 +2296,7 @@ plis, la classe de types `Foldable` a été introduite. Comme `Functor` est pour
 les choses sur lequelles on peut mapper, `Foldable` est pour les choses qui
 peuvent être pliées ! Elle est trouvable dans `Data.Foldable` et puisqu'elle
 exporte des fonctions dont les noms sont en collision avec ceux du `Prelude`,
-elle est préférablement importée qualifiée (et servie avec du basilic)&nbsp;
+elle est préférablement importée qualifiée (et servie avec du basilic)&nbsp;:
 
 > import qualified Foldable as F
 
@@ -2302,7 +2304,7 @@ Pour nous éviter de précieuses frappes de clavier, on l'importe qualifiée par
 `F`. Bien, donc quelles sont les fonctions que cette classe de types définit ?
 Eh bien, parmi celles-ci sont `foldr`, `foldl`, `foldr1`, `foldl1`. Hein ? Mais
 on connaît déjà ces fonctions, quoi de neuf ? Comparons le type de `foldr` dans
-`Foldable` avec celui de `foldr` du `Prelude` pour voir ce qui diffère&nbsp;
+`Foldable` avec celui de `foldr` du `Prelude` pour voir ce qui diffère&nbsp;:
 
 > ghci> :t foldr
 > foldr :: (a -> b -> b) -> b -> [a] -> b
@@ -2312,7 +2314,7 @@ on connaît déjà ces fonctions, quoi de neuf ? Comparons le type de `foldr` da
 Ah ! Donc, alors que `foldr` prend une liste et la plie, le `foldr` de
 `Data.Foldable` accepte tout type qui peut être plié, pas seulement les listes
 ! Comme on peut s'y attendre, les deux fonctions font la même chose sur les
-listes&nbsp;
+listes&nbsp;:
 
 > ghci> foldr (*) 1 [1,2,3]
 > 6
@@ -2335,7 +2337,7 @@ une structure de données un peu plus complexe.
 Vous rappelez-vous la structure de données arborescente du chapitre [Créer nos
 propres types et classes de
 types](creer-nos-propres-types-et-classes-de-types#structures-de-donnees-recursives)
-? On l'avait définie ainsi&nbsp;
+? On l'avait définie ainsi&nbsp;:
 
 > data Tree a = Empty | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
 
@@ -2347,7 +2349,7 @@ de `Foldable` afin de pouvoir le plier. Une façon de faire d'un constructeur de
 types une instance de `Foldable` consiste à implémenter directement `foldr`.
 Une autre façon, souvent bien plus simple, consiste à implémenter la fonction
 `foldMap`, qui fait aussi partie de la classe de types `Foldable`. `foldMap` a
-pour type&nbsp;
+pour type&nbsp;:
 
 > foldMap :: (Monoid m, Foldable t) => (a -> m) -> t a -> m
 
@@ -2363,7 +2365,7 @@ qu'il suffit simplement d'implémenter cette fonction pour que notre type soit
 une instance de `Foldable`. Ainsi, si l'on implémente `foldMap` pour un type,
 on obtient `foldr` et `foldl` sans effort !
 
-Voici comment un `Tree` est fait instance de `Foldable`&nbsp;
+Voici comment un `Tree` est fait instance de `Foldable`&nbsp;:
 
 > instance F.Foldable Tree where
 >     foldMap f Empty = mempty
@@ -2373,7 +2375,7 @@ Voici comment un `Tree` est fait instance de `Foldable`&nbsp;
 
 <img src="img/accordion.png" alt="accordéon" class="right"/>
 
-On pense ainsi&nbsp; si l'on nous donne une fonction qui prend un élément de
+On pense ainsi&nbsp;: si l'on nous donne une fonction qui prend un élément de
 notre arbre et retourne une valeur monoïdale, comment réduit-on notre arbre à
 une simple valeur monoïdale ? Quand nous faisions `fmap` sur notre arbre, on
 appliquait la fonction mappée au nœud, puis on mappait récursivement la
@@ -2401,7 +2403,7 @@ retourne une valeur monoïdale. On la reçoit en paramètre de la fonction
 joindre les monoïdes qui en résultent.
 
 Maintenant qu'on a une instance de `Foldable` pour notre type arborescent, on a
-`foldr` et `foldl` gratuitement ! Considérez cet arbre&nbsp;
+`foldr` et `foldl` gratuitement ! Considérez cet arbre&nbsp;:
 
 > testTree = Node 5
 >             (Node 3
@@ -2416,7 +2418,7 @@ Maintenant qu'on a une instance de `Foldable` pour notre type arborescent, on a
 Il a `5` pour racine, puis son nœud gauche contient `3` avec `1` à sa gauche et
 `6` à sa droite. Le nœud droit de la racine contient `9` avec un `8` à sa
 gauche et un `10` tout à droite. Avec une instance de `Foldable`, on peut faire
-tous les plis qu'on fait sur des listes&nbsp;
+tous les plis qu'on fait sur des listes&nbsp;:
 
 > ghci> F.foldl (+) 0 testTree
 > 42
@@ -2426,7 +2428,7 @@ tous les plis qu'on fait sur des listes&nbsp;
 `foldMap` ne sert pas qu'à créer les instances de `Foldable`, elle sert
 également à réduire une structure à une simple valeur monoïdale. Par exemple,
 si l'on voulait savoir si n'importe quel nombre de notre arbre est égal à `3`,
-on pourrait faire&nbsp;
+on pourrait faire&nbsp;:
 
 > ghci> getAny $ F.foldMap (\x -> Any $ x == 3) testTree  
 > True
@@ -2434,7 +2436,7 @@ on pourrait faire&nbsp;
 Ici, `\x -> Any $ x == 3` est une fonction qui prend un nombre et retourne une
 valeur monoïdale, dans ce cas un `Bool` enveloppé en `Any`. `foldMap` applique
 la fonction à chaque élément de l'arbre, puis réduit les monoïdes résultants en
-une unique valeur monoïdale à l'aide de `mappend`. Si l'on faisait&nbsp;
+une unique valeur monoïdale à l'aide de `mappend`. Si l'on faisait&nbsp;:
 
 > ghci> getAny $ F.foldMap (\x -> Any $ x > 15) testTree  
 > False  
@@ -2449,7 +2451,7 @@ On peut aussi facilement transformer notre arbre en une liste en faisant
 `foldMap` avec la fonction `\x -> []`. En projetant d'abord la fonction sur
 l'arbre, chaque élément devient une liste singleton. Puis, `mappend` a lieu
 entre tous ces singletons et retourne une unique liste qui contient tous les
-éléments de notre arbre&nbsp;
+éléments de notre arbre&nbsp;:
 
 > ghci> F.foldMap (\x -> [x]) testTree  
 > [1,3,6,5,8,9,10]

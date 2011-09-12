@@ -79,7 +79,7 @@ la Linux pour Windows, autrement dit, juste ce qu'il vous faut.
 
 </div>
 
-Pour commencer, tapez ceci dans votre éditeur de texte favori&nbsp;
+Pour commencer, tapez ceci dans votre éditeur de texte favori&nbsp;:
 
 > main = putStrLn "hello, world"
 
@@ -89,7 +89,7 @@ comme on va le voir bientôt. Sauvegardez ce fichier comme `helloworld.hs`.
 
 Et maintenant, on va faire quelque chose sans précédent. On va réellement
 compiler notre programme ! Je suis tellement ému ! Ouvrez votre terminal et
-naviguez jusqu'au répertoire où `helloworld.hs` est placé et faites&nbsp;
+naviguez jusqu'au répertoire où `helloworld.hs` est placé et faites&nbsp;:
 
 > $ ghc --make helloworld
 > [1 of 1] Compiling Main             ( helloworld.hs, helloworld.o )
@@ -112,7 +112,7 @@ Examinons ce qu'on vient d'écrire. D'abord, regardons le type de la fonction
 > ghci> :t putStrLn "hello, world"
 > putStrLn "hello, world" :: IO ()
 
-On peut lire le type de `putStrLn` ainsi&nbsp; `putStrLn` prend une chaîne de
+On peut lire le type de `putStrLn` ainsi&nbsp;: `putStrLn` prend une chaîne de
 caractères et retourne une **action I/O** qui a pour type de retour `()`
 (c'est-à-dire le tuple vide, aussi connu comme *unit*). Une action I/O est
 quelque chose qui, lorsqu'elle sera exécutée, va effectuer une action avec des
@@ -133,7 +133,7 @@ Donc, quand est-ce que cette action sera exécutée ? Eh bien, c'est ici que le
 
 Que votre programme entier ne soit qu'une action I/O semble un peu limitant.
 C'est pourquoi on peut utiliser la notation *do* pour coller ensemble plusieurs
-actions I/O en une seule. Regardez l'exemple suivant&nbsp;
+actions I/O en une seule. Regardez l'exemple suivant&nbsp;:
 
 > main = do
 >     putStrLn "Hello, what's your name?"
@@ -166,7 +166,7 @@ Aha, o-kay. `getLine` est une action I/O qui contient un résultat de type
 `String`. Ça tombe sous le sens, parce qu'elle attendra que l'utilisateur tape
 quelque chose dans son terminal, et ensuite, cette frappe sera représentée
 comme une chaîne de caractères. Mais qu'est-ce qui se passe dans `name <-
-getLine` alors ? Vous pouvez lire ceci ainsi&nbsp; **effectue l'action I/O
+getLine` alors ? Vous pouvez lire ceci ainsi&nbsp;: **effectue l'action I/O
 `getLine` puis lie la valeur résultante au nom `name`**. `getLine` a pour type
 `IO String`, donc `name` aura pour type `String`. Vous pouvez imaginer une
 action I/O comme une boîte avec des petits pieds qui sortirait dans le monde
@@ -174,14 +174,14 @@ réel et irait faire quelque chose là-bas (comme des graffitis sur les murs) et
 reviendrait peut-être avec une valeur. Une fois qu'elle a attrapé une valeur
 pour vous, le seul moyen d'ouvrir la boîte pour en récupérer le contenu est
 d'utiliser la construction `<-`. Et si l'on sort une valeur d'une action I/O,
-    on ne peut le faire qu'à l'intérieur d'une autre action I/O. C'est ainsi
-    qu'Haskell parvient à séparer proprement les parties pure et impure du
-    code.  `getLine` est en un sens impure, parce que sa valeur de retour n'est
-    pas garantie d'être la même lorsqu'on l'exécute deux fois. C'est pourquoi
-    elle est en quelque sorte *tachée* par le constructeur de types `IO`, et on
-    ne peut récupérer cette donnée que dans du code I/O. Et puisque le code I/O
-    est taché aussi, tout calcul qui dépend d'une valeur tachée I/O renverra un
-    résultat taché.
+on ne peut le faire qu'à l'intérieur d'une autre action I/O. C'est ainsi
+qu'Haskell parvient à séparer proprement les parties pure et impure du code.
+`getLine` est en un sens impure, parce que sa valeur de retour n'est pas
+garantie d'être la même lorsqu'on l'exécute deux fois. C'est pourquoi elle est
+en quelque sorte *tachée* par le constructeur de types `IO`, et on ne peut
+récupérer cette donnée que dans du code I/O. Et puisque le code I/O est taché
+aussi, tout calcul qui dépend d'une valeur tachée I/O renverra un résultat
+taché.
 
 Quand je dis *taché*, je ne veux pas dire taché de façon à ce que l'on ne
 puisse plus jamais utiliser le résultat contenu dans l'action I/O dans un code
@@ -189,8 +189,8 @@ pur. Non, on dé-tache temporairement la donnée dans l'action I/O lorsqu'on la
 lie à un nom. Quand on fait `name <- getLine`, `name` est une chaîne de
 caractères normale, parce qu'elle représente ce qui est dans la boîte. On peut
 avoir une fonction très compliquée qui, mettons, prend votre nom (une chaîne de
-        caractères normale) et un paramètre, et vous donne votre fortune et
-votre futur basé sur votre nom. On peut faire cela&nbsp;
+caractères normale) et un paramètre, et vous donne votre fortune et votre futur
+basé sur votre nom. On peut faire cela&nbsp;:
 
 > main = do
 >     putStrLn "Hello, what's your name?"
@@ -219,7 +219,7 @@ des morts-vivants, et il est dans notre meilleur intérêt de restreindre les
 parties I/O de notre code autant que faire se peut.
 
 Chaque action I/O effectuée encapsule son résultat en son sein. C'est pourquoi
-notre précédent programme aurait pu s'écrire ainsi&nbsp;
+notre précédent programme aurait pu s'écrire ainsi&nbsp;:
 
 > main = do
 >     foo <- putStrLn "Hello, what's your name?"
@@ -267,14 +267,13 @@ GHCi et qu'on tape Entrée, il va l'évaluer (autant que nécessaire) et appeler
 terminal en appelant implicitement `putStrLn`.
 
 Vous vous souvenez des liaisons *let* ? Si ce n'est pas le cas,
-     rafraîchissez-vous l'esprit en lisant [cette
-     section](syntaxe-des-fonctions#let-it-be). Elles sont de la forme `let
-     bindings in expression`, où `bindings` sont les noms à donner aux
-     expressions et `expression` est l'expression évaluée qui peut voir ces
-     liaisons. On a aussi dit que dans les listes en compréhension, la partie
-     *in* n'était pas nécessaire. Eh bien, on peut aussi les utiliser dans les
-     blocs *do* comme on le faisait dans les listes en compréhension.
-     Regardez&nbsp;
+rafraîchissez-vous l'esprit en lisant [cette
+section](syntaxe-des-fonctions#let-it-be). Elles sont de la forme `let bindings
+in expression`, où `bindings` sont les noms à donner aux expressions et
+`expression` est l'expression évaluée qui peut voir ces liaisons. On a aussi
+dit que dans les listes en compréhension, la partie *in* n'était pas
+nécessaire. Eh bien, on peut aussi les utiliser dans les blocs *do* comme on le
+faisait dans les listes en compréhension.  Regardez&nbsp;:
 
 > import Data.Char
 >
@@ -307,7 +306,7 @@ avait fait quelque chose comme `let firstName = getLine`, on aurait juste donné
 
 À présent, on va faire un programme qui lit continuellement une ligne et
 l'affiche avec les mots renversés. Le programme s'arrêtera si on entre une
-ligne vide. Voici le programme&nbsp;
+ligne vide. Voici le programme&nbsp;:
 
 > main = do
 >     line <- getLine
@@ -325,10 +324,10 @@ s'intéresse au code.
 
 <div class="hintbox">
 
-**Astuce**&nbsp; Pour lancer un programme, vous pouvez soit le compiler puis
+**Astuce**&nbsp;: Pour lancer un programme, vous pouvez soit le compiler puis
 lancer l'exécutable produit en faisant `ghc --make helloworld` puis
 `./helloworld`, ou bien vous pouvez utiliser la commande `runhaskell`
-ainsi&nbsp; `runhaskell helloworld.hs` et votre programme sera exécuté à la
+ainsi&nbsp;: `runhaskell helloworld.hs` et votre programme sera exécuté à la
 volée.
 
 </div>
@@ -353,7 +352,7 @@ C'est pour cela que dans des blocs *do* I/O, les *if* doivent avoir la forme
 
 Regardons d'abord du côté de la clause *else*. Puisqu'on doit avoir une action
 I/O après le *else*, on crée un bloc *do* pour coller des actions en une. Vous
-pouvez aussi écrire cela&nbsp;
+pouvez aussi écrire cela&nbsp;:
 
 > else (do
 >     putStrLn $ reverseWords line
@@ -371,25 +370,25 @@ qui suit le *then* est exécuté. Si on regarde, on voit qu'il y a `then return
 ()`. Si vous avez utilisé des langages impératifs comme C, Java ou Python, vous
 vous dites certainement que vous savez déjà ce que `return` fait, et il se peut
 que vous ayez déjà sauté ce long paragraphe. Eh bien, voilà le détail qui
-tue&nbsp; **le `return` de Haskell n'a vraiment rien à voir avec le `return` de
-la plupart des autres langages !** Il a le même nom, ce qui embrouille beaucoup
-de monde, mais en réalité, il est bien différent. Dans les langages impératifs,
-   `return` termine généralement l'exécution de la méthode ou sous-routine, en
-   rapportant une valeur à son appelant. En Haskell (plus spécifiquement, dans
-           les action I/O), il crée une action I/O à partir d'une valeur pure.
-   Si vous repensez à l'analogie de la boîte faite précédemment, il prend une
-   valeur et la met dans une boîte. L'action I/O résultante ne fait en réalité
-   rien, mais encapsule juste cette valeur comme son résultat. Ainsi, dans un
-   contexte d'I/O, `return "HAHA"` aura pour type `IO String`. Quel est le but
-   de transformer une valeur pure en une action I/O qui ne fait rien ? Pourquoi
-   salir notre programme d'`IO` plus que nécessaire ? Eh bien, il nous fallait
-   une action I/O à exécuter dans le cas où la ligne en entrée était vide.
-   C'est pourquoi on a créé une fausse action I/O qui ne fait rien, en écrivant
-   `return ()`.
+tue&nbsp;: **le `return` de Haskell n'a vraiment rien à voir avec le `return`
+de la plupart des autres langages !** Il a le même nom, ce qui embrouille
+beaucoup de monde, mais en réalité, il est bien différent. Dans les langages
+impératifs, `return` termine généralement l'exécution de la méthode ou
+sous-routine, en rapportant une valeur à son appelant. En Haskell (plus
+spécifiquement, dans les action I/O), il crée une action I/O à partir d'une
+valeur pure.  Si vous repensez à l'analogie de la boîte faite précédemment, il
+prend une valeur et la met dans une boîte. L'action I/O résultante ne fait en
+réalité rien, mais encapsule juste cette valeur comme son résultat. Ainsi, dans
+un contexte d'I/O, `return "HAHA"` aura pour type `IO String`. Quel est le but
+de transformer une valeur pure en une action I/O qui ne fait rien ? Pourquoi
+salir notre programme d'`IO` plus que nécessaire ? Eh bien, il nous fallait une
+action I/O à exécuter dans le cas où la ligne en entrée était vide.  C'est
+pourquoi on a créé une fausse action I/O qui ne fait rien, en écrivant `return
+()`.
 
 Utiliser `return` ne cause pas la fin de l'exécution du bloc *do* I/O ou quoi
 que ce soit du genre. Par exemple, ce programme va gentiment s'exécuter
-jusqu'au bout de la dernière ligne&nbsp;
+jusqu'au bout de la dernière ligne&nbsp;:
 
 > main = do
 >     return ()
@@ -411,9 +410,9 @@ avec `<-` pour lier des choses à des noms.
 
 Comme vous voyez, `return` est un peu l'opposé de `<-`. Alors que `return`
 prend une valeur et l'enveloppe dans une boîte, `<-` prend une boîte,
-      l'exécute, et en extrait la valeur pour la lier à un nom. Faire cela est
-      un peu redondant, puisque l'on dispose des liaisons *let* dans les blocs
-      *do*, donc on préfère&nbsp;
+l'exécute, et en extrait la valeur pour la lier à un nom. Faire cela est un peu
+redondant, puisque l'on dispose des liaisons *let* dans les blocs *do*, donc on
+préfère&nbsp;:
 
 > main = do
 >     let a = "hell"
@@ -534,7 +533,7 @@ pas Entrée.
 
 Ce programme semble lire un caractère et vérifier si c'est un espace. Si c'est
 le cas, il s'arrête, sinon il affiche le caractère et recommence. C'est un peu
-ce qu'il fait, mais pas forcément comme on s'y attend. Regardez&nbsp;
+ce qu'il fait, mais pas forcément comme on s'y attend. Regardez&nbsp;:
 
 > $ runhaskell getchar_test.hs
 > hello sir
@@ -547,13 +546,13 @@ il agit sur ce qu'on vient de taper. Essayez de jouer avec ce programme pour
 vous rendre compte !
 
 La fonction `when` est dans `Control.Monad` (pour l'utiliser, faites `import
-        Control.Monad`). Elle est intéressante parce que, dans un bloc *do*, on
-dirait qu'elle contrôle le flot du programme, alors qu'en fait c'est une
-fonction tout à fait normale. Elle prend une valeur booléenne et une action
-I/O. Si la valeur booléenne est `True`, elle retourne l'action I/O qu'on lui a
-passée. Si c'est `False`, elle retourne `return ()`, donc une action I/O qui ne
-fait rien. Voici comment on pourrait réécrire le code précédent dans lequel on
-présentait `getChar`, en utilisant `when`&nbsp;
+Control.Monad`). Elle est intéressante parce que, dans un bloc *do*, on dirait
+qu'elle contrôle le flot du programme, alors qu'en fait c'est une fonction tout
+à fait normale. Elle prend une valeur booléenne et une action I/O. Si la valeur
+booléenne est `True`, elle retourne l'action I/O qu'on lui a passée. Si c'est
+`False`, elle retourne `return ()`, donc une action I/O qui ne fait rien. Voici
+comment on pourrait réécrire le code précédent dans lequel on présentait
+`getChar`, en utilisant `when`&nbsp;:
 
 > import Control.Monad
 >
@@ -630,7 +629,8 @@ de nos actions séquencées.
 
 `forever` prend une action I/O et retourne une action I/O qui répète la
 première indéfiniment. Elle est dans `Control.Monad`. Ce programme va demander
-indéfiniment à l'utilisateur une entrée, et va la recracher en MAJUSCULES&nbsp;
+indéfiniment à l'utilisateur une entrée, et va la recracher en
+MAJUSCULES&nbsp;:
 
 > import Control.Monad
 > import Data.Char
@@ -644,7 +644,7 @@ indéfiniment à l'utilisateur une entrée, et va la recracher en MAJUSCULES&nbs
 l'ordre inverse. Le premier paramètre est la liste, et le second la fonction à
 mapper sur cette liste, qui sera finalement séquencée. Pourquoi est-ce utile ?
 Eh bien, en étant un peu créatif sur l'utilisation des lambdas et de la
-notation *do*, on peut faire des choses comme&nbsp;
+notation *do*, on peut faire des choses comme&nbsp;:
 
 > import Control.Monad
 >
@@ -670,11 +670,11 @@ résultat à `colors`. `colors` est une liste tout ce qu'il y a de plus normale,
 qui contient des chaînes de caractères. À la fin, on affiche toutes ces
 couleurs en faisant `mapM putStrLn colors`.
 
-Vous pouvez imaginer `forM` comme signifiant&nbsp; crée une action I/O pour
+Vous pouvez imaginer `forM` comme signifiant&nbsp;: crée une action I/O pour
 tous les éléments de cette liste. Ce que l'action I/O fait peut dépendre de la
 valeur de l'élément de la liste à partir duquelle elle a été créée. Finalement,
-       exécute toutes ces actions et lie leur résultat à quelque chose. Notez
-       qu'on n'est pas forcé de le lier, on pourrait juste le jeter.
+exécute toutes ces actions et lie leur résultat à quelque chose. Notez qu'on
+n'est pas forcé de le lier, on pourrait juste le jeter.
 
 > $ runhaskell form_test.hs
 > Which color do you associate with the number 1?
@@ -727,13 +727,13 @@ rencontrer un caractère de fin de fichier. Son type est `getContents :: IO
 String`. Ce qui est cool avec `getContents`, c'est qu'elle effectue une entrée
 paresseuse. Quand on fait `foo <- getContents`, elle ne va pas lire toute
 l'entrée d'un coup, la stocker en mémoire, puis la lier à `foo`. Non, elle est
-paresseuse ! Elle dira&nbsp; "_Ouais ouais, je lirai l'entrée du terminal plus
+paresseuse ! Elle dira&nbsp;: "_Ouais ouais, je lirai l'entrée du terminal plus
 tard, quand tu en auras besoin !_".
 
 `getContents` est très utile quand on veut connecter la sortie d'un programme à
 l'entrée de notre programme. Si vous ne savez pas comment cette connexion (à
-        base de *tubes*) fonctionne dans les systèmes type Unix, voici un petit
-aperçu.  Créons un fichier texte qui contient ce haiku&nbsp;
+base de *tubes*) fonctionne dans les systèmes type Unix, voici un petit aperçu.
+Créons un fichier texte qui contient ce haiku&nbsp;:
 
 > I'm a lil' teapot
 > What's with that airplane food, huh?
@@ -745,7 +745,7 @@ haikus, je suis preneur.
 Bien, souvenez-vous de ce programme qu'on a écrit en introduisant la fonction
 `forever`. Il demandait à l'utilisateur une ligne, et lui retournait en
 MAJUSCULES, puis recommençait, indéfiniment. Pour vous éviter de remonter tout
-là-haut, je vous la remets ici&nbsp;
+là-haut, je vous la remets ici&nbsp;:
 
 > import Control.Monad
 > import Data.Char
@@ -774,16 +774,17 @@ qui affiche le fichier donné en argument. Regardez-moi ça, booyaka !
 > capslocker <stdin>: hGetLine: end of file
 
 Comme vous voyez, connecter la sortie d'un programme (dans notre cas c'était
-        *cat*) à l'entrée d'un autre (ici *capslocker*) est fait à l'aide du
-caractère `|`. Ce qu'on a fait ici est à peu près équivalent à lancer
-*capslocker*, puis taper notre haiku dans le terminal, avant d'envoyer le
-caractère de fin de fichier (généralement en tapant Ctrl-D). C'est comme lancer
-*cat haiku.txt* et dire&nbsp; "Attends, n'affiche pas ça dans le terminal, va
-le dire à *capslocker* plutôt !".
+*cat*) à l'entrée d'un autre (ici *capslocker*) est fait à l'aide du caractère
+`|`. Ce qu'on a fait ici est à peu près équivalent à lancer *capslocker*, puis
+taper notre haiku dans le terminal, avant d'envoyer le caractère de fin de
+fichier (généralement en tapant Ctrl-D). C'est comme lancer *cat haiku.txt* et
+dire&nbsp;: "Attends, n'affiche pas ça dans le terminal, va le dire à
+*capslocker* plutôt !".
 
 Donc ce qu'on fait principalement avec cette utilisation de `forever` c'est
 prendre l'entrée et la transformer en une sortie. C'est pourquoi on peut
-utiliser `getContents` pour rendre ce programme encore plus court et joli&nbsp;
+utiliser `getContents` pour rendre ce programme encore plus court et
+joli&nbsp;:
 
 > import Data.Char
 >
@@ -821,18 +822,18 @@ une vraie chaîne de caractères, mais plutôt comme une promesse de produire
 cette chaîne de caractères en temps voulu. Quand on mappe `toUpper` sur
 `contents`, c'est aussi une promesse de mapper la fonction sur le contenu une
 fois qu'il sera disponible. Et finalement, quand `putStr` est exécuté, il dit à
-la promesse précédente&nbsp; "_Hé, j'ai besoin des lignes en majuscules !_".
-Celle-ci n'a pas encore les lignes, alors elle demande à `contents`&nbsp; "_Hé,
-    pourquoi tu n'irais pas chercher ces lignes dans le terminal à présent ?_".
-    C'est à ce moment que `getContents` va vraiment lire le terminal et donner
-    une ligne au code qui a demandé d'avoir quelque chose de tangible. Ce code
-    mappe alors `toUpper` sur la ligne et la donne à `putStr`, qui l'affiche.
-    Puis `putStr` dit&nbsp; "_Hé, j'ai besoin de la ligne suivante, allez !_"
-    et tout ceci se répète jusqu'à ce qu'il n'y ait plus d'entrée, comme
-    l'indique le caractère de fin de fichier.
+la promesse précédente&nbsp;: "_Hé, j'ai besoin des lignes en majuscules !_".
+Celle-ci n'a pas encore les lignes, alors elle demande à `contents`&nbsp;:
+"_Hé, pourquoi tu n'irais pas chercher ces lignes dans le terminal à présent
+?_".  C'est à ce moment que `getContents` va vraiment lire le terminal et
+donner une ligne au code qui a demandé d'avoir quelque chose de tangible. Ce
+code mappe alors `toUpper` sur la ligne et la donne à `putStr`, qui l'affiche.
+Puis `putStr` dit&nbsp;: "_Hé, j'ai besoin de la ligne suivante, allez !_" et
+tout ceci se répète jusqu'à ce qu'il n'y ait plus d'entrée, comme l'indique le
+caractère de fin de fichier.
 
 Faisons un programme qui prend une entrée et affiche seulement les lignes qui
-font moins de 10 caractères de long. Observez&nbsp;
+font moins de 10 caractères de long. Observez&nbsp;:
 
 > main = do
 >     contents <- getContents
@@ -851,15 +852,15 @@ l'entrée, on peut l'implémenter en lisant le contenu d'entrée, puis en
 exécutant une fonction pure sur ce contenu, et en affichant le résultat que la
 fonction a renvoyé.
 
-La fonction `shortLinesOnly` fonctionne ainsi&nbsp; elle prend une chaîne de
+La fonction `shortLinesOnly` fonctionne ainsi&nbsp;: elle prend une chaîne de
 caractères comme "short`nlooooooooooooooong\nshort again"`. Cette chaîne a
 trois lignes, dont deux courtes et une au milieu plus longue. La fonction lance
 `lines` sur cette chaîne, ce qui la convertit en `["short",
-    "looooooooooooooong", "short again"]`, qu'on lie au nom `allLines`. Cette
-    liste de chaînes est ensuite filtrée pour ne garder que les lignes de moins
-    de 10 caractères, produisant `["short", "short again"]`. Et finalement,
-    `unlines` joint cette liste en une seule chaîne, donnant `"short\nshort
-    again"`. Testons cela.
+"looooooooooooooong", "short again"]`, qu'on lie au nom `allLines`. Cette liste
+de chaînes est ensuite filtrée pour ne garder que les lignes de moins de 10
+caractères, produisant `["short", "short again"]`. Et finalement, `unlines`
+joint cette liste en une seule chaîne, donnant `"short\nshort again"`. Testons
+cela.
 
 > i'm short
 > so am i
@@ -881,11 +882,11 @@ On connecte le contenu de *shortlines.txt* à l'entrée de *shotlinesonly* et en
 sortie, on obtient les lignes courtes.
 
 Ce motif de récupérer une chaîne en entrée, la transformer avec une fonction,
-   puis écrire le résultat est tellement commun qu'il existe une fonction qui
-   rend cela encore plus simple, appelée `interact`. `interact` prend une
-   fonction de type `String -> String` en paramètre et retourne une action I/O
-   qui va lire une entrée, lancer cette fonction dessus, et afficher le
-   résultat. Modifions notre programme en conséquence&nbsp;
+puis écrire le résultat est tellement commun qu'il existe une fonction qui rend
+cela encore plus simple, appelée `interact`. `interact` prend une fonction de
+type `String -> String` en paramètre et retourne une action I/O qui va lire une
+entrée, lancer cette fonction dessus, et afficher le résultat. Modifions notre
+programme en conséquence&nbsp;:
 
 > main = interact shortLinesOnly
 >
@@ -933,11 +934,11 @@ Plutôt direct. D'abord, on change quelque chose comme
 `"elephant\nABCBA\nwhatever"` en `["elephant", "ABCBA", "whatever"]`, puis on
 mappe la lambda sur ça, donnant `["not a palindrome", "palindrome", "not a
 palindrome"]` et enfin `unlines` joint cette liste en une seule chaîne de
-caractères. À présent, on peut faire&nbsp;
+caractères. À présent, on peut faire&nbsp;:
 
 > main = interact respondPalindromes
 
-Testons ça&nbsp;
+Testons ça&nbsp;:
 
 > $ runhaskell palindromes.hs
 > hehe
@@ -956,7 +957,7 @@ l'afficher en sortie. On termine le programme en envoyant un caractère de fin
 de fichier.
 
 On peut aussi utiliser ce programme en connectant simplement un fichier en
-entrée. Disons qu'on ait ce fichier&nbsp;
+entrée. Disons qu'on ait ce fichier&nbsp;:
 
 > dogaroo
 > radar
@@ -964,7 +965,7 @@ entrée. Disons qu'on ait ce fichier&nbsp;
 > madam
 
 et qu'on le sauvegarde comme `words.txt`. Voici ce qu'on obtient en le
-connectant en entrée de notre programme&nbsp;
+connectant en entrée de notre programme&nbsp;:
 
 > $ cat words.txt | runhaskell palindromes.hs
 > not a palindrome
@@ -996,14 +997,14 @@ dans l'entrée ou la sortie standard.
 On va commencer avec un programme très simple qui ouvre un fichier nommé
 *girlfriend.txt*, qui contient un vers du tube d'Avril Lavigne numéro 1
 *Girlfriend*, et juste afficher cela dans le terminal. Voici
-*girlfriend.txt*&nbsp;
+*girlfriend.txt*&nbsp;:
 
 > Hey! Hey! You! You!
 > I don't like your girlfriend!
 > No way! No way!
 > I think you need a new one!
 
-Et voici notre programme&nbsp;
+Et voici notre programme&nbsp;:
 
 > import System.IO
 >
@@ -1013,7 +1014,7 @@ Et voici notre programme&nbsp;
 >     putStr contents
 >     hClose handle
 
-En le lançant, on obtient le résultat attendu&nbsp;
+En le lançant, on obtient le résultat attendu&nbsp;:
 
 > $ runhaskell girlfriend.hs
 > Hey! Hey! You! You!
@@ -1030,18 +1031,18 @@ quatrième ligne suggère que nous devrions chercher une nouvelle petite amie.
 Hum, regardons plutôt le programme ligne par ligne ! Notre programme consiste
 en plusieurs actions I/O combinées ensemble par un bloc *do*. Dans la première
 ligne du bloc *do*, on remarque une fonction nouvelle nommée *openFile*. Voici
-sa signature de type&nbsp; `openFile :: FilePath -> IOMode -> OI Handle`. Si
-vous lisez ceci tout haut, cela donne&nbsp; `openFile` prend un chemin vers un
+sa signature de type&nbsp;: `openFile :: FilePath -> IOMode -> OI Handle`. Si
+vous lisez ceci tout haut, cela donne&nbsp;: `openFile` prend un chemin vers un
 fichier et un `IOMode` et retourne une action I/O qui va ouvrir le fichier et
 encapsule pour résultat la poignée vers le fichier associé.
 
 `FilePath` est juste un [synonyme du
 type](creer-nos-propres-types-et-classes-de-types#synonymes-de-types) `String`,
-    simplement défini comme&nbsp;
+simplement défini comme&nbsp;:
 
 > type FilePath = String
 
-`IOMode` est défini ainsi&nbsp;
+`IOMode` est défini ainsi&nbsp;:
 
 > data IOMode = ReadMode | WriteMode | AppendMode | ReadWriteMode
 
@@ -1096,7 +1097,7 @@ ouvre le fichier, applique notre fonction, puis ferme le fichier. Le résultat
 retourné par cette action I/O est le même que le résultat retourné par la
 fonction qu'on lui fournit. Ça peut vous sembler compliqué, mais c'est en fait
 très simple, surtout avec des lambdas, voici le précédent exemple réécrit avec
-`withFile`&nbsp;
+`withFile`&nbsp;:
 
 > import System.IO
 >
@@ -1113,7 +1114,8 @@ directement une action I/O, est que l'action I/O ne saurait pas sur quel
 fichier elle doit agir autrement. Ainsi, `withFile` ouvre le fichier et passe
 la poignée à la fonction qu'on lui a donnée. Elle récupère ainsi une action
 I/O, et crée à son tour une action I/O qui est comme la précédente mais ferme
-le fichier à la fin. Voici comment coder notre propre fonction `withFile`&nbsp;
+le fichier à la fin. Voici comment coder notre propre fonction
+`withFile`&nbsp;:
 
 > withFile' :: FilePath -> IOMode -> (Handle -> IO a) -> IO a
 > withFile' path mode f = do
@@ -1140,7 +1142,7 @@ Tout comme on a `hGetContents` qui fonctionne comme `getContents` mais pour un
 fichier, il y a aussi `hGetLine`, `hPutStr`, `hPutStrLn`, `hGetChar`, etc.
 Elles fonctionnent toutes comme leur équivalent sans h, mais prennent une
 poignée en paramètre et opèrent sur le fichier correspondant plutôt que
-l'entrée ou la sortie standard. Par exemple&nbsp; `putStrLn` est une fonction
+l'entrée ou la sortie standard. Par exemple&nbsp;: `putStrLn` est une fonction
 qui prend une chaîne de caractères et retourne une action I/O qui affiche cette
 chaîne dans le terminal avec un retour à la ligne à la fin. `hPutStrLn` prend
 une poignée et une chaîne et retourne une action I/O qui écrit cette chaîne
@@ -1150,7 +1152,7 @@ ligne de ce fichier.
 
 Charger des fichiers et traiter leur contenu comme des chaînes de caractères
 est tellement commun qu'on a ces trois fonctions qui facilitent le
-travail&nbsp;
+travail&nbsp;:
 
 `readFile` a pour signature `readFile :: FilePath -> IO String`. Souvenez-vous
 que `FilePath` est juste un nom plus joli pour `String`. `readFile` prend un
@@ -1158,7 +1160,7 @@ chemin vers un fichier et retourne une action I/O qui lit ce fichier
 (paresseusement bien sûr) et lie son contenu à une chaîne de caractères. C'est
 généralement plus pratique que de faire `openFile`, de lier le retour à une
 poignée, puis de faire `hGetContents`. Ainsi, le précédent exemple se
-réécrit&nbsp;
+réécrit&nbsp;:
 
 > import System.IO
 >
@@ -1220,7 +1222,7 @@ pas de caractère pour aller à la ligne à la fin.
 
 Ooh, encore une chose. On a dit que `contents <- hGetContents handle` ne lisait
 pas tout le fichier d'un coup pour le stocker en mémoire. C'est une
-entrée-sortie paresseuse, donc faire&nbsp;
+entrée-sortie paresseuse, donc faire&nbsp;:
 
 > main = do
 >     withFile "something.txt" ReadMode (\handle -> do
@@ -1243,7 +1245,7 @@ comme une taille cool.
 Vous pouvez contrôler comment la mise en tampon est effectuée en utilisant la
 fonction `hSetBuffering`. Elle prend une poignée et un `BufferMode` et retourne
 une action I/O qui définit le mode de mise en tampon. `BufferMode` est un
-simple type de données énuméré, et les valeurs possibles sont&nbsp;
+simple type de données énuméré, et les valeurs possibles sont&nbsp;:
 `NoBuffering`, `LineBuffering` ou `BlockBuffering (Maybe Int)`. Le `Maybe Int`
 permet de préciser la taille des blocs, en octets. Si c'est `Nothing`, alors le
 système d'exploitation détermine la taille du bloc. `NoBuffering` signifie que
@@ -1273,15 +1275,15 @@ rapporte toutes les données qu'il a lues jusqu'ici. Mais on peut utiliser
 Après avoir vidé le tampon en écriture, les données sont disponibles pour
 n'importe quel autre programme qui accède au fichier en lecture en même temps.
 
-Pensez à la mise en tampon par bloc comme cela&nbsp; votre cuvette de toilettes
-est faite pour se vider dès qu'elle contient un litre d'eau. Vous pouvez donc
-commencer à la remplir d'eau, et dès que vous atteignez un litre, l'eau est
-automatiquement vidée, et les données que vous aviez mises dans cette eau sont
-lues. Mais vous pouvez aussi vider la cuvette manuellement en actionnant la
-chasse d'eau. Cela force la cuvette à se vider, et toute l'eau (les données)
-est lue. Au cas où vous n'auriez pas saisi, tirer la chasse d'eau est une
-métaphore pour `hFlush`. Ce n'est pas une analogie très sensationnelle en
-termes de critères d'analogies dans la programmation, mais je voulais une
+Pensez à la mise en tampon par bloc comme cela&nbsp;: votre cuvette de
+toilettes est faite pour se vider dès qu'elle contient un litre d'eau. Vous
+pouvez donc commencer à la remplir d'eau, et dès que vous atteignez un litre,
+l'eau est automatiquement vidée, et les données que vous aviez mises dans cette
+eau sont lues. Mais vous pouvez aussi vider la cuvette manuellement en
+actionnant la chasse d'eau. Cela force la cuvette à se vider, et toute l'eau
+(les données) est lue. Au cas où vous n'auriez pas saisi, tirer la chasse d'eau
+est une métaphore pour `hFlush`. Ce n'est pas une analogie très sensationnelle
+en termes de critères d'analogies dans la programmation, mais je voulais une
 analogie avec le monde réel d'un objet qu'on peut vider, pour ma chute.
 
 On a déjà fait un programme pour ajouter un nouvel élément à une liste de
@@ -1291,7 +1293,7 @@ pour que vous voyiez que c'est très simple. On va utiliser quelques nouvelles
 fonctions sorties de `System.Directory` et une nouvelle fonction de
 `System.IO`, mais j'expliquerai cela en temps voulu.
 
-Bon, voici le programme qui retire un élément de *todo.txt*&nbsp;
+Bon, voici le programme qui retire un élément de *todo.txt*&nbsp;:
 
 > import System.IO
 > import System.Directory
@@ -1326,7 +1328,7 @@ fichier temporaire. On a utilisé `"."` pour le dossier temporaire, parce que
 d'exploitation. On a utilisé `"temp"` pour le préfixe de nom du fichier
 temporaire, ce qui signifie que le fichier sera nommé *temp* suivi de
 caractères aléatoires. Cette fonction retourne une action I/O qui crée le
-fichier temporaire, et le résultat de cette action est une paire&nbsp; le nom
+fichier temporaire, et le résultat de cette action est une paire&nbsp;: le nom
 du fichier créé et sa poignée. On pouvait simplement ouvrir un fichier
 *todo2.txt* ou quelque chose comme ça, mais il vaut mieux ouvrir un fichier
 temporaire à l'aide d'`openTempFile` pour être certain de ne pas en écraser un
@@ -1420,7 +1422,7 @@ cette approche quand on a voulu savoir quel élément l'utilisateur voulait
 supprimer. Ça marche, mais ce n'est pas optimal, parce que cela requiert que
 l'utilisateur lance le programme, attende que le programme lui demande quelque
 chose, et ensuite indique le fichier au programme. Ceci est appelé un programme
-interactif, et le problème est le suivant&nbsp; que faire si l'on souhaite
+interactif, et le problème est le suivant&nbsp;: que faire si l'on souhaite
 automatiser l'exécution du programme, comme avec un script ? Il est plus dur de
 faire un script qui interagit avec un programme que de faire un script qui
 appelle un ou même plusieurs programmes.
@@ -1437,7 +1439,7 @@ les arguments du programme et les encapsuler dans son résultat sous forme d'une
 liste. `getProgName` a pour type `getProgName :: IO String` et est une action
 I/O qui contient le nom du programme.
 
-Voici un petit programme qui démontre leur fonctionnement&nbsp;
+Voici un petit programme qui démontre leur fonctionnement&nbsp;:
 
 > import System.Environment
 > import Data.List
@@ -1472,7 +1474,7 @@ fera dépendra des arguments. On va aussi le faire de manière à ce qu'il puiss
 opérer sur différents fichiers, pas seulement *todo.txt*.
 
 On va l'appeler *todo* ("à faire") et il servira à faire (haha !) trois choses
-différentes&nbsp;
+différentes&nbsp;:
 
 * Voir des tâches
 * Ajouter des tâches
@@ -1505,7 +1507,7 @@ etc.
 >             ]
 
 Il nous reste encore à définir `main`, `add`, `view` et `remove`, commençons
-par `main`&nbsp;
+par `main`&nbsp;:
 
 > main = do
 >     (command:args) <- getArgs
@@ -1535,7 +1537,7 @@ monkey"]`) et retournera une action I/O qui ajoute `Spank the monkey` à
 *todo.txt*.
 
 Génial ! Il ne reste plus qu'à implémenter `add`, `view` et `remove`.
-Commençons par `add`&nbsp;
+Commençons par `add`&nbsp;:
 
 > add :: [String] -> IO ()
 > add [fileName, todoItem] = appendFile fileName (todoItem ++ "\n")
@@ -1633,12 +1635,13 @@ Voilà le programme final en entier, dans toute sa splendeur !
 
 <img src="img/salad.png" alt="salade" class="left"/>
 
-Pour résumer notre solution&nbsp; on a fait une liste associative de résolution
-qui associe à chaque commande une fonction qui prend des arguments de la ligne
-de commande et retourne une action I/O. On regarde ce qu'est la commande, et en
-fonction de ça on résout l'appel sur la fonction appropriée de la liste de
-résolution. On appelle cette fonction avec le reste des arguments pour obtenir
-une action I/O qui fera l'action attendue et ensuite on exécute cette action !
+Pour résumer notre solution&nbsp;: on a fait une liste associative de
+résolution qui associe à chaque commande une fonction qui prend des arguments
+de la ligne de commande et retourne une action I/O. On regarde ce qu'est la
+commande, et en fonction de ça on résout l'appel sur la fonction appropriée de
+la liste de résolution. On appelle cette fonction avec le reste des arguments
+pour obtenir une action I/O qui fera l'action attendue et ensuite on exécute
+cette action !
 
 Dans d'autres langages, on aurait pu implémenter ceci avec un gros *switch
 case* ou ce genre de structure, mais utiliser des fonctions d'ordre supérieure
@@ -1699,17 +1702,16 @@ quasiment aléatoires.
 Dans la plupart des langages de programmation, vous avez des fonctions qui vous
 donnent un nombre aléatoire. Chaque fois que vous appelez cette fonction, vous
 obtenez (on l'espère) un nombre aléatoire différent. Quid d'Haskell ? Eh bien,
-        souvenez-vous, Haskell est un langage fonctionnel pur. Cela signifie
-        qu'il a la propriété de transparence référentielle. Ce que CELA
-        signifie, c'est qu'une fonction à laquelle on donne les mêmes
-        paramètres plusieurs fois retournera toujours le même résultat. C'est
-        très cool, parce que ça nous permet de raisonner différemment à propos
-        de nos programmes, et de retarder l'évaluation jusqu'à ce qu'elle soit
-        nécessaire. Si j'appelle une fonction, je peux être certain qu'elle ne
-        va pas faire des choses folles avant de me donner son résultat. Tout ce
-        qui importe, c'est son résultat. Cependant, cela rend un peu difficile
-        les choses dans le cas des nombres aléatoires. Si j'ai une fonction
-        comme ça&nbsp;
+souvenez-vous, Haskell est un langage fonctionnel pur. Cela signifie qu'il a la
+propriété de transparence référentielle. Ce que CELA signifie, c'est qu'une
+fonction à laquelle on donne les mêmes paramètres plusieurs fois retournera
+toujours le même résultat. C'est très cool, parce que ça nous permet de
+raisonner différemment à propos de nos programmes, et de retarder l'évaluation
+jusqu'à ce qu'elle soit nécessaire. Si j'appelle une fonction, je peux être
+certain qu'elle ne va pas faire des choses folles avant de me donner son
+résultat. Tout ce qui importe, c'est son résultat. Cependant, cela rend un peu
+difficile les choses dans le cas des nombres aléatoires. Si j'ai une fonction
+comme ça&nbsp;:
 
 > randomNumber :: (Num a) => a
 > randomNumber = 4
@@ -1732,19 +1734,19 @@ un autre type de données).
 
 Pénétrez dans le module `System.Random`. Il a toutes les fonctions qui
 satisfont notre besoin d'aléatoire. Plongeons donc dans l'une des fonctions
-qu'il exporte, j'ai nommé `random`. Voici son type&nbsp; `random :: (RandomGen
-        g, Random a) => g -> (a, g)`. Ouah ! Que de nouvelles classes de types
-dans cette déclaration ! La classe `RandomGen` est pour les types qui peuvent
-agir comme des sources d'aléatoire. La classe de types `Random` est pour les
-choses qui peuvent avoir une valeur aléatoire. Un booléen peut prendre une
-valeur aléatoire, soit `True` soit `False`. Un nombre peut prendre une pléthore
-de différentes valeurs aléatoires. Est-ce qu'une fonction peut prendre une
-valeur aléatoire ? Je ne pense pas, probablement pas ! Si l'on essaie de
-traduire la déclaration de `random`, cela donne quelque chose comme&nbsp; elle
-prend un générateur aléatoire (c'est notre source d'aléatoire) et retourne une
-valeur aléatoire et un nouveau générateur aléatoire. Pourquoi retourne-t-elle
-un nouveau générateur en plus de la valeur aléatoire ? Eh bien, on va voir ça
-dans un instant.
+qu'il exporte, j'ai nommé `random`. Voici son type&nbsp;: `random :: (RandomGen
+g, Random a) => g -> (a, g)`. Ouah ! Que de nouvelles classes de types dans
+cette déclaration ! La classe `RandomGen` est pour les types qui peuvent agir
+comme des sources d'aléatoire. La classe de types `Random` est pour les choses
+qui peuvent avoir une valeur aléatoire. Un booléen peut prendre une valeur
+aléatoire, soit `True` soit `False`. Un nombre peut prendre une pléthore de
+différentes valeurs aléatoires. Est-ce qu'une fonction peut prendre une valeur
+aléatoire ? Je ne pense pas, probablement pas ! Si l'on essaie de traduire la
+déclaration de `random`, cela donne quelque chose comme&nbsp;: elle prend un
+générateur aléatoire (c'est notre source d'aléatoire) et retourne une valeur
+aléatoire et un nouveau générateur aléatoire. Pourquoi retourne-t-elle un
+nouveau générateur en plus de la valeur aléatoire ? Eh bien, on va voir ça dans
+un instant.
 
 Pour utiliser notre fonction `random`, il nous faut obtenir un de ces
 générateurs aléatoires. Le module `System.Random` exporte un type cool,
@@ -1849,7 +1851,7 @@ basées sur ce générateur.
 > [7.904789e-2,0.62691015,0.26363158,0.12223756,0.38291094]
 
 Pourquoi `randoms` ne retourne pas de nouveau générateur avec la liste ? On
-peut implémenter `randoms` très facilement ainsi&nbsp;
+peut implémenter `randoms` très facilement ainsi&nbsp;:
 
 > randoms' :: (RandomGen g, Random a) => g -> [a]
 > randoms' gen = let (value, newGen) = random gen in value:randoms' newGen
@@ -1861,7 +1863,7 @@ nouveau générateur en queue. Puisqu'on doit potentiellement générer une list
 infinie de nombres, on ne peut pas renvoyer le nouveau générateur.
 
 On pourrait faire une fonction qui génère un flot fini de nombres aléatoires et
-un nouveau générateur ainsi&nbsp;
+un nouveau générateur ainsi&nbsp;:
 
 > finiteRandoms :: (RandomGen g, Random a, Num n) => n -> g -> ([a], g)
 > finiteRandoms 0 gen = ([], gen)
@@ -1891,7 +1893,7 @@ pour la valeur produite.
 > (3,1250031057 40692)
 
 Il y a aussi `randomRs`, qui produit un flot de valeurs aléatoires dans
-l'intervalle spécifié. Regardez ça&nbsp;
+l'intervalle spécifié. Regardez ça&nbsp;:
 
 > ghci> take 10 $ randomRs ('a','z') (mkStdGen 3) :: [Char]
 > "ndkxbvmomg"
@@ -1926,7 +1928,7 @@ Voici un simple programme qui génère une chaîne aléatoire.
 > bakzhnnuzrkgvesqplrx
 
 Attention cependant, faire `getStdGen` deux fois vous donnera le même
-générateur global deux fois. Donc si vous faites&nbsp;
+générateur global deux fois. Donc si vous faites&nbsp;:
 
 > import System.Random
 >
@@ -2042,7 +2044,7 @@ Voici notre programme en action !
 > Sorry, it was 10
 > Which number in the range from 1 to 10 am I thinking of?
 
-Une autre manière d'écrire le même programme est comme suit&nbsp;
+Une autre manière d'écrire le même programme est comme suit&nbsp;:
 
 > import System.Random
 > import Control.Monad(when)
@@ -2086,22 +2088,21 @@ depuis l'entrée standard ou un fichier. On peut juste ouvrir un fichier, et le
 lire comme une chaîne de caractères, alors qu'en réalité il ne sera accédé que
 quand ce sera nécessaire.
 
-Cependant, traiter les fichiers comme des listes a un inconvénient&nbsp; ça a
+Cependant, traiter les fichiers comme des listes a un inconvénient&nbsp;: ça a
 tendance à être assez lent. Comme vous le savez, `String` est un synonyme de
 type pour `[Char]`. Les `Char` n'ont pas une taille fixe, parce qu'il faut
 plusieurs octets pour représenter un caractère, par exemple Unicode. De plus,
-          les listes sont vraiment paresseuses. Si vous avez une liste comme
-          `[1, 2, 3, 4]`, elle ne sera évaluée que lorsque ce sera vraiment
-          nécessaire. La liste entière est une promesse de liste. Rappelez-vous
-          que `[1, 2, 3, 4]` est un sucre syntaxique pour `1:2:3:4:[]`. Lorsque
-          le premier élément de la liste est forcé à être évalué (par exemple,
-                  en l'affichant), le reste de la liste `2:3:4:[]` est toujours
-          une promesse de liste, et ainsi de suite. Vous pouvez donc imaginer
-          les listes comme des promesses que l'élément suivant sera délivré
-          quand on en aura besoin, ainsi que la promesse que la suite fera
-          pareil. Il ne faut pas se creuser l'esprit bien longtemps pour se
-          dire que traiter une simple liste de nombres comme une série de
-          promesses n'est peut-être pas la manière la plus efficace au monde.
+les listes sont vraiment paresseuses. Si vous avez une liste comme `[1, 2, 3,
+4]`, elle ne sera évaluée que lorsque ce sera vraiment nécessaire. La liste
+entière est une promesse de liste. Rappelez-vous que `[1, 2, 3, 4]` est un
+sucre syntaxique pour `1:2:3:4:[]`. Lorsque le premier élément de la liste est
+forcé à être évalué (par exemple, en l'affichant), le reste de la liste
+`2:3:4:[]` est toujours une promesse de liste, et ainsi de suite. Vous pouvez
+donc imaginer les listes comme des promesses que l'élément suivant sera délivré
+quand on en aura besoin, ainsi que la promesse que la suite fera pareil. Il ne
+faut pas se creuser l'esprit bien longtemps pour se dire que traiter une simple
+liste de nombres comme une série de promesses n'est peut-être pas la manière la
+plus efficace au monde.
 
 Ce coût supplémentaire ne nous dérange pas la plupart du temps, mais il s'avère
 handicapant lorsque l'on lit et manipule des gros fichiers. C'est pourquoi
@@ -2109,16 +2110,16 @@ Haskell a des **chaînes d'octets**. Les chaînes d'octets sont un peu comme des
 listes, seulement chaque élément fait un octet (ou 8 bits) de taille. La
 manière dont elles sont paresseuses est aussi différente.
 
-Les chaînes d'octets viennent sous deux déclinaisons&nbsp; les strictes et les
+Les chaînes d'octets viennent sous deux déclinaisons&nbsp;: les strictes et les
 paresseuses. Les chaînes d'octets strictes résident dans `Data.ByteString` et
 elles abandonnent complètement la paresse. Plus de promesses impliquées, une
 chaîne d'octets stricte est une série d'octets dans un tableau. Vous ne pouvez
 pas avoir de chaîne d'octets stricte infinie. Si vous évaluez le premier octet
 d'une chaîne stricte, elle est évaluée en entier. Le bon côté des choses, c'est
 qu'il y a moins de coût supplémentaire puisqu'il n'y a plus de glaçons (le
-        terme technique pour les promesses) impliqués. Le mauvais côté, c'est
-qu'elles risquent plus de remplir votre mémoire, parce qu'elles sont lues
-entièrement dans la mémoire d'un coup.
+terme technique pour les promesses) impliqués. Le mauvais côté, c'est qu'elles
+risquent plus de remplir votre mémoire, parce qu'elles sont lues entièrement
+dans la mémoire d'un coup.
 
 L'autre variété de chaîne d'octets réside dans `Data.ByteString.Lazy`. Elles
 sont paresseuses, mais pas autant que les listes. Comme on l'a dit plus tôt, il
@@ -2448,7 +2449,7 @@ handler</code> est la même chose que `catch toTry handler`, qui correspond bien
 est la fonction qui prend une `IOError` et retourne une action à exécuter en
 cas d'exception.
 
-Essayons&nbsp;
+Essayons&nbsp;:
 
 > $ runhaskell count_lines.hs i_exist.txt
 > The file has 3 lines!
@@ -2462,7 +2463,7 @@ le type d'erreur. Attraper tous les types d'erreur dans un seul gestionnaire
 est une mauvaise pratique en Haskell tout comme dans la plupart des autres
 langages. Et si une exception arrivait que l'on ne désirait pas attraper, comme
 une interruption du programme par l'utilisateur ? C'est pour cela qu'on va
-faire comme dans la plupart des autres langages&nbsp; on va vérifier de quel
+faire comme dans la plupart des autres langages&nbsp;: on va vérifier de quel
 type d'exception il s'agit. Si c'est celui qu'on attendait, on la traite.
 Sinon, on la lève à nouveau dans la nature. Modifions notre programme pour
 n'attraper que les exceptions liées à l'inexistence du fichier.
@@ -2506,7 +2507,7 @@ hein ?
 
 Il y a plusieurs prédicats qui agissent sur des `IOError`, et lorsqu'une garde
 n'est pas évaluée comme `True`, l'évaluation passe à la prochaine garde. Les
-prédicats sur les `IOError` sont&nbsp;
+prédicats sur les `IOError` sont&nbsp;:
 
 * `isAlreadyExistsError`
 * `isDoesNotExistError`
@@ -2525,7 +2526,7 @@ qu'il soit préférable d'utiliser des types comme `Either` et `Maybe` pour
 exprimer des échecs plutôt que de lancer vous-même des exceptions avec
 `userError`.
 
-Vous pourriez ainsi avoir un gestionnaire de la sorte&nbsp;
+Vous pourriez ainsi avoir un gestionnaire de la sorte&nbsp;:
 
 > handler :: IOError -> IO ()
 > handler e
@@ -2583,7 +2584,7 @@ Vous n'avez pas à utiliser un unique gestionnaire pour attraper (i.e. `catch`)
 toutes les exceptions de la partie I/O de votre code. Vous pouvez simplement
 protéger certaines parties de votre code avec `catch` ou vous pouvez couvrir
 plusieurs parties avec `catch` et utiliser différents gestionnaires pour
-chacune, ainsi&nbsp;
+chacune, ainsi&nbsp;:
 
 > main = do toTry `catch` handler1
 >           thenTryThis `catch` handler2

@@ -35,14 +35,14 @@ applicatifs étaient juste des foncteurs gonflés aux hormones.
 
 Quand on a débuté les foncteurs, on a vu qu'il était possible de mapper des
 fonctions sur divers types de données. On a vu qu'à cet effet, la classe de
-types `Functor` avait été introduite, et cela a soulevé la question&nbsp; quand
-on a une fonction de type `a -> b` et un type de données `f a`, comment mapper
-cette fonction sur le type de données pour obtenir un `f b` ? On a vu comment
-mapper quelque chose sur un `Maybe a`, une liste `[a]`, une action I/O `IO a`,
-etc. On a même vu comment mapper une fonction `a -> b` sur d'autres fonctions
-de type `r -> a` pour obtenir des fonctions `r -> b`. Pour répondre à la
-question de comment mapper une fonction sur un type de données, tout ce qu'il
-nous a fallu considérer était le type de `fmap`&nbsp;
+types `Functor` avait été introduite, et cela a soulevé la question&nbsp;:
+quand on a une fonction de type `a -> b` et un type de données `f a`, comment
+mapper cette fonction sur le type de données pour obtenir un `f b` ? On a vu
+comment mapper quelque chose sur un `Maybe a`, une liste `[a]`, une action I/O
+`IO a`, etc. On a même vu comment mapper une fonction `a -> b` sur d'autres
+fonctions de type `r -> a` pour obtenir des fonctions `r -> b`. Pour répondre à
+la question de comment mapper une fonction sur un type de données, tout ce
+qu'il nous a fallu considérer était le type de `fmap`&nbsp;:
 
 > fmap :: (Functor f) => (a -> b) -> f a -> f b
 
@@ -56,7 +56,7 @@ cela à `Just 5` ? Et si l'on voulait l'appliquer non pas à `Just 5`, mais
 plutôt à `Nothing` ? Ou si l'on avait `[(*2), (+4)]`, comment
 l'appliquerions-nous à `[1, 2, 3]` ? Comment cela marcherait-il ? Pour cela, la
 classe de types `Applicative` est introduite, afin de répondre au problème à
-l'aide du type&nbsp;
+l'aide du type&nbsp;:
 
 > (<*>) :: (Applicative f) => f (a -> b) -> f a -> f b
 
@@ -74,7 +74,7 @@ d'être un `Char`, c'est un `Maybe Char`, ce qui nous indique que sa valeur peut
 
 La façon dont la classe de types `Applicative` nous permettait d'utiliser des
 fonctions normales sur des valeurs dans des contextes en préservant le contexte
-était très propre. Observez&nbsp;
+était très propre. Observez&nbsp;:
 
 > ghci> (*) <$> Just 2 <*> Just 8
 > Just 16
@@ -90,11 +90,11 @@ déterministes), les `IO a` représentent des valeurs qui ont des effets de bord
 etc.
 
 Les monades sont une extension naturelle des foncteurs applicatifs, et avec
-elles on cherche à résoudre ceci&nbsp; si vous avez une valeur dans un
+elles on cherche à résoudre ceci&nbsp;: si vous avez une valeur dans un
 contexte, `m a`, comment appliquer dessus une fonction qui prend une valeur
 normale `a` et retourne une valeur dans un contexte ? C'est-à-dire, comment
 appliquer une fonction de type `a -> m b` à une valeur de type `m a` ? En gros,
-on veut cette fonction&nbsp;
+on veut cette fonction&nbsp;:
 
 > (>>=) :: (Monad m) => m a -> (a -> m b) -> m b
 
@@ -103,7 +103,7 @@ mais retourne une valeur spéciale, comment donner la valeur spéciale à cette
 fonction ?** C'est la question à laquelle on s'attaquera en étudiant les
 monades. On écrit `m a` plutôt que `f a` parce que le `m` signifie `Monad`,
 mais les monades sont seulement des foncteurs applicatifs supportant `(>>=)`.
-La fonction `(>>=)` est prononcée *bind* (NDT&nbsp; en français, cela signifie
+La fonction `(>>=)` est prononcée *bind* (NDT&nbsp;: en français, cela signifie
 lier).
 
 Quand on a une valeur normale `a` et une fonction normale `a -> b`, il est très
@@ -148,7 +148,7 @@ une fonction sur celui-ci, elle est mappée sur ce qui est à l'intérieur des
 valeurs `Just`, les `Nothing` étant conservés tels quels parce qu'il n'y a pas
 de valeur sur laquelle mapper !
 
-Ainsi&nbsp;
+Ainsi&nbsp;:
 
 > ghci> fmap (++"!") (Just "wisdom")
 > Just "wisdom!"
@@ -162,7 +162,7 @@ fonction dans un `Maybe` à une valeur dans un `Maybe`, elles doivent toutes
 deux être des valeurs `Just` pour que le résultat soit une valeur `Just`,
 autrement le résultat est `Nothing`. C'est logique, puisque s'il vous manque
 soit la fonction, soit son paramètre, vous ne pouvez pas l'inventer, donc vous
-devez propager l'échec&nbsp;
+devez propager l'échec&nbsp;:
 
 > ghci> Just (+3) <*> Just 3
 > Just 6
@@ -191,7 +191,7 @@ Dans ce cas, `>>=` prendrait un `Maybe a` et une fonction de type `a -> Maybe
 b` et appliquerait la fonction au `Maybe a`. Pour comprendre comment elle fait
 cela, on peut utiliser notre intuition venant du fait que `Maybe` est un
 foncteur applicatif. Mettons qu'on ait une fonction `\x -> Just (x + 1)`. Elle
-prend un nombre, lui ajoute `1` et l'enveloppe dans un `Just`&nbsp;
+prend un nombre, lui ajoute `1` et l'enveloppe dans un `Just`&nbsp;:
 
 > ghci> (\x -> Just (x+1)) 1
 > Just 2
@@ -199,7 +199,7 @@ prend un nombre, lui ajoute `1` et l'enveloppe dans un `Just`&nbsp;
 > Just 101
 
 Si on lui donne `1`, elle s'évalue en `Just 2`. Si on lui donne le nombre
-`100`, le résultat est `Just 101`. Très simple. Voilà l'obstacle&nbsp; comment
+`100`, le résultat est `Just 101`. Très simple. Voilà l'obstacle&nbsp;: comment
 donner une valeur `Maybe` a cette fonction ? Si on pense à ce que fait `Maybe`
 en tant que foncteur applicatif, répondre est plutôt simple. Si on lui donne
 une valeur `Just`, elle prend ce qui est dans le `Just` et applique la fonction
@@ -209,14 +209,14 @@ rien pour l'appliquer. Dans ce cas, faisons juste comme avant et retournons
 
 Plutôt que de l'appeler `>>=`, appelons-la `applyMaybe` pour l'instant. Elle
 prend un `Maybe a` et une fonction et retourne un `Maybe b`, parvenantt à
-appliquer la fonction sur le `Maybe a`. Voici le code&nbsp;
+appliquer la fonction sur le `Maybe a`. Voici le code&nbsp;:
 
 > applyMaybe :: Maybe a -> (a -> Maybe b) -> Maybe b
 > applyMaybe Nothing f  = Nothing
 > applyMaybe (Just x) f = f x
 
 Ok, à présent jouons un peu. On va l'utiliser en fonction infixe pour que la
-valeur `Maybe` soit sur le côté gauche et la fonction sur la droite&nbsp;
+valeur `Maybe` soit sur le côté gauche et la fonction sur la droite&nbsp;:
 
 > ghci> Just 3 `applyMaybe` \x -> Just (x+1)
 > Just 4
@@ -230,7 +230,7 @@ valeur `Maybe` soit sur le côté gauche et la fonction sur la droite&nbsp;
 Dans l'exemple ci-dessus, on voit que quand on utilisait `applyMaybe` avec une
 valeur `Just` et une fonction, la fonction était simplement appliquée dans le
 `Just`. Quand on essayait de l'utiliser sur un `Nothing`, le résultat était
-`Nothing`. Et si la fonction retourne `Nothing` ? Voyons&nbsp;
+`Nothing`. Et si la fonction retourne `Nothing` ? Voyons&nbsp;:
 
 > ghci> Just 3 `applyMaybe` \x -> if x > 2 then Just x else Nothing
 > Just 3
@@ -265,8 +265,8 @@ La classe de types Monad
 
 Tout comme les foncteurs ont la classe de types `Functor` et les foncteurs
 applicatifs ont la classe de types `Applicative`, les monades viennent avec
-leur propre classe de types&nbsp; `Monad` ! Wow, qui l'eut cru ? Voici à quoi
-ressemble la classe de types&nbsp;
+leur propre classe de types&nbsp;: `Monad` ! Wow, qui l'eut cru ? Voici à quoi
+ressemble la classe de types&nbsp;:
 
 > class Monad m where
 >     return :: a -> m a
@@ -303,7 +303,7 @@ valeur. Pour `Maybe` elle prend une valeur et l'enveloppe dans `Just`.
 
 <div class="hintbox">
 
-Un petit rappel&nbsp; `return` n'est en rien comme le `return` qui existe dans
+Un petit rappel&nbsp;: `return` n'est en rien comme le `return` qui existe dans
 la plupart des langages. Elle ne termine pas l'exécution de la fonction ou quoi
 que ce soit, elle prend simplement une valeur normale et la place dans un
 contexte.
@@ -345,7 +345,7 @@ gauche est `Nothing`, parce qu'il n'y a pas de valeur sur laquelle appliquer la
 fonction. Si c'est un `Just`, on prend ce qui est à l'intérieur et on applique
 `f` dessus.
 
-On peut jouer un peu avec la monade `Maybe`&nbsp;
+On peut jouer un peu avec la monade `Maybe`&nbsp;:
 
 > ghci> return "WHAT" :: Maybe String
 > Just "WHAT"
@@ -378,7 +378,7 @@ plusieurs valeurs `Maybe a`.
 
 Pierre a décidé de faire une pause dans son emploi au centre de pisciculture
 pour s'adonner au funanbulisme. Il n'est pas trop mauvais, mais il a un
-problème&nbsp; des oiseaux n'arrêtent pas d'atterrir sur sa perche d'équilibre
+problème&nbsp;: des oiseaux n'arrêtent pas d'atterrir sur sa perche d'équilibre
 !  Ils viennent se reposer un instant, discuter avec leurs amis aviaires, avant
 de décoller en quête de miettes de pain. Cela ne le dérangerait pas tant si le
 nombre d'oiseaux sur le côté gauche de la perche était égal à celui sur le côté
@@ -399,7 +399,7 @@ l'oiseau sur sa gauche décide de s'envoler.
 
 On peut représenter la perche comme une simple paire d'entiers. La première
 composante compte les oiseaux sur sa gauche, la seconde ceux sur sa
-droite&nbsp;
+droite&nbsp;:
 
 > type Birds = Int
 > type Pole = (Birds,Birds)
@@ -410,7 +410,7 @@ synonyme pour `(Birds, Birds)` qu'on appelle `Pole` (à ne pas confondre avec
 une personne d'origine polonaise).
 
 Ensuite, pourquoi ne pas créer une fonction qui prenne un nombre d'oiseaux et
-les fait atterrir sur un côté de la perche ? Voici les fonctions&nbsp;
+les fait atterrir sur un côté de la perche ? Voici les fonctions&nbsp;:
 
 > landLeft :: Birds -> Pole -> Pole
 > landLeft n (left,right) = (left + n,right)
@@ -418,7 +418,7 @@ les fait atterrir sur un côté de la perche ? Voici les fonctions&nbsp;
 > landRight :: Birds -> Pole -> Pole
 > landRight n (left,right) = (left,right + n)
 
-Simple. Essayons-les&nbsp;
+Simple. Essayons-les&nbsp;:
 
 > ghci> landLeft 2 (0,0)
 > (2,0)
@@ -429,7 +429,7 @@ Simple. Essayons-les&nbsp;
 
 Pour faire décoller les oiseaux, on a utilisé un nombre négatif. Puisque faire
 atterrir des oiseaux sur un `Pole` retourne un `Pole`, on peut chaîner les
-applications de `landLeft` et `landRight`&nbsp;
+applications de `landLeft` et `landRight`&nbsp;:
 
 > ghci> landLeft 2 (landRight 1 (landLeft 1 (0,0)))
 > (3,1)
@@ -439,12 +439,12 @@ Puis, on fait atterrir un oiseau sur le côté droit, ce qui donne `(1, 1)`.
 Finalement, deux oiseaux atterrisent à gauche, donnant `(3, 1)`. On applique
 une fonction en écrivant d'abord la fonction puis le paramètre, mais ici, il
 serait plus pratique d'avoir la perche en première et ensuite la fonction
-d'atterrissage. Si l'on crée une fonction&nbsp;
+d'atterrissage. Si l'on crée une fonction&nbsp;:
 
 > x -: f = f x
 
 On peut appliquer les fonctions en écrivant d'abord le paramètre puis la
-fonction&nbsp;
+fonction&nbsp;:
 
 > ghci> 100 -: (*3)
 > 300
@@ -454,7 +454,7 @@ fonction&nbsp;
 > (2,0)
 
 Ainsi, on peut faire atterrir de façon répétée des oiseaux, de manière plus
-lisible&nbsp;
+lisible&nbsp;:
 
 > ghci> (0,0) -: landLeft 1 -: landRight 1 -: landLeft 2
 > (3,1)
@@ -472,7 +472,7 @@ atterrissent du même côté ?
 
 10 oiseaux à gauche et seulement 3 à droite ? Avec ça, le pauvre Pierre est sûr
 de se casser la figure ! Ici, c'est facile de s'en rendre compte, mais si l'on
-avait une séquence comme&nbsp;
+avait une séquence comme&nbsp;:
 
 > ghci> (0,0) -: landLeft 1 -: landRight 4 -: landLeft (-1) -: landRight (-2)
 > (0,2)
@@ -484,7 +484,7 @@ et `landRight`. De ce qu'on voit, on veut que ces fonctions puissent échouer.
 C'est-à-dire, on souhaite qu'elles retournent une nouvelle perche tant que
 l'équilibre est respecté, mais qu'elles échouent si les oiseaux atterrissent en
 disproportion. Et quel meilleur moyen d'ajouter un contexte de possible échec
-que d'utiliser une valeur Maybe ? Reprenons ces fonctions&nbsp;
+que d'utiliser une valeur Maybe ? Reprenons ces fonctions&nbsp;:
 
 > landLeft :: Birds -> Pole -> Maybe Pole
 > landLeft n (left,right)
@@ -503,7 +503,7 @@ des gardes pour vérifier si la différence entre les extrémités de la perche 
 inférieure à 4. Si c'est le cas, on enveloppe la nouvelle perche dans un `Just`
 et on la retourne. Sinon, on retourne `Nothing` pour indiquer l'échec.
 
-Mettons ces nouvelles-nées à l'épreuve&nbsp;
+Mettons ces nouvelles-nées à l'épreuve&nbsp;:
 
 > ghci> landLeft 2 (0,0)
 > Just (2,0)
@@ -520,7 +520,7 @@ un `Maybe Pole`. `landLeft 1` prend un `Pole` et retourne un `Maybe Pole`.
 
 On a besoin d'une manière de prendre un `Maybe Pole` et de le donner à une
 fonction qui prend un `Pole` et retourne un `Maybe Pole`. Heureusement, on a
-`>>=`, qui fait exactement ça pour `Maybe`. Essayons&nbsp;
+`>>=`, qui fait exactement ça pour `Maybe`. Essayons&nbsp;:
 
 > ghci> landRight 1 (0,0) >>= landLeft 2
 > Just (2,1)
@@ -530,7 +530,7 @@ lui donner directement un `Maybe Pole` résultant de `landRight 1 (0, 0)`, alors
 on utilise `>>=` pour prendre une valeur dans un contexte et la passer à
 `landLeft 2`. `>>=` nous permet en effet de traiter la valeur `Maybe` comme une
 valeur avec un contexte, parce que si l'on donne `Nothing` à `landLeft 2`, on
-obtient bien  `Nothing` et l'échec est propagé&nbsp;
+obtient bien  `Nothing` et l'échec est propagé&nbsp;:
 
 > ghci> Nothing >>= landLeft 2
 > Nothing
@@ -539,7 +539,7 @@ Ainsi, on peut à présent chaîner des atterrissages pouvant échouer parce que
 `>>=` nous permet de donner une valeur monadique à une fonction qui attend une
 valeur normale.
 
-Voici une séquence d'atterrisages&nbsp;
+Voici une séquence d'atterrisages&nbsp;:
 
 > ghci> return (0,0) >>= landRight 2 >>= landLeft 2 >>= landRight 2
 > Just (2,4)
@@ -552,7 +552,7 @@ chaque fonction. `Just (0, 0)` alimente `landRight 2`, résultant en `Just (0,
 de suite.
 
 Souvenez vous de l'exemple précédent où l'on introduisait la notion d'échec
-dans la routine de Pierre&nbsp;
+dans la routine de Pierre&nbsp;:
 
 > ghci> (0,0) -: landLeft 1 -: landRight 4 -: landLeft (-1) -: landRight (-2)
 > (0,2)
@@ -594,14 +594,14 @@ atterrissage, le résultat possible de l'atterrissage précédent est examiné p
 voir l'équilibre de la perche. Cela détermine l'échec ou non de l'atterrissage.
 
 On peut aussi créer une fonction qui ignore le nombre d'oiseaux sur la perche
-et fait tomber Pierre. On peut l'appeler `banana`&nbsp;
+et fait tomber Pierre. On peut l'appeler `banana`&nbsp;:
 
 > banana :: Pole -> Maybe Pole
 > banana _ = Nothing
 
 On peut maintenant la chaîner à nos atterrissages d'oiseaux. Elle causera
 toujours la chute de notre funambule, parce qu'elle ignore ce qu'on lui passe
-et retourne un échec. Regardez&nbsp;
+et retourne un échec. Regardez&nbsp;:
 
 > ghci> return (0,0) >>= landLeft 1 >>= banana >>= landRight 1
 > Nothing
@@ -611,7 +611,7 @@ qui force le tout à résulter en `Nothing`. Comme c'est triste !
 
 Plutôt que de créer des fonctions qui ignorent leur entrée et retournent une
 valeur monadique prédéterminée, on peut utiliser la fonction `>>`, dont
-l'implémentation par défaut est&nbsp;
+l'implémentation par défaut est&nbsp;:
 
 > (>>) :: (Monad m) => m a -> m b -> m b
 > m >> n = m >>= \_ -> n
@@ -620,7 +620,7 @@ Normalement, passer une valeur à une fonction qui ignore son paramètre et
 retourne tout le temps une valeur prédéterminée résulterait toujours en cette
 valeur prédéterminée. Avec les monades cependant, leur contexte et
 signification doit être également considéré. Voici comment `>>` agit sur
-`Maybe`&nbsp;
+`Maybe`&nbsp;:
 
 > ghci> Nothing >> Just 3
 > Nothing
@@ -633,7 +633,7 @@ Si vous remplacez `>>` par `>>= \_ ->`, il est facile de voir pourquoi cela
 arrive.
 
 On peut remplacer notre fonction `banana` dans la chaîne par un `>>` suivi d'un
-`Nothing`&nbsp;
+`Nothing`&nbsp;:
 
 > ghci> return (0,0) >>= landLeft 1 >> Nothing >>= landRight 1
 > Nothing
@@ -643,7 +643,7 @@ Et voilà, échec évident garanti !
 Il est aussi intéressant de regarder ce qu'on aurait dû écrire si l'on avait
 pas fait le choix astucieux de traiter les valeurs `Maybe` comme des valeurs
 dans un contexte pour les donner à nos fonctions. Voici à quoi une série
-d'atterrissages aurait ressemblé&nbsp;
+d'atterrissages aurait ressemblé&nbsp;:
 
 > routine :: Maybe Pole
 > routine = case landLeft 1 (0,0) of
@@ -688,11 +688,11 @@ spéciale appelée notation *do*. On a déjà rencontré la notation *do* quand 
 faisait des entrées-sorties, et on a alors dit qu'elle servait à coller
 plusieurs actions I/O en une seule. Eh bien, il s'avère que la notation *do*
 n'est pas seulement pour `IO`, mais peut être utilisée pour n'importe quelle
-monade. Le principe est identique&nbsp; coller ensemble plusieurs valeurs
+monade. Le principe est identique&nbsp;: coller ensemble plusieurs valeurs
 monadiques en séquence. Nous allons regarder comment la notation *do*
 fonctionne et en quoi elle est utile.
 
-Considérez l'exemple familier de l'application monadique&nbsp;
+Considérez l'exemple familier de l'application monadique&nbsp;:
 
 > ghci> Just 3 >>= (\x -> Just (show x ++ "!"))
 > Just "3!"
@@ -701,7 +701,7 @@ Déjà vu. Donner une valeur monadique à une fonction qui en retourne une autre
 rien de grandiose. Remarquez comme en faisant ainsi, `x` devient `3` à
 l'intérieur de la lambda. Une fois dans la lambda, c'est juste une valeur
 normale plutôt qu'une valeur monadique. Et si l'on avait encore un `>>=` dans
-cette fonction ? Regardez&nbsp;
+cette fonction ? Regardez&nbsp;:
 
 > ghci> Just 3 >>= (\x -> Just "!" >>= (\y -> Just (show x ++ y)))
 > Just "3!"
@@ -710,14 +710,14 @@ Ah, une utilisation imbriquée de `>>=` ! Dans la lambda la plus à l'extérieur
 on donne `Just "!"` à la lambda `\y -> Just (show x ++ y)`. Dans cette lambda
 là, le `y` devient `"!"`, et le `x` est toujours `3` parce qu'on l'obtient de
 la lambda la plus englobante. Cela me rappelle un peu l'expression
-suivante&nbsp;
+suivante&nbsp;:
 
 > ghci> let x = 3; y = "!" in show x ++ y
 > "3!"
 
 La différence principale entre les deux, c'est que les valeurs dans la première
 sont monadiques. Ce sont des valeurs dans le contexte de l'échec. On peut
-remplacer n'importe laquelle d'entre elle par un échec&nbsp;
+remplacer n'importe laquelle d'entre elle par un échec&nbsp;:
 
 > ghci> Nothing >>= (\x -> Just "!" >>= (\y -> Just (show x ++ y)))
 > Nothing
@@ -734,7 +734,7 @@ C'est donc un peu comme assigner des valeurs à des variables dans des
 expressions *let*, seulement les valeurs sont monadiques.
 
 Pour mieux illustrer ce point, écrivons un script dans lequel chaque `Maybe`
-prend une ligne&nbsp;
+prend une ligne&nbsp;:
 
 > foo :: Maybe String
 > foo = Just 3   >>= (\x ->
@@ -743,7 +743,7 @@ prend une ligne&nbsp;
 
 Pour nous éviter d'écrire ces énervantes lambdas successives, Haskell nous
 offre la notation *do*. Elle nous permet de réécrire le bout de code précédent
-ainsi&nbsp;
+ainsi&nbsp;:
 
 > foo :: Maybe String
 > foo = do
@@ -772,14 +772,14 @@ d'applications avec `>>=`. Plutôt, le résultat de cette dernière expression e
 le résultat de la valeur monadique entière, prenant en compte l'échec possible
 des précédentes.
 
-Par exemple, examinez la ligne suivante&nbsp;
+Par exemple, examinez la ligne suivante&nbsp;:
 
 > ghci> Just 9 >>= (\x -> Just (x > 8))
 > Just True
 
 Puisque le paramètre de gauche de `>>=` est une valeur `Just`, la lambda est
 appliquée à `9` et le résultat est `Just True`. Si l'on réécrit cela en
-notation *do*, on obtient&nbsp;
+notation *do*, on obtient&nbsp;:
 
 > marySue :: Maybe Bool
 > marySue = do
@@ -805,7 +805,7 @@ chacune ajoutait un contexte d'échec éventuel. Voici deux oiseaux atterrissant
 >     second <- landRight 2 first
 >     landLeft 1 second
 
-Voyons si cela réussit&nbsp;
+Voyons si cela réussit&nbsp;:
 
 > ghci> routine
 > Just (3,2)
@@ -826,7 +826,7 @@ résultat des précédentes, ainsi que de leur contexte (dans ce cas, savoir si
 elles ont réussi ou échoué).
 
 Encore une fois, regardons à quoi ressemblerait le code si nous n'avions pas
-utiliser les aspects monadiques de `Maybe`&nbsp;
+utiliser les aspects monadiques de `Maybe`&nbsp;:
 
 > routine :: Maybe Pole
 > routine =
@@ -842,7 +842,7 @@ Voyez comme dans le cas d'un succès, le tuple à l'intérieur de `Just (0, 0)`
 devient `start`, le résultat de `landLeft 2 start` devient `first`, etc.
 
 Si l'on veut lancer à Pierre une peau de banane avec la notation *do*, on peut
-le faire ainsi&nbsp;
+le faire ainsi&nbsp;:
 
 > routine :: Maybe Pole
 > routine = do
@@ -869,7 +869,7 @@ la notation *do*.
 Avec la notation *do*, lorsqu'on lie des valeurs monadiques à des noms, on peut
 utiliser du filtrage par motif, tout comme dans les expressions `let` et les
 paramètres de fonctions. Voici un exemple de filtrage par motif dans une
-expression `do`&nbsp;
+expression `do`&nbsp;:
 
 > justH :: Maybe Char
 > justH = do
@@ -889,21 +889,21 @@ mécanisme de motif suivant. Quand un filtrage par motif échoue dans une
 expression `do`, la fonction `fail` est appelée. Elle fait partie de la classe
 de types `Monad` et permet à un filtrage par motif échoué de résulter en un
 échec dans le contexte de cette monade, plutôt que de planter notre programme.
-Son implémentation par défaut est&nbsp;
+Son implémentation par défaut est&nbsp;:
 
 > fail :: (Monad m) => String -> m a
 > fail msg = error msg
 
 Donc, par défaut, elle plante notre programme, mais les monades qui contiennent
 un contexte d'échec éventuel (comme `Maybe`) implementent généralement leur
-propre version. Pour `Maybe`, elle est implémentée ainsi&nbsp;
+propre version. Pour `Maybe`, elle est implémentée ainsi&nbsp;:
 
 > fail _ = Nothing
 
 Elle ignore le message et crée un `Nothing`. Ainsi, quand le filtrage par motif
 échoue pour une valeur `Maybe` dans une notation *do*, la valeur de la monade
 entière est `Nothing`. C'est préférable à un plantage du programme. Voici une
-expression `do` avec un motif voué à l'échec&nbsp;
+expression `do` avec un motif voué à l'échec&nbsp;:
 
 > wopwop :: Maybe Char
 > wopwop = do
@@ -911,7 +911,7 @@ expression `do` avec un motif voué à l'échec&nbsp;
 >     return x
 
 Le filtrage par motif échoue, donc l'effet est le même que si la ligne entière
-comprenant le motif était remplacée par `Nothing`. Essayons&nbsp;
+comprenant le motif était remplacée par `Nothing`. Essayons&nbsp;:
 
 > ghci> wopwop
 > Nothing
@@ -937,7 +937,7 @@ valeur comme `5` est déterministe. Elle n'a qu'un résultat, et on sait
 exactement lequel c'est. D'un autre côté, une valeur comme `[3, 8, 9]` contient
 plusieurs résultats, on peut donc la voir comme une valeur qui est en fait
 plusieurs valeurs à la fois. Utiliser les listes comme des foncteurs
-applicatifs démontre ce non déterminisme élégamment&nbsp;
+applicatifs démontre ce non déterminisme élégamment&nbsp;:
 
 > ghci> (*) <$> [1,2,3] <*> [10,100,1000]
 > [10,100,1000,20,200,2000,30,300,3000]
@@ -949,7 +949,7 @@ possibles, donc on les essaie tous, et le résultat est également une valeur no
 déterministe, avec encore plus de résultats.
 
 Ce contexte de non déterminisme se transfère très joliment aux monades.
-Regardons immédiatement l'instance de `Monad` pour les listes&nbsp;
+Regardons immédiatement l'instance de `Monad` pour les listes&nbsp;:
 
 > instance Monad [] where
 >     return x = [x]
@@ -982,14 +982,14 @@ la donne à une fonction qui retourne également une valeur non déterministe. L
 résultat est également non déterministe, et contient tous les résultats
 possibles consistant à prendre un élément de la liste `[3, 4, 5]` et de le
 passer à la fonction `\x -> [x, -x]`. Cette fonction prend un nombre et produit
-deux résultats&nbsp; le nombre inchangé et son opposé. Ainsi, quand on utilise
+deux résultats&nbsp;: le nombre inchangé et son opposé. Ainsi, quand on utilise
 `>>=` pour donner cette liste à la fonction, chaque nombre est gardé inchangé
 et opposé. Le `x` de la lambda prend chaque valeur de la liste qu'on donne à la
 fonction.
 
 Pour voir comment cela a lieu, on peut simplement suivre l'implémentation.
 D'abord, on comment avec la liste `[3, 4, 5]`. Puis, on mappe la lambda sur la
-liste, et le résultat est&nbsp;
+liste, et le résultat est&nbsp;:
 
 > [[3,-3],[4,-4],[5,-5]]
 
@@ -1000,7 +1000,7 @@ non déterministe à une valeur non déterministe !
 Le non déterminisme supporte également l'échec. La liste vide `[]` est presque
 l'équivalent de `Nothing`, parce qu'elle signifie l'absence de résultat. C'est
 pourquoi l'échec est défini comme la liste vide. Le message d'erreur est jeté.
-Jouons avec des listes qui échouent&nbsp;
+Jouons avec des listes qui échouent&nbsp;:
 
 > ghci> [] >>= \x -> ["bad","mad","rad"]
 > []
@@ -1015,7 +1015,7 @@ ignoré et la fonction retourne une liste vide. Parce que la fonction échoue
 quelle que soit son entrée, le résultat est un échec.
 
 Tout comme les valeurs `Maybe`, on peut chaîner plusieurs listes avec `>>=`,
-propageant le non déterminisme&nbsp;
+propageant le non déterminisme&nbsp;:
 
 > ghci> [1,2] >>= \n -> ['a','b'] >>= \ch -> return (n,ch)
 > [(1,'a'),(1,'b'),(2,'a'),(2,'b')]
@@ -1027,8 +1027,8 @@ La liste `[1, 2]` est liée à `n` et `['a', 'b']` est liée à `ch`. Puis, on f
 et la placer dans un contexte minimal. Dans ce cas, c'est la liste la plus
 petite contenant la valeur `(n, ch)` et étant le moins non déterministe
 possible. Son effet sur le contexte est donc minimal. Ce qu'on dit ici,
-c'est&nbsp; pour chaque élément dans `[1, 2]`, et pour chaque élément de `['a',
-'b']`, produit un tuple d'un élément de chaque liste.
+c'est&nbsp;: pour chaque élément dans `[1, 2]`, et pour chaque élément de
+`['a', 'b']`, produit un tuple d'un élément de chaque liste.
 
 En généal, parce que `return` prend une valeur et l'enveloppe dans un contexte
 minimal, elle n'a pas d'effet additionnel (comme l'échec pour `Maybe`, ou
@@ -1043,7 +1043,7 @@ représente une branche.
 
 </div>
 
-Voici l'exemple précédent réécrit avec la notation *do*&nbsp;
+Voici l'exemple précédent réécrit avec la notation *do*&nbsp;:
 
 > listOfTuples :: [(Int,Char)]
 > listOfTuples = do
@@ -1058,7 +1058,7 @@ normales, et `>>=` s'occupe du contexte pour nous. Le contexte dans ce cas est
 le non déterminisme.
 
 Utiliser les listes avec la notation *do* me rappelle quelque chose qu'on a
-déjà vu. Regardez le code suivant&nbsp;
+déjà vu. Regardez le code suivant&nbsp;:
 
 > ghci> [ (n,ch) | n <- [1,2], ch <- ['a','b'] ]
 > [(1,'a'),(1,'b'),(2,'a'),(2,'b')]
@@ -1079,7 +1079,7 @@ pour faire les calculs non déterministes.
 
 Les listes en compréhension nous permettent de filtrer la sortie. Par exemple,
 on peut filtrer une liste de nombres pour chercher seulement ceux qui
-contiennent le chiffre `7`&nbsp;
+contiennent le chiffre `7`&nbsp;:
 
 > ghci> [ x | x <- [1..50], '7' `elem` show x ]
 > [7,17,27,37,47]
@@ -1089,7 +1089,7 @@ et on vérifie si le caractère `7` fait partie de cette chaîne. Plutôt malin.
 Pour voir comment le filtrage dans les listes en compréhension se traduit dans
 la monade des listes, il nous faut regarder la fonction `guard` et la classe de
 types `MonadPlus`. La classe de type `MonadPlus` est pour les monades qui
-peuvent aussi se comporter en monoïdes. Voici sa définition&nbsp;
+peuvent aussi se comporter en monoïdes. Voici sa définition&nbsp;:
 
 > class Monad m => MonadPlus m where
 >     mzero :: m a
@@ -1097,7 +1097,7 @@ peuvent aussi se comporter en monoïdes. Voici sa définition&nbsp;
 
 `mzero` est synonyme de `mempty` de la classe de types `Monoid`, et `mplus`
 correspond à `mappend`. Parce que les listes sont des monoïdes ainsi que des
-monades, elles peuvent être instance de cette classe de types&nbsp;
+monades, elles peuvent être instance de cette classe de types&nbsp;:
 
 > instance MonadPlus [] where
 >     mzero = []
@@ -1105,7 +1105,7 @@ monades, elles peuvent être instance de cette classe de types&nbsp;
 
 Pour les listes, `mzero` représente un calcul non déterministe qui n'a pas de
 résultats - un calcul échoué. `mplus` joint deux valeurs non déterministes en
-une. La fonction `guard` est définie ainsi&nbsp;
+une. La fonction `guard` est définie ainsi&nbsp;:
 
 > guard :: (MonadPlus m) => Bool -> m ()
 > guard True = return ()
@@ -1113,7 +1113,7 @@ une. La fonction `guard` est définie ainsi&nbsp;
 
 Elle prend une valeur booléenne et si c'est `True`, elle prend un `()` et le
 place dans un contexte minimal par défaut qui réussisse toujours. Sinon, elle
-crée une valeur monadique échouée. La voici en action&nbsp;
+crée une valeur monadique échouée. La voici en action&nbsp;:
 
 > ghci> guard (5 > 2) :: Maybe ()
 > Just ()
@@ -1125,14 +1125,14 @@ crée une valeur monadique échouée. La voici en action&nbsp;
 > []
 
 Ça a l'air intéressant, mais comment est-ce utile ? Dans la monade des listes,
-on l'utilise pour filtrer des calculs non déterministes. Observez&nbsp;
+on l'utilise pour filtrer des calculs non déterministes. Observez&nbsp;:
 
 > ghci> [1..50] >>= (\x -> guard ('7' `elem` show x) >> return x)
 > [7,17,27,37,47]
 
 Le résultat ici est le même que le résultat de la liste en compréhension
 précédente. Comment `guard` fait-elle cela ? Regardons d'abord comment elle
-fonctionne en conjonction avec `>>`&nbsp;
+fonctionne en conjonction avec `>>`&nbsp;:
 
 > ghci> guard (5 > 2) >> return "cool" :: [String]
 > ["cool"]
@@ -1143,11 +1143,11 @@ Si `guard` réussit, le résultat qu'elle contient est un tuple vide. On utilise
 alors `>>` pour ignorer ce typle vide et présenter quelque chose d'autre en
 retour. Cependant, si `guard` échoue, alors le `return` échouera aussi, parce
 que donner une liste vide à une fonction via `>>=` résulte toujours en une
-liste vide. `guard` dit simplement&nbsp; si ce booléen est `False`, alors
+liste vide. `guard` dit simplement&nbsp;: si ce booléen est `False`, alors
 produit un échec immédiatement, sinon crée une valeur réussie factice avec
 `()`. Tout ce que cela permet est d'autoriser le calcul à continuer.
 
-Voici l'exemple précédent réécrit en notation *do*&nbsp;
+Voici l'exemple précédent réécrit en notation *do*&nbsp;:
 
 > sevensOnly :: [Int]
 > sevensOnly = do
@@ -1157,7 +1157,7 @@ Voici l'exemple précédent réécrit en notation *do*&nbsp;
 
 Si nous avions oublié de présenter `x` en résultat final avec `return`, la
 liste résultat serait seulement une liste de tuples vides. Voici la même chose
-sous forme de liste en compréhension&nbsp;
+sous forme de liste en compréhension&nbsp;:
 
 > ghci> [ x | x <- [1..50], '7' `elem` show x ]
 > [7,17,27,37,47]
@@ -1174,7 +1174,7 @@ colonne, et le second la ligne.
 <img src="img/chess.png" alt="hu je suis un cheval" class="center"/>
 
 Créons un synonyme de type pour la position actuelle du cavalier sur
-l'échiquier&nbsp;
+l'échiquier&nbsp;:
 
 > type KnightPos = (Int,Int)
 
@@ -1184,7 +1184,7 @@ le meilleur mouvement à faire ensuite ? Je sais, pourquoi pas tous les
 mouvements possibles ! On a à notre disposition le non déterminisme, donc
 plutôt que d'avoir à choisir un mouvement, choisissons-les tous à la fois.
 Voici une fonction qui prend la position d'un cavalier et retourne toutes ses
-prochaines positions&nbsp;
+prochaines positions&nbsp;:
 
 > moveKnight :: KnightPos -> [KnightPos]
 > moveKnight (c,r) = do
@@ -1203,7 +1203,7 @@ l'échiquier. Si ce n'est pas le cas, elle produit une liste vide qui cause un
 
 Cette fonction peut être réécrite sans utiliser les listes comme des monades,
 mais on l'a fait quand même pour l'entraînement. Voici la même fonction avec
-`filter`&nbsp;
+`filter`&nbsp;:
 
 > moveKnight :: KnightPos -> [KnightPos]
 > moveKnight (c,r) = filter onBoard
@@ -1213,7 +1213,7 @@ mais on l'a fait quand même pour l'entraînement. Voici la même fonction avec
 >     where onBoard (c,r) = c `elem` [1..8] && r `elem` [1..8]
 
 Les deux font la même chose, choisissez celle que vous trouvez plus jolie.
-Essayons&nbsp;
+Essayons&nbsp;:
 
 > ghci> moveKnight (6,2)
 > [(8,1),(8,3),(4,1),(4,3),(7,4),(5,4)]
@@ -1224,7 +1224,7 @@ Essayons&nbsp;
 mouvements possibles à la fois, pour ainsi dire. À présent qu'on a une position
 non déterministe, on peut utiliser `>>=` pour la donner à `moveKnight`. Voici
 une fonction qui prend une position et retourne toutes les positions qu'on peut
-atteindre dans trois mouvements&nbsp;
+atteindre dans trois mouvements&nbsp;:
 
 > in3 :: KnightPos -> [KnightPos]
 > in3 start = do
@@ -1235,7 +1235,7 @@ atteindre dans trois mouvements&nbsp;
 Si vous lui passez `(6, 2)`, la liste résultante est assez grande, parce que
 s'il y a beaucoup de façons d'atteindre une position en trois mouvements, alors
 le résultat est dans la liste de multiples fois. La même chose sans notation
-*do*&nbsp;
+*do*&nbsp;:
 
 > in3 start = return start >>= moveKnight >>= moveKnight >>= moveKnight
 
@@ -1249,14 +1249,14 @@ la passer à une fonction avec `>>=` est équivalent à appliquer la fonction
 normalement à la valeur, mais on le fait quand même pour le style.
 
 À présent, écrivons une fonction qui prend deux positions et nous dit si on
-peut aller de l'une à l'autre en exactement trois étapes&nbsp;
+peut aller de l'une à l'autre en exactement trois étapes&nbsp;:
 
 > canReachIn3 :: KnightPos -> KnightPos -> Bool
 > canReachIn3 start end = end `elem` in3 start
 
 On génère toutes les solutions possibles pour trois étapes, et on regarde si la
 position qu'on cherche est parmi celles-ci. Voyons donc si on peut aller de
-`(6, 2)` en `(6, 1]` en trois mouvements&nbsp;
+`(6, 2)` en `(6, 1]` en trois mouvements&nbsp;:
 
 > ghci> (6,2) `canReachIn3` (6,1)
 > True
@@ -1300,8 +1300,8 @@ tiennent. Mais ne vous inquiétez pas, elles ne sont pas compliquées.
 
 La première loi dit que si l'on prend une valeur, qu'on la place dans un
 contexte par défaut via `return` et qu'on la donne à une fonction avec `>>=`,
-c'est la même chose que de donner directement la valeur à la fonction. Plus
-formellement&nbsp;
+c'est la même chose que de donner directement la valeur à la fonction.  Plus
+formellement&nbsp;:
 
 * <span class="law">return x >>= f</span> est égal à <span class="law">f
 x</span>
@@ -1316,7 +1316,7 @@ c'est en effet le cas.
 Pour la monade `Maybe`, `return` est définie comme `Just`. La monade `Maybe` se
 préoccupe des échecs possibles, et si l'on a une valeur qu'on met dans un tel
 contexte, c'est logique de la traiter comme un calcul réussi, puisque l'on
-connaît sa valeur. Voici `return` utilisé avec `Maybe`&nbsp;
+connaît sa valeur. Voici `return` utilisé avec `Maybe`&nbsp;:
 
 > ghci> return 3 >>= (\x -> Just (x+100000))
 > Just 100003
@@ -1326,7 +1326,7 @@ connaît sa valeur. Voici `return` utilisé avec `Maybe`&nbsp;
 Pour la monade des listes, `return` place une valeur dans une liste singleton.
 L'implémentation de `>>=` prend chaque valeur de la liste et applique la
 fonction dessus, mais puisqu'il n'y a qu'une valeur dans une liste singleton,
-c'est la même chose que d'appliquer la fonction à la valeur&nbsp;
+c'est la même chose que d'appliquer la fonction à la valeur&nbsp;:
 
 > ghci> return "WoM" >>= (\x -> [x,x,x])
 > ["WoM","WoM","WoM"]
@@ -1341,7 +1341,7 @@ loi tienne ainsi pour `IO` également.
 
 La deuxième loi dit que si l'on a une valeur monadique et qu'on utilise `>>=`
 pour la donner à `return`, alors le résultat est la valeur monadique originale.
-Formellement&nbsp;
+Formellement&nbsp;:
 
 * <span class="law">m >>= return</span> est égal à <span class="law">m</span>
 
@@ -1352,7 +1352,7 @@ valeur monadique. `return` est une telle fonction, si vous considérez son type.
 Comme on l'a dit, `return` place une valeur dans un contexte minimal qui
 présente cette valeur en résultat. Cela signifie, par exemple, pour `Maybe`,
 qu'elle n'introduit pas d'échec, et pour les listes, qu'elle n'ajoute pas de
-non déterminisme. Voici un essaie sur quelques monades&nbsp;
+non déterminisme. Voici un essaie sur quelques monades&nbsp;:
 
 > ghci> Just "move on up" >>= (\x -> return x)
 > Just "move on up"
@@ -1362,7 +1362,7 @@ non déterminisme. Voici un essaie sur quelques monades&nbsp;
 > Wah!
 
 Si l'on regarde de plus près l'exemple des listes, l'implémentation de `>>=`
-est&nbsp;
+est&nbsp;:
 
 > xs >>= f = concat (map f xs)
 
@@ -1379,7 +1379,7 @@ que les valeurs qu'elle produit fassent des tas d'autres choses.
 
 La dernière loi des monades dit que quand on a une chaîne d'application de
 fonctions monadiques avec `>>=`, l'ordre d'imbrication ne doit pas importer.
-Formellement énoncé&nbsp;
+Formellement énoncé&nbsp;:
 
 * <span class="law">(m >>= f) >>= g</span> est egal à <span class="law">m >>=
 (\x -> f x >>= g)</span>
@@ -1395,7 +1395,7 @@ exemple qui rend cette égalité un peu plus claire.
 Vous souvenez-vous de notre funambule Pierre qui marchait sur une corde tendue
 pendant que des oiseaux atterrissaient sur sa perche ? Pour simuler les oiseaux
 atterrissant sur sa parche, on avait chaîné plusieurs fonctions qui pouvaient
-mener à l'échec&nbsp;
+mener à l'échec&nbsp;:
 
 > ghci> return (0,0) >>= landRight 2 >>= landLeft 2 >>= landRight 2
 > Just (2,4)
@@ -1403,12 +1403,12 @@ mener à l'échec&nbsp;
 On commençait avec `Just (0, 0)` et on liait cette valeur à la prochaine
 fonction monadique, `landRight 2`. Le résultat était une nouvelle valeur
 monadique qui était liée dans la prochaine fonction monadique, et ainsi de
-suite. Si nous parenthésions explicitement ceci, cela serait&nbsp;
+suite. Si nous parenthésions explicitement ceci, cela serait&nbsp;:
 
 > ghci> ((return (0,0) >>= landRight 2) >>= landLeft 2) >>= landRight 2
 > Just (2,4)
 
-Mais on peut aussi écrire la routine ainsi&nbsp;
+Mais on peut aussi écrire la routine ainsi&nbsp;:
 
 > return (0,0) >>= (\x ->
 > landRight 2 x >>= (\y ->
@@ -1424,8 +1424,8 @@ qui est effectivement le résultat de l'expression entière.
 
 Ainsi, il n'importe pas de savoir comment vous imbriquez les appels de
 fonctions monadiques, ce qui importe c'est leur sens. Voici une autre façon de
-regarder cette loi&nbsp; considérez la composition de deux fonctions, `f` et
-`g`.  Composer deux fonctions de fait ainsi&nbsp;
+regarder cette loi&nbsp;: considérez la composition de deux fonctions, `f` et
+`g`.  Composer deux fonctions de fait ainsi&nbsp;:
 
 > (.) :: (b -> c) -> (a -> b) -> (a -> c)
 > f . g = (\x -> f (g x))
@@ -1437,12 +1437,12 @@ le paramètre soit passé entre les deux fonctions. Et si ces deux fonctions
 fonction de type `a -> m b`, on ne pourrait pas simplement passer son résultat
 à une fonction de type `b -> m c`, parce que la fonction attend un `b` normal,
 pas un monadique. On pourrait cependant utiliser `>>=` pour réaliser cela.
-Ainsi, en utilisant `>>=`, on peut composer deux fonctions monadiques&nbsp;
+Ainsi, en utilisant `>>=`, on peut composer deux fonctions monadiques&nbsp;:
 
 > (<=<) :: (Monad m) => (b -> m c) -> (a -> m b) -> (a -> m c)
 > f <=< g = (\x -> g x >>= f)
 
-On peut à présent composer deux fonctions monadiques&nbsp;
+On peut à présent composer deux fonctions monadiques&nbsp;:
 
 > ghci> let f x = [x,-x]
 > ghci> let g x = [x*3,x*2]
