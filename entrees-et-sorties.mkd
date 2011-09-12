@@ -74,8 +74,8 @@ on va se faire ce bon vieux `"hello, world"`.
 
 **Hey !** Pour ce chapitre, je vais supposer que vous disposez d'un
 environnement à la Unix pour apprendre Haskell. Si vous êtes sous Windows, je
-suggère d'utiliser [Cygwin](http://www.cygwin.com/), qui est un environnement à
-la Linux pour Windows, autrement dit, juste ce qu'il vous faut.
+suggère d'utiliser [Cygwin](http://www.cygwin.com/), un environnement à la
+Linux pour Windows, autrement dit, juste ce qu'il vous faut.
 
 </div>
 
