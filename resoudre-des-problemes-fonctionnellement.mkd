@@ -46,9 +46,9 @@ n'y a pas besoin de parenthèses, et parce que c'est très simple à taper dans
 une calculatrice. Bien que la plupart des calculatrices modernes utilisent la
 notation infixe, certaines personnes ne jurent toujours que par leur
 calculatrice NPI. Voici ce à quoi l'expression infixe précédente ressemble en
-NPI&nbsp; `10 4 3 + 2 * -`. Comment calcule-t-on le résultat de cela ? Eh bien,
-imaginez une pile. Vous parcourez l'expression de gauche à droite. Chaque fois
-qu'un nombre est rencontré, vous l'empilez. Dès que vous rencontrez un
+NPI&nbsp;: `10 4 3 + 2 * -`. Comment calcule-t-on le résultat de cela ? Eh
+bien, imaginez une pile. Vous parcourez l'expression de gauche à droite. Chaque
+fois qu'un nombre est rencontré, vous l'empilez. Dès que vous rencontrez un
 opérateur, vous retirez les deux nombres en sommet de pile (on dit aussi qu'on
 les *dépile*), utilisez l'opérateur sur ces deux nombres, et empilez le
 résultat. Si l'expression est bien formée, en arrivant à la fin vous ne devriez
@@ -77,12 +77,13 @@ paramètre une chaîne de caractères contenant une expression NPI, comme `"10 4
 Quel serait le type d'une telle fonction ? On veut qu'elle prenne une chaîne de
 caractères en paramètre, et produise un nombre en résultat. Ce sera donc
 probablement quelque chose comme `solveRPN :: (Num a) => String a -> a`
-(NDT&nbsp; "RPN" pour "Reverse Polish Notation").
+(NDT&nbsp;: "RPN" pour "Reverse Polish Notation").
 
-<div class="hintbox">**Astuce&nbsp;** cela aide beaucoup de réfléchir d'abord à
-la déclaration de type d'une fonction avant de s'inquiéter de l'implémentation,
-et d'écrire cette déclaration. En Haskell, une déclaration de type nous en dit
-beaucoup sur une fonction, grâce au système de types puissant.</div>
+<div class="hintbox">**Astuce&nbsp;:** cela aide beaucoup de réfléchir d'abord
+à la déclaration de type d'une fonction avant de s'inquiéter de
+l'implémentation, et d'écrire cette déclaration. En Haskell, une déclaration de
+type nous en dit beaucoup sur une fonction, grâce au système de types
+puissant.</div>
 
 <img src="img/calculator.png" alt="calculatrice" class="left"/>
 
@@ -121,7 +122,7 @@ Ensuite, on va utiliser un pli gauche sur la liste et terminer avec une pile à
 un seul élément, `[-4]`. On sort cet élément de la liste, et c'est notre
 résultat final !
 
-Voici donc l'esquisse de notre fonction&nbsp;
+Voici donc l'esquisse de notre fonction&nbsp;:
 
 > import Data.List
 >
@@ -142,7 +143,7 @@ nouvelle pile `[3, 4, 10]`. Si la pile est `[4, 10]` et que l'élément est
 `"*"`, alors elle devra retourner `[40]`. Mais avant cela, transformons notre
 fonction en [style sans
 point](fonctions-d-ordre-superieur#composition-de-fonctions), parce qu'elle est
-pleine de parenthèses qui m'effraient&nbsp;
+pleine de parenthèses qui m'effraient&nbsp;:
 
 > import Data.List
 >
@@ -193,7 +194,7 @@ et `"+"` pour élément. Cela cause le dépilement des deux nombres, qui sont
 alors sommés, et leur résultat est empilé. La pile finale est `[5]`, qui est
 le nombre qu'on retourne.
 
-Jouons avec notre fonction&nbsp;
+Jouons avec notre fonction&nbsp;:
 
 > ghci> solveRPN "10 4 3 + 2 * -"
 > -4
@@ -265,14 +266,14 @@ une fois qu'on aura découvert les monades (elles ne sont pas effrayantes,
 faites-moi confiance !). On pourrait en écrire une dès maintenant, mais ce
 serait un peu fastidieux parce qu'il faudrait vérifier les valeurs `Nothing` à
 chaque étape. Toutefois, si vous vous sentez d'humeur pour le défi, vous pouvez
-vous lancer ! Indice&nbsp; vous pouvez utiliser `reads` pour voir si un `read`
+vous lancer ! Indice&nbsp;: vous pouvez utiliser `reads` pour voir si un `read`
 a réussi ou non.
 
 <h2 id="d-heathrow-a-londres">
 D'Heathrow à Londres
 </h2>
 
-Notre prochain problème est le suivant&nbsp; votre avion vient d'atterrir en
+Notre prochain problème est le suivant&nbsp;: votre avion vient d'atterrir en
 Angleterre, et vous louez une voiture. Vous avez un rendez-vous très bientôt,
 et devez aller de l'aéroport d'Heathrow jusqu'à Londres aussi vite que possible
 (mais sans vous mettre en danger !).
@@ -293,7 +294,7 @@ choisi un autre, il nous faudrait plus longtemps que ça.
 
 Notre travail consiste à créer un programme qui prend une entrée représentant
 un système routier, et affiche le chemin le plus court pour le traverser. Voici
-à quoi ressemblera l'entrée dans ce cas&nbsp;
+à quoi ressemblera l'entrée dans ce cas&nbsp;:
 
 > 50
 > 10
@@ -316,7 +317,7 @@ une dernière route transversale qui prend 0 minute à traverser. Parce qu'une
 fois arrivé à Londres, ce n'est plus important, on est arrivé.
 
 Tout comme on l'a fait en résolvant le problème de la calculatrice NPI, on va
-résoudre ce problème en trois étapes&nbsp;
+résoudre ce problème en trois étapes&nbsp;:
 
 * Oublier Haskell un instant et penser à la résolution du problème à la main
 * Penser à la représentation des données en Haskell
@@ -337,7 +338,7 @@ fonctionne pour de petites entrées, mais qu'en sera-t-il si notre route a 10
 solution est optimale, on pourra simplement se dire qu'on en est plutôt sûr.
 
 Ce n'est donc pas une bonne solution. Voici une image simplifiée de notre
-système routier&nbsp;
+système routier&nbsp;:
 
 <img src="img/roads_simple.png" alt="routes simplifiées" class="center"/>
 
@@ -367,7 +368,7 @@ minutes supplémentaires pour avancer jusqu'à B2 puis traverser ! Évidemment, 
 chemin le plus court jusqu'à A2 est `B, C, A`. De la même façon, le chemin le
 plus court jusqu'à B2 consiste à aller tout droit depuis A1 et traverser.
 
-<div class="hintbox"> **Vous vous demandez peut-être**&nbsp; mais qu'en est-il
+<div class="hintbox"> **Vous vous demandez peut-être**&nbsp;: mais qu'en est-il
 d'aller jusqu'à A2 en traversant à B1 puis en continuant tout droit ? Eh bien,
 on a déjà couvert la traversée de B1 à A1 quand on cherchait le meilleur moyen
 d'aller à A1, donc on n'a plus besoin de prendre cela en compte à l'étape
@@ -385,18 +386,18 @@ chemins précédents à la première étape, en considérant que ces chemins vid
 avaient un coût de 0.
 
 Voilà un résumé. Pour trouver le meilleur chemin d'Heathrow à Londres, on
-procède ainsi&nbsp; d'abord, on cherche le meilleur chemin jusqu'à la prochaine
-intersection de la route A. Il n'y a que deux options&nbsp; aller directement
-tout droit, ou commencer de la route opposée, avancer puis traverser. On se
-souvient du meiller chemin et du coût. On utilise la même méthode pour trouver
-le meilleur chemin jusqu'à la prochaine intersection de la route B. Ensuite, on
-se demande si le chemin pour aller à la prochaine intersection de la route A
-est plus court en partant de l'intersection précédente de A et en allant tout
-droit, ou en partant de l'intersection précédente de B, en avançant et
-traversant. On se souvient du chemin le plus court, de son coût, et on fait
-pareil pour l'intersection opposée. On continue pour chaque section jusqu'à
-atteindre l'arrivée, et le plus court des deux chemins jusqu'aux deux
-intersections de l'arrivée est notre chemin optimal !
+procède ainsi&nbsp;: d'abord, on cherche le meilleur chemin jusqu'à la
+prochaine intersection de la route A. Il n'y a que deux options&nbsp;: aller
+directement tout droit, ou commencer de la route opposée, avancer puis
+traverser. On se souvient du meiller chemin et du coût. On utilise la même
+méthode pour trouver le meilleur chemin jusqu'à la prochaine intersection de la
+route B. Ensuite, on se demande si le chemin pour aller à la prochaine
+intersection de la route A est plus court en partant de l'intersection
+précédente de A et en allant tout droit, ou en partant de l'intersection
+précédente de B, en avançant et traversant. On se souvient du chemin le plus
+court, de son coût, et on fait pareil pour l'intersection opposée. On continue
+pour chaque section jusqu'à atteindre l'arrivée, et le plus court des deux
+chemins jusqu'aux deux intersections de l'arrivée est notre chemin optimal !
 
 Pour faire simple, on garde un chemin le plus court sur A et un chemin le plus
 court sur B, jusqu'à atteindre l'arrivée, où le plus court des deux est le
@@ -434,13 +435,13 @@ C'est une manière correcte de représenter le système routier en Haskell et on
 pourrait certainement résoudre le problème avec, mais on pourrait peut-être
 trouver quelque chose de plus simple ? Si on revient sur notre solution à la
 main, on n'a jamais vérifié que les longueurs de trois parties de routes à la
-fois&nbsp; la partie de la route A, sa partie opposée sur la route B, et la
+fois&nbsp;: la partie de la route A, sa partie opposée sur la route B, et la
 partie C qui relie l'arrivée des deux parties précédentes. Quand on cherchait
 le plus court chemin vers A1 et B1, on ne se souciait que des longueurs des
 trois premières parties, qui avaient pour longueur 50, 10 et 30. On appellera
 cela une section. Ainsi, le système routier qu'on utilise pour l'exemple peut
-facilement être représenté par quatre sections&nbsp; `50, 10, 30`, `5, 90, 20`,
-`40, 2, 25`, and `10, 8, 0`.
+facilement être représenté par quatre sections&nbsp;: `50, 10, 30`, `5, 90,
+20`, `40, 2, 25`, and `10, 8, 0`.
 
 Il est toujours bon de garder nos types de données aussi simples que possible,
 mais pas trop simples non plus !
@@ -466,7 +467,7 @@ de données `Section` et `Vector`, on ne peut pas accidentellement sommer un
 vecteur et une section de système routier.
 </div>
 
-Notre système routier d'Heathrow à Londres peut être représenté ainsi&nbsp;
+Notre système routier d'Heathrow à Londres peut être représenté ainsi&nbsp;:
 
 > heathrowToLondon :: RoadSystem
 > heathrowToLondon = [Section 50 10 30, Section 5 90 20, Section 40 2 25, Section 10 8 0]
@@ -477,14 +478,15 @@ fonction qui calcule le plus court chemin pour n'importe quel système routier ?
 Elle devrait prendre un système routier en paramètre, et retourner un chemin.
 On représentera un chemin sous forme de liste. Introduisons un type `Label`,
 qui sera juste une énumération `A`, `B` ou `C`. On fera également un synonyme
-de type&nbsp; `Path`.
+de type&nbsp;: `Path`.
 
 > data Label = A | B | C deriving (Show)
 > type Path = [(Label, Int)]
 
 Notre fonction, appelons-la `optimalPath`, devrait donc avoir pour déclaration
 de type `optimalPath :: RoadSystem -> Path`. Si elle est appelée avec le
-système routier `heathrowToLondon`, elle doit retourner le chemin suivant&nbsp;
+système routier `heathrowToLondon`, elle doit retourner le chemin
+suivant&nbsp;:
 
 > [(B,10),(C,30),(A,5),(C,20),(B,2),(B,8)]
 
@@ -506,7 +508,7 @@ Path)`. Implémentons directement cette fonction, elle sera forcément utile.
 
 <div class="hintbox">
 
-**Indice&nbsp;** elle sera utile parce que `(Path, Path) -> Section -> (Path,
+**Indice&nbsp;:** elle sera utile parce que `(Path, Path) -> Section -> (Path,
 Path)` peut être utilisée comme la fonction binaire du pli gauche, qui doit
 avoir pour type `a -> b -> a`.
 
@@ -577,7 +579,7 @@ consiste à avancer directement sur B.
 
 <div id="hintbox">
 
-**Astuce d'optimisation&nbsp;** quand on fait `priceA = sum $ map snd pathA`,
+**Astuce d'optimisation&nbsp;:** quand on fait `priceA = sum $ map snd pathA`,
 on calcule le prix à partir du chemin à chaque étape de l'algorithme. On
 pourrait éviter cela en implémentant `roadStep` comme une fonction ayant pour
 type `(Path, Path, Int, Int) -> Section -> (Path, Path, Int, Int)`, où les
@@ -662,7 +664,7 @@ notre système routier et a un type correct, c'est-à-dire `RoadSystem` (ou
 `[Section]`). On appelle `optimalPath` avec ça et on obtient le chemin optimal
 et son coût dans une représentation textuelle agréable qu'on affiche.
 
-Enregistrons le texte suivant&nbsp;
+Enregistrons le texte suivant&nbsp;:
 
 > 50
 > 10

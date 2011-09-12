@@ -207,7 +207,7 @@ miettes de pain sont `[L, R]` parce qu'on est d'abord allé à droite, puis à
 gauche.
 
 Pour rendre plus clair le déplacement dans notre arbre, on peut réutiliser la
-fonction `-:` qu'on avait définie ainsi&nbsp;::
+fonction `-:` qu'on avait définie ainsi&nbsp;:
 
 > x -: f = f x
 
