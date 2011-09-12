@@ -22,7 +22,7 @@
 Faites confiance aux types
 </h2>
 
-<img src="img/cow.png" alt="vache" class="left"/>
+<img src="img/cow.png" alt="meuh" class="left"/>
 
 Nous avons mentionné auparavant qu'Haskell avait un système de types statique.
 Le type de chaque expression est connu à la compilation, ce qui mène à un code

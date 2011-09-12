@@ -262,7 +262,7 @@ supérieurs à 100 sont déjà bien assez gros comme ça !
 >                         then x
 >                         else x*2
 
-<img src="img/baby.png" alt="bébé" class="left"/>
+<img src="img/baby.png" alt="c'est vous" class="left"/>
 
 Ici, nous avons introduit la construction if de Haskell. Vous êtes probablement
 habitué aux constructions if des autres langages. La différence entre le if de
@@ -306,7 +306,7 @@ de manière interchangeable.
 Introduction aux listes
 </h2>
 
-<img src="img/list.png" alt="liste" class="left"/>
+<img src="img/list.png" alt="ACHETER UN CHIEN" class="left"/>
 
 Tout comme les listes de courses dans le monde réel, les listes Haskell sont
 très utiles. C'est la structure de donnée la plus utilisée, et elle peut l'être
@@ -553,7 +553,7 @@ verrons d'autres [plus tard](modules#data-list).
 Texas rangées
 </h2>
 
-<img src="img/cowboy.png" alt="cowboy" class="right"/>
+<img src="img/cowboy.png" alt="cow-boy" class="right"/>
 
 Que faire si l'on veut la liste des nombres de 1 à 20 ? Bien sûr, on pourrait
 les taper un par un, mais ce n'est pas une solution pour des gentlemen qui
@@ -641,7 +641,7 @@ retourne `[10, 10, 10]`.
 Je suis une liste en compréhension
 </h2>
 
-<img src="img/kermit.png" alt="kermit" class="left"/>
+<img src="img/kermit.png" alt="grenouille" class="left"/>
 
 Si vous avez déjà suivi une classe de mathématiques, vous avez probablement
 déjà rencontré des ensembles définis en compréhension. On les utilise
@@ -773,7 +773,7 @@ elles sont imbriquées.
 Tuples
 </h2>
 
-<img src="img/tuple.png" alt="tuple" class="right"/>
+<img src="img/tuple.png" alt="tuples" class="right"/>
 
 D'une façon, les tuples sont comme des listes - ils permettent de stocker
 plusieurs valeurs dans une seule. Cependant, il y a des différences
@@ -882,7 +882,7 @@ finies avec des listes infinies&nbsp;:
 > ghci> zip [1..] ["apple", "orange", "cherry", "mango"]
 > [(1,"apple"),(2,"orange"),(3,"cherry"),(4,"mango")]
 
-<img src="img/pythag.png" alt="pythagore" class="center"/>
+<img src="img/pythag.png" alt="regardez moooi" class="center"/>
 
 Voici un problème qui combine tuples et listes en compréhensions&nbsp;: quel
 triangle rectangle a des côtés tous entiers, tous inférieurs ou égaux à 10, et

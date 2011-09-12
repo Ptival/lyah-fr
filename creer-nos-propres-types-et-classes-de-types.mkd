@@ -1029,7 +1029,7 @@ l'information en cas d'échec est dans le type de retour.
 Structures de données récursives
 </h2>
 
-<img src="img/thefonz.png" alt="fonz" class="right"/>
+<img src="img/thefonz.png" alt="le fonz" class="right"/>
 
 Comme on l'a vu, un constructeur de type de données algébrique peut avoir
 plusieurs (ou aucun) champs et chaque champ doit avoir un type concret. Avec
@@ -1147,7 +1147,7 @@ sur des choses comme des constructeurs normaux préfixes, ou bien comme `8` ou
 `'a'`, qui sont simplement des constructeurs de types numériques ou de
 caractères respectivement.
 
-<img src="img/binarytree.png" alt="arbre binaire" class="left"/>
+<img src="img/binarytree.png" alt="arbre binaire de recherche" class="left"/>
 
 À présent, implémentons un **arbre binaire de recherche**. Si vous ne
 connaissez pas les arbres binaires de recherche, voici en quoi ils consistent&nbsp;:
@@ -1277,7 +1277,7 @@ recherche, et encore plus !
 Classes de types 102
 </h2>
 
-<img src="img/trafficlight.png" alt="feu de signalisation" class="right"/>
+<img src="img/trafficlight.png" alt="tweet" class="right"/>
 
 Jusqu'ici, on a découvert des classes de types standard d'Haskell et on a vu
 quels types les habitaient. On a aussi appris à créer automatiquement des
@@ -1530,7 +1530,7 @@ déclaration de type d'une fonction. Je trouve ça plutôt cool.
 Une classe de types oui-non
 </h2>
 
-<img src="img/yesno.png" alt="oui non" class="left"/>
+<img src="img/yesno.png" alt="oui-non" class="left"/>
 
 En JavaScript et dans d'autres langages à typage faible, on peut mettre
 quasiment ce que l'on veut dans une expression *if*. Par exemple, tout ceci est
@@ -1673,7 +1673,7 @@ Jetons un coup d'œil.
 > class Functor f where
 >     fmap :: (a -> b) -> f a -> f b
 
-<img src="img/functor.png" alt="foncteur" class="right"/>
+<img src="img/functor.png" alt="JE SUIS FONCTEEUUR !!!" class="right"/>
 
 Parfait. On voit que la classe définit une fonction, `fmap`, et ne fournit pas
 d'implémentation par défaut. Le type de `fmap` est intéressant. Jusqu'ici, dans
@@ -1852,7 +1852,7 @@ plus en détail dans un des chapitres suivants.
 Sortes et un peu de type-fu
 </h2>
 
-<img src="img/typefoo.png" alt="type-fu" class="right"/>
+<img src="img/typefoo.png" alt="MAÎTRE DE TYPE-FU" class="right"/>
 
 Les constructeurs de types prennent d'autres types en paramètres pour
 finalement produire des types concrets. Ça me rappelle un peu les fonctions,

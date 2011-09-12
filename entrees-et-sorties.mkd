@@ -20,7 +20,7 @@ des problèmes fonctionnellement</a>
 </ul>
 </div>
 
-<img src="img/dognap.png" alt="enlèvement de chien" class="right"/>
+<img src="img/dognap.png" alt="pauvre chien" class="right"/>
 
 Nous avons mentionné qu'Haskell était un langage purement fonctionnel. Alors
 que dans des langages impératifs, on parvient généralement à faire quelque
@@ -62,7 +62,7 @@ le monde extérieur.
 Hello, world!
 </h2>
 
-<img src="img/helloworld.png" alt="hello world" class="left"/>
+<img src="img/helloworld.png" alt="HELLO!" class="left"/>
 
 Jusqu'ici, nous avions toujours chargé nos fonctions dans GHCi pour les tester
 et jouer avec elles. On a aussi exploré les fonctions de la bibliothèque
@@ -1046,7 +1046,7 @@ simplement défini comme&nbsp;:
 
 > data IOMode = ReadMode | WriteMode | AppendMode | ReadWriteMode
 
-<img src="img/file.png" alt="lime" class="left"/>
+<img src="img/file.png" alt="UNE LIME DANS UN GÂTEAU !!!" class="left"/>
 
 Tout comme notre type qui représente sept valeurs pour les jours de la semaine,
 ce type est une énumération qui représente ce qu'on veut faire avec le fichier
@@ -1124,7 +1124,7 @@ le fichier à la fin. Voici comment coder notre propre fonction
 >     hClose handle
 >     return result
 
-<img src="img/edd.png" alt="edd" class="right"/>
+<img src="img/edd.png" alt="tartine beurrée" class="right"/>
 
 On sait que le résultat sera une action I/O, donc on peut commencer par écrire
 un *do*. D'abord, on ouvre le fichier pour récupérer une poignée. Puis, on
@@ -1403,7 +1403,8 @@ temporaire. Essayons à présent !
 Arguments de ligne de commande
 </h2>
 
-<img src="img/arguments.png" alt="arguments" class="right"/>
+<img src="img/arguments.png" alt="ARGUMENTS DANS LA LIGNE DE COMMANDE !!!"
+class="right"/>
 
 Gérer les arguments de ligne de commande est plutôt nécessaire si vous voulez
 faire un script ou une application à lancer depuis le terminal. Heureusement,
@@ -1633,7 +1634,7 @@ Voilà le programme final en entier, dans toute sa splendeur !
 >     removeFile fileName
 >     renameFile tempName fileName
 
-<img src="img/salad.png" alt="salade" class="left"/>
+<img src="img/salad.png" alt="salade fraîchement cuisinée" class="left"/>
 
 Pour résumer notre solution&nbsp;: on a fait une liste associative de
 résolution qui associe à chaque commande une fonction qui prend des arguments
@@ -1688,7 +1689,8 @@ exceptions, qu'on va bientôt rencontrer.
 Aléatoire
 </h2>
 
-<img src="img/random.png" alt="aléatoire" class="right"/>
+<img src="img/random.png" alt="cette image est la source d'aléatoire ultime"
+class="right"/>
 
 Souvent quand on programme, on a besoin de données aléatoires. Par exemple,
 lorsque vous faites un jeu où un dé doit être lancé, ou quand vous voulez
@@ -2074,7 +2076,8 @@ offre une fonction facilement réutilisable.
 Chaînes d'octets
 </h2>
 
-<img src="img/chainchomp.png" alt="chomp enchaîné" class="right"/>
+<img src="img/chainchomp.png" alt="comme des chaînes normales, mais qui veulent
+vous croctets... quelle mauvaise blague" class="right"/>
 
 Les listes sont des structures de données cool et utiles. Jusqu'ici, on les a
 utilisées à peu près partout. Il y a une multitude de fonctions opérant sur
@@ -2271,7 +2274,7 @@ convertis en chaînes d'octets si les performances sont insatisfaisantes.
 Exceptions
 </h2>
 
-<img src="img/timber.png" alt="timber" class="left"/>
+<img src="img/timber.png" alt="timberr !!!" class="left"/>
 
 Tous les langages ont des procédures, des fonctions et des bouts de code qui
 peuvent échouer d'une certaine façon. C'est la vie. Différents langages ont
@@ -2318,7 +2321,9 @@ crise de colère lorsqu'on lui donne une liste vide.
 > ghci> head []
 > *** Exception: Prelude.head: empty list
 
-<img src="img/police.png" alt="police" class="left"/>
+<img src="img/police.png" alt="Arrête-toi là vermine criminelle ! Personne
+n'enfreint la loi en ma présence ! Paie ton amende ou tu fileras en prison."
+class="left"/>
 
 Du code pur peut lancer des exceptions, mais elles ne peuvent être attrapées
 que dans du code impur (dans un bloc *do* sous `main`). C'est parce que l'on ne
@@ -2406,7 +2411,7 @@ gestionnaire, qui décidera alors quoi faire. Le résultat final est une action
 I/O qui se comportera soit comme son premier paramètre, ou bien exécutera le
 gestionnaire en fonction de l'exception levée par la première action I/O.
 
-<img src="img/puppy.png" alt="chiot" class="right"/>
+<img src="img/puppy.png" alt="nom : sequidor" class="right"/>
 
 Si vous êtes familier avec les blocs *try-catch* de langages comme Java ou
 Python, la fonction `catch` est similaire. Le premier paramètre est la chose à

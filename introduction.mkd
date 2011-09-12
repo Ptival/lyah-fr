@@ -90,7 +90,7 @@ facilement (et même de prouver) qu'une fonction est correcte, puis de
 construire des fonctions plus complexes en collant des simples fonctions l'une
 à l'autre.
 
-<img src="img/lazy.png" alt="paresseux" class="right"/>
+<img src="img/lazy.png" alt="paresseuse" class="right"/>
 
 Haskell est **paresseux**. Cela signifie qu'à moins de lui demander
 explicitement, Haskell n'exécutera pas les fonctions et ne calculera pas les

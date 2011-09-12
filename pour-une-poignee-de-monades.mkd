@@ -31,7 +31,7 @@ Dans ce chapitre, nous allons découvrir les monads, qui sont juste des
 foncteurs applicatifs gonflés aux hormones, tout comme les foncteurs
 applicatifs étaient juste des foncteurs gonflés aux hormones.
 
-<img src="img/smugpig.png" alt="cochon satisfait" class="right"/>
+<img src="img/smugpig.png" alt="je suis plus cool que toi" class="right"/>
 
 Quand on a débuté les foncteurs, on a vu qu'il était possible de mapper des
 fonctions sur divers types de données. On a vu qu'à cet effet, la classe de
@@ -118,7 +118,7 @@ bonjour.
 Trempons-nous les pieds avec Maybe
 </h2>
 
-<img src="img/buddha.png" alt="bouddha" class="left"/>
+<img src="img/buddha.png" alt="monades, petit scarabée" class="left"/>
 
 Maintenant qu'on a une vague idée de ce que sont les monades, voyons si l'on
 peut éclaircir cette notion un tant soit peu.
@@ -279,7 +279,8 @@ ressemble la classe de types&nbsp;:
 >     fail :: String -> m a
 >     fail msg = error msg
 
-<img src="img/kid.png" alt="ceci vous représente face aux monades" class="right"/>
+<img src="img/kid.png" alt="ceci vous représente face aux monades"
+class="right"/>
 
 Commençons par la première ligne. Elle dit `class Monad m where`. Mais,
 attendez, n'avons-nous pas dit que les monades étaient des foncteurs

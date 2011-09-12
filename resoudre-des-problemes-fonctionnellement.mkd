@@ -54,7 +54,7 @@ les *dépile*), utilisez l'opérateur sur ces deux nombres, et empilez le
 résultat. Si l'expression est bien formée, en arrivant à la fin vous ne devriez
 plus avoir qu'un nombre dans la pile, et ce nombre est le résultat.
 
-<img src="img/rpn.png" alt="npi" class="center"/>
+<img src="img/rpn.png" alt="cette expression" class="center"/>
 
 Parcourons l'expression `10 4 3 + 2 * -` ensemble ! D'abord, on empile `10`, et
 la pile est donc `10`. Le prochain élément est `4`, on l'empile également. La
@@ -85,7 +85,7 @@ l'implémentation, et d'écrire cette déclaration. En Haskell, une déclaration
 type nous en dit beaucoup sur une fonction, grâce au système de types
 puissant.</div>
 
-<img src="img/calculator.png" alt="calculatrice" class="left"/>
+<img src="img/calculator.png" alt="HA HA HA" class="left"/>
 
 Cool. Quand on implémente une solution à un problème en Haskell, il est aussi
 bien de penser à la façon dont vous le feriez à la main et d'en tirer des
@@ -284,7 +284,7 @@ fixe pour voyager d'une intersection à une autre. Vous devez trouver le chemin
 optimal pour arriver à Londres aussi vite que possible ! Vous partez du côté
 gauche et pouvez soit changer de route principale, soit rouler vers Londres.
 
-<img src="img/roads.png" alt="routes" class="center"/>
+<img src="img/roads.png" alt="Heathrow - Londres" class="center"/>
 
 Comme vous le voyez sur l'image, le chemin le plus court d'Heathrow à Londres
 dans ce cas consiste à démarrer sur la route principale B, changer de route
@@ -340,7 +340,7 @@ solution est optimale, on pourra simplement se dire qu'on en est plutôt sûr.
 Ce n'est donc pas une bonne solution. Voici une image simplifiée de notre
 système routier&nbsp;:
 
-<img src="img/roads_simple.png" alt="routes simplifiées" class="center"/>
+<img src="img/roads_simple.png" alt="routes" class="center"/>
 
 Parfait, pouvez-vous trouver quel est le plus court chemin jusqu'à la première
 intersection de la route A (le premier point bleu sur la route A, noté A1) ?
@@ -530,7 +530,7 @@ avoir pour type `a -> b -> a`.
 >                         else (C,c):(A,a):pathA
 >     in  (newPathToA, newPathToB)
 
-<img src="img/guycar.png" alt="homme en voiture" class="right"/>
+<img src="img/guycar.png" alt="c'est vous" class="right"/>
 
 Que se passe-t-il là ? D'abord, il faut calculer le temps optimal sur la route
 A en se basant sur le précédent temps optimal sur A, et de même pour B. On fait

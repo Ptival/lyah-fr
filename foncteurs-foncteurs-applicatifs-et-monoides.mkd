@@ -147,7 +147,7 @@ comment réécrire ceci en utilisant `fmap`&nbsp;:
 >           putStrLn $ "You said " ++ line ++ " backwards!"
 >           putStrLn $ "Yes, you really said" ++ line ++ " backwards!"
 
-<img src="img/alien.png" alt="alien" class="left"/>
+<img src="img/alien.png" alt="w00ooOoooOO" class="left"/>
 
 Tout comme on peut `fmap reverse` sur `Just "blah"` pour obtenir `Just "halb"`,
 on peut `fmap reverse` sur `getLine`. `getLine` est une action I/O qui a pour
@@ -285,7 +285,8 @@ choses agissant plutôt comme des calculs que comme des boîtes (tel `IO` et
 `(->) r`) peuvent elles aussi être des foncteurs. La fonction mappée sur un
 calcul agit comme ce calcul, mais modifie son résultat avec cette fonction.
 
-<img src="img/lifter.png" alt="souleveur" class="right"/>
+<img src="img/lifter.png" alt="il est plus simple de soulever une fonction que
+de soulever un million de kilogrammes" class="right"/>
 
 Avant de regarder les règles que `fmap` doit respecter, regardons encore une
 fois son type. Celui-ci est `fmap :: (a -> b) -> f a -> f b`. Il manque la
@@ -406,7 +407,8 @@ Voir que mapper `id` sur une valeur `Nothing` retourne la même valeur est
 trivial. De ces deux équations de l'implémentation de `fmap`, on déduit que
 `fmap id = id` est vrai.
 
-<img src="img/justice.png" alt="justice" class="left"/>
+<img src="img/justice.png" alt="la justice est aveugle, mon chien aussi"
+class="left"/>
 
 **La seconde loi dit que composer deux fonctions, et mapper le résultat sur un
 foncteur doit être identique à mapper d'abord une des fonctions sur le
@@ -557,7 +559,8 @@ on lui ajoutera trois. C'est ce qui se passe avec la composition.
 Foncteurs applicatifs
 </h2>
 
-<img src="img/present.png" alt="cadeau" class="right"/>
+<img src="img/present.png" alt="ne faites pas attention à cette analogie"
+class="right"/>
 
 Dans cette section, nous allons nous intéresser aux foncteurs applicatifs, qui
 sont des foncteurs gonflés aux hormones, représentés en Haskell par la classe
@@ -923,7 +926,7 @@ comment son instance est implémentée&nbsp;:
 >         x <- b
 >         return (f x)
 
-<img src="img/knight.png" alt="chevalier" class="left"/>
+<img src="img/knight.png" alt="ahahahaha !" class="left"/>
 
 Puisque `pure` ne fait que mettre des valeurs dans un contexte minimal qui
 puisse toujours renvoyer ce résultat, il est sensé que `pure` soit juste
@@ -1377,7 +1380,7 @@ la sémantique de chacun d'entre eux.
 Le mot-clé newtype
 </h2>
 
-<img src="img/maoi.png" alt="maoi" class="left"/>
+<img src="img/maoi.png" alt="pourquoi cet air si sérieux ?" class="left"/>
 
 Jusqu'ici, nous avons appris comment créer nos propres types de données
 algébriques en utilisant le mot-clé **data**. On a aussi appris comment donner
@@ -1632,7 +1635,7 @@ et appliquons `helloMe` à une valeur `undefined`&nbsp;:
 > ghci> helloMe undefined
 > "hello"
 
-<img src="img/shamrock.png" alt="trèfle" class="right"/>
+<img src="img/shamrock.png" alt="passez une bonne journée !!!" class="right"/>
 
 Ça a marché ! Hmmm, pourquoi cela ? Eh bien, comme on l'a dit, quand on utilise
 `newtype`, Haskell peut représenter en interne les valeurs du nouveau type de
@@ -1724,7 +1727,8 @@ de neuf, les chances sont bonnes que le mot-clé *data* soit ce qu'il vous faut.
 Monoïdes
 </h2>
 
-<img src="img/pirateship.png" alt="bateau pirate" class="right"/>
+<img src="img/pirateship.png" alt="wow voilà le bateau pirate le plus gay qui
+soit" class="right"/>
 
 Les classes de types en Haskell sont uilisées pour présenter une interface pour
 des types qui partagent un comportement. On a commencé avec des classes de
@@ -1802,7 +1806,7 @@ peuvent agir comme des monoïdes. Voyons comment la classe de types est définie
 >     mconcat :: [m] -> m
 >     mconcat = foldr mappend mempty
 
-<img src="img/balloondog.png" alt="chien en ballons" class="right"/>
+<img src="img/balloondog.png" alt="ouaf di dou !!!" class="right"/>
 
 La classe de types `Monoid` est définie dans `Data.Monoid`. Prenons un peu de
 temps pour la découvrir.
@@ -1893,7 +1897,7 @@ En testant cela, pas de surprises&nbsp;:
 > ghci> mempty :: [a]
 > []
 
-<img src="img/smug.png" alt=satisfait" class="left"/>
+<img src="img/smug.png" alt="satisfait comme jamais" class="left"/>
 
 Remarquez qu'à la dernière ligne, nous avons dû écrire une annotation de type
 explicite, parce que si l'on faisait seulement `mempty`, GHCi ne saurait pas
@@ -2092,7 +2096,8 @@ précédemment, et plutôt utile également&nbsp;:
 >     EQ `mappend` y = y
 >     GT `mappend` _ = GT
 
-<img src="img/bear.png" alt="ours" class="right"/>
+<img src="img/bear.png" alt="quelqu'un a ORDONNÉ que des pizzas soient livrées
+?!?" class="right"/>
 
 L'instance est créée de la sorte&nbsp;: quand on `mappend` deux valeurs
 `Ordering`, celle de gauche est préservée, à moins que la valeur à gauche soit
@@ -2373,7 +2378,8 @@ Voici comment un `Tree` est fait instance de `Foldable`&nbsp;:
 >                              f x           `mappend`
 >                              F.foldMap f r
 
-<img src="img/accordion.png" alt="accordéon" class="right"/>
+<img src="img/accordion.png" alt="je vous laisse deviner cette blague visuelle"
+class="right"/>
 
 On pense ainsi&nbsp;: si l'on nous donne une fonction qui prend un élément de
 notre arbre et retourne une valeur monoïdale, comment réduit-on notre arbre à

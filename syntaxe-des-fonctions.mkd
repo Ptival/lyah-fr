@@ -23,7 +23,7 @@ types</a>
 Filtrage par motif
 </h2>
 
-<img src="img/pattern.png" alt="motif" class="right"/>
+<img src="img/pattern.png" alt="quatre !" class="right"/>
 
 Ce chapitre couvrira certaines des constructions syntaxiques cool d'Haskell, et
 l'on va commencer par le filtrage par motif. Le filtrage par motif consiste à

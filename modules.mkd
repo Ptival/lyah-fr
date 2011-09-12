@@ -175,7 +175,7 @@ Lorsqu'on transpose ces trois listes, les puissances de 3 se retrouvent dans la
 première ligne, les puissances de 2 dans la deuxième, et ainsi de suite. Mapper
 `sum` sur cette liste produit le résultat désiré.
 
-<img src="img/legolists.png" alt="listes lego" class="left"/>
+<img src="img/legolists.png" alt="listes de shopping" class="left"/>
 
 `foldl'` et `foldl1'` sont des versions strictes de leur équivalents paresseux.
 Si vous faites des plis paresseux sur des listes très grandes, vous pouvez
@@ -675,7 +675,7 @@ length</code>.
 Data.Char
 </h2>
 
-<img src="img/legochar.png" alt="lego char" class="right"/>
+<img src="img/legochar.png" alt="caractère lego" class="right"/>
 
 Le module `Data.Char` fait ce que son nom indique. Il exporte des fonctions qui
 agissent sur des caractères. Et qui servent aussi pour filtrer ou mapper sur
@@ -1136,7 +1136,7 @@ fonctions dans la
 Data.Set
 </h2>
 
-<img src="img/legosets.png" alt="lego sets" class="right"/>
+<img src="img/legosets.png" alt="set lego" class="right"/>
 
 Le module `Data.Set` nous offre des ensembles. Comme les ensembles en
 mathématiques. Les ensembles sont un peu comme un mélange de listes et de maps.

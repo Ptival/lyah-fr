@@ -177,7 +177,7 @@ fonction en paramètre, et l'applique deux fois à quelque chose !
 > applyTwice :: (a -> a) -> a -> a
 > applyTwice f x = f (f x)
 
-<img src="img/bonus.png" alt="bonus" class="right"/>
+<img src="img/bonus.png" alt="pieuvre rock" class="right"/>
 
 D'abord, remarquez la déclaration de type. Avant, on n'avait pas besoin de
 parenthèses, parce que `->` est naturellement associatif à droite. Ici, au
@@ -628,7 +628,7 @@ Plie mais ne rompt pas
 
 </h2>
 
-<img src="img/origami.png" alt="origami" class="right"/>
+<img src="img/origami.png" alt="oiseau plié" class="right"/>
 
 À l'époque où nous faisions de la récursivité, nous avions repéré un thème
 récurrent dans nos fonctions récursives qui opéraient sur des listes. Nous
@@ -741,7 +741,7 @@ problème, c'est que `++` est beaucoup plus coûteux que `:`, donc généralemen
 on utilise des plis à droite lorsqu'on construit des nouvelles listes à partir
 d'une liste.
 
-<img src="img/washmachine.png" alt="machine à laver" class="right"/>
+<img src="img/washmachine.png" alt="pliez-moi ça" class="right"/>
 
 Si vous renversez une liste, vous pouvez faire un pli droit sur une liste comme
 vous auriez fait un pli gauche sur la liste originale, et vice versa.  Parfois,
