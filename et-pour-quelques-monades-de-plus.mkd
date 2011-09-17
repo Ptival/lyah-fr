@@ -42,7 +42,7 @@ Les monades que nous verrons font toutes partie du paquet `mtl`. Un paquet
 Haskell est une collection de modules. Le paquet `mtl` vient avec la
 plate-forme Haskell, donc vous l'avez probablement. Pour vérifier si c'est le
 cas, tapez `ghc-pkg list` dans l'invite de commande. Cela montrera quels
-paquets vous avez installé, et l'un d'entre eux devrait être `mtl` suivi d'un
+paquets vous avez installés, et l'un d'entre eux devrait être `mtl` suivi d'un
 numéro de version.
 
 <h2 id="lui-ecrire-je-la-connais-a-peine">
@@ -482,7 +482,7 @@ simplement les valeurs normales par des valeurs `Writer`, et on remplace
 l'application de fonction usuelle par `>>=` (ou par des expressions `do` si
 cela augmente la lisibilité).
 
-<h3>Construction de listes inefficace</h3>
+<h3>Construction inefficace de listes</h3>
 
 Quand vous utilisez la monade `Writer`, il faut être extrèmement prudent avec
 le choix du monoïde à utiliser, parce qu'utiliser des listes peut s'avérer très
@@ -722,7 +722,7 @@ avait déjà ces résultats. Par exemple&nbsp;:
 > 19
 
 L'expression `(+) <$> (*2) <*> (+10)` crée une fonction qui prend un nombre,
-donne ce nombre à `(*2)` et a `(+10)`, et somme les résultats. Par exemple, si
+donne ce nombre à `(*2)` et à `(+10)`, et somme les résultats. Par exemple, si
 l'on applique cette fonction à `3`, elle applique à la fois `(*2)` et `(+10)`
 sur `3`, résultant en `6` et `13`. Puis, elle appelle `(+)` avec `6` et `13` et
 le résultat est `19`.
@@ -745,7 +745,7 @@ ressemble à ça&nbsp;:
 
 Nous avons déjà vu comment `pure` était implémentée pour les fonctions, et
 `return` est la même chose que `pure`. Elle prend une valeur, et la place dans
-un contexte minimale contenant cette valeur comme résultat. Et le seul moyen de
+un contexte minimal contenant cette valeur comme résultat. Et le seul moyen de
 créer une fonction qui renvoie toujours le même résultat consiste à lui faire
 ignorer complètement son paramètre.
 
@@ -775,11 +775,11 @@ une expression `do` qui utilise cette monade&nbsp;:
 
 C'est la même chose que l'expression applicative qu'on a écrite plus haut,
 seulement maintenant elle se base sur le fait que les fonctions soient des
-monades. Un expression `do` résulte toujours en une valeur monadique, et
+monades. Une expression `do` résulte toujours en une valeur monadique, et
 celle-ci ne fait pas exception. Le résultat de cette valeur monadique est une
 fonction. Ce qui se passe ici, c'est quelle prend un nombre, puis fait `(*2)`
 sur ce nombre, ce qui résulte en `a`. `(+10)` est également appliquée au même
-nombre que celui donné à `(*2`, et le résultat devient `b`. `return`, comme
+nombre que celui donné à `(*2)`, et le résultat devient `b`. `return`, comme
 dans les autres monades, n'a pas d'autre effet que de créer une valeur
 monadique présentée en résultat. Elle présente ici `a + b` comme le résultat de
 cette fonction. Si on essaie, on obtient le même résultat qu'avant&nbsp;:
@@ -801,7 +801,7 @@ ainsi&nbsp;:
 >     in a+b
 
 On voit que la monade de lecture nous permet de traiter les fonctions comme des
-valeurs dans un contexte. On peut agir comme si l'on s'avait déjà ce que les
+valeurs dans un contexte. On peut agir comme si l'on savait déjà ce que les
 fonctions retournaient. Ceci est réussi en collant toutes les fonctions
 ensemble et en donnant le paramètre de la fonction ainsi créée à toutes les
 fonctions qui la composent. Ainsi, si l'on a plein de fonctions qui attendent
@@ -815,7 +815,7 @@ Calculs à états dans tous leurs états
 
 <img src="img/texas.png" alt="on ne blague pas sur le texas" class="left"/>
 
-Haskell est un langage pur, et grâce à cela, nos programmes sont fait de
+Haskell est un langage pur, et grâce à cela, nos programmes sont faits de
 fonctions qui ne peuvent pas altérer un état global ou des variables, elles ne
 peuvent que faire des calculs et retourner des résultats. Cette restriction
 rend en fait plus simple la réflexion sur nos programmes, puisqu'elle nous
@@ -824,7 +824,7 @@ instant donné. Cependant, certains problèmes sont intrinsèquement composés
 d'états en ce qu'ils se basent sur des états pouvant évoluer dans le temps.
 Bien que de tels problèmes ne soient pas un problème pour Haskell, ils peuvent
 parfois être fastidieux à modeler. C'est pourquoi Haskell offre la monade
-d'états, qui rend la festion de problèmes à états simples comme bonjour tout en
+d'états, qui rend la gestion de problèmes à états simple comme bonjour tout en
 restant propre et pur.
 
 [Lorsqu'on travaillait avec des nombres
@@ -912,7 +912,7 @@ retourne `()` en résultat, ainsi qu'une nouvelle pile. Voici&nbsp;:
 
 On utilise `()` comme résultat lorsque l'on empile parce qu'empiler un élément
 sur la pile n'a pas de résultat intéressant, son travail est simplement de
-changer la pile. Remarquez que si l'on applique que le premire paramètre de
+changer la pile. Remarquez que si l'on applique que le premier paramètre de
 `push`, on obtient un calcul à états. `pop` est déjà un calcul à états de par
 son type.
 
@@ -941,7 +941,7 @@ Cool, le résultat est `5` et la nouvelle pile est `[8, 2, 1]`. Remarquez comme
 `stackManip` est elle-même un calcul à états. On a pris plusieurs calculs à
 états et on les a collés ensemble. Hmm, ça sonne familier.
 
-Le code ci-dessus de `stackManip` est un peut fastidieux puisqu'on donne
+Le code ci-dessus de `stackManip` est un peu fastidieux puisqu'on donne
 manuellement l'état à chaque calcul à états, puis on récupère un nouvel état
 qu'on donne à nouveau au prochain calcul. Ce serait mieux si, au lieu de donner
 les piles manuellement à chaque fonction, on pouvait écrire&nbsp;:
@@ -1132,7 +1132,7 @@ La fonction `random` de `System.Random` a pour type&nbsp;:
 Signifiant qu'elle prend un générateur aléatoire et produit un nombre aléatoire
 et un nouveau générateur. On peut voir que c'est un calcul à états, on peut
 donc l'envelopper dans le constructeur de *newtype* `State` et l'utiliser comme
-une valeur monadique afin que la gestion de l'état soit fait pour nous&nbsp;:
+une valeur monadique afin que la gestion de l'état soit faite pour nous&nbsp;:
 
 > import System.Random
 > import Control.Monad.State
@@ -1209,7 +1209,7 @@ pour `Just`. Dans le cas d'une erreur, la valeur `Left` est conservée ainsi que
 son contenu qui décrit l'erreur.
 
 L'instance de `Monad` d'`Either e a` a un pré-requis additionnel, qui est que
-le type de la valeur contenur dans `Left`, celui indexé par le paramètre de
+le type de la valeur contenue dans `Left`, celui indexé par le paramètre de
 type `e`, doit être une instance de la classe de types `Error`. La classe de
 types `Error` est pour les types dont les valeurs peuvent être vues comme des
 messages d'erreur. Elle définit une fonction `strMsg`, qui prend une erreur
@@ -1334,9 +1334,9 @@ classe `Applicative` alors que l'autre a une contrainte `Monad`.  Testons
 
 On sait déjà comment `fmap` fonctionne avec les valeurs `Maybe`. Et `liftM` est
 identique. Pour les valeurs `Writer`, la fonction est mappée sur la première
-composante du tuple, qui est le résultat. Daire `fmap` ou `liftM` sur un calcul
+composante du tuple, qui est le résultat. Faire `fmap` ou `liftM` sur un calcul
 à états résulte en un autre calcul à états, mais son résultat final sera
-modifié par la fonction passée en argument. Si l'on avait pas mappé `(+100)`
+modifié par la fonction passée en argument. Si l'on n'avait pas mappé `(+100)`
 sur `pop`, elle aurait retourné `(1,[2,3,4])`.
 
 Voici comment `liftM` est implémentée&nbsp;:
@@ -1429,7 +1429,7 @@ Nous avons vu que les monades étaient plus puissantes que les foncteurs
 applicatifs et les foncteurs et que bien que toutes les monades soient des
 foncteurs applicatifs et des foncteurs, elles n'ont pas nécessairement
 d'instances de `Functor` et `Applicative`, et on a donc vu les fonctions
-équivalents à celles qu'on utilisait sur nos foncteurs et nos foncteurs
+équivalentes à celles qu'on utilisait sur nos foncteurs et nos foncteurs
 applicatifs.
 
 <h3>La fonction `join`</h3>
@@ -1437,7 +1437,7 @@ applicatifs.
 Voici de quoi faire travailler vos neurones&nbsp;: si le résultat d'une valeur
 monadique est une autre valeur monadique, autrement dit si une valeur monadique
 est imbriquée dans une autre, peut-on les aplatir en une valeur monadique
-simple ? Par exemple, si l'on a `Just (Just 9)`, peut on en faire un `Just 9` ?
+simple ? Par exemple, si l'on a `Just (Just 9)`, peut-on en faire un `Just 9` ?
 Il s'avère que toute valeur monadique imbriquée peut être aplatie et ceci est
 une propriété unique des monades. Pour cela, la fonction `join` existe. Son
 type est&nbsp;:
@@ -1593,7 +1593,7 @@ sûr, on va utiliser la monade `Writer` à cet effet&nbsp;:
 >         return False
 
 Plutôt que de seulement retourner un `Bool`, cette fonction retourne un `Writer
-[String] Bool`. C'est un prédicat monadique. Ca sonne classe, non ? Si le
+[String] Bool`. C'est un prédicat monadique. Ça sonne classe, non ? Si le
 nombre est plus petit que `4`, on indique qu'on le garde et on `return True`.
 
 À présent, passons-la à `filterM` avec une liste. Puisque le prédicat retourne
@@ -1667,7 +1667,7 @@ L'équivalent monadique de `foldl` est `foldM`. Si vous vous souvenez de vos
 plis de la [section sur les
 plis](fonctions-d-ordre-superieur#plie-mais-ne-rompt-pas), vous savez que
 `foldl` prend une fonction binaire, un accumulateur initial et une liste à
-plier, et plie la liste en partant de la gauche avec la fonctions binaire pour
+plier, et plie la liste en partant de la gauche avec la fonction binaire pour
 n'en faire plus qu'une valeur. `foldM` fait la même chose, mais prend une
 fonction qui produit une valeur monadique pour plier la liste. Sans surprise,
 la valeur résultante est également monadique. Le type de `foldl` est&nbsp;:
@@ -1797,14 +1797,13 @@ fonction monadique pouvant échouer&nbsp;:
 > foldingFunction (x:y:ys) "-" = return ((y - x):ys)
 > foldingFunction xs numberString = liftM (:xs) (readMaybe numberString)
 
-Les trois premiers cas sont comme les anciens, à l'exception que la nouvelle
-pile est enveloppée dans un `Just` (on a utilisé `return` pour cela, mais on
-aurait tout aussi bien pu écrire `Just`). Dans le dernier cas, on fait
-`readMaybe numberString` et on mappe ensuite `(:xs)` dessus. Donc, si la pile
-`xs` est `[1.0, 2.0]` et si `readMaybe numberString` résulte en `Just 3.0`, le
-résultat est `Just [3.0, 1.0, 2.0]`. Si `readMaybe numberString` résulte en
-`Nothing`, alors le résultat est `Nothing`. Essayons la fonction de pli
-seule&nbsp;:
+Les trois premiers cas sont comme les anciens, sauf que la nouvelle pile est
+enveloppée dans un `Just` (on a utilisé `return` pour cela, mais on aurait tout
+aussi bien pu écrire `Just`). Dans le dernier cas, on fait `readMaybe
+numberString` et on mappe ensuite `(:xs)` dessus. Donc, si la pile `xs` est
+`[1.0, 2.0]` et si `readMaybe numberString` résulte en `Just 3.0`, le résultat
+est `Just [3.0, 1.0, 2.0]`. Si `readMaybe numberString` résulte en `Nothing`,
+alors le résultat est `Nothing`. Essayons la fonction de pli seule&nbsp;:
 
 > ghci> foldingFunction [3,2] "*"
 > Just [6.0]
@@ -1904,7 +1903,7 @@ faisait&nbsp;:
 > canReachIn3 :: KnightPos -> KnightPos -> Bool
 > canReachIn3 start end = end `elem` in3 start
 
-En utilisant la composition de fonctions monadique, on peut créer une fonction
+En utilisant la composition de fonctions monadiques, on peut créer une fonction
 comme `in3`, seulement qu'au lieu de générer toutes les positions possibles du
 cavalier après trois mouvements, on peut le faire pour un nombre de mouvements
 arbitraires. Si vous regardez `in3`, vous voyez qu'on utilise `moveKnight`
@@ -1924,7 +1923,7 @@ déplace le cavalier `x` fois de façon non déterministe. Il suffit alors de
 placer la position initiale dans une liste singleton avec `return` et de la
 donner à notre fonction.
 
-On peut maintenant changer la fonctions `canReachIn3` pour être également plus
+On peut maintenant changer la fonction `canReachIn3` pour être également plus
 générale&nbsp;:
 
 > canReachIn :: Int -> KnightPos -> KnightPos -> Bool
@@ -1938,7 +1937,7 @@ Créer des monades
 
 Dans cette section, on va regarder comment un type est créé, identifié comme
 une monade, et instancié en `Monad`. Généralement, on ne crée pas une monade
-pour le plaisir de créer une monade. Plutôt, on crée généralement un type dont
+pour le plaisir de créer une monade. Généralement, on crée plutôt un type dont
 le but est de modéliser un aspect du problème à résoudre, et plus tard si l'on
 s'aperçoit que ce type réprésente une valeur dans un contexte et peut agir
 comme une monade, on lui donne une instance de `Monad`.
@@ -1967,7 +1966,7 @@ les probabilités, mais plutôt des nombres réels entre 0 et 1. Un 0 signifie q
 quelque chose n'a aucune chance au monde d'avoir lieu, et un 1 signifie qu'elle
 aura lieu à coup sûr. Les nombres à virgule flottante peuvent rapidement
 devenir bordéliques parce qu'ils ont tendance à perdre en précision, ainsi
-Haskell propose un type de donnée pour les nombres rationnels qui ne perdent
+Haskell propose un type de données pour les nombres rationnels qui ne perdent
 pas en précision. Ce type s'appelle `Rational` et vit dans `Data.Ratio`. Pour
 créer un `Rational`, on l'écrit comme si c'était une fraction. Le numérateur et
 le dénominateur sont séparés par un `%`. Voici quelques exemples&nbsp;:
@@ -2039,7 +2038,7 @@ probabilités. Comme exemple, considérons une liste où il y a exactement 25% d
 chances que `'a'` ou `'b'` ait lieu. `a` et `b` ont la même probabilité.
 Également, il y a 75% de chances que `c` ou `d` ait lieu. `'c'` et `'d'` ont
 également la même probabilité. Voici une image de la liste de probabilités qui
-modèle ce scénario&nbsp;:
+modélise ce scénario&nbsp;:
 
 <img src="img/prob.png" alt="probas" class="left"/>
 
@@ -2049,7 +2048,7 @@ seraient ces probabilités ? Pour les trouver, il suffit de multiplier chaque
 probabilité par la probabilité qu'elle contient. `'a'` aurait lieu une fois sur
 huit, et de même pour `'b'`, parce que si l'on multiplie un demi par un quart,
 on obtient un huitième. `'c'` aurait lieu trois fois sur huit parce que trois
-quarts multipliés par un demi donnent trois huitièmes `'d'` aurait aussi lieu
+quarts multipliés par un demi donnent trois huitièmes. `'d'` aurait aussi lieu
 trois fois sur huit. Si l'on somme toutes les probabilités, la somme vaut
 toujours un.
 
@@ -2100,9 +2099,10 @@ résultante, chaque probabilité résultant de la fonction serait multipliée pa
 la probabilité `1%1` créée par `return`, donc le contexte serait inaffecté. Le
 raisonnement montrant que `m >>= return` est égal à `m` est similaire. La
 troisième loi dit que `f <=< (g <=< h)` devrait être égal à `(f <=< g) <=< h`.
-Elle tient aussi, parce qu'elle tient pour la monade des listes qui est la base
-de la monade de probabilité, et parce que la multiplication est associative.
-`1%2 * (1%3 * 1%5)` est égal à `(1%2 * 1%3) * 1%5`.
+Puisque cette loi tient pour la monade des listes, qui est la base de la monade
+des probabilités, et parce que la multiplication est associative, cette loi
+tient donc également pour la monade des probabilités. `1%2 * (1%3 * 1%5)` est
+égal à `(1%2 * 1%3) * 1%5`.
 
 À présent qu'on a une monade, que peut-on en faire ? Eh bien, elle peut nous
 aider à faire des calculs avec des probabilités. On peut traiter des évènements
@@ -2152,7 +2152,7 @@ exercice pour le lecteur (vous !).
 Dans cette section, on est parti d'une question (et si les listes
 transportaient également une information de probabilité ?) pour créer un type,
 reconnaître une monade et finalement créer une instance et faire quelque chose
-avec elle. Je trouve ça plutôt attrayant ! À ce stage, on devrait avoir une
+avec elle. Je trouve ça plutôt attrayant ! À ce stade, on devrait avoir une
 assez bonne compréhension de ce que sont les monades.
 
 <div class="prev-toc-next">

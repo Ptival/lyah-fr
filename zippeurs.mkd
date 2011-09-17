@@ -22,9 +22,10 @@ monades de plus</a>
 Alors que la pureté d'Haskell amène tout un tas de bienfaits, elle nous oblige
 à attaquer certains problèmes sous un autre angle que celui qu'on aurait pris
 dans des langages impurs. À cause de la transparence référentielle, une valeur
-est aussi bonne qu'une autre en Haskell si elles représentent la même chose.
+est aussi bonne qu'une autre en Haskell si elles représentent toutes les deux
+la même chose.
 
-Donc si on a un arbre plein de cinqs (tapez-m'en cinq ?) et qu'on veut en
+Donc si on a un arbre plein de cinq (tapez-m'en cinq ?) et qu'on veut en
 changer un en un six, il nous faut un moyen de savoir exactement quel cinq dans
 notre arbre on veut changer. Il faut savoir où il est dans l'arbre. Dans les
 langages impurs, on aurait pu noter l'adresse mémoire où est situé le cinq, et
@@ -35,7 +36,7 @@ on dit qu'on change un arbre, on veut en fait dire qu'on prend un arbre et
 qu'on en retourne un autre, similaire à l'original mais un peu différent.
 
 Une possibilité consiste à se rappeler du chemin de la racine de l'arbre à
-l'élément qu'on souhaite changer. On pourrait dire, prend cet arbre, va à
+l'élément qu'on souhaite changer. On pourrait dire : prends cet arbre, va à
 gauche, va à droite, et encore à gauche, et change l'élément qui est à cet
 endroit. Bien que cela marche, ça peut être inefficace. Si l'on veut plus tard
 changer un élément qui est juste à côté de celui qu'on vient de changer, on
@@ -119,7 +120,7 @@ changera l'élément sur lequel on tombe en suivant ces directions. Voici&nbsp;:
 >     changeToP [] (Node _ l r) = Node 'P' l r
 
 Si le premier élément de notre liste de directions est un `L`, on construit un
-nouvel arbre comme l'original, mais son sous-arbre gauche à un élément modifié
+nouvel arbre comme l'original, mais son sous-arbre gauche a un élément modifié
 en `'P'`. Quand on appelle récursivement `changeToP`, on ne donne que la queue
 de la liste des directions, puisqu'on est déjà allé une fois à gauche. On fait
 la même chose dans le cas de `R`. Si la liste des directions est vide, cela
@@ -199,7 +200,7 @@ Elle fonctionne de façon similaire. Utilisons ces fonctions pour prendre notre
 > ghci> goLeft (goRight (freeTree, []))
 > (Node 'W' (Node 'C' Empty Empty) (Node 'R' Empty Empty),[L,R])
 
-<img src="img/almostzipper.png" alt="on y est presque" class="right"/>
+<img src="img/almostzipper.png" alt="on y est presque" class="left"/>
 
 Ok, donc maintenant on a un arbre qui a `'W'` à sa racine, `'C'` à la racine de
 son sous-arbre gauche, et `'R'` à la racine de son sous-arbre droit. Les
@@ -281,10 +282,11 @@ un `LeftCrumb` qui indique qu'on est allé à gauche, et on munit ce `LeftCrumb`
 de l'élément du nœud qu'on quitte (le `x`) et de son sous-arbre droit qu'on a
 choisi de ne pas visiter.
 
-Remarquez que cette fonction suppose que l'arbre actuellement focalisé n'est
-pas `Empty`. Un arbre vide n'a pas de sous-arbres, donc si l'on essaie d'aller
-à gauche dans un arbre vide, une erreur aura lieu parce que le filtrage par
-motif sur `Node` échouera, et parce qu'on n'a pas mis de motif pour `Empty`.
+Remarquez que cette fonction suppose que l'arbre sur lequel on se focalise
+actuellement n'est pas `Empty`. Un arbre vide n'a pas de sous-arbres, donc si
+l'on essaie d'aller à gauche dans un arbre vide, une erreur aura lieu parce que
+le filtrage par motif sur `Node` échouera, et parce qu'on n'a pas mis de motif
+pour `Empty`.
 
 `goRight` est similaire&nbsp;:
 
@@ -318,7 +320,7 @@ Avec une paire de `Tree a` et de `Breadcrumbs a`, on a toute l'information
 nécessaire pour reconstruire un arbre entier, tout en étant focalisé sur un de
 ses sous-arbres. Ce mécanisme nous permet de facilement nous déplacer à gauche,
 à droite, et vers le haut. Une telle paire contenant une partie focalisée d'une
-structure de données, et ses alentours, est appelée un zipper, parce que
+structure de données, et ses alentours, est appelée un zippeur, parce que
 changer de point focal vers le haut et vers le bas fait penser à une braguette
 qui monte et descend. Il est donc pratique de créer un synonyme de types&nbsp;:
 
@@ -326,7 +328,7 @@ qui monte et descend. Il est donc pratique de créer un synonyme de types&nbsp;:
 
 Je préférerais appeler le synonyme de types `Focus` pour indiquer clairement
 qu'on se focalise sur une partie de la structure de données, mais le terme
-zipper est globalement accepté pour décrire un tel mécanisme, on s'en tiendra
+zippeur est globalement accepté pour décrire un tel mécanisme, on s'en tiendra
 donc à `Zipper`.
 
 <h3>Manipuler des arbres sous focalisation</h3>
@@ -362,11 +364,11 @@ Ou avec `-:`&nbsp;:
 > ghci> let newFocus2 = newFocus -: goUp -: modify (\_ -> 'X')
 
 Remonter est facile puisque les miettes qu'on a laissées forment la structure
-de données que l'on a pas visitée, seulement tout est renversé, un peu comme
+de données que l'on n'a pas visitée, seulement tout est renversé, un peu comme
 une chaussette à l'envers. C'est pourquoi, lorsqu'on veut remonter d'un cran,
-on a pas besoin de repartir de la racine et de redescendre presque tout en bas,
-il nous suffit de prendre le sommet de notre arbre inversé, en le remettant
-dans le bon sens et sous notre focalisation.
+on n'a pas besoin de repartir de la racine et de redescendre presque tout en
+bas, il nous suffit de prendre le sommet de notre arbre inversé, en le
+remettant dans le bon sens et sous notre focalisation.
 
 Chaque nœud a deux sous-arbres, même si ces sous-arbres sont vides. Ainsi, si
 l'on se focalise sur un arbre vide, on peut le remplacer par un sous-arbre non
@@ -376,11 +378,11 @@ simple&nbsp;:
 > attach :: Tree a -> Zipper a -> Zipper a
 > attach t (_, bs) = (t, bs)
 
-On prend un arbre et un zipper, et on retourne un nouveau zipper, dont le point
-focal est remplacé par l'arbre en question. Non seulement peut-on étendre des
-arbres ainsi, en remplaçant des sous-arbres vides par d'autres arbres, mais on
-peut aussi complètement remplacer des sous-arbres existants. Attachons un arbre
-tout à gauche de notre `freeTree`&nbsp;:
+On prend un arbre et un zippeur, et on retourne un nouveau zippeur, dont le
+point focal est remplacé par l'arbre en question. Non seulement peut-on étendre
+des arbres ainsi, en remplaçant des sous-arbres vides par d'autres arbres, mais
+on peut aussi complètement remplacer des sous-arbres existants. Attachons un
+arbre tout à gauche de notre `freeTree`&nbsp;:
 
 > ghci> let farLeft = (freeTree,[]) -: goLeft -: goLeft -: goLeft -: goLeft
 > ghci> let newFocus = farLeft -: attach (Node 'Z' Empty Empty)
@@ -413,7 +415,7 @@ voir tous les changements effectués depuis cette meilleure perspective.
 Se focaliser sur des listes
 </h2>
 
-Les zippers peuvent être utilisés avec quasiment toutes les structures de
+Les zippeurs peuvent être utilisés avec quasiment toutes les structures de
 données, il n'est donc pas surprenant qu'on peut les utiliser pour se focaliser
 sur les sous-listes d'une liste. Après tout, les listes sont un peu comme des
 arbres, seulement là où le nœud d'un arbre a un élément (ou pas) et plusieurs
@@ -435,7 +437,7 @@ tête de liste, qui est `1`, et une queue, qui est `2:3:[]`. À son tour,
 `2:3:[]` a aussi une tête, qui est `2`, et une queue, qui est `3:[]`. Avec
 `3:[]`, la tête est `3` et la queue est la liste vide `[]`.
 
-Créons un zipper de listes. Pour changer le point focal d'une sous-liste d'une
+Créons un zippeur de listes. Pour changer le point focal d'une sous-liste d'une
 liste, on peut aller soit en avant, soit en arrière (alors que pour les arbres,
 on pouvait aller en haut, à gauche ou à droite). La partie focalisée sera une
 sous-liste, avec une traînée de miettes qu'on aura laissée en avançant. En quoi
@@ -457,7 +459,7 @@ précédent était `2`, on peut rebrousser chemin en plaçant simplement cet
 
 Puisqu'une miette de pain est juste un élément dans ce cas, on n'a pas vraiment
 besoin de la placer dans un type de données, comme on l'avait fait avec `Crumb`
-pour notre zipper d'arbres&nbsp;:
+pour notre zippeur d'arbres&nbsp;:
 
 > type ListZipper a = ([a],[a])
 
@@ -492,21 +494,21 @@ qu'une partie de la liste renversée. L'élément dont on part devient la tête
 des miettes, il est donc facile de revenir en arrière en reprenant la tête des
 miettes et en en faisant la tête de notre point focal.
 
-On voit également mieux pourquoi on appelle ça un zipper, parce que cela
+On voit également mieux pourquoi on appelle ça un zippeur, parce que cela
 ressemble vraiment à une braguette montant et descendant.
 
 Si vous étiez en train de créer un éditeur de texte, vous pourriez utiliser une
 liste de chaînes de caractères pour représenter les lignes du fichier de texte
-ouvert, et utiliser un zipper pour savoir à quelle ligne le curseur se trouve
-actuellement. En utilisant un zipper, il serait également facile d'insérer de
+ouvert, et utiliser un zippeur pour savoir à quelle ligne le curseur se trouve
+actuellement. En utilisant un zippeur, il serait également facile d'insérer de
 nouvelles lignes n'importe où dans le texte ou d'effacer des lignes existantes.
 
 <h2 id="un-systeme-de-fichiers-elementaire">
 Un système de fichiers élémentaire
 </h2>
 
-Maintenant qu'on sait comment les zippers fonctionnent, utilisons des arbres
-pour représenter un système de fichiers très simple, et créons un zipper pour
+Maintenant qu'on sait comment les zippeurs fonctionnent, utilisons des arbres
+pour représenter un système de fichiers très simple, et créons un zippeur pour
 ce système de fichiers, qui nous permettra de nous déplacer à travers les
 dossiers, comme on le fait généralement quand on parcourt un système de
 fichiers.
@@ -555,12 +557,12 @@ Voici un dossier avec des fichiers et des sous-dossiers&nbsp;:
 
 C'est exactement ce que contient mon disque dur à l'instant.
 
-<h3>Un zipper pour notre système de fichiers</h3>
+<h3>Un zippeur pour notre système de fichiers</h3>
 
 <img src="img/spongedisk.png" alt="spongedisk" class="right"/>
 
 Maintenant qu'on a un système de fichiers, tout ce dont on a besoin est d'un
-zipper afin de zipper et zoomer dans celui-ci, et d'ajouter, modifier ou
+zippeur afin de zippeur et zoomer dans celui-ci, et d'ajouter, modifier ou
 supprimer des fichiers ou des dossiers. Tout comme avec les arbres binaires et
 les listes, on va semer des miettes qui contiennent l'information nécessaire
 concernant les choses qu'on n'a pas choisi de visiter. Comme on l'a dit, une
@@ -589,7 +591,7 @@ Voici notre type miette pour le système de fichiers&nbsp;:
 
 > data FSCrumb = FSCrumb Name [FSItem] [FSItem] deriving (Show)
 
-Et voici un synonyme de type pour notre zipper&nbsp;:
+Et voici un synonyme de type pour notre zippeur&nbsp;:
 
 > type FSZipper = (FSItem, [FSCrumb])
 
@@ -657,8 +659,8 @@ Partons de la racine et dirigeons-nous vers le fichier `"skull_man(scary).bmp"`
 
 > ghci> let newFocus = (myDisk,[]) -: fsTo "pics" -: fsTo "skull_man(scary).bmp"
 
-`newFocus` est à présent un zipper qui est focalisé sur le fichier
-`"skull_man(scary).bmp"`. Récupérons le premier élément du zipper (le point
+`newFocus` est à présent un zippeur qui est focalisé sur le fichier
+`"skull_man(scary).bmp"`. Récupérons le premier élément du zippeur (le point
 focal lui-même) et vérifions si c'est bien vrai&nbsp;:
 
 > ghci> fst newFocus
@@ -706,12 +708,12 @@ Ce qui est vraiment cool, c'est que lorsqu'on modifie notre système de
 fichiers, on ne le modifie pas vraiment en lieu et place, mais on retourne
 plutôt un nouveau système de fichiers. Ainsi, on a à la fois accès à l'ancien
 système de fichiers (ici, `myDisk`) et au nouveau (la première composante de
-`newFocus`). Ainsi, en utilisant des zippers, on obtient du versionnage sans
+`newFocus`). Ainsi, en utilisant des zippeurs, on obtient du versionnage sans
 effort, ce qui signifie qu'on peut toujours se référer aux anciennes versions
 de nos structures de données même après les avoir modifiées, pour ainsi dire.
-Ce n'est pas unique aux zippers, c'est simplement une propriété d'Haskell dûe
+Ce n'est pas unique aux zippeurs, c'est simplement une propriété d'Haskell dûe
 au fait que ses structures de données sont immuables. Cependant, avec les
-zippers, on a la capacité de se déplacer efficacement dans des structures de
+zippeurs, on a la capacité de se déplacer efficacement dans des structures de
 données, et c'est là que la persistance des structures de données d'Haskell
 commence à dévoiler son potentiel.
 
@@ -722,8 +724,8 @@ Attention à la marche
 Jusqu'ici, lorsqu'on traversait nos structures de données, qu'elles soient des
 arbres binaires, des listes ou des systèmes de fichiers, on ne se préoccupait
 pas trop d'avancer un pas trop loin et de tomber dans le vide. Par exemple,
-notre fonction `goLeft` prend un zipper et un arbre binaire et déplace le point
-focal vers son sous-arbre gauche&nbsp;:
+notre fonction `goLeft` prend un zippeur et un arbre binaire et déplace le
+point focal vers son sous-arbre gauche&nbsp;:
 
 > goLeft :: Zipper a -> Zipper a
 > goLeft (Node x l r, bs) = (l, LeftCrumb x r:bs)
@@ -741,14 +743,14 @@ illogique, et jusqu'alors, on a ignoré ce fait paresseusement.
 
 Et si l'on était à la racine d'un arbre, sans miettes, et qu'on essayait de
 rebrousser chemin ? La même chose aurait lieu. Il semblerait que quand on
-utilise les zippers, chaque pas pourrait être notre dernier pas (une musique
+utilise les zippeurs, chaque pas pourrait être notre dernier pas (une musique
 menaçante se fait entendre). En d'autres termes, tout mouvement peut réussir,
 mais peut aussi échouer. Cela ne vous rappelle rien ? Bien sûr, les monades !
 Plus spécifiquement, la monade `Maybe` qui ajoute un contexte d'échec potentiel
 à nos valeurs.
 
 Utilisons donc la monade `Maybe` pour ajouter un contexte possible d'échec à
-nos mouvements. On va prendre les fonctions qui marchent sur notre zipper
+nos mouvements. On va prendre les fonctions qui marchent sur notre zippeur
 d'arbres binaires et les rendre monadiques. D'abord, occupons-nous des échecs
 possibles de `goLeft` et `goRight`. Jusqu'ici, l'échec de fonctions pouvant
 échouer était toujours reflété dans leur résultat, il en va de même ici. Voici
@@ -789,8 +791,8 @@ Modifions-là pour échouer gracieusement&nbsp;:
 Si l'on a des miettes, tout va bien et on retourne un nouveau point focal
 réussi, mais si ce n'est pas le cas, on retourne un échec.
 
-Auparavant, ces fonctions prenaient des zippers et retournaient des zippers, ce
-qui signifiant qu'on pouvais les chaîner ainsi pour se balader&nbsp;:
+Auparavant, ces fonctions prenaient des zippeurs et retournaient des zippeurs,
+ce qui signifiait qu'on pouvait les chaîner ainsi pour se balader&nbsp;:
 
 > gchi> let newFocus = (freeTree,[]) -: goLeft -: goRight
 
@@ -820,7 +822,7 @@ fonctions ! Observez&nbsp;:
 > ghci> return (coolTree,[]) >>= goRight >>= goRight >>= goRight
 > Nothing
 
-On a utilisé `return` pour placer un zipper dans un `Just`, puis utilisé `>>=`
+On a utilisé `return` pour placer un zippeur dans un `Just`, puis utilisé `>>=`
 pour donner cela à notre fonction `goRight`. D'abord, on crée un arbre qui a un
 sous-arbre gauche vide, et un sous-arbre droit avec deux sous-arbres. Quand on
 essaie d'aller à droite une fois, c'est un succès, parce que l'opération est

@@ -31,9 +31,9 @@ Haskell qui traînent sur Internet. Quand je débutais en Haskell, je n'ai pas
 appris que d'une seule source. Ma méthode d'apprentissage consistait à lire
 plusieurs tutoriels et articles, car chacun d'eux expliquait d'une manière un
 peu différente de l'autre. En confrontant plusieurs ressources, j'ai pu
-assembler les pièces du puzzle et tout s'est mis à sa place. Ceci est un essai
-afin de produire une ressource de plus afin d'apprendre Haskell, de sorte que
-vous ayez plus de chance d'en trouver une que vous appréciez.
+assembler les pièces du puzzle et tout s'est mis à sa place. Ceci est une
+tentative visant à produire une ressource de plus afin d'apprendre Haskell, de
+sorte que vous ayez plus de chance d'en trouver une que vous appréciez.
 
 <img src="img/bird.png" alt="oiseau" class="left"/>
 
@@ -41,7 +41,8 @@ Ce tutoriel vise les personnes ayant de l'expérience dans un langage de
 programmation impérative (C, C++, Java, Python, …) mais qui n'ont jamais
 programmé dans un langage de programmation fonctionnel auparavant (Haskell, ML,
 OCaml, …). Bien que je me doute que même sans vraie expérience en
-programmation, un chouette type comme vous pourra suivre et apprendre Haskell.
+programmation, une chouette personne comme vous pourra suivre et apprendre
+Haskell.
 
 Le canal #haskell sur le réseau freenode est un bon endroit pour poser des
 questions si vous êtes bloqué (NdT: Le canal #haskell.fr du même réseau vous
@@ -55,7 +56,7 @@ le reste est venu plutôt facilement. Ce que j'essaie de vous dire&nbsp;:
 Haskell est génial, et si vous êtes intéressés par la programmation, vous
 devriez l'apprendre même si cela semble bizarre au début. Apprendre Haskell est
 très similaire à l'apprentissage de la programmation la première fois - c'est
-fun !  Ca vous force à penser différemment, ce qui nous amène à la section
+fun ! Ça vous force à penser différemment, ce qui nous amène à la section
 suivante…
 
 <h2 id="donc-qu-est-ce-qu-haskell">
@@ -66,7 +67,7 @@ Donc, qu'est-ce qu'Haskell ?
 
 Haskell est un **langage de programmation purement fonctionnelle**. Dans les
 langages impératifs, vous effectuez des choses en donnant à l'ordinateur une
-séquence de tâches, et iles les exécute. Lors de cette exécution, il peut
+séquence de tâches, et il les les exécute. Lors de cette exécution, il peut
 changer d'état. Par exemple, vous affectez à une variable `a` la valeur 5, puis
 vous faites quelque chose, puis lui affectez une autre valeur. Vous avez des
 structures de contrôle de flot pour répéter des actions plusieurs fois. Dans un
@@ -87,8 +88,8 @@ garanti qu'elle renverra le même résultat. On appelle ceci la transparence
 référentielle, et cela permet non seulement au compilateur de raisonner à
 propos du comportement du programme, mais également à vous de déduire
 facilement (et même de prouver) qu'une fonction est correcte, puis de
-construire des fonctions plus complexes en collant des simples fonctions l'une
-à l'autre.
+construire des fonctions plus complexes en collant de simples fonctions l'une à
+l'autre.
 
 <img src="img/lazy.png" alt="paresseuse" class="right"/>
 
@@ -138,10 +139,10 @@ niveau, les programmes Haskell sont généralement plus courts que leurs
 équivalents impératifs. Et des programmes plus courts sont plus simples à
 maintenir et ont moins de bogues.
 
-Haskell a été créé par des **personnes très intelligentes** (ayant un PhD). Le
-travail sur Haskell a débuté en 1987 lorsqu'un comité de chercheurs s'est
-rassemblé pour concevoir un langage révolutionnaire. En 2003, le rapport
-Haskell fut publié, et définit une version stable du langage.
+Haskell a été créé par des **personnes très intelligentes** (ayant un
+doctorat). Le travail sur Haskell a débuté en 1987 lorsqu'un comité de
+chercheurs s'est rassemblé pour concevoir un langage révolutionnaire. En 2003,
+le rapport Haskell fut publié, et définit une version stable du langage.
 
 <h2 id="ce-dont-vous-avez-besoin-avant-de-plonger">
 Ce dont vous avez besoin avant de plonger
@@ -167,9 +168,9 @@ myfunctions`, puis jouer avec, à condition que `myfunctions.hs` soit dans le
 dossier d'où `ghci` a été invoqué. Si vous modifiez le script .hs, tapez juste
 `:l myfunctions` à nouveau, ou encore `:r`, qui est équivalent puisqu'il
 recharge le script courant. Ma procédure habituelle quand je joue avec des
-choses est de définir des fonctions dans a.hs, de les charger, et de bidouiller
-avec, puis de retourner changer le .hs, recharger, etc. C'est aussi ce qu'on va
-faire à présent.
+choses est de définir des fonctions dans un fichier *a.hs*, de les charger, et
+de bidouiller avec, puis de retourner changer le .hs, recharger, etc. C'est
+aussi ce qu'on va faire à présent.
 
 <div class="prev-toc-next">
 <ul>

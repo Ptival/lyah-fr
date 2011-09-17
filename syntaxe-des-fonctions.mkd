@@ -318,10 +318,10 @@ Très souvent, la dernière garde est `otherwise`. `otherwise` est simplement
 définie comme `otherwise = True` et attrape donc tout. C'est très similaire aux
 motifs, sauf qu'eux vérifient que l'entrée satisfait un motif alors que les
 gardes vérifient des conditions booléennes. Si toutes les gardes d'une fonction
-sont évaluées à `False` (donc, qu'on a pas fourni de garde `otherwise` qui vaut
-toujours `True`), l'évaluation passe au **motif** suivant. C'est ainsi que les
-motifs et les gardes s'entendent bien. Si aucune combinaison de gardes et de
-motifs n'est satisfaite, une erreur est levée.
+sont évaluées à `False` (donc, qu'on n'a pas fourni de garde `otherwise` qui
+vaut toujours `True`), l'évaluation passe au **motif** suivant. C'est ainsi que
+les motifs et les gardes s'entendent bien. Si aucune combinaison de gardes et
+de motifs n'est satisfaite, une erreur est levée.
 
 Bien sûr, on peut utiliser les gardes sur des fonctions qui prennent autant de
 paramètres que l'on souhaite. Plutôt que de calculer son IMC avant d'appeler la
