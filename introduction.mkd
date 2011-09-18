@@ -67,9 +67,9 @@ Donc, qu'est-ce qu'Haskell ?
 
 Haskell est un **langage de programmation purement fonctionnelle**. Dans les
 langages impératifs, vous effectuez des choses en donnant à l'ordinateur une
-séquence de tâches, et il les les exécute. Lors de cette exécution, il peut
-changer d'état. Par exemple, vous affectez à une variable `a` la valeur 5, puis
-vous faites quelque chose, puis lui affectez une autre valeur. Vous avez des
+séquence de tâches, et il les exécute. Lors de cette exécution, il peut changer
+d'état. Par exemple, vous affectez à une variable `a` la valeur 5, puis vous
+faites quelque chose, puis lui affectez une autre valeur. Vous avez des
 structures de contrôle de flot pour répéter des actions plusieurs fois. Dans un
 langage de programmation purement fonctionnelle, vous n'indiquez pas à
 l'ordinateur quoi faire, mais plutôt ce que les choses *sont*. La factorielle
