@@ -1,3 +1,4 @@
+#content {width: 800px; margin: 0px auto;}
 body {background-image: url(img/bg.png); font-size: 100%; line-height: 25px;
     font-size: 14px; font-family: Arial, sans-serif; margin: 0}
 h1 {font-size: 60px; line-height: 60px; font-family: georgia, Arial, serif;
@@ -39,7 +40,6 @@ img.center {margin: 10px auto 25px auto; display: block;}
     background-position: top right; background-repeat: no-repeat;}
 .bgwrapper {margin-top: 50px; margin-bottom: 50px;
     background-color: white; padding: 25px 0 50px 0;}
-#content {width: 800px; margin: 0px auto;}
 .hintbox{padding: 10px; background-color: #FFC; margin-bottom: 25px;
     background-image: url(img/note.jpg);}
 .law {background-color: #9DC; color: black; white-space: nowrap;

@@ -12,6 +12,17 @@ RMLAST2 := head -n -2
 SOURCE := $(wildcard *.mkd)
 TARGET := $(addprefix html/, $(SOURCE:.mkd=.html))
 
+ORDEREDHTML := introduction.html demarrons.html \
+	types-et-classes-de-types.html syntaxe-des-fonctions.html \
+	recursivite.html fonctions-d-ordre-superieur.html modules.html \
+	creer-nos-propres-types-et-classes-de-types.html entrees-et-sorties.html \
+	resoudre-des-problemes-fonctionnellement.html \
+	foncteurs-foncteurs-applicatifs-et-monoides.html \
+	pour-une-poignee-de-monades.html et-pour-quelques-monades-de-plus.html \
+	zippeurs.html
+
+HTMLFILES := $(addprefix html/, $(ORDEREDHTML))
+
 all: $(TARGET)
 
 html/%.html:%.mkd
@@ -20,13 +31,16 @@ html/%.html:%.mkd
 	-B before.html -A after.html -H header.html \
 	| $(UNLIT1) | $(UNLIT2) | $(UNLIT3) > $@
 
-.mkd.tex:
-	cat $< | $(HSCOLOUR) -latex | $(PANDOC) -t latex> $@
+.PHONY: pdf clean
 
-.tex.pdf:
-	pdflatex $< && pdflatex $< && pdflatex $<
-
-.PHONY: clean
+pdf:
+	cp html/hscolour.css html/hscolour.tmp
+	sed -i 's/content {width: 800px; /content {/g' html/hscolour.css
+	wkhtmltopdf --toc --toc-depth 2 -s A3 --disable-internal-links \
+		--title "Apprendre Haskell vous fera le plus grand bien \!" \
+		--cover html/pdfcover.html $(HTMLFILES) \
+		apprendre-haskell-vous-fera-le-plus-grand-bien.pdf
+	mv html/hscolour.tmp html/hscolour.css
 
 clean:
 	rm $(TARGET)

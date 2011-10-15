@@ -45,7 +45,7 @@ programmation, une chouette personne comme vous pourra suivre et apprendre
 Haskell.
 
 Le canal #haskell sur le réseau freenode est un bon endroit pour poser des
-questions si vous êtes bloqué (NdT: Le canal #haskell.fr du même réseau vous
+questions si vous êtes bloqué (NdT: Le canal #haskell-fr du même réseau vous
 permettra de poser vos questions en français). Les gens y sont extrêmement
 gentils, patients et compréhensifs envers les débutants.
 

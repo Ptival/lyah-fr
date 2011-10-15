@@ -1,6 +1,12 @@
 Apprendre Haskell vous fera le plus grand bien !
 ================================================
 
+[Également disponible en version PDF ! (dernière mise à jour : 29/09/2011 07:54
+CEST)](http://lyah.haskell.fr/apprendre-haskell-vous-fera-le-plus-grand-bien.pdf)
+
+[N'hésitez pas à m'envoyer vos remarques quant à la
+traduction !](mailto:contact@haskell.fr)
+
 #. [Introduction](introduction)
     + [À propos de ce tutoriel](introduction#a-propos-de-ce-tutoriel)
     + [Donc, qu'est-ce qu'Haskell ?](introduction#donc-qu-est-ce-qu-haskell)
@@ -111,3 +117,10 @@ Commerciale - Partage à l'Identique 3.0 non
 transcrit](http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr) parce que
 son auteur n'a pas trouvé de licence avec un nom encore plus long. Ce travail
 est par conséquent redistribué sous la même licence.
+
+<a href="http://haskell.fr">
+
+<img src="http://haskell.fr/img/haskell_fr_logo.png" alt="haskell.fr"
+class="center"/>
+
+</a>

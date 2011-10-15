@@ -227,7 +227,7 @@ ensemble.
 
 Simple. Nous aurions également pu l'écrire `doubleUs x y = x + x + y + y`.  Un
 test produit les résultats attendus (rappelez-vous bien d'ajouter cette
-fonction à la bin de `baby.hs`, de sauvegarder le fichier, et de faire `:l
+fonction à la fin de `baby.hs`, de sauvegarder le fichier, et de faire `:l
 baby` dans GHCi).
 
 > ghci> doubleUs 4 9
@@ -284,7 +284,7 @@ précédente, nous aurions pu l'écrire ainsi.
 Si nous avions omis les parenthèses, nous aurions ajouté 1 seulement si `x`
 était plus grand que 100. Remarquez le `'` à la fin du nom de la fonction.
 Cette apostrophe n'a pas de signification spéciale en Haskell. C'est un
-caractère valide à utiliser dans un nom de fonction. On utilise généralement
+caractère valide à utiliser dans un nom de fonction. On utilise habituellement
 `'` pour indiquer la version stricte d'une fonction (une version qui n'est pas
 paresseuse) ou pour la version légèrement modifiée d'une fonction ou d'une
 variable. Puisque `'` est un caractère valide dans le nom d'une fonction, on
@@ -592,7 +592,7 @@ ne sont pas aussi intelligentes que ce que certaines personnes attendent. Vous
 ne pouvez pas écrire `[1, 2, 4, 8, 16..100]` en espérant obtenir les puissances
 de 2. Premièrement, parce qu'on ne peut spécifier qu'un pas. Secondement, parce
 que certaines progressions non arithmétiques sont ambigües lorsqu'on ne les
-énonce que pas leurs premiers éléments.
+énonce que par leurs premiers éléments.
 
 Pour créer une liste des nombres de 20 à 1, vous ne pouvez pas écrire
 `[20..1]`, vous devez écrire `[20, 19..1]`.
