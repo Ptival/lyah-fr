@@ -365,7 +365,7 @@ l'on veut que ce type de données contienne lorsqu'il ne vaut pas `Nothing`, ce
 constructeur de types peut éventuellement construire un type `Maybe Int`,
 `Maybe Car`, `Maybe String`, etc. Aucune valeur ne peut avoir pour type
 `Maybe`, car ce n'est pas un type per se, mais un constructeur de types. Pour
-pouvoir être un type réel que peut avoir une valeur, il doit avoir tous ses
+pouvoir être un type réel qui peut avoir une valeur, il doit avoir tous ses
 paramètres remplis.
 
 Donc, si l'on passe `Char` en paramètre de type à `Maybe`, on obtient un type
@@ -392,8 +392,8 @@ Jouons un peu avec le type `Maybe`.
 > ghci> Just 10 :: Maybe Double
 > Just 10.0
 
-Les paramètres de types sont utiles parce qu'on peut créer différents types qui
-dépendent de quelle sorte de types on souhaite que notre type de données
+Les paramètres de types sont utiles parce qu'on peut créer différents types
+en fonction de la sorte de types qu'on souhaite que notre type de données
 contienne. Quand on fait `:t Just "Haha"`, le moteur d'inférence de types
 se rend compte que le type doit être `Maybe [Char]`, parce que le `a` dans le
 `Just a` est une chaîne de caractères, donc le `a` de `Maybe a` doit aussi être
@@ -478,20 +478,20 @@ de `Data.Map`. Le `k` est le type des clés, le `v` le type des valeurs. C'est
 un bon exemple d'endroit où les types paramétrés sont très utiles. Avoir des
 maps paramétrées nous permet de créer des maps de n'importe quel type vers
 n'importe quel autre type, du moment que le type de la clé soit membre de la
-classe de types `Ord`. Si nous étions en train de définir un type de map, on
+classe de types `Ord`. Si nous souhaitions définir un type de map, on
 pourrait ajouter la contrainte de classe dans la déclaration *data*&nbsp;:
 
 > data (Ord k) => Map k v = ...
 
 Cependant, il existe une très forte convention en Haskell qui est de **ne
 jamais ajouter de contraintes de classe à une déclaration de données**.
-Pourquoi ? Eh bien, parce que le bénéfice est minimal, comparé au fait qu'on se
+Pourquoi ? Eh bien, parce que le bénéfice est minimal, mais on se
 retrouve à écrire plus de contraintes de classes, même lorsqu'elles ne sont pas
 nécessaires. Que l'on mette ou non, la contrainte `Ord k` dans la déclaration
 *data* de `Map k v`, on aura à écrire la contrainte dans les fonctions qui
 supposent un ordre sur les clés de toute façon. Mais, si l'on ne met pas la
 contrainte dans la déclaration *data*, alors on n'aura pas à mettre `(Ord k)
-=>` dans les déclarations de types de fonctions qui n'ont pas besoin de cette
+=>` dans les déclarations de types des fonctions qui n'ont pas besoin de cette
 contrainte pour fonctionner. Un exemple d'une telle fonction est `toList`, qui
 prend un mapping et le convertit en liste associative. Sa signature de type est
 `toList :: Map k a -> [(k, a)]`. Si `Map k v` avait une contrainte de classe
@@ -520,7 +520,7 @@ bien qu'en général on n'en utilise qu'un seul.
 
 `vplus` somme deux vecteurs. Deux vecteurs sont sommés en sommant leurs
 composantes deux à deux. `scalarMult` est le produit scalaire de deux vecteurs
-et `vectorMult` permet de multiplier un vecteur par un scalaire. Ces fonctions
+et `vectMult` permet de multiplier un vecteur par un scalaire. Ces fonctions
 peuvent opérer sur des types comme `Vector Int`, `Vector Integer`, `Vector
 Float`, à condition que le `a` de `Vector a` soit de la classe `Num`.
 Également, si vous examinez les déclarations de type des fonctions, vous verrez
