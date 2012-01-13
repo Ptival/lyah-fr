@@ -1165,8 +1165,10 @@ notre élément en seulement 3 coups ! Si l'on cherchait dans une liste, ou dans
 un arbre mal construit, cela pourrait nous prendre jursqu'à 8 coups pour savoir
 si 8 est là ou pas.
 
-Les ensembles de `Data.Set` et les maps de `Data.Map` sont implémentés à l'aide
-d'arbres binaires de recherche équilibrés, qui sont toujours bien équilibrés.
+Les ensembles de `Data.Set` et les maps de `Data.Map` sont implémentés à
+l'aide d'arbres binaires de recherche équilibrés, qui sont toujours bien
+équilibrés. Mais pour l'instant, nous allons simplement implémenter des
+arbres de recherches binaires standards.
 
 Voilà ce qu'on va dire&nbsp;: un arbre est soit vide, soit un élément contenant une
 valeur et deux arbres. Ça sent le type de données algébrique à plein nez !
