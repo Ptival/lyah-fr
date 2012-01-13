@@ -1155,11 +1155,11 @@ chaque élément pointe vers deux éléments, son fils gauche et son fils droit.
 fils gauche a une valeur inférieure à celle de l'élément, le fils droit a une
 valeur supérieure. Chacun des fils peut à son tour pointer vers zéro, un ou
 deux éléments. Chaque élément a ainsi au plus deux sous-arbres. Et la
-propriété intéressante de ces arbres est que tous les nœeuds du sous-arbre
-gauche d'un nœeud donné, mettons 5, ont une valeur inférieure à 5. Quant aux
-nœeuds du sous-arbre droit, ils sont tous supérieurs à 5. Ainsi, si l'on
+propriété intéressante de ces arbres est que tous les nœuds du sous-arbre
+gauche d'un nœud donné, mettons 5, ont une valeur inférieure à 5. Quant aux
+nœuds du sous-arbre droit, ils sont tous supérieurs à 5. Ainsi, si l'on
 cherche 8 dans un arbre dont la racine vaut 5, on va chercher seulement dans le
-sous-arbre droit, puisque 8 est plus grand que 5. Si le nœeud suivant est 7, on
+sous-arbre droit, puisque 8 est plus grand que 5. Si le nœud suivant est 7, on
 cherche encore à droite car 8 est plus grand que 7. Et voilà ! On a trouvé
 notre élément en seulement 3 coups ! Si l'on cherchait dans une liste, ou dans
 un arbre mal construit, cela pourrait nous prendre jursqu'à 8 coups pour savoir
@@ -1176,9 +1176,9 @@ valeur et deux arbres. Ça sent le type de données algébrique à plein nez !
 Ok, bien, c'est très bien. Plutôt que de construire des arbres à la main, on va
 créer une fonction qui prend un arbre, un élément, et insère cet élément. Cela
 se fait en comparant la valeur de l'élément que l'on souhaite insérer avec le
-nœeud racine, s'il est plus petit on part à gauche, s'il est plus grand on part
-à droite. On fait de même avec tous les nœeuds suivants jusqu'à ce qu'on arrive
-à un arbre vide. C'est ici qu'on doit insérer notre nœeud qui va simplement
+nœud racine, s'il est plus petit on part à gauche, s'il est plus grand on part
+à droite. On fait de même avec tous les nœuds suivants jusqu'à ce qu'on arrive
+à un arbre vide. C'est ici qu'on doit insérer notre nœud qui va simplement
 remplacer ce vide.
 
 Dans des langages comme C, on fait ceci en modifiant des pointeurs et des
@@ -1192,7 +1192,7 @@ contient cet élément. Ça peut paraître inefficace, mais la paresse se charge
 ce problème.
 
 Voici donc deux fonctions. L'une est une fonction auxiliaire pour créer un
-arbre singleton (qui ne contient qu'un nœeud) et l'autre est une fonction
+arbre singleton (qui ne contient qu'un nœud) et l'autre est une fonction
 d'insertion.
 
 > singleton :: a -> Tree a
@@ -1205,7 +1205,7 @@ d'insertion.
 >     | x < a  = Node a (treeInsert x left) right
 >     | x > a  = Node a left (treeInsert x right)
 
-La fonction `singleton` est juste un raccourci pour créer un nœeud contenant
+La fonction `singleton` est juste un raccourci pour créer un nœud contenant
 une valeur et deux sous-arbres vides. Dans la fonction d'insertion, on a
 d'abord notre cas de base sous forme d'un motif. Si l'on atteint un arbre vide
 et qu'on veut y insérer notre valeur, cela veut dire qu'il faut renvoyer
@@ -1253,9 +1253,9 @@ un élément d'une liste et produit un nouvel arbre) et `EmptyTree` était
 l'accumulateur initial. `nums`, évidemment, était la liste qu'on pliait.
 
 Lorsqu'on affiche notre arbre à la console, il n'est pas très lisible, mais en
-essayant, on peut voir sa structure. On peut voir que le nœeud racine est 5 et
-qu'il a deux sous-arbres, un qui a pour nœeud racine 3, l'autre qui a pour
-nœeud racine 7, etc.
+essayant, on peut voir sa structure. On peut voir que le nœud racine est 5 et
+qu'il a deux sous-arbres, un qui a pour nœud racine 3, l'autre qui a pour
+nœud racine 7, etc.
 
 > ghci> 8 `treeElem` numsTree
 > True
@@ -1841,7 +1841,7 @@ liste renversée `[5, 4, 3, 2]`. Si on utilise `fmap (\a -> a)` (la fonction
 identité qui retourne son paramètre inchangé) sur une liste, on s'attend à
 retrouver la même liste en retour. Par exemple, si on donnait une mauvaise
 instance de foncteur à notre type `Tree`, alors en utilisant `fmap` sur un
-arbre où le sous-arbre gauche n'a que des éléments inférieurs au nœeud racine
+arbre où le sous-arbre gauche n'a que des éléments inférieurs au nœud racine
 et le sous-arbre droit n'a que des éléments supérieurs, on risquerait de
 produire un arbre qui n'a plus cette propriété. On verra les lois des foncteurs
 plus en détail dans un des chapitres suivants.
