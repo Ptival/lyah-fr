@@ -160,7 +160,7 @@ lui-même pour une raison quelconque, on aurait pu utiliser des motifs nommés.
 > ghci> surface (Circle (Point 0 0) 24)
 > 1809.5574
 
-Et pourquoi pas une fonciton qui bouge une forme ? Elle prend une forme, une
+Et pourquoi pas une fonction qui bouge une forme ? Elle prend une forme, une
 quantité sur l'axe x et sur l'axe y, et retourne une forme aux mêmes
 dimensions, mais déplacée selon ces quantités.
 
@@ -1391,7 +1391,7 @@ Puisqu'il y a beaucoup de cas où deux lumières sont différentes, on a spécif
 les cas d'égalité, et utilisé un motif attrape-tout pour dire que dans tous les
 autres cas, les lumières sont différentes.
 
-Créons une instance de `Show` à la main également. Pour sastisfaire une
+Créons une instance de `Show` à la main également. Pour satisfaire une
 définition complète minimale de `Show`, il suffit d'implémenter `show`, qui
 prend une valeur et retourne une chaîne de caractères.
 
@@ -1807,7 +1807,7 @@ caractères, que `b` était une chaîne de caractères, mais que `a` était un
 nombre, ça ne marcherait pas. Aussi, en voyant ce que serait le type de `fmap`
 s'il n'opérait que sur des valeurs `Either`, on voit que le premier paramètre
 doit rester le même alors que le second peut changer, et c'est le constructeur
-de valeurs `Left` qui actualise ce premire paramètre.
+de valeurs `Left` qui actualise ce premier paramètre.
 
 Cela va bien de pair avec notre analogie de la boîte, si l'on imagine que
 `Left` est une boîte vide sur laquelle un message d'erreur indique pourquoi
@@ -1826,7 +1826,7 @@ pour dénoter des choses qui sont similaires mais un peu modifiées.
 
 </div>
 
-Essayez de deviner comme `Map k` est fait instance de `Functor` par vous-même !
+Essayez de deviner comment `Map k` est fait instance de `Functor` par vous-même !
 
 Avec la classe `Functor`, on a vu comment les classes de types peuvent
 représenter des concepts d'ordre supérieur plutôt cool. On a aussi pratiqué un
