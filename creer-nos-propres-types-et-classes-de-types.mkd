@@ -1874,8 +1874,8 @@ système de types.
 Donc, les valeurs comme `3`, `"YEAH"`, ou `takeWhile` (les fonctions sont aussi
 des valeurs, puisqu'on peut les passer et les retourner) ont chacune un type.
 Les types sont des petites étiquettes que les valeurs transportent afin qu'on
-puisse raisonner sur leur valeur. Mais les types ont eux-même leur petite
-étiquette, appelée **sorte**. Une sorte est plus ou moins le type d'un type. Ça
+puisse raisonner sur leur valeur. Mais les types ont eux-même leurs petites
+étiquettes, appelées **sortes**. Une sorte est plus ou moins le type d'un type. Ça
 peut sembler bizarre et déroutant, mais c'est en fait un concept très cool.
 
 Que sont les sortes et à quoi servent-elles ? Eh bien, examinons la sorte d'un
