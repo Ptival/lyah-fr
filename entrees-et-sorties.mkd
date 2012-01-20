@@ -914,7 +914,7 @@ la façon dont l'utilisateur veut utiliser le programme.
 
 Faisons un programme qui lit continuellement une ligne et nous dit si la ligne
 était un palindrome ou pas. On pourrait utiliser `getLine` pour lire une ligne,
-dire à l'utilisateur si c'est un palindrome, puis lancer main à nouveau. Mais
+dire à l'utilisateur si c'est un palindrome, puis lancer `main` à nouveau. Mais
 il est plus simple d'utiliser `interact`. Quand vous utilisez `interact`,
 pensez à tout ce que vous avez besoin de faire pour transformer une entrée en
 la sortie désirée. Dans notre cas, on doit remplacer chaque ligne de l'entrée
