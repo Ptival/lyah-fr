@@ -853,7 +853,7 @@ exécutant une fonction pure sur ce contenu, et en affichant le résultat que la
 fonction a renvoyé.
 
 La fonction `shortLinesOnly` fonctionne ainsi&nbsp;: elle prend une chaîne de
-caractères comme "short`nlooooooooooooooong\nshort again"`. Cette chaîne a
+caractères comme `"short\nlooooooooooooooong\nshort again"`. Cette chaîne a
 trois lignes, dont deux courtes et une au milieu plus longue. La fonction lance
 `lines` sur cette chaîne, ce qui la convertit en `["short",
 "looooooooooooooong", "short again"]`, qu'on lie au nom `allLines`. Cette liste
