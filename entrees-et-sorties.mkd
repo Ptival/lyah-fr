@@ -881,8 +881,8 @@ cela.
 On connecte le contenu de *shortlines.txt* à l'entrée de *shotlinesonly* et en
 sortie, on obtient les lignes courtes.
 
-Ce motif de récupérer une chaîne en entrée, la transformer avec une fonction,
-puis écrire le résultat est tellement commun qu'il existe une fonction qui rend
+Ce motif qui récupère une chaîne en entrée, la transforme avec une fonction,
+puis écrit le résultat est tellement commun qu'il existe une fonction qui rend
 cela encore plus simple, appelée `interact`. `interact` prend une fonction de
 type `String -> String` en paramètre et retourne une action I/O qui va lire une
 entrée, lancer cette fonction dessus, et afficher le résultat. Modifions notre
