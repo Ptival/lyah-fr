@@ -1690,7 +1690,7 @@ prend une fonction d'un type vers un autre type et un foncteur appliqué au
 premier type, et retourne un foncteur appliqué au second type.
 
 Si cela semble un peu confus, ne vous inquiétez pas. Tout sera bientôt révélé
-avec des exemples. Hmm, cette déclaration de type de `gmap` me rappelle quelque
+avec des exemples. Hmm, cette déclaration de type de `fmap` me rappelle quelque
 chose. Si vous ne connaissez pas la signature de `map`, c'est `map :: (a -> b)
 -> [a] -> [b]`.
 
