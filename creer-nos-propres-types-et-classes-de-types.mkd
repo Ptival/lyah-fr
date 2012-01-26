@@ -1433,7 +1433,7 @@ puisse attendre de lui qu'il soit testable pour l'égalité. C'est tout pour le
 sous-typage, c'est seulement une contrainte de classes sur une déclaration de
 *classe* ! À partir de là, quand on définit le corps des fonctions, que ce soit
 dans la déclaration de *classe* ou bien dans une déclaration d'*instance*, on
-peut toujours présumer que `a` et membre d'`Eq` et ainsi utiliser `==` sur des
+peut toujours présumer que `a` est membre d'`Eq` et ainsi utiliser `==` sur des
 valeurs de ce type.
 
 Mais comment est-ce que `Maybe`, ou le type des listes, sont rendus instances
