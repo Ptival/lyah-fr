@@ -159,7 +159,7 @@ une boîte `IO`, seulement la boîte doit toujours aller dans le monde réel pou
 obtenir quelque chose. Ensuite, lorsqu'on la lie à quelque chose avec `<-`, le
 nom sera lié au résultat auquel `reverse` aura déjà été appliquée.
 
-L'action I/O `fmap (++"!") getLine"` se comporte comme `getLine`, mais ajoute
+L'action I/O `fmap (++"!") getLine` se comporte comme `getLine`, mais ajoute
 toujours `"!"` à son résultat !
 
 Si on regarde ce que le type de `fmap` serait si elle était limitée à `IO`, ce
