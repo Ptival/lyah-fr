@@ -2084,7 +2084,7 @@ signifient *inférieur*, *égal* et *supérieur* respectivement&nbsp;:
 Avec les listes, les nombres et les valeurs booléennes, on voit que trouver des
 monoïdes est juste l'affaire de regarder ce qu'on utilisait déjà afin de voir
 si ces choses présentent un comportement monoïdal. Pour `Ordering`, il faut y
-regarder à deux fois avant de reconnaître le monoïde, mais il s'avère que sont
+regarder à deux fois avant de reconnaître le monoïde, mais il s'avère que son
 instance de `Monoid` est tout aussi intuitive que celles recontrées
 précédemment, et plutôt utile également&nbsp;:
 
