@@ -1853,11 +1853,9 @@ utilise la classe de types `Monoid`, on se repose sur le fait que ses instances
 agissent comme des monoïdes. Sinon, à quoi cela servirait-il ? C'est pourquoi,
 en créant des instances, on doit s'assurer qu'elles obéissent à ces lois&nbsp;:
 
-* <span class="law">mempty `mappend` x = x</span>
-
-* <span class="law">x `mappend` mempty = x</span>
-
-* <span class="law">(x `mappend` y) `mappend` z = x `mappend` (y `mappend`
+* <span class="law">mempty \`mappend\` x = x</span>
+* <span class="law">x \`mappend\` mempty = x</span>
+* <span class="law">(x \`mappend\` y) \`mappend\` z = x \`mappend\` (y \`mappend\`
 z)</span>
 
 Les deux premières déclarent que `mempty` doit être le neutre de `mappend`, la
