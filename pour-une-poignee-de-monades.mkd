@@ -485,7 +485,7 @@ et `landRight`. De ce qu'on voit, on veut que ces fonctions puissent échouer.
 C'est-à-dire, on souhaite qu'elles retournent une nouvelle perche tant que
 l'équilibre est respecté, mais qu'elles échouent si les oiseaux atterrissent en
 disproportion. Et quel meilleur moyen d'ajouter un contexte de possible échec
-que d'utiliser une valeur Maybe ? Reprenons ces fonctions&nbsp;:
+que d'utiliser une valeur `Maybe` ? Reprenons ces fonctions&nbsp;:
 
 > landLeft :: Birds -> Pole -> Maybe Pole
 > landLeft n (left,right)
