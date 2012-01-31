@@ -1383,7 +1383,7 @@ fonctions monadiques avec `>>=`, l'ordre d'imbrication ne doit pas importer.
 Formellement énoncé&nbsp;:
 
 * <span class="law">(m >>= f) >>= g</span> est egal à <span class="law">m >>=
-(\x -> f x >>= g)</span>
+(\\x -> f x >>= g)</span>
 
 Hmmm, que se passe-t-il donc là ? On a une valeur monadique `m`, et deux
 fonctions monadiques `f` et `g`. Quand on fait `(m >>= f) >>= g`, on donne `m`
