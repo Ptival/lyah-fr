@@ -24,7 +24,7 @@ ceux qui apprennent haskell et ceux qui doivent coder en java" class="right"/>
 
 Nous avons vu comment les monades pouvaient être utilisées pour prendre des
 valeurs dans un contexte et appliquer des fonctions dessus, et comment utiliser
-`>>=` et la notation *do* nous permettait de nous concentrer sur les valeurs
+`>>=` et la notation `do` nous permettait de nous concentrer sur les valeurs
 elles-même pendant que le contexte était géré pour nous.
 
 Nous avons croisé la monade `Maybe` et avons vu comment elle ajoutait un
@@ -320,17 +320,17 @@ afficher. Pour les `String`, la valeur monoïdale est la chaîne vide. Avec
 inchangée. Pour `Product`, le neutre est `1`.
 
 L'instance `Writer` n'a pas d'implémentation de `fail`, donc si un filtrage par
-motif échoue dans une notation *do*, `error` est appelée.
+motif échoue dans une notation `do`, `error` est appelée.
 
 <h3>Utiliser la notation do avec Writer</h3>
 
 À présent qu'on a une instance de `Monad`, on est libre d'utiliser la notation
-*do* pour les valeurs `Writer`. C'est pratique lorsqu'on a plusieurs valeurs
+`do` pour les valeurs `Writer`. C'est pratique lorsqu'on a plusieurs valeurs
 `Writer` et qu'on veut faire quelque chose avec. Comme les autres monades,  on
 peut les traiter comme des valeurs normales et les contextes sont pris en
 compte pour nous. Dans ce cas, les valeurs monoïdales sont attachées et
 `mappend` les unes aux autres et ceci se réflète dans le résultat final. Voici
-un exemple simple de l'utilisation de la notation *do* avec `Writer` pour
+un exemple simple de l'utilisation de la notation `do` avec `Writer` pour
 multiplier des nombres.
 
 > import Control.Monad.Writer
@@ -1224,7 +1224,7 @@ exemple d'instance d'`Error` est, eh bien, le type `String` ! Dans le cas de
 
 Puisqu'on utilise généralement des `String` pour décrire nos erreurs quand on
 utilise `Either`, on n'a pas trop à s'en soucier. Quand un filtrage par motif
-échoue dans la notation *do*, une valeur `Left` est utilisée pour indiquer cet
+échoue dans la notation `do`, une valeur `Left` est utilisée pour indiquer cet
 échec.
 
 Voici quelques exemples d'utilisation&nbsp;:
@@ -1344,7 +1344,7 @@ Voici comment `liftM` est implémentée&nbsp;:
 > liftM :: (Monad m) => (a -> b) -> m a -> m b
 > liftM f m = m >>= (\x -> return (f x))
 
-Ou, en notation *do*&nbsp;:
+Ou, en notation `do`&nbsp;:
 
 > liftM :: (Monad m) => (a -> b) -> m a -> m b
 > liftM f m = do
