@@ -329,7 +329,7 @@ motif échoue dans une notation `do`, `error` est appelée.
 `Writer` et qu'on veut faire quelque chose avec. Comme les autres monades,  on
 peut les traiter comme des valeurs normales et les contextes sont pris en
 compte pour nous. Dans ce cas, les valeurs monoïdales sont attachées et
-`mappend` les unes aux autres et ceci se réflète dans le résultat final. Voici
+`mappend` les unes aux autres et ceci se reflète dans le résultat final. Voici
 un exemple simple de l'utilisation de la notation `do` avec `Writer` pour
 multiplier des nombres.
 
@@ -452,7 +452,7 @@ d'utiliser <code>gcd' b (a \`mod\` b)</code> dans une ligne d'une expression
 Bien qu'il puisse être assez utile de tracer l'exécution de notre nouvelle
 `gcd'` à la main pour voir comment les registres sont juxtaposés, je pense
 qu'il sera plus enrichissant de prendre de la perspective et voir ceux-ci
-commes des valeurs avec un contexte, et ainsi imaginer ce que notre résultat
+comme des valeurs avec un contexte, et ainsi imaginer ce que notre résultat
 devrait être.
 
 Essayons notre nouvelle fonction `gcd'`. Son résultat est une valeur `Writer
@@ -484,7 +484,7 @@ cela augmente la lisibilité).
 
 <h3>Construction inefficace de listes</h3>
 
-Quand vous utilisez la monade `Writer`, il faut être extrèmement prudent avec
+Quand vous utilisez la monade `Writer`, il faut être extrêmement prudent avec
 le choix du monoïde à utiliser, parce qu'utiliser des listes peut s'avérer très
 lent. C'est parce que les listes utilisent `++` pour `mappend`, et utiliser
 `++` pour ajouter quelque chose à la fin d'une liste peut s'avérer très lent si
@@ -853,7 +853,7 @@ puisqu'Haskell est pur, on ne peut pas faire cela, donc nous devons prendre un
 utiliser ce nouvel état pour générer d'autres résultats.
 
 On pourrait se dire que pour éviter d'avoir à gérer manuellement ce genre de
-calculs à états, on devrait se débarasser de la pureté d'Haskell. Eh bien, cela
+calculs à états, on devrait se débarrasser de la pureté d'Haskell. Eh bien, cela
 n'est pas nécessaire, puisqu'il existe une petite monade spéciale appelée la
 monade d'états qui s'occupe de toute cette manipulation d'états pour nous, et
 sans abandonner la pureté qui fait que programmer en Haskell est tellement
@@ -1939,7 +1939,7 @@ Dans cette section, on va regarder comment un type est créé, identifié comme
 une monade, et instancié en `Monad`. Généralement, on ne crée pas une monade
 pour le plaisir de créer une monade. Généralement, on crée plutôt un type dont
 le but est de modéliser un aspect du problème à résoudre, et plus tard si l'on
-s'aperçoit que ce type réprésente une valeur dans un contexte et peut agir
+s'aperçoit que ce type représente une valeur dans un contexte et peut agir
 comme une monade, on lui donne une instance de `Monad`.
 
 Comme on l'a vu, les listes sont utilisées pour représenter des valeurs non
@@ -1979,7 +1979,7 @@ le dénominateur sont séparés par un `%`. Voici quelques exemples&nbsp;:
 > 19 % 12
 
 La première ligne est juste un quart. À la deuxième ligne, on additionne deux
-moitiés, ce qui nous donne un tout, et à la troisième ligne on additione un
+moitiés, ce qui nous donne un tout, et à la troisième ligne on additionne un
 tiers et cinq quarts et on obtient dix-neuf douzièmes. Jetons ces nombres à
 virgule flottante et utilisons plutôt des `Rational` pour nos
 probabilités&nbsp;:
@@ -2112,7 +2112,7 @@ s'assurera que les probabilités sont bien reflétées dans le résultat final.
 Mettons qu'on ait deux pièces normales et une pièce pipée qui donne pile un
 nombre ahurissant de neuf fois sur dix, et face seulement une fois sur dix. Si
 l'on jette les trois pièces à la fois, quelles sont les chances qu'elles
-atterrissent toutes sur pile ? D'abord, créont des valeurs de probabilités pour
+atterrissent toutes sur pile ? D'abord, créons des valeurs de probabilités pour
 un lancer de pièce normale et un lancer de pièce pipée&nbsp;:
 
 > data Coin = Heads | Tails deriving (Show, Eq)
