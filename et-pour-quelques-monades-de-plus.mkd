@@ -200,7 +200,7 @@ Puisque la valeur accompagnante peut être n'importe quelle valeur monoïdale,
 plus besoin de penser à un tuple valeur et registre, on peut désormais penser à
 un tuple valeur et valeur monoïdale. Par exemple, on peut avoir un tuple
 contenant un nom d'objet et un prix en tant que valeur monoïdale. On utilise le
-*newtype* `Sum` pour s'assurer que les prix sont bien additionnés lorsqu'on
+`newtype` `Sum` pour s'assurer que les prix sont bien additionnés lorsqu'on
 opère sur les objets. Voici une fonction qui ajoute des boissons à de la
 nourriture de cow-boy&nbsp;:
 
@@ -215,7 +215,7 @@ nourriture de cow-boy&nbsp;:
 > addDrink _ = ("beer", Sum 30)
 
 On utilise des chaînes de caractères pour représenter la nourriture, et un
-`Int` dans un *newtype* `Sum` pour tracer le nombre de centimes que quelque
+`Int` dans un `newtype` `Sum` pour tracer le nombre de centimes que quelque
 chose coûte. Juste un rappel, faire `mappend` sur des `Sum` résulte en la somme
 des valeurs enveloppées&nbsp;:
 
@@ -265,11 +265,11 @@ valeur monadique, examinons l'instance de `Monad` pour de tels types. Le module
 
 D'abord, examinons le type lui-même. Pour attacher un monoïde à une valeur, on
 doit simplement les placer ensemble dans un tuple. Le type `Writer w a` est
-juste un enrobage *newtype* de cela. Sa définition est très simple&nbsp;:
+juste un enrobage `newtype` de cela. Sa définition est très simple&nbsp;:
 
 > newtype Writer w a = Writer { runWriter :: (a, w) }
 
-C'est enveloppé dans un *newtype* afin d'être fait instance de `Monad` et de
+C'est enveloppé dans un `newtype` afin d'être fait instance de `Monad` et de
 séparer ce type des tuples ordinaires. Le paramètre de type `a` représente le
 type de la valeur, alors que le paramètre de type `w` est la valeur monoïdale
 attachée.
@@ -285,7 +285,7 @@ class="right"/>
 
 Tout d'abord, examinons `>>=`. Son implémentation est essentiellement identique
 à `applyLog`, seulement à présent que notre tuple est enveloppé dans un
-*newtype* `Writer`, on doit l'en sortir en filtrant par motif. On prend la
+`newtype` `Writer`, on doit l'en sortir en filtrant par motif. On prend la
 valeur `x` et applique la fonction `f`. Cela nous rend une valeur `Writer w a`
 et on utilise un filtrage par motif via une expression `let` dessus. On
 présente le `y` comme nouveau résultat et on utilise `mappend` pour combiner
@@ -456,7 +456,7 @@ comme des valeurs avec un contexte, et ainsi imaginer ce que notre résultat
 devrait être.
 
 Essayons notre nouvelle fonction `gcd'`. Son résultat est une valeur `Writer
-[String] Int` et si on l'extrait de son *newtype*, on obtient un tuple. La
+[String] Int` et si on l'extrait de son `newtype`, on obtient un tuple. La
 première composante de cette paire est le résultat. Voyons si c'est le
 cas&nbsp;:
 
@@ -572,7 +572,7 @@ Nous avons concaténé deux listes différentielles simplement en en créant une
 nouvelle fonction qui applique d'abord une liste différentielle sur une liste,
 puis applique l'autre liste différentielle au résultat.
 
-Créons un emballage *newtype* pour nos listes différentielles de façon à
+Créons un emballage `newtype` pour nos listes différentielles de façon à
 pouvoir les doter d'une instance de monoïde&nbsp;:
 
 > newtype DiffList a = DiffList { getDiffList :: [a] -> [a] }
@@ -635,7 +635,7 @@ correctement&nbsp;:
 > 110 mod 34 = 8
 
 On fait `gcdReverse 110 34`, puis on utilise `runWriter` pour sortir le
-résultat du *newtype*, et on applique `snd` pour n'obtenir que le registre,
+résultat du `newtype`, et on applique `snd` pour n'obtenir que le registre,
 puis on applique `fromDiffList` pour le convertir en une liste normale, et
 enfin on l'affiche entrée par entrée à l'écran.
 
@@ -957,7 +957,7 @@ préoccuper de la gestion de l'état manuellement.
 
 <h3>La monade State</h3>
 
-Le module `Control.Monad.State` fournit un *newtype* qui enveloppe des calculs
+Le module `Control.Monad.State` fournit un `newtype` qui enveloppe des calculs
 à états. Voici sa définition&nbsp;:
 
 > newtype State s a = State { runState :: s -> (a,s) }
@@ -986,7 +986,7 @@ certaine valeur sans changer l'état.
 
 Qu'en est-il de `>>=` ? Eh bien, le résultat obtenu en donnant une fonction à
 un calcul à états par `>>=` doit être un calcul à états, n'est-ce pas ? On
-commence donc à écrire le *newtype* `State` et une lambda. Cette lambda doit
+commence donc à écrire le `newtype` `State` et une lambda. Cette lambda doit
 être notre nouveau calcul à états. Mais que doit-elle faire ? Eh bien, on doit
 extraire le résultat du premier calcul à états d'une manière ou d'une autre.
 Puisqu'on se trouve dans un calcul à états, on peut donner au calcul à états
@@ -1028,7 +1028,7 @@ sur la pile avant de dépiler deux nombres ainsi&nbsp;:
 >     pop
 
 Voyez-vous comme on a collé ensemble un empilement et deux dépilements en un
-calcul à états ? Quand on sort ce calcul de son *newtype*, on obtient une
+calcul à états ? Quand on sort ce calcul de son `newtype`, on obtient une
 fonction à laquelle on peut fournir un état initial&nbsp;:
 
 > ghci> runState stackManip [5,8,2,1]
@@ -1131,7 +1131,7 @@ La fonction `random` de `System.Random` a pour type&nbsp;:
 
 Signifiant qu'elle prend un générateur aléatoire et produit un nombre aléatoire
 et un nouveau générateur. On peut voir que c'est un calcul à états, on peut
-donc l'envelopper dans le constructeur de *newtype* `State` et l'utiliser comme
+donc l'envelopper dans le constructeur de `newtype` `State` et l'utiliser comme
 une valeur monadique afin que la gestion de l'état soit faite pour nous&nbsp;:
 
 > import System.Random
@@ -1992,7 +1992,7 @@ une fois sur quatre. Plutôt propre.
 
 Nous avons pris des listes, et ajouter un contexte supplémentaire, afin
 qu'elles représentent des valeurs avec des contextes. Avant d'aller plus loin,
-enveloppons cela dans un *newtype* parce que mon petit doigt me dit qu'on va
+enveloppons cela dans un `newtype` parce que mon petit doigt me dit qu'on va
 bientôt créer des instances.
 
 > import Data.Ratio
@@ -2008,7 +2008,7 @@ laissera les probabilités comme elles étaient. Créons une instance&nbsp;:
 > instance Functor Prob where
 >     fmap f (Prob xs) = Prob $ map (\(x,p) -> (f x,p)) xs
 
-On sort la paire du *newtype* en filtrant par motif, on applique la fonction
+On sort la paire du `newtype` en filtrant par motif, on applique la fonction
 `f` aux valeurs en gardant les probabilités telles quelles, et on réencapsule
 le tout. Voyons si cela marche&nbsp;:
 
