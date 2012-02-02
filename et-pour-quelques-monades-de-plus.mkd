@@ -777,7 +777,7 @@ C'est la même chose que l'expression applicative qu'on a écrite plus haut,
 seulement maintenant elle se base sur le fait que les fonctions soient des
 monades. Une expression `do` résulte toujours en une valeur monadique, et
 celle-ci ne fait pas exception. Le résultat de cette valeur monadique est une
-fonction. Ce qui se passe ici, c'est quelle prend un nombre, puis fait `(*2)`
+fonction. Ce qui se passe ici, c'est qu'elle prend un nombre, puis fait `(*2)`
 sur ce nombre, ce qui résulte en `a`. `(+10)` est également appliquée au même
 nombre que celui donné à `(*2)`, et le résultat devient `b`. `return`, comme
 dans les autres monades, n'a pas d'autre effet que de créer une valeur
