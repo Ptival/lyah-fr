@@ -823,7 +823,7 @@ libère de l'inquiétude de savoir quelle est la valeur de chaque variable à un
 instant donné. Cependant, certains problèmes sont intrinsèquement composés
 d'états en ce qu'ils se basent sur des états pouvant évoluer dans le temps.
 Bien que de tels problèmes ne soient pas un problème pour Haskell, ils peuvent
-parfois être fastidieux à modeler. C'est pourquoi Haskell offre la monade
+parfois être fastidieux à modéliser. C'est pourquoi Haskell offre la monade
 d'états, qui rend la gestion de problèmes à états simple comme bonjour tout en
 restant propre et pur.
 
