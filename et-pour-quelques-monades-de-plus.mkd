@@ -1312,7 +1312,7 @@ Et le type de `fmap`&nbsp;:
 
 > fmap :: (Functor f) => (a -> b) -> f a -> f b
 
-Si un type est à la fois instance de `Functor` et de `Maybe` et obéit leurs
+Si un type est à la fois instance de `Functor` et de `Monad` et obéit leurs
 lois respectives, alors ces deux fonctions doivent être identiques (c'est le
 cas pour toutes les monades qu'on a vues jusqu'ici). Un peu comme `pure` et
 `return` font la même chose, seulement que la première a une contrainte de
@@ -1351,7 +1351,7 @@ Ou, en notation `do`&nbsp;:
 >     x <- m
 >     return (f x)
 
-On donne la valeur monadique `m` à la fonction, et elle applique `f` à son
+On donne la valeur monadique `m` à la fonction, et on applique `f` à son
 résultat avant de le retourner dans un contexte par défaut. Grâce aux lois des
 monades, on a la garantie que le contexte est inchangé, seule la valeur
 résultante est altérée. On voit que `liftM` est implémentée sans faire
@@ -1456,7 +1456,7 @@ en action sur diverses valeurs `Maybe`&nbsp;:
 > Nothing
 
 La première ligne contient un calcul réussi en résultat d'un calcul réussi,
-donc ils sont joints et un gros calcul réussi. La deuxième ligne contient un
+donc ils sont joints en un gros calcul réussi. La deuxième ligne contient un
 `Nothing` comme résultat dans un `Just`. À chaque fois qu'on a eu affaire à des
 valeurs `Maybe` auparavant et qu'on voulait en combiner plusieurs, que ce soit
 avec `<*>` ou `>>=`, elles devaient toutes être `Just` pour que le résultat
@@ -1476,7 +1476,7 @@ valeurs monoïdales.
 > ghci> runWriter $ join (Writer (Writer (1,"aaa"),"bbb"))
 > (1,"bbbaaa")
 
-Le valeur monoïde extérieure `"bbb"` vient d'abord, puis `"aaa"` est
+Le valeur monoïdale extérieure `"bbb"` vient d'abord, puis `"aaa"` est
 juxtaposée. Intuitivement, pour examiner la valeur d'un `Writer`, il faut que
 sa valeur monoïdale soit mise au registre d'abord, et seulement ensuite peut-on
 examiner ce qu'elle contient.
@@ -1525,16 +1525,17 @@ des valeurs `Just`. Voici à quoi cela ressemblait si `mm` était fixé à l'ava
 <img src="img/tipi.png" alt="je suis aussi également un policier pareillement"
 class="right"/>
 
-Peut-être que la chose la plus intéressante à propos de `join` est que, pour
-chaque monade, donner une valeur monadique à `>>=` est équivalent à mapper
-cette fonction sur la valeur puis utiliser `join` pour aplatir la valeur
-monadique imbriquée résultante ! En d'autres termes, `m >>= f` est toujours
-égal à `join (fmap f m)` ! C'est logique quand on y réfléchit. Avec `>>=`, on
-donne une valeur monadique à une fonction qui attend une valeur normale et
-retourne une valeur monadique. Si l'on mappe cette fonction sur la valeur
-monadique, on a une valeur monadique à l'intérieur d'une valeur monadique. Par
-exemple, si l'on a `Just 9` et la fonction `\x -> Just (x + 1)`. En mappant la
-fonction sur `Just 9`, on obtient `Just (Just 10))`.
+Peut-être que la chose la plus intéressante à propos de `join` est que,
+pour chaque monade, donner une valeur monadique à une fonction avec `>>=`
+est équivalent à mapper cette fonction sur la valeur puis utiliser `join`
+pour aplatir la valeur monadique imbriquée résultante ! En d'autres termes,
+`m >>= f` est toujours égal à `join (fmap f m)` ! C'est logique quand on y
+réfléchit. Avec `>>=`, on donne une valeur monadique à une fonction qui
+attend une valeur normale et retourne une valeur monadique. Si l'on mappe
+cette fonction sur la valeur monadique, on a une valeur monadique à
+l'intérieur d'une valeur monadique. Par exemple, si l'on a `Just 9` et la
+fonction `\x -> Just (x + 1)`. En mappant la fonction sur `Just 9`, on
+obtient `Just (Just 10))`.
 
 Le fait que `m >>= f` est toujours égal à `join (fmap f)` est très utile quand
 on crée nos propres instances de `Monad` pour certains types parce qu'il est
