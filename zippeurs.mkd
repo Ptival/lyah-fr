@@ -416,7 +416,7 @@ Se focaliser sur des listes
 </h2>
 
 Les zippeurs peuvent être utilisés avec quasiment toutes les structures de
-données, il n'est donc pas surprenant qu'on peut les utiliser pour se focaliser
+données, il n'est donc pas surprenant qu'on puisse les utiliser pour se focaliser
 sur les sous-listes d'une liste. Après tout, les listes sont un peu comme des
 arbres, seulement là où le nœud d'un arbre a un élément (ou pas) et plusieurs
 sous-arbres, un nœud d'une liste n'a qu'un élément et qu'une sous-liste. Quand
