@@ -160,7 +160,7 @@ lui-même pour une raison quelconque, on aurait pu utiliser des motifs nommés.
 > ghci> surface (Circle (Point 0 0) 24)
 > 1809.5574
 
-Et pourquoi pas une fonciton qui bouge une forme ? Elle prend une forme, une
+Et pourquoi pas une fonction qui bouge une forme ? Elle prend une forme, une
 quantité sur l'axe x et sur l'axe y, et retourne une forme aux mêmes
 dimensions, mais déplacée selon ces quantités.
 
@@ -365,7 +365,7 @@ l'on veut que ce type de données contienne lorsqu'il ne vaut pas `Nothing`, ce
 constructeur de types peut éventuellement construire un type `Maybe Int`,
 `Maybe Car`, `Maybe String`, etc. Aucune valeur ne peut avoir pour type
 `Maybe`, car ce n'est pas un type per se, mais un constructeur de types. Pour
-pouvoir être un type réel que peut avoir une valeur, il doit avoir tous ses
+pouvoir être un type réel qui peut avoir une valeur, il doit avoir tous ses
 paramètres remplis.
 
 Donc, si l'on passe `Char` en paramètre de type à `Maybe`, on obtient un type
@@ -392,8 +392,8 @@ Jouons un peu avec le type `Maybe`.
 > ghci> Just 10 :: Maybe Double
 > Just 10.0
 
-Les paramètres de types sont utiles parce qu'on peut créer différents types qui
-dépendent de quelle sorte de types on souhaite que notre type de données
+Les paramètres de types sont utiles parce qu'on peut créer différents types
+en fonction de la sorte de types qu'on souhaite que notre type de données
 contienne. Quand on fait `:t Just "Haha"`, le moteur d'inférence de types
 se rend compte que le type doit être `Maybe [Char]`, parce que le `a` dans le
 `Just a` est une chaîne de caractères, donc le `a` de `Maybe a` doit aussi être
@@ -478,20 +478,20 @@ de `Data.Map`. Le `k` est le type des clés, le `v` le type des valeurs. C'est
 un bon exemple d'endroit où les types paramétrés sont très utiles. Avoir des
 maps paramétrées nous permet de créer des maps de n'importe quel type vers
 n'importe quel autre type, du moment que le type de la clé soit membre de la
-classe de types `Ord`. Si nous étions en train de définir un type de map, on
+classe de types `Ord`. Si nous souhaitions définir un type de map, on
 pourrait ajouter la contrainte de classe dans la déclaration *data*&nbsp;:
 
 > data (Ord k) => Map k v = ...
 
 Cependant, il existe une très forte convention en Haskell qui est de **ne
 jamais ajouter de contraintes de classe à une déclaration de données**.
-Pourquoi ? Eh bien, parce que le bénéfice est minimal, comparé au fait qu'on se
+Pourquoi ? Eh bien, parce que le bénéfice est minimal, mais on se
 retrouve à écrire plus de contraintes de classes, même lorsqu'elles ne sont pas
 nécessaires. Que l'on mette ou non, la contrainte `Ord k` dans la déclaration
 *data* de `Map k v`, on aura à écrire la contrainte dans les fonctions qui
 supposent un ordre sur les clés de toute façon. Mais, si l'on ne met pas la
 contrainte dans la déclaration *data*, alors on n'aura pas à mettre `(Ord k)
-=>` dans les déclarations de types de fonctions qui n'ont pas besoin de cette
+=>` dans les déclarations de types des fonctions qui n'ont pas besoin de cette
 contrainte pour fonctionner. Un exemple d'une telle fonction est `toList`, qui
 prend un mapping et le convertit en liste associative. Sa signature de type est
 `toList :: Map k a -> [(k, a)]`. Si `Map k v` avait une contrainte de classe
@@ -520,7 +520,7 @@ bien qu'en général on n'en utilise qu'un seul.
 
 `vplus` somme deux vecteurs. Deux vecteurs sont sommés en sommant leurs
 composantes deux à deux. `scalarMult` est le produit scalaire de deux vecteurs
-et `vectorMult` permet de multiplier un vecteur par un scalaire. Ces fonctions
+et `vectMult` permet de multiplier un vecteur par un scalaire. Ces fonctions
 peuvent opérer sur des types comme `Vector Int`, `Vector Integer`, `Vector
 Float`, à condition que le `a` de `Vector a` soit de la classe `Num`.
 Également, si vous examinez les déclarations de type des fonctions, vous verrez
@@ -1155,18 +1155,20 @@ chaque élément pointe vers deux éléments, son fils gauche et son fils droit.
 fils gauche a une valeur inférieure à celle de l'élément, le fils droit a une
 valeur supérieure. Chacun des fils peut à son tour pointer vers zéro, un ou
 deux éléments. Chaque élément a ainsi au plus deux sous-arbres. Et la
-propriété intéressante de ces arbres est que tous les nœeuds du sous-arbre
-gauche d'un nœeud donné, mettons 5, ont une valeur inférieure à 5. Quant aux
-nœeuds du sous-arbre droit, ils sont tous supérieurs à 5. Ainsi, si l'on
+propriété intéressante de ces arbres est que tous les nœuds du sous-arbre
+gauche d'un nœud donné, mettons 5, ont une valeur inférieure à 5. Quant aux
+nœuds du sous-arbre droit, ils sont tous supérieurs à 5. Ainsi, si l'on
 cherche 8 dans un arbre dont la racine vaut 5, on va chercher seulement dans le
-sous-arbre droit, puisque 8 est plus grand que 5. Si le nœeud suivant est 7, on
+sous-arbre droit, puisque 8 est plus grand que 5. Si le nœud suivant est 7, on
 cherche encore à droite car 8 est plus grand que 7. Et voilà ! On a trouvé
 notre élément en seulement 3 coups ! Si l'on cherchait dans une liste, ou dans
 un arbre mal construit, cela pourrait nous prendre jursqu'à 8 coups pour savoir
 si 8 est là ou pas.
 
-Les ensembles de `Data.Set` et les maps de `Data.Map` sont implémentés à l'aide
-d'arbres binaires de recherche équilibrés, qui sont toujours bien équilibrés.
+Les ensembles de `Data.Set` et les maps de `Data.Map` sont implémentés à
+l'aide d'arbres binaires de recherche équilibrés, qui sont toujours bien
+équilibrés. Mais pour l'instant, nous allons simplement implémenter des
+arbres de recherches binaires standards.
 
 Voilà ce qu'on va dire&nbsp;: un arbre est soit vide, soit un élément contenant une
 valeur et deux arbres. Ça sent le type de données algébrique à plein nez !
@@ -1176,9 +1178,9 @@ valeur et deux arbres. Ça sent le type de données algébrique à plein nez !
 Ok, bien, c'est très bien. Plutôt que de construire des arbres à la main, on va
 créer une fonction qui prend un arbre, un élément, et insère cet élément. Cela
 se fait en comparant la valeur de l'élément que l'on souhaite insérer avec le
-nœeud racine, s'il est plus petit on part à gauche, s'il est plus grand on part
-à droite. On fait de même avec tous les nœeuds suivants jusqu'à ce qu'on arrive
-à un arbre vide. C'est ici qu'on doit insérer notre nœeud qui va simplement
+nœud racine, s'il est plus petit on part à gauche, s'il est plus grand on part
+à droite. On fait de même avec tous les nœuds suivants jusqu'à ce qu'on arrive
+à un arbre vide. C'est ici qu'on doit insérer notre nœud qui va simplement
 remplacer ce vide.
 
 Dans des langages comme C, on fait ceci en modifiant des pointeurs et des
@@ -1192,7 +1194,7 @@ contient cet élément. Ça peut paraître inefficace, mais la paresse se charge
 ce problème.
 
 Voici donc deux fonctions. L'une est une fonction auxiliaire pour créer un
-arbre singleton (qui ne contient qu'un nœeud) et l'autre est une fonction
+arbre singleton (qui ne contient qu'un nœud) et l'autre est une fonction
 d'insertion.
 
 > singleton :: a -> Tree a
@@ -1205,7 +1207,7 @@ d'insertion.
 >     | x < a  = Node a (treeInsert x left) right
 >     | x > a  = Node a left (treeInsert x right)
 
-La fonction `singleton` est juste un raccourci pour créer un nœeud contenant
+La fonction `singleton` est juste un raccourci pour créer un nœud contenant
 une valeur et deux sous-arbres vides. Dans la fonction d'insertion, on a
 d'abord notre cas de base sous forme d'un motif. Si l'on atteint un arbre vide
 et qu'on veut y insérer notre valeur, cela veut dire qu'il faut renvoyer
@@ -1253,9 +1255,9 @@ un élément d'une liste et produit un nouvel arbre) et `EmptyTree` était
 l'accumulateur initial. `nums`, évidemment, était la liste qu'on pliait.
 
 Lorsqu'on affiche notre arbre à la console, il n'est pas très lisible, mais en
-essayant, on peut voir sa structure. On peut voir que le nœeud racine est 5 et
-qu'il a deux sous-arbres, un qui a pour nœeud racine 3, l'autre qui a pour
-nœeud racine 7, etc.
+essayant, on peut voir sa structure. On peut voir que le nœud racine est 5 et
+qu'il a deux sous-arbres, un qui a pour nœud racine 3, l'autre qui a pour
+nœud racine 7, etc.
 
 > ghci> 8 `treeElem` numsTree
 > True
@@ -1389,7 +1391,7 @@ Puisqu'il y a beaucoup de cas où deux lumières sont différentes, on a spécif
 les cas d'égalité, et utilisé un motif attrape-tout pour dire que dans tous les
 autres cas, les lumières sont différentes.
 
-Créons une instance de `Show` à la main également. Pour sastisfaire une
+Créons une instance de `Show` à la main également. Pour satisfaire une
 définition complète minimale de `Show`, il suffit d'implémenter `show`, qui
 prend une valeur et retourne une chaîne de caractères.
 
@@ -1431,7 +1433,7 @@ puisse attendre de lui qu'il soit testable pour l'égalité. C'est tout pour le
 sous-typage, c'est seulement une contrainte de classes sur une déclaration de
 *classe* ! À partir de là, quand on définit le corps des fonctions, que ce soit
 dans la déclaration de *classe* ou bien dans une déclaration d'*instance*, on
-peut toujours présumer que `a` et membre d'`Eq` et ainsi utiliser `==` sur des
+peut toujours présumer que `a` est membre d'`Eq` et ainsi utiliser `==` sur des
 valeurs de ce type.
 
 Mais comment est-ce que `Maybe`, ou le type des listes, sont rendus instances
@@ -1688,7 +1690,7 @@ prend une fonction d'un type vers un autre type et un foncteur appliqué au
 premier type, et retourne un foncteur appliqué au second type.
 
 Si cela semble un peu confus, ne vous inquiétez pas. Tout sera bientôt révélé
-avec des exemples. Hmm, cette déclaration de type de `gmap` me rappelle quelque
+avec des exemples. Hmm, cette déclaration de type de `fmap` me rappelle quelque
 chose. Si vous ne connaissez pas la signature de `map`, c'est `map :: (a -> b)
 -> [a] -> [b]`.
 
@@ -1805,7 +1807,7 @@ caractères, que `b` était une chaîne de caractères, mais que `a` était un
 nombre, ça ne marcherait pas. Aussi, en voyant ce que serait le type de `fmap`
 s'il n'opérait que sur des valeurs `Either`, on voit que le premier paramètre
 doit rester le même alors que le second peut changer, et c'est le constructeur
-de valeurs `Left` qui actualise ce premire paramètre.
+de valeurs `Left` qui actualise ce premier paramètre.
 
 Cela va bien de pair avec notre analogie de la boîte, si l'on imagine que
 `Left` est une boîte vide sur laquelle un message d'erreur indique pourquoi
@@ -1824,7 +1826,7 @@ pour dénoter des choses qui sont similaires mais un peu modifiées.
 
 </div>
 
-Essayez de deviner comme `Map k` est fait instance de `Functor` par vous-même !
+Essayez de deviner comment `Map k` est fait instance de `Functor` par vous-même !
 
 Avec la classe `Functor`, on a vu comment les classes de types peuvent
 représenter des concepts d'ordre supérieur plutôt cool. On a aussi pratiqué un
@@ -1841,7 +1843,7 @@ liste renversée `[5, 4, 3, 2]`. Si on utilise `fmap (\a -> a)` (la fonction
 identité qui retourne son paramètre inchangé) sur une liste, on s'attend à
 retrouver la même liste en retour. Par exemple, si on donnait une mauvaise
 instance de foncteur à notre type `Tree`, alors en utilisant `fmap` sur un
-arbre où le sous-arbre gauche n'a que des éléments inférieurs au nœeud racine
+arbre où le sous-arbre gauche n'a que des éléments inférieurs au nœud racine
 et le sous-arbre droit n'a que des éléments supérieurs, on risquerait de
 produire un arbre qui n'a plus cette propriété. On verra les lois des foncteurs
 plus en détail dans un des chapitres suivants.
@@ -1872,8 +1874,8 @@ système de types.
 Donc, les valeurs comme `3`, `"YEAH"`, ou `takeWhile` (les fonctions sont aussi
 des valeurs, puisqu'on peut les passer et les retourner) ont chacune un type.
 Les types sont des petites étiquettes que les valeurs transportent afin qu'on
-puisse raisonner sur leur valeur. Mais les types ont eux-même leur petite
-étiquette, appelée **sorte**. Une sorte est plus ou moins le type d'un type. Ça
+puisse raisonner sur leur valeur. Mais les types ont eux-même leurs petites
+étiquettes, appelées **sortes**. Une sorte est plus ou moins le type d'un type. Ça
 peut sembler bizarre et déroutant, mais c'est en fait un concept très cool.
 
 Que sont les sortes et à quoi servent-elles ? Eh bien, examinons la sorte d'un
