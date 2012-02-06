@@ -853,7 +853,7 @@ exécutant une fonction pure sur ce contenu, et en affichant le résultat que la
 fonction a renvoyé.
 
 La fonction `shortLinesOnly` fonctionne ainsi&nbsp;: elle prend une chaîne de
-caractères comme "short`nlooooooooooooooong\nshort again"`. Cette chaîne a
+caractères comme `"short\nlooooooooooooooong\nshort again"`. Cette chaîne a
 trois lignes, dont deux courtes et une au milieu plus longue. La fonction lance
 `lines` sur cette chaîne, ce qui la convertit en `["short",
 "looooooooooooooong", "short again"]`, qu'on lie au nom `allLines`. Cette liste
@@ -881,8 +881,8 @@ cela.
 On connecte le contenu de *shortlines.txt* à l'entrée de *shotlinesonly* et en
 sortie, on obtient les lignes courtes.
 
-Ce motif de récupérer une chaîne en entrée, la transformer avec une fonction,
-puis écrire le résultat est tellement commun qu'il existe une fonction qui rend
+Ce motif qui récupère une chaîne en entrée, la transforme avec une fonction,
+puis écrit le résultat est tellement commun qu'il existe une fonction qui rend
 cela encore plus simple, appelée `interact`. `interact` prend une fonction de
 type `String -> String` en paramètre et retourne une action I/O qui va lire une
 entrée, lancer cette fonction dessus, et afficher le résultat. Modifions notre
@@ -914,7 +914,7 @@ la façon dont l'utilisateur veut utiliser le programme.
 
 Faisons un programme qui lit continuellement une ligne et nous dit si la ligne
 était un palindrome ou pas. On pourrait utiliser `getLine` pour lire une ligne,
-dire à l'utilisateur si c'est un palindrome, puis lancer main à nouveau. Mais
+dire à l'utilisateur si c'est un palindrome, puis lancer `main` à nouveau. Mais
 il est plus simple d'utiliser `interact`. Quand vous utilisez `interact`,
 pensez à tout ce que vous avez besoin de faire pour transformer une entrée en
 la sortie désirée. Dans notre cas, on doit remplacer chaque ligne de l'entrée
