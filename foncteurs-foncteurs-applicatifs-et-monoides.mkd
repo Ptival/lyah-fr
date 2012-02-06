@@ -98,7 +98,7 @@ ne prend qu'un paramètre de type, alors qu'`Either` en prend deux, et ainsi
 
 On sait à présent comment plusieurs types (ou plutôt, des constructeurs de
 types) sont des instances de `Functor`, comme `[]`, `Maybe`, `Either a` et un
-type `Tree` qu'on a créé nous-même. On a vu comment l'on pouvait mapper des
+type `Tree` qu'on a créé nous-mêmes. On a vu comment l'on pouvait mapper des
 fonctions sur ceux-ci pour notre plus grand bien. Dans cette section, on va
 découvrir deux autres instances de foncteurs, `IO` et `(->) r`.
 
@@ -159,7 +159,7 @@ une boîte `IO`, seulement la boîte doit toujours aller dans le monde réel pou
 obtenir quelque chose. Ensuite, lorsqu'on la lie à quelque chose avec `<-`, le
 nom sera lié au résultat auquel `reverse` aura déjà été appliquée.
 
-L'action I/O `fmap (++"!") getLine"` se comporte comme `getLine`, mais ajoute
+L'action I/O `fmap (++"!") getLine` se comporte comme `getLine`, mais ajoute
 toujours `"!"` à son résultat !
 
 Si on regarde ce que le type de `fmap` serait si elle était limitée à `IO`, ce
@@ -528,7 +528,7 @@ lois, mais vous pouvez vérifier si vous ne me croyez pas. Et la prochaine fois
 que vous créez une instance de `Functor`, prenez une minute pour vous assurer
 qu'elle obéit aux lois des foncteurs. Une fois que vous avez utilisé assez de
 foncteurs, vous développez une intuition pour ces propriétés et comportements
-qu'ils ont en commun et il n'est plus dur de se rendre compte intuitivememnt
+qu'ils ont en commun et il n'est plus dur de se rendre compte intuitivement
 qu'un type obéit ou non aux lois des foncteurs. Mais même sans intuition, vous
 pouvez toujours regarder l'implémentation ligne par ligne et voir si les lois
 sont respectées, ou trouver un contre-exemple.
@@ -631,7 +631,7 @@ foncteurs.
 Je vous présente la classe de types `Applicative`. Elle réside dans le module
 `Control.Applicative` et définit deux méthodes, `pure` et `<*>`. Elle ne
 fournit pas d'implémentation par défaut pour celles-ci, il faut donc les
-définir toutes deux nous-même si l'on veut faire de quelque chose un foncteur
+définir toutes deux nous-mêmes si l'on veut faire de quelque chose un foncteur
 applicatif. La classe est définie ainsi&nbsp;:
 
 > class (Functor f) => Applicative f where
@@ -755,7 +755,7 @@ qui attend des paramètres qui ne sont pas nécessairement enveloppés dans des
 foncteurs, et d'utiliser cette fonction pour opérer sur des valeurs qui sont
 dans des contextes fonctoriels. La fonction peut prendre autant de paramètres
 qu'on le souhaite, parce qu'elle est partiellement appliquée étape par étape, à
-chaque occurence de `<*>`.
+chaque occurrence de `<*>`.
 
 Cela devient encore plus pratique et apparent si l'on considère le fait que
 `pure f <*> x` est égal à `fmap f x`. C'est une des lois des foncteurs
@@ -775,7 +775,7 @@ définition&nbsp;:
 
 <div class="hintbox">
 
-**Yo !** Petit rappel&nbsp;: les variables de types sont indépendentes des noms
+**Yo !** Petit rappel&nbsp;: les variables de types sont indépendantes des noms
 des paramètres ou des noms des valeurs en général. Le `f` de la déclaration de
 la fonction ici est une variable de type avec une contrainte de classe disant
 que tout type remplaçant `f` doit être membre de la classe `Functor`. Le `f`
@@ -1853,11 +1853,9 @@ utilise la classe de types `Monoid`, on se repose sur le fait que ses instances
 agissent comme des monoïdes. Sinon, à quoi cela servirait-il ? C'est pourquoi,
 en créant des instances, on doit s'assurer qu'elles obéissent à ces lois&nbsp;:
 
-* <span class="law">mempty `mappend` x = x</span>
-
-* <span class="law">x `mappend` mempty = x</span>
-
-* <span class="law">(x `mappend` y) `mappend` z = x `mappend` (y `mappend`
+* <span class="law">mempty \`mappend\` x = x</span>
+* <span class="law">x \`mappend\` mempty = x</span>
+* <span class="law">(x \`mappend\` y) \`mappend\` z = x \`mappend\` (y \`mappend\`
 z)</span>
 
 Les deux premières déclarent que `mempty` doit être le neutre de `mappend`, la
@@ -2086,7 +2084,7 @@ signifient *inférieur*, *égal* et *supérieur* respectivement&nbsp;:
 Avec les listes, les nombres et les valeurs booléennes, on voit que trouver des
 monoïdes est juste l'affaire de regarder ce qu'on utilisait déjà afin de voir
 si ces choses présentent un comportement monoïdal. Pour `Ordering`, il faut y
-regarder à deux fois avant de reconnaître le monoïde, mais il s'avère que sont
+regarder à deux fois avant de reconnaître le monoïde, mais il s'avère que son
 instance de `Monoid` est tout aussi intuitive que celles recontrées
 précédemment, et plutôt utile également&nbsp;:
 
