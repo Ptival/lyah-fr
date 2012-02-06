@@ -208,7 +208,7 @@ rien pour l'appliquer. Dans ce cas, faisons juste comme avant et retournons
 `Nothing`.
 
 Plutôt que de l'appeler `>>=`, appelons-la `applyMaybe` pour l'instant. Elle
-prend un `Maybe a` et une fonction et retourne un `Maybe b`, parvenantt à
+prend un `Maybe a` et une fonction et retourne un `Maybe b`, parvenant à
 appliquer la fonction sur le `Maybe a`. Voici le code&nbsp;:
 
 > applyMaybe :: Maybe a -> (a -> Maybe b) -> Maybe b
@@ -384,13 +384,13 @@ problème&nbsp;: des oiseaux n'arrêtent pas d'atterrir sur sa perche d'équilib
 de décoller en quête de miettes de pain. Cela ne le dérangerait pas tant si le
 nombre d'oiseaux sur le côté gauche de la perche était égal à celui sur le côté
 droit. Mais parfois, tous les oiseaux décident qu'ils préfèrent le même côté,
-et ils détruisent son équilibre, l'entraînant dans une chute embarassante (il a
+et ils détruisent son équilibre, l'entraînant dans une chute embarrassante (il a
 un filet de sécurité).
 
 Disons qu'il arrive à tenir en équilibre tant que le nombre d'oiseaux sur les
 côtés gauche et droit ne s'éloignent pas de plus de trois. Ainsi, s'il y a un
 oiseau à droite et quatre oiseaux à gauche, tout va bien. Mais si un cinquième
-oiseau atterit sur sa gauche, il perd son équilibre et plonge malgré lui.
+oiseau atterrit sur sa gauche, il perd son équilibre et plonge malgré lui.
 
 Nous allons simuler des oiseaux atterrissant et décollant de la perche et voir
 si Pierre tient toujours après un certain nombre d'arrivées et de départs.  Par
@@ -437,7 +437,7 @@ applications de `landLeft` et `landRight`&nbsp;:
 
 Quand on applique la fonction `landLeft 1` sur `(0, 0)`, on obtient `(1, 0)`.
 Puis, on fait atterrir un oiseau sur le côté droit, ce qui donne `(1, 1)`.
-Finalement, deux oiseaux atterrisent à gauche, donnant `(3, 1)`. On applique
+Finalement, deux oiseaux atterrissent à gauche, donnant `(3, 1)`. On applique
 une fonction en écrivant d'abord la fonction puis le paramètre, mais ici, il
 serait plus pratique d'avoir la perche en première et ensuite la fonction
 d'atterrissage. Si l'on crée une fonction&nbsp;:
@@ -485,7 +485,7 @@ et `landRight`. De ce qu'on voit, on veut que ces fonctions puissent échouer.
 C'est-à-dire, on souhaite qu'elles retournent une nouvelle perche tant que
 l'équilibre est respecté, mais qu'elles échouent si les oiseaux atterrissent en
 disproportion. Et quel meilleur moyen d'ajouter un contexte de possible échec
-que d'utiliser une valeur Maybe ? Reprenons ces fonctions&nbsp;:
+que d'utiliser une valeur `Maybe` ? Reprenons ces fonctions&nbsp;:
 
 > landLeft :: Birds -> Pole -> Maybe Pole
 > landLeft n (left,right)
@@ -573,7 +573,7 @@ Regardons comment ce résultat est obtenu. D'abord, `return` place `(0, 0)` dans
 un contexte par défaut, en faisant un `Just (0, 0)`. Puis, `Just (0,0) >>=
 landLeft 1` a lieu. Puisque `Just (0, 0)` est une valeur `Just`, `landLeft 1`
 est appliquée à `(0, 0)`, retournant `Just (1, 0)`, parce que l'oiseau seul ne
-détruit pas l'équilibre. Ensuitre, `Just (1,0) >>= landRight 4` prend place, et
+détruit pas l'équilibre. Ensuite, `Just (1,0) >>= landRight 4` prend place, et
 le résultat est `Just (1, 4)` car l'équilibre reste intact, bien qu'à sa
 limite. `Just (1, 4)` est donné à `landLeft (-1)`. Cela signifie que `landLeft
 (-1) (1, 4)` prend place. Conformément au fonctionnement de `landLeft`, cela
@@ -685,12 +685,12 @@ Notation do
 </h2>
 
 Les monades en Haskell sont tellement utiles qu'elles ont leur propre syntaxe
-spéciale appelée notation *do*. On a déjà rencontré la notation *do* quand on
+spéciale appelée notation `do`. On a déjà rencontré la notation `do` quand on
 faisait des entrées-sorties, et on a alors dit qu'elle servait à coller
-plusieurs actions I/O en une seule. Eh bien, il s'avère que la notation *do*
+plusieurs actions I/O en une seule. Eh bien, il s'avère que la notation `do`
 n'est pas seulement pour `IO`, mais peut être utilisée pour n'importe quelle
 monade. Le principe est identique&nbsp;: coller ensemble plusieurs valeurs
-monadiques en séquence. Nous allons regarder comment la notation *do*
+monadiques en séquence. Nous allons regarder comment la notation `do`
 fonctionne et en quoi elle est utile.
 
 Considérez l'exemple familier de l'application monadique&nbsp;:
@@ -743,7 +743,7 @@ prend une ligne&nbsp;:
 >       Just (show x ++ y)))
 
 Pour nous éviter d'écrire ces énervantes lambdas successives, Haskell nous
-offre la notation *do*. Elle nous permet de réécrire le bout de code précédent
+offre la notation `do`. Elle nous permet de réécrire le bout de code précédent
 ainsi&nbsp;:
 
 > foo :: Maybe String
@@ -780,7 +780,7 @@ Par exemple, examinez la ligne suivante&nbsp;:
 
 Puisque le paramètre de gauche de `>>=` est une valeur `Just`, la lambda est
 appliquée à `9` et le résultat est `Just True`. Si l'on réécrit cela en
-notation *do*, on obtient&nbsp;:
+notation `do`, on obtient&nbsp;:
 
 > marySue :: Maybe Bool
 > marySue = do
@@ -791,7 +791,7 @@ Si l'on compare les deux, il est facile de comprendre pourquoi le résultat de
 la valeur monadique complète est celui de la dernière valeur monadique écrite
 dans l'expression `do`, après avoir chaîné toutes les précédentes.
 
-La routine de notre funambule peut être exprimée avec la notation *do*.
+La routine de notre funambule peut être exprimée avec la notation `do`.
 `landLeft` et `landRight` prennent un nombre d'oiseaux et une perche et
 produisent une perche enveloppée dans un `Just`, à moins que le funambule ne
 glisse, auquel cas `Nothing` est produit. On a utilisé `>>=` pour chaîner les
@@ -842,7 +842,7 @@ utilisé les aspects monadiques de `Maybe`&nbsp;:
 Voyez comme dans le cas d'un succès, le tuple à l'intérieur de `Just (0, 0)`
 devient `start`, le résultat de `landLeft 2 start` devient `first`, etc.
 
-Si l'on veut lancer à Pierre une peau de banane avec la notation *do*, on peut
+Si l'on veut lancer à Pierre une peau de banane avec la notation `do`, on peut
 le faire ainsi&nbsp;:
 
 > routine :: Maybe Pole
@@ -853,21 +853,21 @@ le faire ainsi&nbsp;:
 >     second <- landRight 2 first
 >     landLeft 1 second
 
-Quand on écrit une ligne en notation *do* sans lier sa valeur monadique avec
+Quand on écrit une ligne en notation `do` sans lier sa valeur monadique avec
 `<-`, c'est comme si l'on avait mis `>>` après la valeur monadique dont on
 souhaite ignorer le résultat. On séquence la valeur monadique mais on ignore
 son résultat parce qu'on s'en fiche, et parce que c'est plus joli que d'écrire
 `_ <- Nothing`, qui est équivalent.
 
-À vous de choisir quand utiliser la notation *do* et quand utiliser
+À vous de choisir quand utiliser la notation `do` et quand utiliser
 explicitement `>>=`. Je pense que cet exemple se prête plus à l'utilisation
 explicite de `>>=` parce que chaque étape ne nécessite spécifiquement que le
-résultat de la précédente. Avec la notation *do*, il a fallu écrire à chaque
+résultat de la précédente. Avec la notation `do`, il a fallu écrire à chaque
 fois sur quelle perche les oiseaux atterrissaient, mais c'était à chaque fois
 celle qui précédait immédiatement. Cependant, cela a fondé notre intuition de
-la notation *do*.
+la notation `do`.
 
-Avec la notation *do*, lorsqu'on lie des valeurs monadiques à des noms, on peut
+Avec la notation `do`, lorsqu'on lie des valeurs monadiques à des noms, on peut
 utiliser du filtrage par motif, tout comme dans les expressions `let` et les
 paramètres de fonctions. Voici un exemple de filtrage par motif dans une
 expression `do`&nbsp;:
@@ -902,7 +902,7 @@ propre version. Pour `Maybe`, elle est implémentée ainsi&nbsp;:
 > fail _ = Nothing
 
 Elle ignore le message et crée un `Nothing`. Ainsi, quand le filtrage par motif
-échoue pour une valeur `Maybe` dans une notation *do*, la valeur de la monade
+échoue pour une valeur `Maybe` dans une notation `do`, la valeur de la monade
 entière est `Nothing`. C'est préférable à un plantage du programme. Voici une
 expression `do` avec un motif voué à l'échec&nbsp;:
 
@@ -917,7 +917,7 @@ comprenant le motif était remplacée par `Nothing`. Essayons&nbsp;:
 > ghci> wopwop
 > Nothing
 
-Le motif échoué a provoqué l'échec dans le conxtexte de la monade plutôt que
+Le motif échoué a provoqué l'échec dans le contexte de la monade plutôt que
 de provoquer un échec du programme entier, ce qui est plutôt sympa.
 
 <h2 id="la-monade-des-listes">
@@ -1044,7 +1044,7 @@ représente une branche.
 
 </div>
 
-Voici l'exemple précédent réécrit avec la notation *do*&nbsp;:
+Voici l'exemple précédent réécrit avec la notation `do`&nbsp;:
 
 > listOfTuples :: [(Int,Char)]
 > listOfTuples = do
@@ -1058,13 +1058,13 @@ des éléments de valeurs monadiques, et on les traite comme des valeurs
 normales, et `>>=` s'occupe du contexte pour nous. Le contexte dans ce cas est
 le non déterminisme.
 
-Utiliser les listes avec la notation *do* me rappelle quelque chose qu'on a
+Utiliser les listes avec la notation `do` me rappelle quelque chose qu'on a
 déjà vu. Regardez le code suivant&nbsp;:
 
 > ghci> [ (n,ch) | n <- [1,2], ch <- ['a','b'] ]
 > [(1,'a'),(1,'b'),(2,'a'),(2,'b')]
 
-Oui ! Les listes en compréhension ! Dans notre exemple avec la notation *do*,
+Oui ! Les listes en compréhension ! Dans notre exemple avec la notation `do`,
 `n` prenait chaque résultat de `[1, 2]`, et pour chacun d'eux, `ch` recevait un
 résultat de `['a', 'b']`, et enfin la dernière ligne plaçait `(n, ch)` dans un
 contexte par défaut (une liste singleton) pour le présenter comme résultat sans
@@ -1075,7 +1075,7 @@ liste s'en occupe pour nous.
 
 En fait, les listes en compréhension sont juste un sucre syntaxique pour
 utiliser les listes comme des monades. Au final, les listes en compréhension,
-ainsi que les listes en notation *do*, sont traduites en utilisations de `>>=`
+ainsi que les listes en notation `do`, sont traduites en utilisations de `>>=`
 pour faire les calculs non déterministes.
 
 Les listes en compréhension nous permettent de filtrer la sortie. Par exemple,
@@ -1148,7 +1148,7 @@ liste vide. `guard` dit simplement&nbsp;: si ce booléen est `False`, alors
 produis un échec immédiatement, sinon crée une valeur réussie factice avec
 `()`. Tout ce que cela permet est d'autoriser le calcul à continuer.
 
-Voici l'exemple précédent réécrit en notation *do*&nbsp;:
+Voici l'exemple précédent réécrit en notation `do`&nbsp;:
 
 > sevensOnly :: [Int]
 > sevensOnly = do
@@ -1236,7 +1236,7 @@ atteindre dans trois mouvements&nbsp;:
 Si vous lui passez `(6, 2)`, la liste résultante est assez grande, parce que
 s'il y a beaucoup de façons d'atteindre une position en trois mouvements, alors
 le résultat est dans la liste de multiples fois. La même chose sans notation
-*do*&nbsp;:
+`do`&nbsp;:
 
 > in3 start = return start >>= moveKnight >>= moveKnight >>= moveKnight
 
@@ -1383,7 +1383,7 @@ fonctions monadiques avec `>>=`, l'ordre d'imbrication ne doit pas importer.
 Formellement énoncé&nbsp;:
 
 * <span class="law">(m >>= f) >>= g</span> est egal à <span class="law">m >>=
-(\x -> f x >>= g)</span>
+(\\x -> f x >>= g)</span>
 
 Hmmm, que se passe-t-il donc là ? On a une valeur monadique `m`, et deux
 fonctions monadiques `f` et `g`. Quand on fait `(m >>= f) >>= g`, on donne `m`
