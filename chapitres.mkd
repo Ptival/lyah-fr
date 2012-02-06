@@ -1,8 +1,10 @@
 Apprendre Haskell vous fera le plus grand bien !
 ================================================
 
-[Également disponible en version PDF ! (dernière mise à jour : 29/09/2011 07:54
+[Également disponible en version PDF ! (dernière mise à jour : 28/10/2011 20:23
 CEST)](http://lyah.haskell.fr/apprendre-haskell-vous-fera-le-plus-grand-bien.pdf)
+
+[Et en version plus agréable à imprimer (meilleur contraste, pas de fond noir)](http://lyah.haskell.fr/apprendre-haskell-vous-fera-le-plus-grand-bien_printer-friendly.pdf)
 
 [N'hésitez pas à m'envoyer vos remarques quant à la
 traduction !](mailto:contact@haskell.fr)

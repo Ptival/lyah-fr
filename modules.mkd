@@ -163,10 +163,10 @@ vice versa.
 > ghci> transpose ["hey","there","guys"]
 > ["htg","ehu","yey","rs","e"]
 
-Mettons qu'on ait les polynômes *3x² + 5x + 9*, *10x + 9* et *8x³ + 5x² + x -
+Mettons qu'on ait les polynômes *3x² + 5x + 9*, *10x³ + 9* et *8x³ + 5x² + x -
 1*, et que l'on souhaite les additionner. On peut utiliser les listes `[0, 3,
-    5, 9]`, `[10, 0, 0, 9]` et `[8, 5, 1, -1]` pour les représenter en Haskell.
-    Maintenant, pour les sommer, il suffit de faire&nbsp;:
+5, 9]`, `[10, 0, 0, 9]` et `[8, 5, 1, -1]` pour les représenter en Haskell.
+Maintenant, pour les sommer, il suffit de faire&nbsp;:
 
 > ghci> map sum $ transpose [[0,3,5,9],[10,0,0,9],[8,5,1,-1]]
 > [18,8,6,17]

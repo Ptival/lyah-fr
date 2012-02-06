@@ -115,14 +115,14 @@ nombre, et donc qu'il ne sait pas l'additionner à 5. Même si ce n'était pas
 `"llama"` mais `"four"` ou même `"4"`, Haskell ne considérerait pas cela comme
 un nombre. `+` attend comme opérandes à droite et à gauche des nombres. Si on
 essayait de faire `True == 5`, GHCi nous dirait que les types ne correspondent
-pas. Là où `+` ne fonctionne que sur ce qui est considéré comme un nombre, `==`
-marche sur n'importe quelles deux choses qui peuvent être comparées. Le piège,
-c'est qu'elles doivent être toutes les deux du même type de choses. On ne
-compare pas des pommes et des oranges. Nous nous intéresserons de plus près aux
-types plus tard. Notez&nbsp;: vous pouvez tout de même faire `5 + 4.0` car `5`
-est vicieux et peut se faire passer pour un entier ou pour un nombre à virgule
-flottante. `4.0` ne peut pas se faire passer pour un entier, donc c'est à `5`
-de s'adapter à lui.
+pas. Ainsi, `+` ne fonctionne qu'avec des paramètres pouvant être considérés
+comme des nombres, alors que `==` marche sur n'importe quelles deux choses à
+condition qu'on puisse les comparer. Le piège, c'est qu'elles doivent être
+toutes les deux du même type de choses. On ne compare pas des pommes et des
+oranges. Nous nous intéresserons de plus près aux types plus tard. Notez&nbsp;:
+vous pouvez tout de même faire `5 + 4.0` car `5` est vicieux et peut se faire
+passer pour un entier ou pour un nombre à virgule flottante. `4.0` ne peut pas
+se faire passer pour un entier, donc c'est à `5` de s'adapter à lui.
 
 Vous ne le savez peut-être pas, mais nous venons d'utiliser des fonctions tout
 du long. Par exemple, `*` est une fonction qui prend deux nombres et les
@@ -181,7 +181,7 @@ divisé par quel nombre. On peut donc l'écrire plutôt <code>92 \`div\`
 
 Beaucoup de personnes venant de langages impératifs ont pour habitude de penser
 que les parenthèses indiquent l'application de fonctions. Par exemple, en C, on
-utilise des parenthèses pour appeler des fonctions comme `foo()`, `bar()1)` ou
+utilise des parenthèses pour appeler des fonctions comme `foo()`, `bar(1)` ou
 `baz(3, "haha")`. Comme nous l'avons vu, les espaces sont utilisés pour
 l'application de fonctions en Haskell. Donc, en Haskell, on écrirait `foo`,
 `bar 1` et `baz 3 "haha"`. Si vous voyez quelque chose comme `bar (bar 3)`,
@@ -205,7 +205,7 @@ Les fonctions sont définies de la même façon qu'elles sont appelées. Le nom 
 la fonction est suivi de ses paramètres, séparés par des espaces. Mais lors de
 la définition d'une fonction, un `=` suivi de la définition de ce que la
 fonction fait suivent. Sauvez ceci en tant que `baby.hs` ou quoi que ce soit.
-À présent, naviguez jusquà l'endroit où vous l'avez sauvegardé, et lancez
+À présent, naviguez jusqu'à l'endroit où vous l'avez sauvegardé, et lancez
 `ghci` d'ici. Une fois lancé, tapez `:l baby`. Maintenant que notre script est
 chargé, on peut jouer avec la fonction que l'on vient de définir.
 
@@ -282,7 +282,7 @@ précédente, nous aurions pu l'écrire ainsi.
 > doubleSmallNumber' x = (if x > 100 then x else x*2) + 1
 
 Si nous avions omis les parenthèses, nous aurions ajouté 1 seulement si `x`
-était plus grand que 100. Remarquez le `'` à la fin du nom de la fonction.
+était plus petit que 100. Remarquez le `'` à la fin du nom de la fonction.
 Cette apostrophe n'a pas de signification spéciale en Haskell. C'est un
 caractère valide à utiliser dans un nom de fonction. On utilise habituellement
 `'` pour indiquer la version stricte d'une fonction (une version qui n'est pas
@@ -440,7 +440,7 @@ qui opérent sur des listes.
 > 5
 
 `tail` prend une liste et retourne sa queue. En d'autres termes, elle coupe la
-queue.
+tête de la liste.
 
 > ghci> tail [5,4,3,2,1]
 > [4,3,2,1]
@@ -579,7 +579,7 @@ la séquence manuellement est stupide.
 > "KLMNOPQRSTUVWXYZ"
 
 Les progressions sont cool car on peut préciser un pas. Que faire si l'on
-cherche les nombres impairs entre 1 et 20 ? Ou un nombre sur trois ?
+cherche les nombres pairs entre 1 et 20 ? Ou un nombre sur trois ?
 
 > ghci> [2,4..20]
 > [2,4,6,8,10,12,14,16,18,20]
@@ -868,8 +868,8 @@ listes simultanément. Démonstration.
 
 Elle met en paires les éléments et produit une nouvelle liste. Le premier
 élément va avec le premier, le deuxième avec le deuxième, etc. Remarquez que,
-puisque les paires peuvent avoir différent types en elles, `zip` peut prendre
-deux listes qui contiennent des éléments de différent types et les zipper. Que
+puisque les paires peuvent avoir différents types en elles, `zip` peut prendre
+deux listes qui contiennent des éléments de différents types et les zipper. Que
 se passe-t-il si les longueurs des listes ne correspondent pas ?
 
 > ghci> zip [5,3,2,6,2,7,2,5,4,6,6] ["im","a","turtle"]
