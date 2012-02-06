@@ -24,7 +24,7 @@ ceux qui apprennent haskell et ceux qui doivent coder en java" class="right"/>
 
 Nous avons vu comment les monades pouvaient être utilisées pour prendre des
 valeurs dans un contexte et appliquer des fonctions dessus, et comment utiliser
-`>>=` et la notation *do* nous permettait de nous concentrer sur les valeurs
+`>>=` et la notation `do` nous permettait de nous concentrer sur les valeurs
 elles-même pendant que le contexte était géré pour nous.
 
 Nous avons croisé la monade `Maybe` et avons vu comment elle ajoutait un
@@ -200,7 +200,7 @@ Puisque la valeur accompagnante peut être n'importe quelle valeur monoïdale,
 plus besoin de penser à un tuple valeur et registre, on peut désormais penser à
 un tuple valeur et valeur monoïdale. Par exemple, on peut avoir un tuple
 contenant un nom d'objet et un prix en tant que valeur monoïdale. On utilise le
-*newtype* `Sum` pour s'assurer que les prix sont bien additionnés lorsqu'on
+`newtype` `Sum` pour s'assurer que les prix sont bien additionnés lorsqu'on
 opère sur les objets. Voici une fonction qui ajoute des boissons à de la
 nourriture de cow-boy&nbsp;:
 
@@ -215,7 +215,7 @@ nourriture de cow-boy&nbsp;:
 > addDrink _ = ("beer", Sum 30)
 
 On utilise des chaînes de caractères pour représenter la nourriture, et un
-`Int` dans un *newtype* `Sum` pour tracer le nombre de centimes que quelque
+`Int` dans un `newtype` `Sum` pour tracer le nombre de centimes que quelque
 chose coûte. Juste un rappel, faire `mappend` sur des `Sum` résulte en la somme
 des valeurs enveloppées&nbsp;:
 
@@ -265,11 +265,11 @@ valeur monadique, examinons l'instance de `Monad` pour de tels types. Le module
 
 D'abord, examinons le type lui-même. Pour attacher un monoïde à une valeur, on
 doit simplement les placer ensemble dans un tuple. Le type `Writer w a` est
-juste un enrobage *newtype* de cela. Sa définition est très simple&nbsp;:
+juste un enrobage `newtype` de cela. Sa définition est très simple&nbsp;:
 
 > newtype Writer w a = Writer { runWriter :: (a, w) }
 
-C'est enveloppé dans un *newtype* afin d'être fait instance de `Monad` et de
+C'est enveloppé dans un `newtype` afin d'être fait instance de `Monad` et de
 séparer ce type des tuples ordinaires. Le paramètre de type `a` représente le
 type de la valeur, alors que le paramètre de type `w` est la valeur monoïdale
 attachée.
@@ -285,7 +285,7 @@ class="right"/>
 
 Tout d'abord, examinons `>>=`. Son implémentation est essentiellement identique
 à `applyLog`, seulement à présent que notre tuple est enveloppé dans un
-*newtype* `Writer`, on doit l'en sortir en filtrant par motif. On prend la
+`newtype` `Writer`, on doit l'en sortir en filtrant par motif. On prend la
 valeur `x` et applique la fonction `f`. Cela nous rend une valeur `Writer w a`
 et on utilise un filtrage par motif via une expression `let` dessus. On
 présente le `y` comme nouveau résultat et on utilise `mappend` pour combiner
@@ -320,17 +320,17 @@ afficher. Pour les `String`, la valeur monoïdale est la chaîne vide. Avec
 inchangée. Pour `Product`, le neutre est `1`.
 
 L'instance `Writer` n'a pas d'implémentation de `fail`, donc si un filtrage par
-motif échoue dans une notation *do*, `error` est appelée.
+motif échoue dans une notation `do`, `error` est appelée.
 
 <h3>Utiliser la notation do avec Writer</h3>
 
 À présent qu'on a une instance de `Monad`, on est libre d'utiliser la notation
-*do* pour les valeurs `Writer`. C'est pratique lorsqu'on a plusieurs valeurs
+`do` pour les valeurs `Writer`. C'est pratique lorsqu'on a plusieurs valeurs
 `Writer` et qu'on veut faire quelque chose avec. Comme les autres monades,  on
 peut les traiter comme des valeurs normales et les contextes sont pris en
 compte pour nous. Dans ce cas, les valeurs monoïdales sont attachées et
-`mappend` les unes aux autres et ceci se réflète dans le résultat final. Voici
-un exemple simple de l'utilisation de la notation *do* avec `Writer` pour
+`mappend` les unes aux autres et ceci se reflète dans le résultat final. Voici
+un exemple simple de l'utilisation de la notation `do` avec `Writer` pour
 multiplier des nombres.
 
 > import Control.Monad.Writer
@@ -452,11 +452,11 @@ d'utiliser <code>gcd' b (a \`mod\` b)</code> dans une ligne d'une expression
 Bien qu'il puisse être assez utile de tracer l'exécution de notre nouvelle
 `gcd'` à la main pour voir comment les registres sont juxtaposés, je pense
 qu'il sera plus enrichissant de prendre de la perspective et voir ceux-ci
-commes des valeurs avec un contexte, et ainsi imaginer ce que notre résultat
+comme des valeurs avec un contexte, et ainsi imaginer ce que notre résultat
 devrait être.
 
 Essayons notre nouvelle fonction `gcd'`. Son résultat est une valeur `Writer
-[String] Int` et si on l'extrait de son *newtype*, on obtient un tuple. La
+[String] Int` et si on l'extrait de son `newtype`, on obtient un tuple. La
 première composante de cette paire est le résultat. Voyons si c'est le
 cas&nbsp;:
 
@@ -484,7 +484,7 @@ cela augmente la lisibilité).
 
 <h3>Construction inefficace de listes</h3>
 
-Quand vous utilisez la monade `Writer`, il faut être extrèmement prudent avec
+Quand vous utilisez la monade `Writer`, il faut être extrêmement prudent avec
 le choix du monoïde à utiliser, parce qu'utiliser des listes peut s'avérer très
 lent. C'est parce que les listes utilisent `++` pour `mappend`, et utiliser
 `++` pour ajouter quelque chose à la fin d'une liste peut s'avérer très lent si
@@ -572,7 +572,7 @@ Nous avons concaténé deux listes différentielles simplement en en créant une
 nouvelle fonction qui applique d'abord une liste différentielle sur une liste,
 puis applique l'autre liste différentielle au résultat.
 
-Créons un emballage *newtype* pour nos listes différentielles de façon à
+Créons un emballage `newtype` pour nos listes différentielles de façon à
 pouvoir les doter d'une instance de monoïde&nbsp;:
 
 > newtype DiffList a = DiffList { getDiffList :: [a] -> [a] }
@@ -635,7 +635,7 @@ correctement&nbsp;:
 > 110 mod 34 = 8
 
 On fait `gcdReverse 110 34`, puis on utilise `runWriter` pour sortir le
-résultat du *newtype*, et on applique `snd` pour n'obtenir que le registre,
+résultat du `newtype`, et on applique `snd` pour n'obtenir que le registre,
 puis on applique `fromDiffList` pour le convertir en une liste normale, et
 enfin on l'affiche entrée par entrée à l'écran.
 
@@ -777,7 +777,7 @@ C'est la même chose que l'expression applicative qu'on a écrite plus haut,
 seulement maintenant elle se base sur le fait que les fonctions soient des
 monades. Une expression `do` résulte toujours en une valeur monadique, et
 celle-ci ne fait pas exception. Le résultat de cette valeur monadique est une
-fonction. Ce qui se passe ici, c'est quelle prend un nombre, puis fait `(*2)`
+fonction. Ce qui se passe ici, c'est qu'elle prend un nombre, puis fait `(*2)`
 sur ce nombre, ce qui résulte en `a`. `(+10)` est également appliquée au même
 nombre que celui donné à `(*2)`, et le résultat devient `b`. `return`, comme
 dans les autres monades, n'a pas d'autre effet que de créer une valeur
@@ -823,7 +823,7 @@ libère de l'inquiétude de savoir quelle est la valeur de chaque variable à un
 instant donné. Cependant, certains problèmes sont intrinsèquement composés
 d'états en ce qu'ils se basent sur des états pouvant évoluer dans le temps.
 Bien que de tels problèmes ne soient pas un problème pour Haskell, ils peuvent
-parfois être fastidieux à modeler. C'est pourquoi Haskell offre la monade
+parfois être fastidieux à modéliser. C'est pourquoi Haskell offre la monade
 d'états, qui rend la gestion de problèmes à états simple comme bonjour tout en
 restant propre et pur.
 
@@ -853,7 +853,7 @@ puisqu'Haskell est pur, on ne peut pas faire cela, donc nous devons prendre un
 utiliser ce nouvel état pour générer d'autres résultats.
 
 On pourrait se dire que pour éviter d'avoir à gérer manuellement ce genre de
-calculs à états, on devrait se débarasser de la pureté d'Haskell. Eh bien, cela
+calculs à états, on devrait se débarrasser de la pureté d'Haskell. Eh bien, cela
 n'est pas nécessaire, puisqu'il existe une petite monade spéciale appelée la
 monade d'états qui s'occupe de toute cette manipulation d'états pour nous, et
 sans abandonner la pureté qui fait que programmer en Haskell est tellement
@@ -957,7 +957,7 @@ préoccuper de la gestion de l'état manuellement.
 
 <h3>La monade State</h3>
 
-Le module `Control.Monad.State` fournit un *newtype* qui enveloppe des calculs
+Le module `Control.Monad.State` fournit un `newtype` qui enveloppe des calculs
 à états. Voici sa définition&nbsp;:
 
 > newtype State s a = State { runState :: s -> (a,s) }
@@ -986,7 +986,7 @@ certaine valeur sans changer l'état.
 
 Qu'en est-il de `>>=` ? Eh bien, le résultat obtenu en donnant une fonction à
 un calcul à états par `>>=` doit être un calcul à états, n'est-ce pas ? On
-commence donc à écrire le *newtype* `State` et une lambda. Cette lambda doit
+commence donc à écrire le `newtype` `State` et une lambda. Cette lambda doit
 être notre nouveau calcul à états. Mais que doit-elle faire ? Eh bien, on doit
 extraire le résultat du premier calcul à états d'une manière ou d'une autre.
 Puisqu'on se trouve dans un calcul à états, on peut donner au calcul à états
@@ -1028,7 +1028,7 @@ sur la pile avant de dépiler deux nombres ainsi&nbsp;:
 >     pop
 
 Voyez-vous comme on a collé ensemble un empilement et deux dépilements en un
-calcul à états ? Quand on sort ce calcul de son *newtype*, on obtient une
+calcul à états ? Quand on sort ce calcul de son `newtype`, on obtient une
 fonction à laquelle on peut fournir un état initial&nbsp;:
 
 > ghci> runState stackManip [5,8,2,1]
@@ -1131,7 +1131,7 @@ La fonction `random` de `System.Random` a pour type&nbsp;:
 
 Signifiant qu'elle prend un générateur aléatoire et produit un nombre aléatoire
 et un nouveau générateur. On peut voir que c'est un calcul à états, on peut
-donc l'envelopper dans le constructeur de *newtype* `State` et l'utiliser comme
+donc l'envelopper dans le constructeur de `newtype` `State` et l'utiliser comme
 une valeur monadique afin que la gestion de l'état soit faite pour nous&nbsp;:
 
 > import System.Random
@@ -1224,7 +1224,7 @@ exemple d'instance d'`Error` est, eh bien, le type `String` ! Dans le cas de
 
 Puisqu'on utilise généralement des `String` pour décrire nos erreurs quand on
 utilise `Either`, on n'a pas trop à s'en soucier. Quand un filtrage par motif
-échoue dans la notation *do*, une valeur `Left` est utilisée pour indiquer cet
+échoue dans la notation `do`, une valeur `Left` est utilisée pour indiquer cet
 échec.
 
 Voici quelques exemples d'utilisation&nbsp;:
@@ -1312,7 +1312,7 @@ Et le type de `fmap`&nbsp;:
 
 > fmap :: (Functor f) => (a -> b) -> f a -> f b
 
-Si un type est à la fois instance de `Functor` et de `Maybe` et obéit leurs
+Si un type est à la fois instance de `Functor` et de `Monad` et obéit leurs
 lois respectives, alors ces deux fonctions doivent être identiques (c'est le
 cas pour toutes les monades qu'on a vues jusqu'ici). Un peu comme `pure` et
 `return` font la même chose, seulement que la première a une contrainte de
@@ -1344,14 +1344,14 @@ Voici comment `liftM` est implémentée&nbsp;:
 > liftM :: (Monad m) => (a -> b) -> m a -> m b
 > liftM f m = m >>= (\x -> return (f x))
 
-Ou, en notation *do*&nbsp;:
+Ou, en notation `do`&nbsp;:
 
 > liftM :: (Monad m) => (a -> b) -> m a -> m b
 > liftM f m = do
 >     x <- m
 >     return (f x)
 
-On donne la valeur monadique `m` à la fonction, et elle applique `f` à son
+On donne la valeur monadique `m` à la fonction, et on applique `f` à son
 résultat avant de le retourner dans un contexte par défaut. Grâce aux lois des
 monades, on a la garantie que le contexte est inchangé, seule la valeur
 résultante est altérée. On voit que `liftM` est implémentée sans faire
@@ -1456,7 +1456,7 @@ en action sur diverses valeurs `Maybe`&nbsp;:
 > Nothing
 
 La première ligne contient un calcul réussi en résultat d'un calcul réussi,
-donc ils sont joints et un gros calcul réussi. La deuxième ligne contient un
+donc ils sont joints en un gros calcul réussi. La deuxième ligne contient un
 `Nothing` comme résultat dans un `Just`. À chaque fois qu'on a eu affaire à des
 valeurs `Maybe` auparavant et qu'on voulait en combiner plusieurs, que ce soit
 avec `<*>` ou `>>=`, elles devaient toutes être `Just` pour que le résultat
@@ -1476,7 +1476,7 @@ valeurs monoïdales.
 > ghci> runWriter $ join (Writer (Writer (1,"aaa"),"bbb"))
 > (1,"bbbaaa")
 
-Le valeur monoïde extérieure `"bbb"` vient d'abord, puis `"aaa"` est
+Le valeur monoïdale extérieure `"bbb"` vient d'abord, puis `"aaa"` est
 juxtaposée. Intuitivement, pour examiner la valeur d'un `Writer`, il faut que
 sa valeur monoïdale soit mise au registre d'abord, et seulement ensuite peut-on
 examiner ce qu'elle contient.
@@ -1525,16 +1525,17 @@ des valeurs `Just`. Voici à quoi cela ressemblait si `mm` était fixé à l'ava
 <img src="img/tipi.png" alt="je suis aussi également un policier pareillement"
 class="right"/>
 
-Peut-être que la chose la plus intéressante à propos de `join` est que, pour
-chaque monade, donner une valeur monadique à `>>=` est équivalent à mapper
-cette fonction sur la valeur puis utiliser `join` pour aplatir la valeur
-monadique imbriquée résultante ! En d'autres termes, `m >>= f` est toujours
-égal à `join (fmap f m)` ! C'est logique quand on y réfléchit. Avec `>>=`, on
-donne une valeur monadique à une fonction qui attend une valeur normale et
-retourne une valeur monadique. Si l'on mappe cette fonction sur la valeur
-monadique, on a une valeur monadique à l'intérieur d'une valeur monadique. Par
-exemple, si l'on a `Just 9` et la fonction `\x -> Just (x + 1)`. En mappant la
-fonction sur `Just 9`, on obtient `Just (Just 10))`.
+Peut-être que la chose la plus intéressante à propos de `join` est que,
+pour chaque monade, donner une valeur monadique à une fonction avec `>>=`
+est équivalent à mapper cette fonction sur la valeur puis utiliser `join`
+pour aplatir la valeur monadique imbriquée résultante ! En d'autres termes,
+`m >>= f` est toujours égal à `join (fmap f m)` ! C'est logique quand on y
+réfléchit. Avec `>>=`, on donne une valeur monadique à une fonction qui
+attend une valeur normale et retourne une valeur monadique. Si l'on mappe
+cette fonction sur la valeur monadique, on a une valeur monadique à
+l'intérieur d'une valeur monadique. Par exemple, si l'on a `Just 9` et la
+fonction `\x -> Just (x + 1)`. En mappant la fonction sur `Just 9`, on
+obtient `Just (Just 10))`.
 
 Le fait que `m >>= f` est toujours égal à `join (fmap f)` est très utile quand
 on crée nos propres instances de `Monad` pour certains types parce qu'il est
@@ -1939,7 +1940,7 @@ Dans cette section, on va regarder comment un type est créé, identifié comme
 une monade, et instancié en `Monad`. Généralement, on ne crée pas une monade
 pour le plaisir de créer une monade. Généralement, on crée plutôt un type dont
 le but est de modéliser un aspect du problème à résoudre, et plus tard si l'on
-s'aperçoit que ce type réprésente une valeur dans un contexte et peut agir
+s'aperçoit que ce type représente une valeur dans un contexte et peut agir
 comme une monade, on lui donne une instance de `Monad`.
 
 Comme on l'a vu, les listes sont utilisées pour représenter des valeurs non
@@ -1979,7 +1980,7 @@ le dénominateur sont séparés par un `%`. Voici quelques exemples&nbsp;:
 > 19 % 12
 
 La première ligne est juste un quart. À la deuxième ligne, on additionne deux
-moitiés, ce qui nous donne un tout, et à la troisième ligne on additione un
+moitiés, ce qui nous donne un tout, et à la troisième ligne on additionne un
 tiers et cinq quarts et on obtient dix-neuf douzièmes. Jetons ces nombres à
 virgule flottante et utilisons plutôt des `Rational` pour nos
 probabilités&nbsp;:
@@ -1992,7 +1993,7 @@ une fois sur quatre. Plutôt propre.
 
 Nous avons pris des listes, et ajouter un contexte supplémentaire, afin
 qu'elles représentent des valeurs avec des contextes. Avant d'aller plus loin,
-enveloppons cela dans un *newtype* parce que mon petit doigt me dit qu'on va
+enveloppons cela dans un `newtype` parce que mon petit doigt me dit qu'on va
 bientôt créer des instances.
 
 > import Data.Ratio
@@ -2008,7 +2009,7 @@ laissera les probabilités comme elles étaient. Créons une instance&nbsp;:
 > instance Functor Prob where
 >     fmap f (Prob xs) = Prob $ map (\(x,p) -> (f x,p)) xs
 
-On sort la paire du *newtype* en filtrant par motif, on applique la fonction
+On sort la paire du `newtype` en filtrant par motif, on applique la fonction
 `f` aux valeurs en gardant les probabilités telles quelles, et on réencapsule
 le tout. Voyons si cela marche&nbsp;:
 
@@ -2112,7 +2113,7 @@ s'assurera que les probabilités sont bien reflétées dans le résultat final.
 Mettons qu'on ait deux pièces normales et une pièce pipée qui donne pile un
 nombre ahurissant de neuf fois sur dix, et face seulement une fois sur dix. Si
 l'on jette les trois pièces à la fois, quelles sont les chances qu'elles
-atterrissent toutes sur pile ? D'abord, créont des valeurs de probabilités pour
+atterrissent toutes sur pile ? D'abord, créons des valeurs de probabilités pour
 un lancer de pièce normale et un lancer de pièce pipée&nbsp;:
 
 > data Coin = Heads | Tails deriving (Show, Eq)
