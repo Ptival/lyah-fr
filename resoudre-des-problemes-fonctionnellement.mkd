@@ -76,7 +76,7 @@ paramètre une chaîne de caractères contenant une expression NPI, comme `"10 4
 
 Quel serait le type d'une telle fonction ? On veut qu'elle prenne une chaîne de
 caractères en paramètre, et produise un nombre en résultat. Ce sera donc
-probablement quelque chose comme `solveRPN :: (Num a) => String a -> a`
+probablement quelque chose comme `solveRPN :: (Num a) => String -> a`
 (NDT&nbsp;: "RPN" pour "Reverse Polish Notation").
 
 <div class="hintbox">**Astuce&nbsp;:** cela aide beaucoup de réfléchir d'abord
