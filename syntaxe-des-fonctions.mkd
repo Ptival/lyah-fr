@@ -304,7 +304,7 @@ alignées. Une garde est simplement une expression booléenne. Si elle est
 évaluée à `True`, le corps de la fonction correspondant est utilisé. Si elle
 s'évalue à `False`, la vérification prend la prochaine garde, etc. Si on
 appelle cette fonction avec `24.3`, elle va d'abord vérifier si c'est plus
-grand ou égal à `18.5`. Puisque ce n'est pas le cas, elle passe à la prochaine
+petit ou égal à `18.5`. Puisque ce n'est pas le cas, elle passe à la prochaine
 garde. La vérification est effectuée avec la deuxième garde, et puisque 24.3
 est inférieur à 25.0, la second chaîne est retournée.
 

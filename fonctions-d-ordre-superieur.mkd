@@ -496,7 +496,7 @@ récursive assez simple.
 Yay ! Ça a l'air de marcher correctement. À présent, la fonction qui nous donne
 notre réponse&nbsp;:
 
-> ngChains :: Int
+> numLongChains :: Int
 > numLongChains = length (filter isLong (map chain [1..100]))
 >     where isLong xs = length xs > 15
 
@@ -837,7 +837,7 @@ liste retournée, alors que pour un `scanr`, il sera en tête.
 Les scans sont utilisés pour surveiller la progression d'une fonction
 implémentable comme un pli. Répondons à cette question&nbsp;: **Combien
 d'entiers naturels croissants faut-il pour que la somme de leurs racines
-carrées dépasse 100 ?** Pour récupérer les racines carrées de tous les entiers
+carrées dépasse 1000 ?** Pour récupérer les racines carrées de tous les entiers
 naturels, on fait `map sqrt [1..]`. Maintenant, pour obtenir leur somme, on
 pourrait faire un pli, mais puisqu'on s'intéresse à la progression de la somme,
 on va plutôt faire un scan. Une fois le scan fait, on compte juste le nombre de
