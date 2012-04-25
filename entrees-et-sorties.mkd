@@ -22,9 +22,9 @@ des problèmes fonctionnellement</a>
 
 <img src="img/dognap.png" alt="pauvre chien" class="right"/>
 
-Nous avons mentionné qu'Haskell était un langage purement fonctionnel. Alors
-que dans des langages impératifs, on parvient généralement à faire quelque
-chose en donnant à l'ordinateur une série d'étapes à exécuter, en programmation
+Nous avons mentionné qu'Haskell était un langage fonctionnel pur. Alors que
+dans des langages impératifs, on parvient généralement à faire quelque chose en
+donnant à l'ordinateur une série d'étapes à exécuter, en programmation
 fonctionnelle on définit plutôt ce que les choses sont. En Haskell, une
 fonction ne peut pas changer un état, comme par exemple le contenu d'une
 variable (quand une fonction change un état, on dit qu'elle a des *effets de

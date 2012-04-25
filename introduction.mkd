@@ -65,31 +65,30 @@ Donc, qu'est-ce qu'Haskell ?
 
 <img src="img/fx.png" alt="fx" class="right"/>
 
-Haskell est un **langage de programmation purement fonctionnelle**. Dans les
-langages impératifs, vous effectuez des choses en donnant à l'ordinateur une
-séquence de tâches, et il les exécute. Lors de cette exécution, il peut changer
-d'état. Par exemple, vous affectez à une variable `a` la valeur 5, puis vous
-faites quelque chose, puis lui affectez une autre valeur. Vous avez des
-structures de contrôle de flot pour répéter des actions plusieurs fois. Dans un
-langage de programmation purement fonctionnelle, vous n'indiquez pas à
-l'ordinateur quoi faire, mais plutôt ce que les choses *sont*. La factorielle
-d'un nombre est le produit de tous les nombres de 1 à celui-ci, la somme d'une
-liste de nombres est égale au premier de ceux-ci additionné à la somme des
-autres, etc. Vous exprimez ceci sous la forme de fonctions. Également, vous
-n'affectez pas une valeur à une variable, puis une autre valeur plus tard. Si
-vous dites que `a` est égal à 5, vous ne pouvez pas dire qu'il est égal à autre
-chose plus tard, car vous venez de dire qu'il était égal à 5. Quoi, vous êtes
-un menteur ? Donc, dans les langages purement fonctionnels, une fonction n'a
-pas d'effets de bord. La seule chose qu'une fonction puisse faire, c'est
-calculer quelque chose et retourner le résultat. Au départ, cela semble plutôt
-limitant, mais il s'avère que ça a de très intéressantes conséquences&nbsp;: si
-une fonction est appelée deux fois, avec les mêmes paramètres, alors il est
-garanti qu'elle renverra le même résultat. On appelle ceci la transparence
-référentielle, et cela permet non seulement au compilateur de raisonner à
-propos du comportement du programme, mais également à vous de déduire
-facilement (et même de prouver) qu'une fonction est correcte, puis de
-construire des fonctions plus complexes en collant de simples fonctions l'une à
-l'autre.
+Haskell est un **langage de programmation fonctionnel pur**. Dans les langages
+impératifs, vous effectuez des choses en donnant à l'ordinateur une séquence de
+tâches, et il les exécute. Lors de cette exécution, il peut changer d'état. Par
+exemple, vous affectez à une variable `a` la valeur 5, puis vous faites quelque
+chose, puis lui affectez une autre valeur. Vous avez des structures de contrôle
+de flot pour répéter des actions plusieurs fois. Dans un langage de
+programmation fonctionnel pur, vous n'indiquez pas à l'ordinateur quoi faire,
+mais plutôt ce que les choses *sont*. La factorielle d'un nombre est le produit
+de tous les nombres de 1 à celui-ci, la somme d'une liste de nombres est égale
+au premier de ceux-ci additionné à la somme des autres, etc. Vous exprimez ceci
+sous la forme de fonctions. Également, vous n'affectez pas une valeur à une
+variable, puis une autre valeur plus tard. Si vous dites que `a` est égal à 5,
+vous ne pouvez pas dire qu'il est égal à autre chose plus tard, car vous venez
+de dire qu'il était égal à 5. Quoi, vous êtes un menteur ? Donc, dans les
+langages fonctionnels purs, une fonction n'a pas d'effets de bord. La seule
+chose qu'une fonction puisse faire, c'est calculer quelque chose et retourner
+le résultat. Au départ, cela semble plutôt limitant, mais il s'avère que ça a
+de très intéressantes conséquences&nbsp;: si une fonction est appelée deux
+fois, avec les mêmes paramètres, alors il est garanti qu'elle renverra le même
+résultat. On appelle ceci la transparence référentielle, et cela permet non
+seulement au compilateur de raisonner à propos du comportement du programme,
+mais également à vous de déduire facilement (et même de prouver) qu'une
+fonction est correcte, puis de construire des fonctions plus complexes en
+collant de simples fonctions l'une à l'autre.
 
 <img src="img/lazy.png" alt="paresseuse" class="right"/>
 

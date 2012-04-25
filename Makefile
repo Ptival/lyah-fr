@@ -23,7 +23,7 @@ ORDEREDHTML := introduction.html demarrons.html \
 
 HTMLFILES := $(addprefix html/, $(ORDEREDHTML))
 
-all: $(TARGET)
+all: $(TARGET) pdf printer_friendly_pdf
 
 html/%.html:%.mkd
 	cat $< | $(HSCOLOUR) -css | $(RMFIRST9) | $(RMLAST2) \
