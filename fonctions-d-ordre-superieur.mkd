@@ -65,7 +65,7 @@ En quoi cela nous aide-t-il ? Pour faire simple, si on appelle une fonction
 avec trop peu de paramètres, on obtient une fonction **appliquée
 partiellement**, c'est à dire une fonction qui prend autant de paramètres qu'on
 en a oubliés. Utiliser l'application partielle (appeler une fonction avec trop
-peu de paramètres) est un moyen grâcieux de créer des fonctions à la volée et
+peu de paramètres) est un moyen gracieux de créer des fonctions à la volée et
 de les passer à d'autres fonctions pour qu'elle les complète avec d'autres
 données.
 
