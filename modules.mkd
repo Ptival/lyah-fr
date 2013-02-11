@@ -36,7 +36,7 @@ propre code est séparé dans des modules assez indépendants (on dit qu'ils ont
 un couplage faible), vous pourrez les réutiliser plus tard. Cela rend la
 programmation plus facile à gérer en séparant des entités avec des buts précis.
 
-La bibliothèque standard Haskell est coupée en modules, chacun d'eux contenant
+La bibliothèque standard Haskell est découpée en modules, chacun d'eux contenant
 des fonctions et des types qui sont reliés et servent un but partagé. Il y a un
 module de manipulation de listes, un module de programmation concurrente, un
 module pour les nombres complexes, etc. Toutes les fonctions, types et classes
