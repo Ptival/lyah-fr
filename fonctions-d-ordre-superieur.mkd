@@ -931,7 +931,7 @@ valeur qui a le même type que la valeur retournée par `g`. Ainsi, la fonction
 résultante peut prendre un paramètre du même type que celui attendu par `g`, et
 retourner une valeur du même type que celui retourné par `f`. L'expression
 `negate . (* 3)` retourne une fonction qui prend un nombre, le multiplie par 3,
-et retourne la négation.
+et retourne l'opposé.
 
 Une utilisation de la composition de fonctions est de créer des fonctions à la
 volée pour les passer à d'autre fonctions. Bien sûr, on peut utiliser des
