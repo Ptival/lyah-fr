@@ -22,7 +22,7 @@
 
 Les fonctions Haskell peuvent prendre d'autres fonctions en paramètres, et
 retourner des fonctions en valeur de retour. Une fonction capable d'une de ces
-deux choses est dite d'odre supérieur. Les fonctions d'ordre supérieur ne sont
+deux choses est dite d'ordre supérieur. Les fonctions d'ordre supérieur ne sont
 pas qu'une partie de l'expérience Haskell, elles sont l'expérience Haskell.
 Elles s'avèrent indispensable pour définir ce que les choses *sont* plutôt
 que des étapes qui changent un état et bouclent. Elles sont un moyen très
