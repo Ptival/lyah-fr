@@ -636,7 +636,7 @@ introduisions un motif `x:xs` et nous faisions quelque chose avec la tête et
 quelque chose avec la queue. Il s'avère que c'est un motif très commun, donc il
 existe quelques fonctions très utiles qui l'encapsulent. Ces fonctions sont
 appelées des *folds* (NDT&nbsp;: des plis). Elles sont un peu comme la fonction
-`map`, seulement qu'elles réduisent une liste à une simple valeur.
+`map`, seulement qu'elles réduisent une liste à une valeur unique.
 
 Un *fold* prend une fonction binaire, une valeur de départ (que j'aime appeler
 l'accumulateur) et une liste à plier. La fonction binaire prend deux
