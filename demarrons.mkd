@@ -149,7 +149,7 @@ successeur. Comme vous pouvez le voir, on sépare le nom de la fonction du
 paramètre par un espace. Appeler une fonction avec plusieurs paramètres est
 aussi simple. Les fonctions `min` et `max` prennent deux choses qu'on peut
 ordonner (comme des nombres !). `min` retourne la plus petite, `max` la plus
-grande. Voyez vous-mêmes&nbsp;:
+grande. Voyez vous-même&nbsp;:
 
 > ghci> min 9 10
 > 9
