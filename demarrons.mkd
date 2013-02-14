@@ -431,7 +431,7 @@ elles sont égales, alors les éléments en deuxième position sont comparés, e
 > True
 
 Que peut-on faire d'autre avec des listes ? Voici quelques fonctions de base
-qui opérent sur des listes.
+qui opèrent sur des listes.
 
 `head` prend une liste et retourne sa tête. La tête est simplement le premier
 élément.
@@ -546,7 +546,7 @@ car c'est plus simple à lire.
 > ghci> 10 `elem` [3,4,5,6]
 > False
 
-C'était un premier tour des fonctions qui opérent sur des listes. Nous en
+C'était un premier tour des fonctions qui opèrent sur des listes. Nous en
 verrons d'autres [plus tard](modules#data-list).
 
 <h2 id="texas-rangees">
@@ -831,7 +831,7 @@ seulement la valeur qu'il contient, et n'aurait donc pas d'intérêt.
 Comme les listes, les tuples peuvent être comparés entre eux si leurs
 composantes peuvent être comparées. Seulement, vous ne pouvez pas comparer des
 tuples de tailles différentes, alors que vous pouvez comparer des listes de
-tailles différentes. Deux fonctions utiles qui opérent sur des paires&nbsp;:
+tailles différentes. Deux fonctions utiles qui opèrent sur des paires&nbsp;:
 
 `fst` prend une paire et renvoie sa première composante.
 
