@@ -177,7 +177,7 @@ première ligne, les puissances de 2 dans la deuxième, et ainsi de suite. Mappe
 
 <img src="img/legolists.png" alt="listes de shopping" class="left"/>
 
-`foldl'` et `foldl1'` sont des versions strictes de leur équivalents paresseux.
+`foldl'` et `foldl1'` sont des versions strictes de leurs équivalents paresseux.
 Si vous faites des plis paresseux sur des listes très grandes, vous pouvez
 souvent avoir des erreurs de débordement de pile. Le coupable est la nature
 paresseuse des plis, la valeur de l'accumulateur n'étant pas réellement mise à
@@ -1257,7 +1257,7 @@ Créer nos propres modules
 
 <img src="img/making_modules.png" alt="créer des modules" class="right"/>
 
-On vient de regarder des modules plutôt cool, mais comment crée-t-on nos
+On vient de regarder des modules plutôt cools, mais comment crée-t-on nos
 propres modules ? Presque tous les langages de programmation vous permettent de
 découper votre code en plusieurs fichiers et Haskell également. Lorsqu'on
 programme, il est de bonne pratique de prendre des fonctions et des types qui
