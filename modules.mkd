@@ -341,8 +341,8 @@ fois chaque élément apparaît dans la liste.
 > ghci> map (\l@(x:xs) -> (x,length l)) . group . sort $ [1,1,1,1,2,2,2,2,3,3,2,2,2,5,6,7]
 > [(1,4),(2,7),(3,2),(5,1),(6,1),(7,1)]
 
-`inits` et `tails` sont comme `init` et `tail`, mais appliquent ces fonctions
-récursivement tant que faire se peut. Observez&nbsp;:
+`inits` et `tails` sont comme `init` et `tail`, sauf qu'elles appliquent ces
+fonctions récursivement à une liste jusqu'à ce qu'il ne reste plus rien. Observez&nbsp;:
 
 > ghci> inits "w00t"
 > ["","w","w0","w00","w00t"]
