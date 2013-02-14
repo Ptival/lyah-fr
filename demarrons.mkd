@@ -309,7 +309,7 @@ Introduction aux listes
 <img src="img/list.png" alt="ACHETER UN CHIEN" class="left"/>
 
 Tout comme les listes de courses dans le monde réel, les listes Haskell sont
-très utiles. C'est la structure de donnée la plus utilisée, et elle peut l'être
+très utiles. C'est la structure de données la plus utilisée, et elle peut l'être
 d'une multitude de façons pour modéliser et résoudre tout un tas de problèmes.
 Les listes sont TROP géniales. Dans cette section, nous allons découvrir les
 bases des listes, des chaînes de caractères (qui sont en fait des listes) et
