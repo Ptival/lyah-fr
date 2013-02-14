@@ -39,8 +39,8 @@ celui-ci.
 > Prelude>
 
 Bravo, vous êtes dans GHCi ! L'invite `Prelude>` peut devenir de plus en plus
-long lorsqu'on importera des choses dans la session, alors on va le remplacer
-par `ghci>`. Si vous voulez le même invite, tapez simplement `:set prompt
+longue lorsqu'on importera des choses dans la session, alors on va la remplacer
+par `ghci>`. Si vous voulez la même invite, tapez simplement `:set prompt
 "ghci> "`.
 
 Voici un peu d'arithmétique élémentaire.
