@@ -87,7 +87,7 @@ importer sélectivement juste ces fonctions. Si nous ne voulions que `nub` et
 
 Vous pouvez aussi choisir d'importer toutes les fonctions d'un module, sauf
 certaines. C'est souvent utile quand plusieurs modules exportent des fonctions
-qui ont le même nom et que vous voulez vous débarasser de celles qui ne vous
+qui ont le même nom et que vous voulez vous débarrasser de celles qui ne vous
 concernent pas. Mettons qu'on ait défini une fonction `nub` et qu'on veuille
 importer toutes les fonctions de `Data.List` à part `nub`&nbsp;:
 
@@ -103,7 +103,7 @@ Voici comment on résout cela&nbsp;:
 > import qualified Data.Map
 
 Cela nous force à écrire `Data.Map.filter` pour désigner la fonction `filter`
-de `Data.Map`, alors que `filter` tout court correpond à la fonction du
+de `Data.Map`, alors que `filter` tout court correspond à la fonction du
 `Prelude` qu'on connaît et qu'on aime tous. Mais écrire `Data.Map` devant
 chaque fonction du module est un peu fastidieux. C'est pourquoi on peut
 renommer les imports qualifiés&nbsp;:
@@ -476,7 +476,7 @@ fonction binaire (c'est-à-dire qui prend deux paramètres). Mais comment zipper
 ensemble trois listes ? Ou zipper trois listes à l'aide d'une fonction qui
 attend trois paramètres ? Pour cela, il existe `zip3`, `zip4`, etc. et
 `zipWith3`, `zipWith4`, etc. Ces variantes existent jusqu'à 7. Bien que ça ait
-l'air un peu arbitraire et ad-hoc, ça s'avère plutôt suffisant, car vous ne
+l'air un peu arbitraire et ad hoc, ça s'avère plutôt suffisant, car vous ne
 voudrez sûrement jamais zipper ensemble 8 listes. Il existe un moyen astucieux
 de zipper ensemble une infinité de listes, mais nous ne sommes pas assez avancé
 pour couvrir ça maintenant.
