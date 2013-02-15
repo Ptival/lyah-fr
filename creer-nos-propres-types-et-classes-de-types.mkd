@@ -53,7 +53,7 @@ illustratif.
 
 Maintenant, imaginons comment l'on représenterait une forme en Haskell. Une
 possibilité serait d'utiliser des tuples. Un cercle pourrait être `(43.1, 55.0,
-10.4)` où les deux premières composantes serait les coordonnées du centre, et
+10.4)` où les deux premières composantes seraient les coordonnées du centre, et
 la troisième le rayon. Ça a l'air raisonnable, mais ça pourrait tout aussi bien
 représenter un vecteur 3D ou je ne sais quoi. Une meilleure solution consiste à
 créer notre type pour représenter les données. Disons qu'une forme puisse être
