@@ -53,7 +53,7 @@ illustratif.
 
 Maintenant, imaginons comment l'on représenterait une forme en Haskell. Une
 possibilité serait d'utiliser des tuples. Un cercle pourrait être `(43.1, 55.0,
-10.4)` où les deux premières composantes serait les coordonnées du centre, et
+10.4)` où les deux premières composantes seraient les coordonnées du centre, et
 la troisième le rayon. Ça a l'air raisonnable, mais ça pourrait tout aussi bien
 représenter un vecteur 3D ou je ne sais quoi. Une meilleure solution consiste à
 créer notre type pour représenter les données. Disons qu'une forme puisse être
@@ -63,7 +63,7 @@ un cercle ou un rectangle. Voilà&nbsp;:
 
 Qu'est-ce que c'est que ça ? Pensez-y ainsi. Le constructeur de valeurs
 `Circle` a trois champs, qui sont tous des `Float`. Ainsi, lorsqu'on écrit un
-constructeur de valeurs, on peut optionellement ajouter des types à la suite
+constructeur de valeurs, on peut optionnellement ajouter des types à la suite
 qui définissent les valeurs qu'il peut contenir. Ici, les deux premiers champs
 sont les coordonnées du centre, le troisième est son rayon. Le constructeur de
 valeurs `Rectangle` a quatre champs qui acceptent des `Float`. Les deux
@@ -468,7 +468,7 @@ pas le coup. On utilise généralement les paramètres de types lorsque le type
 contenu dans les divers constructeurs de valeurs du type de données n'est pas
 vraiment important pour que le type fonctionne. Une liste de choses est une
 liste de choses, peu importe ce que les choses sont, ça marche. Si on souhaite
-sommer une liste de nombre, on peut spécifier au dernier moment que la fonction
+sommer une liste de nombres, on peut spécifier au dernier moment que la fonction
 de sommage attend une liste de nombres. De même pour `Maybe`. `Maybe`
 représente une option qui est soit de n'avoir rien, soit d'avoir quelque chose.
 Peu importe ce que le type de cette chose est.
