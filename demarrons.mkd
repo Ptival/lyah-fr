@@ -39,8 +39,8 @@ celui-ci.
 > Prelude>
 
 Bravo, vous êtes dans GHCi ! L'invite `Prelude>` peut devenir de plus en plus
-long lorsqu'on importera des choses dans la session, alors on va le remplacer
-par `ghci>`. Si vous voulez le même invite, tapez simplement `:set prompt
+longue lorsqu'on importera des choses dans la session, alors on va la remplacer
+par `ghci>`. Si vous voulez la même invite, tapez simplement `:set prompt
 "ghci> "`.
 
 Voici un peu d'arithmétique élémentaire.
@@ -149,7 +149,7 @@ successeur. Comme vous pouvez le voir, on sépare le nom de la fonction du
 paramètre par un espace. Appeler une fonction avec plusieurs paramètres est
 aussi simple. Les fonctions `min` et `max` prennent deux choses qu'on peut
 ordonner (comme des nombres !). `min` retourne la plus petite, `max` la plus
-grande. Voyez vous-mêmes&nbsp;:
+grande. Voyez vous-même&nbsp;:
 
 > ghci> min 9 10
 > 9
@@ -309,7 +309,7 @@ Introduction aux listes
 <img src="img/list.png" alt="ACHETER UN CHIEN" class="left"/>
 
 Tout comme les listes de courses dans le monde réel, les listes Haskell sont
-très utiles. C'est la structure de donnée la plus utilisée, et elle peut l'être
+très utiles. C'est la structure de données la plus utilisée, et elle peut l'être
 d'une multitude de façons pour modéliser et résoudre tout un tas de problèmes.
 Les listes sont TROP géniales. Dans cette section, nous allons découvrir les
 bases des listes, des chaînes de caractères (qui sont en fait des listes) et
@@ -431,7 +431,7 @@ elles sont égales, alors les éléments en deuxième position sont comparés, e
 > True
 
 Que peut-on faire d'autre avec des listes ? Voici quelques fonctions de base
-qui opérent sur des listes.
+qui opèrent sur des listes.
 
 `head` prend une liste et retourne sa tête. La tête est simplement le premier
 élément.
@@ -546,7 +546,7 @@ car c'est plus simple à lire.
 > ghci> 10 `elem` [3,4,5,6]
 > False
 
-C'était un premier tour des fonctions qui opérent sur des listes. Nous en
+C'était un premier tour des fonctions qui opèrent sur des listes. Nous en
 verrons d'autres [plus tard](modules#data-list).
 
 <h2 id="texas-rangees">
@@ -831,7 +831,7 @@ seulement la valeur qu'il contient, et n'aurait donc pas d'intérêt.
 Comme les listes, les tuples peuvent être comparés entre eux si leurs
 composantes peuvent être comparées. Seulement, vous ne pouvez pas comparer des
 tuples de tailles différentes, alors que vous pouvez comparer des listes de
-tailles différentes. Deux fonctions utiles qui opérent sur des paires&nbsp;:
+tailles différentes. Deux fonctions utiles qui opèrent sur des paires&nbsp;:
 
 `fst` prend une paire et renvoie sa première composante.
 
