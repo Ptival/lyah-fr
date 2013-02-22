@@ -171,9 +171,9 @@ Maintenant, pour les sommer, il suffit de faire&nbsp;:
 > ghci> map sum $ transpose [[0,3,5,9],[10,0,0,9],[8,5,1,-1]]
 > [18,8,6,17]
 
-Lorsqu'on transpose ces trois listes, les puissances de 3 se retrouvent dans la
-première ligne, les puissances de 2 dans la deuxième, et ainsi de suite. Mapper
-`sum` sur cette liste produit le résultat désiré.
+Lorsqu'on transpose ces trois listes, les coefficients de degré 3 se retrouvent 
+sur la première ligne, les coefficients de degré 2 sur la deuxième et ainsi 
+de suite. Mapper `sum` sur cette liste produit le résultat désiré.
 
 <img src="img/legolists.png" alt="listes de shopping" class="left"/>
 
