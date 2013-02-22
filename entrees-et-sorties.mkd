@@ -733,14 +733,14 @@ tard, quand tu en auras besoin !_".
 `getContents` est très utile quand on veut connecter la sortie d'un programme à
 l'entrée de notre programme. Si vous ne savez pas comment cette connexion (à
 base de *tubes*) fonctionne dans les systèmes type Unix, voici un petit aperçu.
-Créons un fichier texte qui contient ce haiku&nbsp;:
+Créons un fichier texte qui contient ce haïku&nbsp;:
 
 > I'm a lil' teapot
 > What's with that airplane food, huh?
 > It's so small, tasteless
 
-Ouais, le haiku est pourri, mais bon ? Si quelqu'un connaît un tutoriel de
-haikus, je suis preneur.
+Ouais, le haïku est pourri, mais bon ? Si quelqu'un connaît un tutoriel de
+haïkus, je suis preneur.
 
 Bien, souvenez-vous de ce programme qu'on a écrit en introduisant la fonction
 `forever`. Il demandait à l'utilisateur une ligne, et lui retournait en
@@ -776,7 +776,7 @@ qui affiche le fichier donné en argument. Regardez-moi ça, booyaka !
 Comme vous voyez, connecter la sortie d'un programme (dans notre cas c'était
 *cat*) à l'entrée d'un autre (ici *capslocker*) est fait à l'aide du caractère
 `|`. Ce qu'on a fait ici est à peu près équivalent à lancer *capslocker*, puis
-taper notre haiku dans le terminal, avant d'envoyer le caractère de fin de
+taper notre haïku dans le terminal, avant d'envoyer le caractère de fin de
 fichier (généralement en tapant Ctrl-D). C'est comme lancer *cat haiku.txt* et
 dire&nbsp;: "Attends, n'affiche pas ça dans le terminal, va le dire à
 *capslocker* plutôt !".
@@ -1356,10 +1356,10 @@ caractères, on utilise `read` sur cela pour obtenir `1` et on le lie à
 `number`.
 
 Souvenez-vous de `delete` et `!!` de `Data.List`. `!!` retourne l'élément d'une
-liste à l'indice donné, et `delete` supprime la première occurence d'un élément
-dans une liste et retourne une nouvelle liste sans cette occurence. `(todoTasks
+liste à l'indice donné, et `delete` supprime la première occurrence d'un élément
+dans une liste et retourne une nouvelle liste sans cette occurrence. `(todoTasks
 !! number)` (`number` étant `1`) retourne `"Dust the dog"`. On lie `todoTasks`
-à laquelle on a supprimé la première occurence de `"Dust the dog"` à
+à laquelle on a supprimé la première occurrence de `"Dust the dog"` à
 `newTodoItems`, puis on joint cela en une seule chaîne avec `unlines` avant de
 l'écrire dans notre fichier temporaire. L'ancien fichier n'est pas modifié et
 le fichier temporaire contient toutes les lignes de l'ancien, à l'exception de
@@ -2086,7 +2086,7 @@ elles et la paresse d'Haskell nous permet d'échanger les boucles *for* et
 listes, parce que l'évaluation n'aura lieu que lorsque cela sera nécessaire,
 donc des choses comme des listes infinies (et même des listes infinies de
 listes infinies !) ne nous posent pas de problème. C'est pourquoi les listes
-peuvent être utilisées pour réprésenter les flots, que ce soit en lecture
+peuvent être utilisées pour représenter les flots, que ce soit en lecture
 depuis l'entrée standard ou un fichier. On peut juste ouvrir un fichier, et le
 lire comme une chaîne de caractères, alors qu'en réalité il ne sera accédé que
 quand ce sera nécessaire.
