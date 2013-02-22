@@ -526,7 +526,7 @@ des vrais noms pour les fonctions, pas des mots de vieilles personnes.
 > ghci> nub "Lots of words and stuff"
 > "Lots fwrdanu"
 
-`delete` prend un élément, une liste, et supprime la première occurence de cet
+`delete` prend un élément, une liste, et supprime la première occurrence de cet
 élément dans la liste.
 
 > ghci> delete 'h' "hey there ghang!"
