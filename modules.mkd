@@ -499,7 +499,7 @@ lignes.
 `'\n'` est le caractère UNIX pour aller à la ligne. L'antislash a une
 signification spéciale dans les caractères et les chaînes de caractères.
 
-`unlines` est la fonction inverse de `lines`. Elle prend une liste de chaînes
+`unlines` est la fonction réciproque de `lines`. Elle prend une liste de chaînes
 de caractères et les joint ensemble avec des `'\n'`.
 
 > ghci> unlines ["first line", "second line", "third line"]
