@@ -853,8 +853,9 @@ msg`. Essayons d'encoder quelques messages.
 > ghci> encode 5 "Marry Christmas! Ho ho ho!"
 > "Rfww~%Hmwnxyrfx&%Mt%mt%mt&"
 
-C'est effectivement encodé. Décoder ces messages revient simplement à décaler
-les nombres d'autant de places dans le sens opposé au sens initial.
+C'est effectivement encodé. Décoder ces messages consiste simplement à les
+décaler dans le sens opposé et du même nombre de places que le décalage
+initial.
 
 > decode :: Int -> String -> String
 > decode shift msg = encode (negate shift) msg
