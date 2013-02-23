@@ -583,7 +583,7 @@ instances d'une classe de types en implémentant les fonctions définies par
 cette classe. Pour l'instant, voyons comment Haskell peut magiquement faire de
 nos types des instances de n'importe laquelle des classes de types suivantes&nbsp;:
 `Eq`, `Ord`, `Enum`, `Bounded`, `Show` et `Read`. Haskell peut dériver le
-comportement de nos types dans ces contextes si l'on utilise le mot clé
+comportement de nos types dans ces contextes si l'on utilise le mot-clé
 *deriving* lors de la création du type de données.
 
 Considérez ce type de données&nbsp;:
@@ -791,7 +791,7 @@ comment la bibliothèque standard définit `String` comme un synonyme de
 
 <img src="img/chicken.png" alt="poulet" class="left"/>
 
-On a introduit le mot-clé *type*. Le mot clé peut être déroutant pour certains,
+On a introduit le mot-clé *type*. Le mot-clé peut être déroutant pour certains,
 puisqu'on ne crée en fait rien de nouveau (on faisait cela avec le mot-clé
 *data*), mais on crée seulement un synonyme pour un type déjà existant.
 
@@ -1314,7 +1314,7 @@ Voici comment `Eq` est définie dans le prélude&nbsp;:
 >     x == y = not (x /= y)
 >     x /= y = not (x == y)
 
-Wow, wow, wow ! Quels nouveaux syntaxe et mot-clés étranges ! Pas d'inquiétude,
+Wow, wow, wow ! Quels nouveaux syntaxe et mots-clés étranges ! Pas d'inquiétude,
 tout cela va s'éclaircir bientôt. Tout d'abord, quand on écrit `class Eq a
 where`, cela signifie qu'on définit une nouvelle classe `Eq`. Le `a` est une
 variable de types et indique que `a` jouera le rôle du type qu'on souhaitera

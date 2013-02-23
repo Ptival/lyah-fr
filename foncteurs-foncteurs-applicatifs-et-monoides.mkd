@@ -1430,7 +1430,7 @@ fonction qui extrait une liste d'une `ZipList`&nbsp;:
 
 Cela a l'air correct, et fonctionnerait en fait plutôt bien. Puisqu'on avait
 deux manières de faire d'un type existant une instance d'une classe de types,
-on a utilisé le mot clé *data* pour juste envelopper ce type dans un autre
+on a utilisé le mot-clé *data* pour juste envelopper ce type dans un autre
 type, et fait de ce second type une instance de la seconde manière.
 
 Le mot-clé *newtype* en Haskell est fait exactement pour ces cas où l'on veut
