@@ -85,7 +85,7 @@ Pour commencer, tapez ceci dans votre éditeur de texte favori&nbsp;:
 
 On vient juste de définir un nom `main`, qui consiste à appeler `putStrLn` avec
 le paramètre `"hello, world"`. Ça semble plutôt banal, mais ça ne l'est pas,
-comme on va le voir bientôt. Sauvegardez ce fichier comme `helloworld.hs`.
+comme on va le voir bientôt. Sauvegardez ce fichier sous `helloworld.hs`.
 
 Et maintenant, on va faire quelque chose sans précédent. On va réellement
 compiler notre programme ! Je suis tellement ému ! Ouvrez votre terminal et
