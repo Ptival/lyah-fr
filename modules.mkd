@@ -177,7 +177,7 @@ de suite. Mapper `sum` sur cette liste produit le résultat désiré.
 
 <img src="img/legolists.png" alt="listes de shopping" class="left"/>
 
-`foldl'` et `foldl1'` sont des versions strictes de leurs équivalents paresseux.
+`foldl'` et `foldl1'` sont des versions strictes de leur équivalent paresseux.
 Si vous faites des plis paresseux sur des listes très grandes, vous pouvez
 souvent avoir des erreurs de débordement de pile. Le coupable est la nature
 paresseuse des plis, la valeur de l'accumulateur n'étant pas réellement mise à
