@@ -1002,14 +1002,14 @@ On ne peut pas prendre le cosinus d'une fonction. On peut cependant exprimer
 > fn = ceiling . negate . tan . cos . max 50
 
 Excellent ! Souvent, un style sans point est plus lisible et concis, car il
-vous fait réfléchir en termes de fonctions composant leur résultat plutôt que
-de réfléchir à comment est-ce que les données sont transportées d'un endroit à
-l'autre. Vous pouvez prendre de simples fonctions et utiliser la composition
-pour les coller et former des fonctions plus complexes. Cependant, souvent,
-écrire une fonction en style sans point peut être moins lisible parce que la
-fonction est trop complexe. C'est pourquoi l'on décourage les trop grandes
-chaînes de composition, bien que je sois coupable d'être fan de composition. Le
-style préféré consiste à utiliser des liaisons *let* pour donner des noms aux
+vous fait réfléchir en termes de fonctions et de composition de leur résultat,
+plutôt qu'à la façon dont les données sont transportées d'un endroit à l'autre.
+Vous pouvez prendre de simples fonctions et utiliser la composition pour les
+coller et former des fonctions plus complexes. Cependant, souvent, écrire une
+fonction en style sans point peut être moins lisible parce que la fonction est
+trop complexe. C'est pourquoi l'on décourage les trop grandes chaînes de
+composition, bien que je sois coupable d'être fan de composition. Le style
+préféré consiste à utiliser des liaisons *let* pour donner des noms aux
 résultats intermédiaires ou découper le problème en sous-problèmes et ensuite
 mettre tout en place pour que les fonctions aient du sens pour le lecteur,
 plutôt que de voir une grosse chaîne de compositions.
