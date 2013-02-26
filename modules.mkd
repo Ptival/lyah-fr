@@ -50,7 +50,7 @@ name>`. Cela doit être fait avant de définir des fonctions, donc généralemen
 les imports sont faits en début de fichier. Un script peut bien sûr importer
 plusieurs modules. Écrivez simplement une ligne d'import par module. Importons
 le module `Data.List`, qui a un paquet de fonctions utiles pour travailler sur
-des listes, et utilisons une des fonctions que le module exporte afin de savoir
+des listes et utilisons une des fonctions que le module exporte afin de savoir
 combien d'éléments uniques une liste comporte.
 
 > import Data.List
@@ -66,7 +66,7 @@ double. Composer `length` et `nub` en faisant `length . nub` produit une
 fonction équivalente à `\xs -> length (nub xs)`.
 
 Vous pouvez aussi importer des fonctions d'un module dans l'espace de nommage
-global de GHCi. Si vous êtes dans GHCi, et que vous désirez appeler des
+global de GHCi. Si vous êtes dans GHCi et que vous désirez appeler des
 fonctions exportées par `Data.List`, faites&nbsp;:
 
 > ghci> :m + Data.List
@@ -124,7 +124,7 @@ d'apprendre Haskell et de se faire une idée solide de ce dont il s'agit.
 Pour trouver des fonctions et savoir dans quel module elles résident, utilisez
 [Hoogle](http://haskell.org/hoogle/). C'est un moteur de recherche pour Haskell
 génial, vous pouvez chercher quelque chose par son nom, par le nom de son
-module, ou même par son type !
+module ou même par son type !
 
 <h2 id="data-list">
 Data.List
@@ -138,7 +138,7 @@ manière qualifiée, il n'a de collision avec aucun nom du `Prelude`, à part
 évidemment les fonctions que le `Prelude` lui avait empruntées.
 Intéressons-nous à d'autres fonctions que nous n'avions pas encore vues.
 
-`intersperse` prend un élément et une liste, et place cet élément entre chaque
+`intersperse` prend un élément et une liste et place cet élément entre chaque
 paire d'éléments de la liste. Démonstration&nbsp;:
 
 > ghci> intersperse '.' "MONKEY"
@@ -147,7 +147,7 @@ paire d'éléments de la liste. Démonstration&nbsp;:
 > [1,0,2,0,3,0,4,0,5,0,6]
 
 `intercalate` prend une liste de listes et une liste. Elle insère cette dernière
-entre toutes les listes de la première, et aplatit le résultat.
+entre toutes les listes de la première et aplatit le résultat.
 
 > ghci> intercalate " " ["hey","there","guys"]
 > "hey there guys"
@@ -164,20 +164,20 @@ vice versa.
 > ["htg","ehu","yey","rs","e"]
 
 Mettons qu'on ait les polynômes *3x² + 5x + 9*, *10x³ + 9* et *8x³ + 5x² + x -
-1*, et que l'on souhaite les additionner. On peut utiliser les listes `[0, 3,
+1* et que l'on souhaite les additionner. On peut utiliser les listes `[0, 3,
 5, 9]`, `[10, 0, 0, 9]` et `[8, 5, 1, -1]` pour les représenter en Haskell.
 Maintenant, pour les sommer, il suffit de faire&nbsp;:
 
 > ghci> map sum $ transpose [[0,3,5,9],[10,0,0,9],[8,5,1,-1]]
 > [18,8,6,17]
 
-Lorsqu'on transpose ces trois listes, les puissances de 3 se retrouvent dans la
-première ligne, les puissances de 2 dans la deuxième, et ainsi de suite. Mapper
-`sum` sur cette liste produit le résultat désiré.
+Lorsqu'on transpose ces trois listes, les coefficients de degré 3 se retrouvent 
+sur la première ligne, les coefficients de degré 2 sur la deuxième et ainsi 
+de suite. Mapper `sum` sur cette liste produit le résultat désiré.
 
 <img src="img/legolists.png" alt="listes de shopping" class="left"/>
 
-`foldl'` et `foldl1'` sont des versions strictes de leur équivalents paresseux.
+`foldl'` et `foldl1'` sont des versions strictes de leur équivalent paresseux.
 Si vous faites des plis paresseux sur des listes très grandes, vous pouvez
 souvent avoir des erreurs de débordement de pile. Le coupable est la nature
 paresseuse des plis, la valeur de l'accumulateur n'étant pas réellement mise à
@@ -186,8 +186,8 @@ l'accumulateur fait en quelque sorte la promesse qu'il se rappellera comment
 calculer sa valeur quand on la lui demandera (NDT&nbsp;: pour cela, ce qu'on
         appelle un glaçon, traduction de *thunk*, est créé). Cela a lieu pour
 chaque accumulateur intermédiaire, et tous les glaçons sont empilés sur votre
-pile, et finissent par la faire déborder.  Les plis stricts ne sont pas de vils
-paresseux, et calculent les valeurs intermédiaires en route au lieu de remplir
+pile et finissent par la faire déborder.  Les plis stricts ne sont pas de vils
+paresseux et calculent les valeurs intermédiaires en route au lieu de remplir
 votre pile de glaçons.  Donc, si jamais vous rencontrez des problèmes de
 débordement de pile en faisant des plis paresseux, essayez d'utiliser plutôt
 les versions strictes.
@@ -261,7 +261,7 @@ d'éléments spécifié, retournant chaque bout dans une paire.
 > "barfoo"
 
 `takeWhile` est très utile. Elle prend des éléments de la liste tant que le
-prédicat est satisfait, et s'arrête dès qu'un élément l'invalide. C'est très
+prédicat est satisfait et s'arrête dès qu'un élément l'invalide. C'est très
 utile.
 
 > ghci> takeWhile (>3) [6,5,4,3,2,1,2,3,4,5,4,3,2,1]
@@ -278,7 +278,7 @@ Si l'on cherchait la somme de toutes les puissances de 3 inférieures à 10 000,
 > ghci> sum $ takeWhile (<10000) $ map (^3) [1..]
 > 53361
 
-On applique `(^3)` à une liste infinie, et on coupe dès que ça dépasse 10 000.
+On applique `(^3)` à une liste infinie et on coupe dès que ça dépasse 10 000.
 Il ne reste plus qu'à sommer aisément.
 
 `dropWhile` est similaire, mais elle jette les éléments tant que le prédicat
@@ -335,14 +335,14 @@ sont égaux.
 > ghci> group [1,1,1,1,2,2,2,2,3,3,2,2,2,5,6,7]
 > [[1,1,1,1],[2,2,2,2],[3,3],[2,2,2],[5],[6],[7]]
 
-Si l'on trie une liste avant de grouper ses éléments, on peut connaître le
-compte de chaque élément.
+Si l'on trie une liste avant de grouper ses éléments, on peut savoir combien de
+fois chaque élément apparaît dans la liste.
 
 > ghci> map (\l@(x:xs) -> (x,length l)) . group . sort $ [1,1,1,1,2,2,2,2,3,3,2,2,2,5,6,7]
 > [(1,4),(2,7),(3,2),(5,1),(6,1),(7,1)]
 
-`inits` et `tails` sont comme `init` et `tail`, mais appliquent ces fonctions
-récursivement tant que faire se peut. Observez&nbsp;:
+`inits` et `tails` sont comme `init` et `tail`, sauf qu'elles appliquent ces
+fonctions récursivement à une liste jusqu'à ce qu'il ne reste plus rien. Observez&nbsp;:
 
 > ghci> inits "w00t"
 > ["","w","w0","w00","w00t"]
@@ -499,13 +499,13 @@ lignes.
 `'\n'` est le caractère UNIX pour aller à la ligne. L'antislash a une
 signification spéciale dans les caractères et les chaînes de caractères.
 
-`unlines` est la fonction inverse de `lines`. Elle prend une liste de chaînes
+`unlines` est la fonction réciproque de `lines`. Elle prend une liste de chaînes
 de caractères et les joint ensemble avec des `'\n'`.
 
 > ghci> unlines ["first line", "second line", "third line"]
 > "first line\nsecond line\nthird line\n"
 
-`words` et `unwords` servent à séparer une ligne de texte en plusieurs mots, ou
+`words` et `unwords` servent à séparer une ligne de texte en plusieurs mots ou
 à joindre une liste de mots en un texte. Très pratique.
 
 > ghci> words "hey these are the words in this sentence"
@@ -526,7 +526,7 @@ des vrais noms pour les fonctions, pas des mots de vieilles personnes.
 > ghci> nub "Lots of words and stuff"
 > "Lots fwrdanu"
 
-`delete` prend un élément, une liste, et supprime la première occurence de cet
+`delete` prend un élément, une liste et supprime la première occurrence de cet
 élément dans la liste.
 
 > ghci> delete 'h' "hey there ghang!"
@@ -567,7 +567,7 @@ les éléments apparaissant dans les deux listes.
 `insert` prend un élément et une liste d'éléments qui peuvent être triés et
 insère l'élément à la dernière position où il reste inférieur au prochain
 élément. `insert` va parcourir la liste jusqu'à trouver un élément plus grand
-que celui passé en paramètre, et va alors insérer ce dernier devant l'autre.
+que celui passé en paramètre et va alors insérer ce dernier devant l'autre.
 
 > ghci> insert 4 [3,5,1,2,8,2]
 > [3,4,5,1,2,8,2]
@@ -575,7 +575,7 @@ que celui passé en paramètre, et va alors insérer ce dernier devant l'autre.
 > [1,3,4,4,4,1]
 
 Le `4` est inséré juste après le `3` et juste avant le `5` dans le premier
-exemple, et entre le `3` et le `4` dans le second.
+exemple et entre le `3` et le `4` dans le second.
 
 Propriété intéressante&nbsp;: si l'on utilise `insert` pour insérer dans une
 liste triée, la liste reste triée.
@@ -853,8 +853,9 @@ msg`. Essayons d'encoder quelques messages.
 > ghci> encode 5 "Marry Christmas! Ho ho ho!"
 > "Rfww~%Hmwnxyrfx&%Mt%mt%mt&"
 
-C'est effectivement encodé. Décoder ces messages revient simplement à décaler
-les nombres d'autant de places dans le sens opposé au sens initial.
+C'est effectivement encodé. Décoder ces messages consiste simplement à les
+décaler dans le sens opposé et du même nombre de places que le décalage
+initial.
 
 > decode :: Int -> String -> String
 > decode shift msg = encode (negate shift) msg
@@ -901,7 +902,7 @@ la recherche d'une valeur par sa clé. Créons une fonction qui trouve une valeu
 
 Plutôt simple. La fonction prend une clé, une liste, filtre la liste de façon à
 ce que seules les clés correspondantes ne restent, prend la première paire
-clé-valeur, et en retourne la valeur. Mais que se passe-t-il si la clé que l'on
+clé-valeur et en retourne la valeur. Mais que se passe-t-il si la clé que l'on
 cherche n'est pas dans la liste ? Hmmm. Ici, si la clé n'est pas dans la liste,
 on va essayer de prendre la tête d'une liste vide, ce qui génère une erreur à
 l'exécution. On ne devrait pas laisser notre programme planter si facilement,
@@ -916,7 +917,7 @@ où *something* sera la valeur correspondant à la clé.
 >                             else findKey key xs
 
 Regardez la déclaration de type. Elle prend une clé qui dispose d'un test
-d'égalité, une liste associative, et retourne éventuellement une valeur. Ça a
+d'égalité, une liste associative et retourne éventuellement une valeur. Ça a
 l'air correct.
 
 Ceci est un cas d'école de fonction récursive opérant sur une liste. Cas de
@@ -990,7 +991,7 @@ arbre.
 Vous devriez toujours utiliser `Data.Map` pour associer des clés-valeurs, à
 moins que vous ayez des clés qui ne sont pas membres d'`Ord`.
 
-`empty` représente une map vide. Elle ne prend pas d'argument, et retourne une
+`empty` représente une map vide. Elle ne prend pas d'argument et retourne une
 map vide.
 
 > ghci> Map.empty
@@ -1014,7 +1015,7 @@ et un pli. Observez&nbsp;:
 > fromList' :: (Ord k) => [(k,v)] -> Map.Map k v
 > fromList' = foldr (\(k,v) acc -> Map.insert k v acc) Map.empty
 
-C'est un pli plutôt simple. On commence avec la map vide, et on la plie depuis
+C'est un pli plutôt simple. On commence avec la map vide et on la plie depuis
 la droite, en insérant les paires clé-valeur dans l'accumulateur tout du long.
 
 `null` vérifie si une map est vide.
@@ -1031,7 +1032,7 @@ la droite, en insérant les paires clé-valeur dans l'accumulateur tout du long.
 > ghci> Map.size $ Map.fromList [(2,4),(3,3),(4,2),(5,4),(6,4)]
 > 5
 
-`singleton` prend une clé et une valeur, et crée une map qui contient
+`singleton` prend une clé et une valeur et crée une map qui contient
 uniquement cette association.
 
 > ghci> Map.singleton 3 9
@@ -1042,7 +1043,7 @@ uniquement cette association.
 `lookup` fonctionne comme `lookup` de `Data.List`, mais opère sur des maps.
 Elle retourne `Just something` si elle trouve quelque chose, `Nothing` sinon.
 
-`member` est un prédicat qui prend une clé, une map, et indique si la clé est
+`member` est un prédicat qui prend une clé, une map et indique si la clé est
 dans la map.
 
 > ghci> Map.member 3 $ Map.fromList [(3,6),(4,3),(6,9)]
@@ -1067,7 +1068,7 @@ dans la map.
 `map snd . Map.toList`.
 
 `fromListWith` est une petite fonction assez cool. Elle agit un peu comme
-`fromList`, mais elle ne jette pas les clés en double, et utilise une fonction
+`fromList`, mais elle ne jette pas les clés en double et utilise une fonction
 passée en paramètre pour décider quoi faire d'elles. Disons qu'une fille peut
 avoir plusieurs numéros de téléphone, et qu'on a une liste associative comme
 celle-ci&nbsp;:
@@ -1257,7 +1258,7 @@ Créer nos propres modules
 
 <img src="img/making_modules.png" alt="créer des modules" class="right"/>
 
-On vient de regarder des modules plutôt cool, mais comment crée-t-on nos
+On vient de regarder des modules plutôt cools, mais comment crée-t-on nos
 propres modules ? Presque tous les langages de programmation vous permettent de
 découper votre code en plusieurs fichiers et Haskell également. Lorsqu'on
 programme, il est de bonne pratique de prendre des fonctions et des types qui
