@@ -36,18 +36,18 @@ html/%.html:%.mkd
 pdf:
 	cp html/hscolour.css html/hscolour.tmp
 	sed -i 's/content {width: 800px; /content {/g' html/hscolour.css
-	wkhtmltopdf --toc --toc-depth 2 -s A3 --disable-internal-links \
+	wkhtmltopdf -s A3 \
 		--title "Apprendre Haskell vous fera le plus grand bien \!" \
-		--cover html/pdfcover.html $(HTMLFILES) \
+		toc toc.xslt --load-error-handling ignore $(HTMLFILES) \
 		apprendre-haskell-vous-fera-le-plus-grand-bien.pdf
 	mv html/hscolour.tmp html/hscolour.css
 
 printer_friendly_pdf:
 	cp html/hscolour.css html/hscolour.tmp
 	cp html/hscolour_printer.css html/hscolour.css
-	wkhtmltopdf --toc --toc-depth 2 -s A3 --disable-internal-links \
+	wkhtmltopdf -s A3 \
 		--title "Apprendre Haskell vous fera le plus grand bien \!" \
-		--cover html/pdfcover.html $(HTMLFILES) \
+		toc toc.xslt --load-error-handling ignore $(HTMLFILES) \
 		apprendre-haskell-vous-fera-le-plus-grand-bien_printer-friendly.pdf
 	mv html/hscolour.tmp html/hscolour.css
 
