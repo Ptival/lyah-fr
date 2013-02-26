@@ -1035,8 +1035,9 @@ plutôt écrit&nbsp;:
 >         belowLimit = takeWhile (<10000) oddSquares
 >     in  sum belowLimit
 
-Je ne gagnerai pas de compétition de golf ainsi, mais quelqu'un qui aura à lire
-ça trouvera certainement cela plus simple à lire qu'une chaîne de compositions.
+Ce code ne gagnerait pas à une compétition de «code golf», mais si quelqu'un
+devrait le lire, il trouverait certainement cela plus lisible qu'une chaîne de
+compositions.
 
 <div class="prev-toc-next">
 <ul>
