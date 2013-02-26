@@ -1004,7 +1004,7 @@ On ne peut pas prendre le cosinus d'une fonction. On peut cependant exprimer
 Excellent ! Souvent, un style sans point est plus lisible et concis, car il
 vous fait réfléchir en termes de fonctions composant leur résultat plutôt que
 de réfléchir à comment est-ce que les données sont transportées d'un endroit à
-l'autre. Vous pouvez prendre de simple fonctions et utiliser la composition
+l'autre. Vous pouvez prendre de simples fonctions et utiliser la composition
 pour les coller et former des fonctions plus complexes. Cependant, souvent,
 écrire une fonction en style sans point peut être moins lisible parce que la
 fonction est trop complexe. C'est pourquoi l'on décourage les trop grandes
