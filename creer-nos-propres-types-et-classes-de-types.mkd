@@ -2040,7 +2040,7 @@ convenablement placé dans son propre champ.
 
 Et voilà ! On vient juste de mapper `f` sur le premier champ.
 
-Dans cette section, on a vu un tour détaillé du fonctionnement des paramètres
+Dans cette section, on a eu un bon aperçu du fonctionnement des paramètres
 de types et on les a en quelque sorte formalisés avec les sortes, comme on
 avait formalisé les paramètres de fonctions avec des déclarations de type. On a
 vu qu'il existe des parallèles intéressants entre les fonctions et les
