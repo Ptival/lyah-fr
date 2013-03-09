@@ -296,13 +296,13 @@ ce nom dans une chaîne de caractères qu'on a affichée sur le terminal plus
 tard.
 
 Vous vous demandez peut-être quand utiliser `<-` et quand utiliser des liaisons
-*let* ? Eh bien, souvenez-vous, `<-` sert (pour l'instant) à effectuer des
-actions I/O et lier leur résultat à des noms. `map toUpper firstName`,
-cependant, n'est pas une action I/O. C'est une expression pure en Haskell.
-Donc, utilisez `<-` quand vous voulez lier le résultat d'une action I/O à un
-nom et utiliser une liaison *let* pour lier une expression pure à un nom. Si on
-avait fait quelque chose comme `let firstName = getLine`, on aurait juste donné
-à l'action I/O `getLine` un nouveau nom, sans avoir exécuté cette action.
+*let* ? Eh bien, souvenez-vous, `<-` sert (pour l'instant) à effectuer une
+action I/O et lier son résultat à un nom. `map toUpper firstName`, cependant,
+n'est pas une action I/O. C'est une expression pure en Haskell.  Donc, utilisez
+`<-` quand vous voulez lier le résultat d'une action I/O à un nom et utiliser
+une liaison *let* pour lier une expression pure à un nom. Si on avait fait
+quelque chose comme `let firstName = getLine`, on aurait juste donné à l'action
+I/O `getLine` un nouveau nom, sans avoir exécuté cette action.
 
 À présent, on va faire un programme qui lit continuellement une ligne et
 l'affiche avec les mots renversés. Le programme s'arrêtera si on entre une
@@ -743,7 +743,7 @@ Ouais, le haïku est pourri, mais bon ? Si quelqu'un connaît un tutoriel de
 haïkus, je suis preneur.
 
 Bien, souvenez-vous de ce programme qu'on a écrit en introduisant la fonction
-`forever`. Il demandait à l'utilisateur une ligne, et lui retournait en
+`forever`. Il demandait à l'utilisateur une ligne, et la lui retournait en
 MAJUSCULES, puis recommençait, indéfiniment. Pour vous éviter de remonter tout
 là-haut, je vous la remets ici&nbsp;:
 
@@ -1434,7 +1434,7 @@ l'utilisateur des choses une fois lancé. Et quel meilleur moyen pour
 l'utilisateur d'indiquer ce qu'il veut au programme que de donner des arguments
 en ligne de commande !
 
-Le module `System.Environment` a deux actions I/O cool. L'une est `getArgs`,
+Le module `System.Environment` a deux actions I/O cools. L'une est `getArgs`,
 qui a pour type `getArgs :: IO [String]` et est une action I/O qui va récupérer
 les arguments du programme et les encapsuler dans son résultat sous forme d'une
 liste. `getProgName` a pour type `getProgName :: IO String` et est une action
