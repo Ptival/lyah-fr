@@ -1298,7 +1298,7 @@ classe définit sur des éléments de ce type.
 
 Les classes de types n'ont presque rien à voir avec les types dans des langages
 comme Java ou Python. Cela désoriente beaucoup de gens, aussi je veux que vous
-oubliez tout ce que vous savez des classes dans les langages impératifs à
+oubliiez tout ce que vous savez des classes dans les langages impératifs à
 partir de maintenant.
 
 Par exemple, la classe `Eq` est pour les choses qui peuvent être testées
