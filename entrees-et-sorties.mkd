@@ -33,7 +33,7 @@ résultat basé sur les paramètres qu'on lui a donnés. Si une fonction est
 appelée deux fois avec les mêmes paramètres, elle doit retourner le même
 résultat. Bien que ça puisse paraître un peu limitant lorsqu'on vient d'un
 monde impératif, on a vu que c'est en fait plutôt sympa. Dans un langage
-impératif, vous n'avez aucune garantie qu'une fonction qui est sensée calculer
+impératif, vous n'avez aucune garantie qu'une fonction qui est censée calculer
 des nombres ne va pas brûler votre maison, kidnapper votre chien et rayer votre
 voiture avec une patate pendant qu'elle calcule ces nombres. Par exemple, quand
 on a fait un arbre binaire de recherche, on n'a pas inséré un élément dans un
@@ -43,7 +43,7 @@ modifier l'ancien.
 
 Bien qu'avoir des fonctions incapables de changer d'état soit bien puisque cela
 nous aide à raisonner sur nos programmes, il y a un problème avec ça. Si une
-fonction ne peut rien changer dans le monde, comment est-elle sensée nous dire
+fonction ne peut rien changer dans le monde, comment est-elle censée nous dire
 ce qu'elle a calculé ? Pour nous dire ce qu'elle a calculé, elle doit pouvoir
 changer l'état d'un matériel de sortie (généralement, l'état de notre écran),
 qui va ensuite émettre des photons qui voyageront jusqu'à notre cerveau pour
