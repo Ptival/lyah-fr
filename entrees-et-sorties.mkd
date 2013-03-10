@@ -1434,11 +1434,11 @@ l'utilisateur des choses une fois lancé. Et quel meilleur moyen pour
 l'utilisateur d'indiquer ce qu'il veut au programme que de donner des arguments
 en ligne de commande !
 
-Le module `System.Environment` a deux actions I/O cools. L'une est `getArgs`,
-qui a pour type `getArgs :: IO [String]` et est une action I/O qui va récupérer
-les arguments du programme et les encapsuler dans son résultat sous forme d'une
-liste. `getProgName` a pour type `getProgName :: IO String` et est une action
-I/O qui contient le nom du programme.
+Le module `System.Environment` a deux chouettes actions I/O. L'une est
+`getArgs`, qui a pour type `getArgs :: IO [String]` et est une action I/O qui
+va récupérer les arguments du programme et les encapsuler dans son résultat
+sous forme d'une liste. `getProgName` a pour type `getProgName :: IO String` et
+est une action I/O qui contient le nom du programme.
 
 Voici un petit programme qui démontre leur fonctionnement&nbsp;:
 
@@ -1468,11 +1468,11 @@ Finalement, on affiche aussi le nom du programme. Compilons cela comme
 > arg-test
 
 Bien. Armé de cette connaissance, vous pouvez créer des applications en ligne
-de commande plutôt cool. En fait, créons-en une dès maintenant. Dans la section
-précédente, nous avions créé deux programmes séparés pour ajouter des tâches et
-en supprimer. Maintenant, on va faire cela en un seul programme, et ce qu'il
-fera dépendra des arguments. On va aussi le faire de manière à ce qu'il puisse
-opérer sur différents fichiers, pas seulement *todo.txt*.
+de commande plutôt sympathiques. En fait, créons-en une dès maintenant. Dans la
+section précédente, nous avions créé deux programmes séparés pour ajouter des
+tâches et en supprimer. Maintenant, on va faire cela en un seul programme, et
+ce qu'il fera dépendra des arguments. On va aussi le faire de manière à ce
+qu'il puisse opérer sur différents fichiers, pas seulement *todo.txt*.
 
 On va l'appeler *todo* ("à faire") et il servira à faire (haha !) trois choses
 différentes&nbsp;:
