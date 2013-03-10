@@ -291,7 +291,7 @@ Remarquez comme les actions I/O dans le bloc *do* sont alignées. Notez
 sont alignés les uns aux autres. C'est important, parce que l'indentation
 importe en Haskell. Ici, on a fait `map toUpper firstName`, qui transforme
 quelque chose comme `"John"` en une chaîne de caractères bien plus cool comme
-`"JOHN"`. On a lié cette chaîne de caractères majuscules à un nom, puis utilisé
+`"JOHN"`. On a lié cette chaîne de caractères en capitales à un nom, puis utilisé
 ce nom dans une chaîne de caractères qu'on a affichée sur le terminal plus
 tard.
 
@@ -630,7 +630,7 @@ de nos actions séquencées.
 `forever` prend une action I/O et retourne une action I/O qui répète la
 première indéfiniment. Elle est dans `Control.Monad`. Ce programme va demander
 indéfiniment à l'utilisateur une entrée, et va la recracher en
-MAJUSCULES&nbsp;:
+LETTRES CAPITALES&nbsp;:
 
 > import Control.Monad
 > import Data.Char
@@ -744,7 +744,7 @@ haïkus, je suis preneur.
 
 Bien, souvenez-vous de ce programme qu'on a écrit en introduisant la fonction
 `forever`. Il demandait à l'utilisateur une ligne, et la lui retournait en
-MAJUSCULES, puis recommençait, indéfiniment. Pour vous éviter de remonter tout
+LETTRES CAPITALES, puis recommençait, indéfiniment. Pour vous éviter de remonter tout
 là-haut, je vous la remets ici&nbsp;:
 
 > import Control.Monad
@@ -797,8 +797,8 @@ Puis on mappe `toUpper` sur cette chaîne, et on l'affiche sur le terminal.
 Gardez en tête que puisque les chaînes de caractères sont simplement des
 listes, qui sont paresseuses, et que `getContents` est aussi paresseuse en
 entrée-sortie, cela ne va pas essayer de lire tout le contenu et de le stocker
-en mémoire avant d'afficher la version en majuscules. Plutôt, cela va afficher
-la version en majuscule au fur et à mesure de la lecture, parce que cela ne
+en mémoire avant d'afficher la version en lettres capitales. Plutôt, cela va afficher
+la version en capitales au fur et à mesure de la lecture, parce que cela ne
 lira une ligne de l'entrée que lorsque ce sera nécessaire.
 
 > $ cat haiku.txt | ./capslocker
@@ -816,13 +816,13 @@ lignes nous-même ?
 > LETS GO
 
 On a quitté le programme en tapant Ctrl-D. Plutôt joli ! Comme vous voyez, cela
-affiche nos caractères en majuscules ligne après ligne. Quand le résultat de
+affiche nos caractères en capitales ligne après ligne. Quand le résultat de
 `getContents` est lié à `contents`, ce n'est pas représenté en mémoire comme
 une vraie chaîne de caractères, mais plutôt comme une promesse de produire
 cette chaîne de caractères en temps voulu. Quand on mappe `toUpper` sur
 `contents`, c'est aussi une promesse de mapper la fonction sur le contenu une
 fois qu'il sera disponible. Et finalement, quand `putStr` est exécuté, il dit à
-la promesse précédente&nbsp;: "_Hé, j'ai besoin des lignes en majuscules !_".
+la promesse précédente&nbsp;: "_Hé, j'ai besoin des lignes en lettres capitales !_".
 Celle-ci n'a pas encore les lignes, alors elle demande à `contents`&nbsp;:
 "_Hé, pourquoi tu n'irais pas chercher ces lignes dans le terminal à présent
 ?_".  C'est à ce moment que `getContents` va vraiment lire le terminal et
@@ -1175,7 +1175,7 @@ manuellement, donc Haskell le fait tout seul quand on utilise `readFile`.
 un chemin vers un fichier et une chaîne de caractères à écrire dans ce fichier
 et retourne une action I/O qui effectuera l'écriture. Si le fichier existe
 déjà, il sera écrasé complètement avant que l'écriture ne commence. Voici
-comment transformer *girlfriend.txt* en une version en MAJUSCULES et écrire
+comment transformer *girlfriend.txt* en une version en LETTRES CAPITALES et écrire
 cette version dans *girlfriendcaps.txt*.
 
 > import System.IO
