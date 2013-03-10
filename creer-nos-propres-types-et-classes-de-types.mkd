@@ -1271,7 +1271,7 @@ nœud racine 7, etc.
 Tester l'appartenance fonctionne aussi correctement. Cool.
 
 Comme vous le voyez, les structures de données algébriques sont des concepts
-cool et puissants en Haskell. On peut les utiliser pour tout faire, des
+cools et puissants en Haskell. On peut les utiliser pour tout faire, des
 booléens et énumérations des jours de la semaine jusqu'aux arbres binaires de
 recherche, et encore plus !
 
@@ -1829,7 +1829,7 @@ pour dénoter des choses qui sont similaires mais un peu modifiées.
 Essayez de deviner comment `Map k` est fait instance de `Functor` par vous-même !
 
 Avec la classe `Functor`, on a vu comment les classes de types peuvent
-représenter des concepts d'ordre supérieur plutôt cool. On a aussi pratiqué un
+représenter des concepts d'ordre supérieur plutôt cools. On a aussi pratiqué un
 peu plus l'application partielle sur les types et la création d'instances. Dans
 un des chapitres suivants, on verra quelques lois qui s'appliquent sur les
 foncteurs.
@@ -1858,7 +1858,7 @@ Sortes et un peu de type-fu
 
 Les constructeurs de types prennent d'autres types en paramètres pour
 finalement produire des types concrets. Ça me rappelle un peu les fonctions,
-qui prennent des valeurs en paramètre pour produire des valeurs. On a vu que
+qui prennent des valeurs en paramètres pour produire des valeurs. On a vu que
 les constructeurs de types peuvent être appliqués partiellement (`Either
 String` est un constructeur de types qui prend un type et produit un type
 concret, comme `Either String Int`), tout comme le peuvent les fonctions. C'est
@@ -2040,7 +2040,7 @@ convenablement placé dans son propre champ.
 
 Et voilà ! On vient juste de mapper `f` sur le premier champ.
 
-Dans cette section, on a vu un tour détaillé du fonctionnement des paramètres
+Dans cette section, on a eu un bon aperçu du fonctionnement des paramètres
 de types et on les a en quelque sorte formalisés avec les sortes, comme on
 avait formalisé les paramètres de fonctions avec des déclarations de type. On a
 vu qu'il existe des parallèles intéressants entre les fonctions et les
