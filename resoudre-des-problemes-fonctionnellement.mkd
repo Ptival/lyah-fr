@@ -60,7 +60,7 @@ Parcourons l'expression `10 4 3 + 2 * -` ensemble ! D'abord, on empile `10`, et
 la pile est donc `10`. Le prochain élément est `4`, on l'empile également. La
 pile est maintenant `10, 4`. De même avec `3`, la pile est à présent `10, 4,
 3`. Soudain, on rencontre un opérateur, j'ai nommé `+` ! On dépile les deux
-nombres en sommet de la pile (donc la pile devient `10`), on somme ces deux
+nombres au sommet de la pile (donc la pile devient `10`), on somme ces deux
 nombres, et on empile le résultat. La pile est désormais `10, 7`. On empile le
 `2`, la pile devient `10, 7, 2`. On rencontre un nouvel opérateur, on dépile
 donc `7` et `2`, on les multiplie et on empile le résultat. `7` fois `2` donne
@@ -608,7 +608,7 @@ sections) avec pour accumulateur initial une paire de chemins vides. Le
 résultat de ce pli est une paire de chemins, qu'on filtre par motif pour
 obtenir les chemins. Puis, on regarde lequel est le plus rapide, et on retourne
 celui-ci. Avant de le retourner, on le renverse, parce que les chemins étaient
-jusqu'alors renversées parce qu'on avait choisi de conser plutôt que de
+jusqu'alors renversés parce qu'on avait choisi de conser plutôt que de
 postposer.
 
 Testons cela !
