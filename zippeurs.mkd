@@ -232,7 +232,7 @@ miette de pain devrait aussi contenir toutes les données nécessaires pour
 remonter dans l'arbre. Dans ce cas, il nous faudrait l'élément de l'arbre
 parent ainsi que le sous-arbre droit.
 
-En généal, une miette de pain doit contenir toutes les données nécessaires pour
+En général, une miette de pain doit contenir toutes les données nécessaires pour
 reconstruire son nœud parent. Elle doit donc contenir toute l'information sur
 les chemins que l'on n'a pas suivis, ainsi que la direction que l'on a prise,
 mais elle n'a pas besoin de contenir le sous-arbre sur lequel on se focalise,
