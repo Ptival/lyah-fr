@@ -26,7 +26,7 @@ Prêts, feu, partez !
 <img src="img/startingout.png" alt="œuf" class="right"/>
 
 Bien, démarrons ! Si vous êtes le genre de personne horrible qui ne lit pas les
-introductions et que vous l'avez sautée, vous feriez peut-être bien de tout de
+introductions et que vous l'ayez sautée, vous feriez peut-être bien de tout de
 même lire la dernière section de l'introduction, car elle explique ce dont vous
 avez besoin pour suivre ce tutoriel et comment l'on va charger des fonctions.
 La première chose qu'on va faire, c'est lancer un GHC interactif et appeler
