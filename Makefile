@@ -1,3 +1,4 @@
+.PHONY: pdf clean printer_friendly_pdf
 .SUFFIXES: .mkd .html .tex .pdf
 
 PANDOC := pandoc --no-wrap -s -S -T \
@@ -12,7 +13,7 @@ RMLAST2 := head -n -2
 SOURCE := $(wildcard *.mkd)
 TARGET := $(addprefix html/, $(SOURCE:.mkd=.html))
 
-ORDEREDHTML := introduction.html demarrons.html \
+ORDEREDHTML := chapitres.html introduction.html demarrons.html \
 	types-et-classes-de-types.html syntaxe-des-fonctions.html \
 	recursivite.html fonctions-d-ordre-superieur.html modules.html \
 	creer-nos-propres-types-et-classes-de-types.html entrees-et-sorties.html \
@@ -30,8 +31,6 @@ html/%.html:%.mkd
 	| $(PANDOC) -t html -c hscolour.css \
 	-B before.html -A after.html -H header.html \
 	| $(UNLIT1) | $(UNLIT2) | $(UNLIT3) > $@
-
-.PHONY: pdf clean printer_friendly_pdf
 
 pdf:
 	cp html/hscolour.css html/hscolour.tmp
@@ -53,3 +52,4 @@ printer_friendly_pdf:
 
 clean:
 	rm $(TARGET)
+
