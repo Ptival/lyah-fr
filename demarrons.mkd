@@ -659,7 +659,7 @@ entiers naturels, mais quelque chose de plus compliqué ? On pourrait utiliser
 une liste en compréhension pour ça. Les listes en compréhension sont très
 semblables aux ensembles en compréhension. Restons-en au cas des 10 entiers
 pairs pour l'instant. La liste de compréhension adéquate serait `[x*2 | x <-
-[1..10]`. `x` est extrait de `[1..10]` et pour chaque élément de `[1..10]`
+[1..10]]`. `x` est extrait de `[1..10]` et pour chaque élément de `[1..10]`
 (désormais attaché à `x`), nous prenons son double. En action.
 
 > ghci> [x*2 | x <- [1..10]]
@@ -780,9 +780,9 @@ plusieurs valeurs dans une seule. Cependant, il y a des différences
 fondamentales. Une liste de nombres est une liste de nombres. C'est son type,
 et cela n'importe pas qu'elle ait un seul nombre ou une infinité. Les tuples,
 par contre, sont utilisés lorsque vous savez exactement combien de valeurs vous
-désirez combiner, et son type dépend du nombre de composants qu'il a et du type
-de ces composantes. Ils sont dénotés avec des parenthèses, et les composantes
-sont séparées par des virgules.
+désirez combiner, et son type dépend du nombre de composantes qu'il a et du
+type de ces composantes. Ils sont dénotés avec des parenthèses, et les
+composantes sont séparées par des virgules.
 
 Une autre différence clé est qu'ils n'ont pas à être homogènes. Contrairement à
 une liste, un tuple peut contenir une combinaison de différents types.

@@ -64,7 +64,7 @@ indique son type. Essayons.
 Ici on voit que faire `:t` sur une expression affiche l'expression, suivie de
 `::` et de son type. `::` se lit "a pour type". Les types explicites sont
 toujours notés avec une initiale en majuscule. `'a'`, semblerait-il, a pour
-type `Char`. On en conclue rapidement que cela signifie *caractère*. `True` est
+type `Char`. On en conclut rapidement que cela signifie *caractère*. `True` est
 de type `Bool`. C'est logique. Mais, et ça ? Examiner `"HELLO!"` renvoie un
 `[Char]`. Les crochets indiquent une liste. Nous lisons donc cela *liste de
 caractères*. Contrairement aux listes, chaque longueur de tuple a son propre
@@ -352,7 +352,7 @@ dans le cas de GHCi, de l'évaluer). Donc nous devons dire à Haskell&nbsp;: "H�
 cette expression devrait avoir ce type, au cas où tu ne saurais pas !".
 
 Les membres d'`Enum` sont des types ordonnés séquentiellement - on peut les
-énumérer. L'avantage de la classe de types `Enum` est qu'on peut l'utiliser ses
+énumérer. L'avantage de la classe de types `Enum` est qu'on peut utiliser ses
 types dans les progressions. Elle définit aussi un successeur et un
 prédécesseur, qu'on peut obtenir à l'aide des fonctions `succ` et `pred`. Les
 types membres de cette classe sont&nbsp;: `()`, `Bool`, `Char`, `Ordering`,
@@ -391,7 +391,7 @@ Tous les tuples sont membres de `Bounded` si leurs composantes le sont
 pouvoir se comporter comme des nombres. Examinons le type d'un nombre.
 
 > ghci> :t 20
-> 20 :: (Num t) => t
+> 20 :: (Num a) => a
 
 Il semblerait que tous les nombres soient aussi des constantes polymorphiques.
 Ils peuvent se faire passer pour tout membre de la classe `Num`.
@@ -418,11 +418,11 @@ faire passer pour un `Integer` ou un `Int`.
 
 Pour être dans `Num`, un type doit déjà être ami avec `Show` et `Eq`.
 
-`Integral` est aussi une classe de types numériques. `Num` inclue tous les
+`Integral` est aussi une classe de types numériques. `Num` inclut tous les
 nombres, autant réels qu'entiers, `Integral` ne contient que des entiers. `Int`
 et `Integer` sont membres de cette classe.
 
-`Floating` inclue seulement des nombres à virgule flottante, donc `Float` et
+`Floating` inclut seulement des nombres à virgule flottante, donc `Float` et
 `Double`.
 
 Une fonction très utile pour manipuler des nombres est `fromIntegral`. Sa
