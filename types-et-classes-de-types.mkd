@@ -228,10 +228,10 @@ deux valeurs du même type et retourne un `Bool`. Le type de ces valeurs doit
 être membre de la classe `Eq` (ceci est la contrainte de classe).
 
 La classe de types `Eq` offre une interface pour tester l'égalité. Tout type
-pour lequel tester l'égalité de deux valeurs a du sens devrait être membre de
-la classe de types `Eq`. Tous les types standards de Haskell à l'exception d'IO
-(le type qui permet de faire des entrées-sorties) et des fonctions font partie
-de la classe de types `Eq`.
+pour lequel il semble raisonnable de tester l'égalité entre deux valeurs de ce
+type devrait être membre de la classe de types `Eq`. Tous les types standards
+de Haskell à l'exception d'IO (le type qui permet de faire des entrées-sorties)
+et des fonctions font partie de la classe de types `Eq`.
 
 La fonction `elem` a pour type `(Eq a) => a -> [a] -> Bool` car elle utilise
 `==` sur les éléments de la liste pour vérifier si la valeur qu'on cherche est
