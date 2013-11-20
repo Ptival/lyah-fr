@@ -1,17 +1,17 @@
 #content {width: 800px; margin: 0px auto;}
-body {background-image: url(img/bg.png); font-size: 100%; line-height: 25px;
-    font-size: 14px; font-family: Arial, sans-serif; margin: 0}
-h1 {font-size: 60px; line-height: 60px; font-family: georgia, Arial, serif;
+body {background-image: url(img/bg.png); line-height: 25px;
+    font-size: 14px; font-family: Arial, serif; margin: 0}
+h1 {font-size: 60px; line-height: 60px; font-family: Georgia, Arial, serif;
     margin: 0 0 15px 0; font-weight: normal;}
 h2 {clear: left;}
 h3 {font-style: italic;}
 pre {background-color: black; padding: 10px; margin: 0px 0 25px 0 !important;
-    font-size: 14px; line-height: 18px; width: auto !important;
-    overflow-x: auto; overflow-y: auto;}
+    line-height: 18px; width: auto !important;
+    overflow-x: auto; overflow-y: auto; font-family: Monaco;}
 code {background-color: #DDD; font-weight: bold; padding: 0 2px 0 2px;
-    white-space: nowrap;}
-ol {list-style-type: decimal; font-family: arial,serif; font-size: 24px;
-    padding-left: 25px; margin: 0px; color: #408156; margin-bottom: 25px;}
+    white-space: nowrap; font-family: Monaco;}
+ol {list-style-type: decimal; font-family: Arial, serif; font-size: 24px;
+    margin: 10px; color: #408156; margin-bottom: 25px;}
 ol > li > a:hover {color: #BD2A33;}
 ol > li > a {text-decoration: none; color: #555; display: block;
     border-bottom: 1px solid #DDD;}
@@ -43,5 +43,5 @@ img.center {margin: 10px auto 25px auto; display: block;}
 .hintbox{padding: 10px; background-color: #FFC; margin-bottom: 25px;
     background-image: url(img/note.jpg);}
 .law {background-color: #9DC; color: black; white-space: nowrap;
-    font-family: Consolas, "Courier New", monospace; font-size: 16px;
+    font-family: Monaco; font-size: 16px;
     padding: 0px 3px;}
