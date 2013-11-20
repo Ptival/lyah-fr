@@ -35,7 +35,7 @@ html/%.html:%.mkd
 pdf:
 	cp html/hscolour.css html/hscolour.tmp
 	sed -i 's/content {width: 800px; /content {/g' html/hscolour.css
-	wkhtmltopdf -s A3 \
+	wkhtmltopdf -s A4 --use-xserver \
 		--title "Apprendre Haskell vous fera le plus grand bien \!" \
 		toc toc.xslt --load-error-handling ignore $(HTMLFILES) \
 		apprendre-haskell-vous-fera-le-plus-grand-bien.pdf
@@ -44,7 +44,7 @@ pdf:
 printer_friendly_pdf:
 	cp html/hscolour.css html/hscolour.tmp
 	cp html/hscolour_printer.css html/hscolour.css
-	wkhtmltopdf -s A3 \
+	wkhtmltopdf -s A4 --use-xserver \
 		--title "Apprendre Haskell vous fera le plus grand bien \!" \
 		toc toc.xslt --load-error-handling ignore $(HTMLFILES) \
 		apprendre-haskell-vous-fera-le-plus-grand-bien_printer-friendly.pdf
