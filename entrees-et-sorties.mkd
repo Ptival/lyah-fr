@@ -1031,7 +1031,7 @@ quatrième ligne suggère que nous devrions chercher une nouvelle petite amie.
 Hum, regardons plutôt le programme ligne par ligne ! Notre programme consiste
 en plusieurs actions I/O combinées ensemble par un bloc *do*. Dans la première
 ligne du bloc *do*, on remarque une fonction nouvelle nommée *openFile*. Voici
-sa signature de type&nbsp;: `openFile :: FilePath -> IOMode -> OI Handle`. Si
+sa signature de type&nbsp;: `openFile :: FilePath -> IOMode -> IO Handle`. Si
 vous lisez ceci tout haut, cela donne&nbsp;: `openFile` prend un chemin vers un
 fichier et un `IOMode` et retourne une action I/O qui va ouvrir le fichier et
 encapsule pour résultat la poignée vers le fichier associé.
