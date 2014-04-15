@@ -1352,17 +1352,17 @@ effet pas obtenir le résultat d'une action I/O sans l'exécuter.
 
 Comme les foncteurs ordinaires, les foncteurs applicatifs viennent avec
 quelques lois. La plus importante est celle qu'on a déjà mentionnée, qui dit
-que <span class="law">pure f <*> x = fmap f x</span>. En exercice, vous pouvez
+que <span class="law">pure f <\*> x = fmap f x</span>. En exercice, vous pouvez
 prouver cette loi pour quelques uns des foncteurs applicatifs vus dans ce
 chapitre. Les autres lois des foncteurs applicatifs sont&nbsp;:
 
-* <span class="law">pure id <*> v = v</span>
+* <span class="law">pure id <\*> v = v</span>
 
-* <span class="law">pure (.) <*> u <*> v <*> w = u <*> (v <*> w)</span>
+* <span class="law">pure (.) <\*> u <\*> v <\*> w = u <\*> (v <\*> w)</span>
 
-* <span class="law">pure f <*> pure x = pure (f x)</span>
+* <span class="law">pure f <\*> pure x = pure (f x)</span>
 
-* <span class="law">u <*> pure y = pure ($ y) <*> u</span>
+* <span class="law">u <*\> pure y = pure ($ y) <\*> u</span>
 
 On ne va pas les regarder en détail pour l'instant, parce que cela prendrait
 trop de pages et serait probablement ennuyeux, mais si vous vous sentez
