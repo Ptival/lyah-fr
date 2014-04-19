@@ -883,7 +883,7 @@ chaînes de caractères entre deux foncteurs applicatifs à l'aide des opérateu
 applicatifs appropriés.
 
 Vous pouvez imaginer les listes comme des calculs non déterministes. Une valeur
-comme `100` ou `"what"` peut être vu comme un calcul déterministe qui ne
+comme `100` ou `"what"` peut être vue comme un calcul déterministe qui ne
 renvoie qu'un seul résultat, alors qu'une liste `[1, 2, 3]` peut être vue comme
 un calcul qui ne peut pas se décider sur le résultat qu'il doit avoir, et nous
 présente donc tous les résultats possibles. Donc, quand vous faites quelque

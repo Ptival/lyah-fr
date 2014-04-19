@@ -562,7 +562,7 @@ C'est exactement ce que contient mon disque dur à l'instant.
 <img src="img/spongedisk.png" alt="spongedisk" class="right"/>
 
 Maintenant qu'on a un système de fichiers, tout ce dont on a besoin est d'un
-zippeur afin de zippeur et zoomer dans celui-ci, et d'ajouter, modifier ou
+zippeur afin de zipper et zoomer dans celui-ci, et d'ajouter, modifier ou
 supprimer des fichiers ou des dossiers. Tout comme avec les arbres binaires et
 les listes, on va semer des miettes qui contiennent l'information nécessaire
 concernant les choses qu'on n'a pas choisi de visiter. Comme on l'a dit, une
