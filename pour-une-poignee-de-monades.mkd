@@ -1453,7 +1453,7 @@ On peut à présent composer deux fonctions monadiques&nbsp;:
 
 Cool. Qu'est-ce que cela a à voir avec la loi d'associativité ? Eh bien, quand
 on regarde la loi comme une loi de composition, elle dit que <span
-class="law">f <=< (g <=< g)</span> doit être égal à <span class="law">(f <=< g)
+class="law">f <=< (g <=< h)</span> doit être égal à <span class="law">(f <=< g)
 <=< h</span>. C'est juste une autre façon de dire que l'imbrication des
 opérations n'importe pas pour les monades.
 

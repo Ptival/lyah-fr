@@ -24,7 +24,7 @@ ORDEREDHTML := chapitres.html introduction.html demarrons.html \
 
 HTMLFILES := $(addprefix html/, $(ORDEREDHTML))
 
-all: $(TARGET) pdf printer_friendly_pdf
+all: clean $(TARGET) pdf printer_friendly_pdf
 
 html/%.html:%.mkd
 	cat $< | $(HSCOLOUR) -css | $(RMFIRST9) | $(RMLAST2) \
@@ -51,5 +51,5 @@ printer_friendly_pdf:
 	mv html/hscolour.tmp html/hscolour.css
 
 clean:
-	rm $(TARGET)
+	rm -f $(TARGET)
 

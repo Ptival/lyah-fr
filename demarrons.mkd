@@ -794,8 +794,8 @@ points d'une forme du plan ? On pourrait faire `[[1, 2], [8, 11], [4, 5]]`. Le
 problème de cette méthode est que l'on pourrait également faire `[[1, 2], [8,
 11, 5], [4, 5]]`, qu'Haskell accepterait puisque cela reste une liste de listes
 de nombres, mais ça n'a pas vraiment de sens. Alors qu'un tuple de taille deux
-(aussi appelé une paire) est un type propre, ce qui signifie qu'une liste ne
-peut pas avoir quelques paires puis un triplet (tuple de taille trois),
+(aussi appelé un couple) est un type propre, ce qui signifie qu'une liste ne
+peut pas avoir quelques couples puis un triplet (tuple de taille trois),
 utilisons donc cela en lieu et place. Plutôt que d'entourer nos vecteurs de
 crochets, on utilise des parenthèses&nbsp;: `[(1, 2), (8, 11), (4, 5)]`. Et si
 l'on essayait d'entrer la forme `[(1, 2), (8, 11, 5), (4, 5)]` ? Eh bien, on
@@ -807,10 +807,10 @@ aurait cette erreur&nbsp;:
 > In the expression: [(1, 2), (8, 11, 5), (4, 5)]
 > In the definition of `it': it = [(1, 2), (8, 11, 5), (4, 5)]
 
-Cela nous dit que l'on a essayé d'utiliser une paire et un triplet dans la même
+Cela nous dit que l'on a essayé d'utiliser un couple et un triplet dans la même
 liste, ce qui ne doit pas arriver. Vous ne pourriez pas non plus créer une
-liste `[(1, 2), ("One", 2)]` car le premier élément de cette liste est une
-paire de nombres alors que le second est une paire d'une chaîne de caractères
+liste `[(1, 2), ("One", 2)]` car le premier élément de cette liste est un
+couple de nombres alors que le second est un couple d'une chaîne de caractères
 et d'un nombre. Les tuples peuvent aussi être utilisés pour représenter un
 grand éventail de données. Par exemple, si nous voulions représenter le nom et
 l'âge d'une personne en Haskell, on pourrait utiliser le triplet&nbsp;:
@@ -821,7 +821,7 @@ Utilisez des tuples lorsque vous savez à l'avance combien de composantes une
 donnée doit avoir. Les tuples sont beaucoup plus rigides car chaque taille de
 tuple a son propre type, donc on ne peut pas écrire une fonction générique pour
 ajouter un élément à un tuple - il faudrait écrire une fonction pour ajouter à
-une paire, une fonction pour ajouter à un triplet, un fonction pour ajouter à
+un couple, une fonction pour ajouter à un triplet, un fonction pour ajouter à
 un quadruplet, etc.
 
 Bien qu'il y ait des listes singleton, il n'existe pas de tuple singleton. Ça
@@ -831,16 +831,16 @@ seulement la valeur qu'il contient, et n'aurait donc pas d'intérêt.
 Comme les listes, les tuples peuvent être comparés entre eux si leurs
 composantes peuvent être comparées. Seulement, vous ne pouvez pas comparer des
 tuples de tailles différentes, alors que vous pouvez comparer des listes de
-tailles différentes. Deux fonctions utiles qui opèrent sur des paires&nbsp;:
+tailles différentes. Deux fonctions utiles qui opèrent sur des couples&nbsp;:
 
-`fst` prend une paire et renvoie sa première composante.
+`fst` prend un couple et renvoie sa première composante.
 
 > ghci> fst (8,11)
 > 8
 > ghci> fst ("Wow", False)
 > "Wow"
 
-`snd` prend une paire et renvoie sa seconde composante. Quelle surprise !
+`snd` prend un couple et renvoie sa seconde composante. Quelle surprise !
 
 > ghci> snd (8,11)
 > 11
@@ -849,15 +849,15 @@ tailles différentes. Deux fonctions utiles qui opèrent sur des paires&nbsp;:
 
 <div class="hintbox">
 
-**Note&nbsp;:** ces deux fonctions opèrent seulement sur des paires. Elles ne
+**Note&nbsp;:** ces deux fonctions opèrent seulement sur des couples. Elles ne
 marcheront pas sur des triplets, des quadruplets, etc. Nous verrons comment
 extraire des données de tuples de différentes façons un peu plus tard.
 
 </div>
 
-Une fonction cool qui produit une liste de paires&nbsp;: `zip`. Elle prend deux
-listes et les zippe ensemble en joignant les éléments correspondants en des
-paires. C'est une fonction très simple, mais elle sert beaucoup. C'est
+Une fonction cool qui produit une liste de couples&nbsp;: `zip`. Elle prend
+deux listes et les zippe ensemble en joignant les éléments correspondants en
+des couples. C'est une fonction très simple, mais elle sert beaucoup. C'est
 particulièrement utile pour combiner deux listes d'une façon ou traverser deux
 listes simultanément. Démonstration.
 
@@ -866,11 +866,11 @@ listes simultanément. Démonstration.
 > ghci> zip [1 .. 5] ["one", "two", "three", "four", "five"]
 > [(1,"one"),(2,"two"),(3,"three"),(4,"four"),(5,"five")]
 
-Elle met en paires les éléments et produit une nouvelle liste. Le premier
-élément va avec le premier, le deuxième avec le deuxième, etc. Remarquez que,
-puisque les paires peuvent avoir différents types en elles, `zip` peut prendre
-deux listes qui contiennent des éléments de différents types et les zipper. Que
-se passe-t-il si les longueurs des listes ne correspondent pas ?
+Elle couple les éléments et produit une nouvelle liste. Le premier élément va
+avec le premier, le deuxième avec le deuxième, etc. Remarquez que, puisque les
+couples peuvent avoir différents types en elles, `zip` peut prendre deux listes
+qui contiennent des éléments de différents types et les zipper. Que se
+passe-t-il si les longueurs des listes ne correspondent pas ?
 
 > ghci> zip [5,3,2,6,2,7,2,5,4,6,6] ["im","a","turtle"]
 > [(5,"im"),(3,"a"),(2,"turtle")]
