@@ -138,7 +138,7 @@ préciserons pas qu'une fonction est préfixe, on le supposera par défaut. Dans
 la plupart des langages impératifs, les fonctions sont appelées en écrivant le
 nom de la fonction, puis ses paramètres entre parenthèses, généralement séparés
 par des virgules. En Haskell, les fonctions sont appelées en écrivant le nom de
-la fonction, puis un espace, puis ses paramètres, séparés par des espaces. Par
+la fonction, puis une espace, puis ses paramètres, séparés par des espaces. Par
 exemple, essayons d'appeler une des fonctions les plus ennuyantes d'Haskell.
 
 > ghci> succ 8
@@ -146,7 +146,7 @@ exemple, essayons d'appeler une des fonctions les plus ennuyantes d'Haskell.
 
 La fonction `succ` prend n'importe quoi qui a un successeur, et renvoie ce
 successeur. Comme vous pouvez le voir, on sépare le nom de la fonction du
-paramètre par un espace. Appeler une fonction avec plusieurs paramètres est
+paramètre par une espace. Appeler une fonction avec plusieurs paramètres est
 aussi simple. Les fonctions `min` et `max` prennent deux choses qu'on peut
 ordonner (comme des nombres !). `min` retourne la plus petite, `max` la plus
 grande. Voyez vous-même&nbsp;:
@@ -158,9 +158,9 @@ grande. Voyez vous-même&nbsp;:
 > ghci> max 100 101
 > 101
 
-L'application de fonction (appeler une fonction en mettant un espace après puis
-ses paramètres) a la plus grande des précédences. Cela signifie pour nous que
-les deux déclarations suivantes sont équivalentes.
+L'application de fonction (appeler une fonction en mettant une espace après
+puis ses paramètres) a la plus grande des précédences. Cela signifie pour nous
+que les deux déclarations suivantes sont équivalentes.
 
 > ghci> succ 9 + max 5 4 + 1
 > 16

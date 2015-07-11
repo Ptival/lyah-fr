@@ -89,7 +89,7 @@ puissant.</div>
 
 Cool. Quand on implémente une solution à un problème en Haskell, il est aussi
 bien de penser à la façon dont vous le feriez à la main et d'en tirer des
-idées. Ici, on voit qu'on traite chaque nombre ou opérateur séparé par un
+idées. Ici, on voit qu'on traite chaque nombre ou opérateur séparé par une
 espace comme un élément unique. Il serait donc peut-être utile de commencer par
 découper une chaîne comme `"10 4 3 + 2 * -"` en une liste d'éléments comme
 `["10","4","3","+","2","*","-"]`.

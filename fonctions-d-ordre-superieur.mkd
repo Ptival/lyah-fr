@@ -53,7 +53,7 @@ ainsi équivalents&nbsp;:
 
 <img src="img/curry.png" alt="haskell curry" class="left"/>
 
-Mettre un espace entre deux choses consiste à **appliquer une fonction**.
+Mettre une espace entre deux choses consiste à **appliquer une fonction**.
 L'espace est en quelque sorte un opérateur, et il a la plus grande précédence.
 Examinons le type de `max`. C'est `max :: (Ord a) => a -> a -> a`. On peut
 aussi écrire ceci&nbsp;: `max :: (Ord a) => a -> (a -> a)`. Et le lire
@@ -75,7 +75,7 @@ Regardons cette fonction violemment simple&nbsp;:
 > multThree x y z = x * y * z
 
 Que se passe-t-il vraiment quand on fait `multThree 3 5 9` ou `((multThree 3)
-5) 9` ? D'abord, `3` est appliqué à `multThree`, car ils sont séparés par un
+5) 9` ? D'abord, `3` est appliqué à `multThree`, car ils sont séparés par une
 espace. Cela crée une fonction qui prend un paramètre et retourne une fonction.
 Ensuite, `5` est appliqué à cette nouvelle fonction, ce qui crée une fonction
 qui prend un paramètre et le multiplie par 15. `9` est appliqué à cette
@@ -202,7 +202,7 @@ paramètres, bien que l'on sache ce qui se trame en réalité sous la couverture
 </div>
 
 Le corps de la fonction est plutôt simple. On utilise le paramètre `f` comme
-une fonction, on applique cette fonction à `x` en les séparant par un espace,
+une fonction, on applique cette fonction à `x` en les séparant par une espace,
 puis on applique `f` au résultat une nouvelle fois. Jouons un peu avec la
 fonction&nbsp;:
 
@@ -877,9 +877,9 @@ fonction*. Voyons sa définition&nbsp;:
 
 De quoi ? Qu'est-ce que c'est que cet opérateur inutile ? C'est juste une
 application de fonction ! Eh bien, presque, mais pas complètement ! Alors que
-l'application de fonction habituelle (avec un espace entre deux choses) a une
+l'application de fonction habituelle (avec une espace entre deux choses) a une
 précédence très élevée, la fonction `$` a la plus faible précédence. Une
-application de fonction avec un espace est associative à gauche (`f a b c` est
+application de fonction avec une espace est associative à gauche (`f a b c` est
 équivalent à `((f a) b) c`), alors qu'avec `$` elle est associative à droite.
 
 C'est tout, mais en quoi cela nous aide-t-il ? La plupart du temps, c'est une

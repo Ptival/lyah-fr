@@ -531,7 +531,7 @@ pas Entrée.
 >             main
 >         else return ()
 
-Ce programme semble lire un caractère et vérifier si c'est un espace. Si c'est
+Ce programme semble lire un caractère et vérifier si c'est une espace. Si c'est
 le cas, il s'arrête, sinon il affiche le caractère et recommence. C'est un peu
 ce qu'il fait, mais pas forcément comme on s'y attend. Regardez&nbsp;:
 
