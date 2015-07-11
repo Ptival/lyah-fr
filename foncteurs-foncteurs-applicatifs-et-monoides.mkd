@@ -2452,7 +2452,7 @@ pourquoi le résultat final est `False`, ce qui est logique puisqu'aucune valeur
 de notre arbre n'excède `15`.
 
 On peut aussi facilement transformer notre arbre en une liste en faisant
-`foldMap` avec la fonction `\x -> []`. En projetant d'abord la fonction sur
+`foldMap` avec la fonction `\x -> [x]`. En projetant d'abord la fonction sur
 l'arbre, chaque élément devient une liste singleton. Puis, `mappend` a lieu
 entre tous ces singletons et retourne une unique liste qui contient tous les
 éléments de notre arbre&nbsp;:
