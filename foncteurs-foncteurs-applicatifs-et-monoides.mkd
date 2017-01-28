@@ -1730,8 +1730,8 @@ Monoïdes
 <img src="img/pirateship.png" alt="wow voilà le bateau pirate le plus gay qui
 soit" class="right"/>
 
-Les classes de types en Haskell sont uilisées pour présenter une interface pour
-des types qui partagent un comportement. On a commencé avec des classes de
+Les classes de types en Haskell sont utilisées pour présenter une interface
+pour des types qui partagent un comportement. On a commencé avec des classes de
 types simples comme `Eq`, pour les types dont on peut tester l'égalité, et
 `Ord` pour ceux qu'on peut mettre en ordre, puis on est passé à des classes
 plus intéressantes, comme `Functor` et `Applicative`.
