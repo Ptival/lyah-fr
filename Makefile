@@ -1,7 +1,7 @@
 .PHONY: pdf clean printer_friendly_pdf
 .SUFFIXES: .mkd .html .tex .pdf
 
-PANDOC := pandoc --no-wrap -s -S -T \
+PANDOC := pandoc --wrap=none -s -T \
 	"Apprendre Haskell vous fera le plus grand bien !"
 HSCOLOUR := HsColour -lit
 UNLIT1 := sed "s/<pre><span class='hs-varop'>&gt;<\/span> /<pre>/g"
@@ -28,28 +28,31 @@ all: clean $(TARGET) pdf printer_friendly_pdf
 
 html/%.html:%.mkd
 	cat $< | $(HSCOLOUR) -css | $(RMFIRST9) | $(RMLAST2) \
-	| $(PANDOC) -t html -c hscolour.css \
+	| $(PANDOC) -t html+smart -c hscolour.css \
 	-B before.html -A after.html -H header.html \
 	| $(UNLIT1) | $(UNLIT2) | $(UNLIT3) > $@
 
 pdf:
-	cp html/hscolour.css html/hscolour.tmp
+	cp html/hscolour_website.css html/hscolour.css
 	sed -i 's/content {width: 800px; /content {/g' html/hscolour.css
 	wkhtmltopdf -s A4 --use-xserver \
 		--title "Apprendre Haskell vous fera le plus grand bien \!" \
 		toc toc.xslt --load-error-handling ignore $(HTMLFILES) \
 		apprendre-haskell-vous-fera-le-plus-grand-bien.pdf
-	mv html/hscolour.tmp html/hscolour.css
 
 printer_friendly_pdf:
-	cp html/hscolour.css html/hscolour.tmp
 	cp html/hscolour_printer.css html/hscolour.css
 	wkhtmltopdf -s A4 --use-xserver \
 		--title "Apprendre Haskell vous fera le plus grand bien \!" \
 		toc toc.xslt --load-error-handling ignore $(HTMLFILES) \
 		apprendre-haskell-vous-fera-le-plus-grand-bien_printer-friendly.pdf
-	mv html/hscolour.tmp html/hscolour.css
+
+grayscale_printer_friendly_pdf:
+	cp html/hscolour_printer.css html/hscolour.css
+	wkhtmltopdf -s A4 --use-xserver \
+		--title "Apprendre Haskell vous fera le plus grand bien \!" \
+		toc toc.xslt --load-error-handling ignore $(HTMLFILES) \
+		apprendre-haskell-vous-fera-le-plus-grand-bien_printer-friendly.pdf
 
 clean:
 	rm -f $(TARGET)
-
