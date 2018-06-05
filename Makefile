@@ -1,4 +1,4 @@
-.PHONY: pdf clean printer_friendly_pdf
+.PHONY: clean pdf_normal pdf_printer pdf_grayscale
 .SUFFIXES: .mkd .html .tex .pdf
 
 PANDOC := pandoc --wrap=none -s -T \
@@ -24,7 +24,7 @@ ORDEREDHTML := chapitres.html introduction.html demarrons.html \
 
 HTMLFILES := $(addprefix html/, $(ORDEREDHTML))
 
-all: clean $(TARGET) pdf printer_friendly_pdf
+all: clean $(TARGET) pdf pdf_printer pdf_grayscale
 
 html/%.html:%.mkd
 	cat $< | $(HSCOLOUR) -css | $(RMFIRST9) | $(RMLAST2) \
@@ -32,27 +32,26 @@ html/%.html:%.mkd
 	-B before.html -A after.html -H header.html \
 	| $(UNLIT1) | $(UNLIT2) | $(UNLIT3) > $@
 
-pdf:
-	cp html/hscolour_website.css html/hscolour.css
-	sed -i 's/content {width: 800px; /content {/g' html/hscolour.css
+# ${1}: one of {grayscale,normal,printer}
+define mkPDF
+	cp html/hscolour_pdf_${1}.css html/hscolour.css
 	wkhtmltopdf -s A4 --use-xserver \
 		--title "Apprendre Haskell vous fera le plus grand bien \!" \
 		toc toc.xslt --load-error-handling ignore $(HTMLFILES) \
-		apprendre-haskell-vous-fera-le-plus-grand-bien.pdf
+		apprendre-haskell-vous-fera-le-plus-grand-bien-${1}.pdf
+endef
 
-printer_friendly_pdf:
-	cp html/hscolour_printer.css html/hscolour.css
-	wkhtmltopdf -s A4 --use-xserver \
-		--title "Apprendre Haskell vous fera le plus grand bien \!" \
-		toc toc.xslt --load-error-handling ignore $(HTMLFILES) \
-		apprendre-haskell-vous-fera-le-plus-grand-bien_printer-friendly.pdf
+# colorful, black backgrounds for code
+pdf_normal:
+	$(call mkPDF,normal)
 
-grayscale_printer_friendly_pdf:
-	cp html/hscolour_printer.css html/hscolour.css
-	wkhtmltopdf -s A4 --use-xserver \
-		--title "Apprendre Haskell vous fera le plus grand bien \!" \
-		toc toc.xslt --load-error-handling ignore $(HTMLFILES) \
-		apprendre-haskell-vous-fera-le-plus-grand-bien_printer-friendly.pdf
+# colorful, white backgrounds for code (saves toner)
+pdf_printer:
+	$(call mkPDF,printer)
+
+# grayscale, better contrast for black-and-white printers
+pdf_grayscale:
+	$(call mkPDF,grayscale)
 
 clean:
 	rm -f $(TARGET)
