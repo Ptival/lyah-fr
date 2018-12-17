@@ -3,18 +3,13 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
 <a href="syntaxe-des-fonctions" class="prevlink">Syntaxe des fonctions</a>
-
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="fonctions-d-ordre-superieur" class="nextlink">Fonctions d'ordre
-supérieur</a>
-
+<a href="fonctions-d-ordre-superieur" class="nextlink">Fonctions d'ordre supérieur</a>
 </li>
 </ul>
 </div>
@@ -361,18 +356,13 @@ récursif.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
 <a href="syntaxe-des-fonctions" class="prevlink">Syntaxe des fonctions</a>
-
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="fonctions-d-ordre-superieur" class="nextlink">Fonctions d'ordre
-supérieur</a>
-
+<a href="fonctions-d-ordre-superieur" class="nextlink">Fonctions d'ordre supérieur</a>
 </li>
 </ul>
 </div>

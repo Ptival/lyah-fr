@@ -3,19 +3,13 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="foncteurs-foncteurs-applicatifs-et-monoides"
-class="prevlink">Foncteurs, foncteurs applicatifs et monoïdes</a>
-
+<a href="foncteurs-foncteurs-applicatifs-et-monoides" class="prevlink">Foncteurs, foncteurs applicatifs et monoïdes</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="et-pour-quelques-monades-de-plus" class="nextlink">Et pour quelques
-monades de plus</a>
-
+<a href="et-pour-quelques-monades-de-plus" class="nextlink">Et pour quelques monades de plus</a>
 </li>
 </ul>
 </div>
@@ -1471,19 +1465,14 @@ nôtres.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
 <a href="foncteurs-foncteurs-applicatifs-et-monoides"
 class="prevlink">Foncteurs, foncteurs applicatifs et monoïdes</a>
-
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="et-pour-quelques-monades-de-plus" class="nextlink">Et pour quelques
-monades de plus</a>
-
+<a href="et-pour-quelques-monades-de-plus" class="nextlink">Et pour quelques monades de plus</a>
 </li>
 </ul>
 </div>

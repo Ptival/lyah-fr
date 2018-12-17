@@ -3,18 +3,13 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
 <a href="introduction" class="prevlink">Introduction</a>
-
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="types-et-classes-de-types" class="nextlink">Types et classes de
-types</a>
-
+<a href="types-et-classes-de-types" class="nextlink">Types et classes de types</a>
 </li>
 </ul>
 </div>
@@ -914,18 +909,13 @@ transformations sur ces solutions et les filtrez jusqu'à obtenir les bonnes.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
 <a href="introduction" class="prevlink">Introduction</a>
-
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="types-et-classes-de-types" class="nextlink">Types et classes de
-types</a>
-
+<a href="types-et-classes-de-types" class="nextlink">Types et classes de types</a>
 </li>
 </ul>
 </div>

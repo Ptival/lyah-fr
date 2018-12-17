@@ -3,19 +3,13 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="fonctions-d-ordre-superieur" class="prevlink">Fonctions d'ordre
-supérieur</a>
-
+<a href="fonctions-d-ordre-superieur" class="prevlink">Fonctions d'ordre supérieur</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="creer-nos-propres-types-et-classes-de-types" class="nextlink">Créer
-nos propres types et classes de types</a>
-
+<a href="creer-nos-propres-types-et-classes-de-types" class="nextlink">Créer nos propres types et classes de types</a>
 </li>
 </ul>
 </div>
@@ -171,8 +165,8 @@ Maintenant, pour les sommer, il suffit de faire&nbsp;:
 > ghci> map sum $ transpose [[0,3,5,9],[10,0,0,9],[8,5,1,-1]]
 > [18,8,6,17]
 
-Lorsqu'on transpose ces trois listes, les coefficients de degré 3 se retrouvent 
-sur la première ligne, les coefficients de degré 2 sur la deuxième et ainsi 
+Lorsqu'on transpose ces trois listes, les coefficients de degré 3 se retrouvent
+sur la première ligne, les coefficients de degré 2 sur la deuxième et ainsi
 de suite. Mapper `sum` sur cette liste produit le résultat désiré.
 
 <img src="img/legolists.png" alt="listes de shopping" class="left"/>
@@ -1436,19 +1430,13 @@ autre programme.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="fonctions-d-ordre-superieur" class="prevlink">Fonctions d'ordre
-supérieur</a>
-
+<a href="fonctions-d-ordre-superieur" class="prevlink">Fonctions d'ordre supérieur</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="creer-nos-propres-types-et-classes-de-types" class="nextlink">Créer
-nos propres types et classes de types</a>
-
+<a href="creer-nos-propres-types-et-classes-de-types" class="nextlink">Créer nos propres types et classes de types</a>
 </li>
 </ul>
 </div>

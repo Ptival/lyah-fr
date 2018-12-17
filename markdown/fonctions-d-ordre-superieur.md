@@ -3,17 +3,13 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
 <a href="recursivite" class="prevlink">Récursivité</a>
-
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
 <a href="modules" class="nextlink">Modules</a>
-
 </li>
 </ul>
 </div>

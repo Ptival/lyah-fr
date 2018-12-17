@@ -3,18 +3,13 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
 <a href="entrees-et-sorties" class="prevlink">Entrées et sorties</a>
-
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="foncteurs-foncteurs-applicatifs-et-monoides"
-class="nextlink">Foncteurs, foncteurs applicatifs et monoïdes</a>
-
+<a href="foncteurs-foncteurs-applicatifs-et-monoides" class="nextlink">Foncteurs, foncteurs applicatifs et monoïdes</a>
 </li>
 </ul>
 </div>
@@ -693,18 +688,13 @@ de remplacer `foldl` par `foldl'`, sa version stricte.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
 <a href="entrees-et-sorties" class="prevlink">Entrées et sorties</a>
-
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="foncteurs-foncteurs-applicatifs-et-monoides"
-class="nextlink">Foncteurs, foncteurs applicatifs et monoïdes</a>
-
+<a href="foncteurs-foncteurs-applicatifs-et-monoides" class="nextlink">Foncteurs, foncteurs applicatifs et monoïdes</a>
 </li>
 </ul>
 </div>

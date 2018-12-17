@@ -3,18 +3,13 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="types-et-classes-de-types" class="prevlink">Types et classes de
-types</a>
-
+<a href="types-et-classes-de-types" class="prevlink">Types et classes de types</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
 <a href="recursivite" class="nextlink">Récursivité</a>
-
 </li>
 </ul>
 </div>
@@ -649,18 +644,13 @@ aurait aussi pu définir&nbsp;:
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="types-et-classes-de-types" class="prevlink">Types et classes de
-types</a>
-
+<a href="types-et-classes-de-types" class="prevlink">Types et classes de types</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
 <a href="recursivite" class="nextlink">Récursivité</a>
-
 </li>
 </ul>
 </div>

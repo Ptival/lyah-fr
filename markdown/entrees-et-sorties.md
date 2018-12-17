@@ -3,19 +3,13 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="creer-nos-propres-types-et-classes-de-types" class="prevlink">Créer
-nos propres types et classes de types</a>
-
+<a href="creer-nos-propres-types-et-classes-de-types" class="prevlink">Créer nos propres types et classes de types</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="resoudre-des-problemes-fonctionnellement" class="nextlink">Résoudre
-des problèmes fonctionnellement</a>
-
+<a href="resoudre-des-problemes-fonctionnellement" class="nextlink">Résoudre des problèmes fonctionnellement</a>
 </li>
 </ul>
 </div>
@@ -2618,19 +2612,13 @@ ou `Right b` lorsqu'elles sont exécutées.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="creer-nos-propres-types-et-classes-de-types" class="prevlink">Créer
-nos propres types et classes de types</a>
-
+<a href="creer-nos-propres-types-et-classes-de-types" class="prevlink">Créer nos propres types et classes de types</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="resoudre-des-problemes-fonctionnellement" class="nextlink">Résoudre
-des problèmes fonctionnellement</a>
-
+<a href="resoudre-des-problemes-fonctionnellement" class="nextlink">Résoudre des problèmes fonctionnellement</a>
 </li>
 </ul>
 </div>

@@ -3,18 +3,13 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="pour-une-poignee-de-monades" class="prevlink">Pour une poignée de
-monades</a>
-
+<a href="pour-une-poignee-de-monades" class="prevlink">Pour une poignée de monades</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
 <a href="zippeurs" class="nextlink">Zippeurs</a>
-
 </li>
 </ul>
 </div>
@@ -2159,18 +2154,13 @@ assez bonne compréhension de ce que sont les monades.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="pour-une-poignee-de-monades" class="prevlink">Pour une poignée de
-monades</a>
-
+<a href="pour-une-poignee-de-monades" class="prevlink">Pour une poignée de monades</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
 <a href="zippeurs" class="nextlink">Zippeurs</a>
-
 </li>
 </ul>
 </div>

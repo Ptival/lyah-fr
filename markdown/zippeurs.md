@@ -3,16 +3,12 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="et-pour-quelques-monades-de-plus" class="prevlink">Et pour quelques
-monades de plus</a>
-
+<a href="et-pour-quelques-monades-de-plus" class="prevlink">Et pour quelques monades de plus</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
 </li>
 </ul>
 </div>
@@ -842,16 +838,12 @@ gracieusement en utilisant la monade `Maybe`.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="et-pour-quelques-monades-de-plus" class="prevlink">Et pour quelques
-monades de plus</a>
-
+<a href="et-pour-quelques-monades-de-plus" class="prevlink">Et pour quelques monades de plus</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
 </li>
 </ul>
 </div>

@@ -3,19 +3,13 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="resoudre-des-problemes-fonctionnellement" class="prevlink">Résoudre
-des problèmes fonctionnellement</a>
-
+<a href="resoudre-des-problemes-fonctionnellement" class="prevlink">Résoudre des problèmes fonctionnellement</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="pour-une-poignee-de-monades" class="nextlink">Pour une poignée de
-monades</a>
-
+<a href="pour-une-poignee-de-monades" class="nextlink">Pour une poignée de monades</a>
 </li>
 </ul>
 </div>
@@ -2434,7 +2428,7 @@ tous les plis qu'on fait sur des listes&nbsp;:
 si l'on voulait savoir si n'importe quel nombre de notre arbre est égal à `3`,
 on pourrait faire&nbsp;:
 
-> ghci> getAny $ F.foldMap (\x -> Any $ x == 3) testTree  
+> ghci> getAny $ F.foldMap (\x -> Any $ x == 3) testTree
 > True
 
 Ici, `\x -> Any $ x == 3` est une fonction qui prend un nombre et retourne une
@@ -2442,8 +2436,8 @@ valeur monoïdale, dans ce cas un `Bool` enveloppé en `Any`. `foldMap` applique
 la fonction à chaque élément de l'arbre, puis réduit les monoïdes résultants en
 une unique valeur monoïdale à l'aide de `mappend`. Si l'on faisait&nbsp;:
 
-> ghci> getAny $ F.foldMap (\x -> Any $ x > 15) testTree  
-> False  
+> ghci> getAny $ F.foldMap (\x -> Any $ x > 15) testTree
+> False
 
 Tous les nœuds de notre arbre contiendraient la valeur `Any False` après avoir
 appliqué la fonction dans la lambda à chacun d'eux. Pour valoir `True`,
@@ -2457,7 +2451,7 @@ l'arbre, chaque élément devient une liste singleton. Puis, `mappend` a lieu
 entre tous ces singletons et retourne une unique liste qui contient tous les
 éléments de notre arbre&nbsp;:
 
-> ghci> F.foldMap (\x -> [x]) testTree  
+> ghci> F.foldMap (\x -> [x]) testTree
 > [1,3,6,5,8,9,10]
 
 Ce qui est vraiment cool, c'est que toutes ces techniques ne sont pas limitées
@@ -2466,19 +2460,13 @@ aux arbres, elles fonctionnent pour toute instance de `Foldable`.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
-<a href="resoudre-des-problemes-fonctionnellement" class="prevlink">Résoudre
-des problèmes fonctionnellement</a>
-
+<a href="resoudre-des-problemes-fonctionnellement" class="prevlink">Résoudre des problèmes fonctionnellement</a>
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
-<a href="pour-une-poignee-de-monades" class="nextlink">Pour une poignée de
-monades</a>
-
+<a href="pour-une-poignee-de-monades" class="nextlink">Pour une poignée de monades</a>
 </li>
 </ul>
 </div>

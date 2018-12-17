@@ -3,17 +3,13 @@
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
 <a href="modules" class="prevlink">Modules</a>
-
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
 <a href="entrees-et-sorties" class="nextlink">Entrées et sorties</a>
-
 </li>
 </ul>
 </div>
@@ -2059,17 +2055,13 @@ de types d'Haskell.
 <div class="prev-toc-next">
 <ul>
 <li style="text-align:left">
-
 <a href="modules" class="prevlink">Modules</a>
-
 </li>
 <li style="text-align:center">
 [Table des matières](chapitres)
 </li>
 <li style="text-align:right">
-
 <a href="entrees-et-sorties" class="nextlink">Entrées et sorties</a>
-
 </li>
 </ul>
 </div>
