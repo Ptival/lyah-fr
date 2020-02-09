@@ -977,8 +977,9 @@ pouvez l'écrire `replicate 100 . product . map (*3) . zipWith max [1, 2, 3, 4,
 réécriture contiendra probablement trois opérateurs de composition.
 
 Une autre utilisation courante de la composition de fonctions consiste à
-définir des fonctions avec un style dit sans point (certains disent même sans
-but !). Prenez par exemple la fonction définie auparavant&nbsp;:
+définir des fonctions avec un style dit sans argument (NdT: en anglais, "sans
+point", ce qui ouvre la possibilité de blaguer "sans but"). Prenez par exemple
+la fonction définie auparavant&nbsp;:
 
 > sum' :: (Num a) => [a] -> a
 > sum' xs = foldl (+) 0 xs
@@ -986,7 +987,8 @@ but !). Prenez par exemple la fonction définie auparavant&nbsp;:
 Le `xs` est exposé à gauche comme à droite. À cause de la curryfication, on
 peut l'omettre des deux côtés, puisqu'appeler `foldl (+) 0` renverra une
 fonction qui attend une liste. Écrire une fonction comme `sum' = foldl (+) 0`
-est dit dans le style sans point. Comment écrire ceci en style sans point ?
+est dit dans le style sans argument. Comment écrire ceci en style sans argument
+?
 
 > fn x = ceiling (negate (tan (cos (max 50 x))))
 
@@ -997,13 +999,13 @@ On ne peut pas prendre le cosinus d'une fonction. On peut cependant exprimer
 
 > fn = ceiling . negate . tan . cos . max 50
 
-Excellent ! Souvent, un style sans point est plus lisible et concis, car il
+Excellent ! Souvent, un style sans argument est plus lisible et concis, car il
 vous fait réfléchir en termes de fonctions et de composition de leur résultat,
 plutôt qu'à la façon dont les données sont transportées d'un endroit à l'autre.
 Vous pouvez prendre de simples fonctions et utiliser la composition pour les
 coller et former des fonctions plus complexes. Cependant, souvent, écrire une
-fonction en style sans point peut être moins lisible parce que la fonction est
-trop complexe. C'est pourquoi l'on décourage les trop grandes chaînes de
+fonction en style sans argument peut être moins lisible parce que la fonction
+est trop complexe. C'est pourquoi l'on décourage les trop grandes chaînes de
 composition, bien que je sois coupable d'être fan de composition. Le style
 préféré consiste à utiliser des liaisons *let* pour donner des noms aux
 résultats intermédiaires ou découper le problème en sous-problèmes et ensuite

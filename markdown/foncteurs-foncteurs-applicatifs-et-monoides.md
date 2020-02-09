@@ -611,7 +611,7 @@ la fonction mappée comme paramètre.
 > [9,18,27,36]
 
 Mais si l'on a une valeur fonctorielle `Just (3 *)` et une autre valeur
-fonctorielle `Just 3`, et qu'on souhaite sortir la fonction de `Just (3 *)`
+fonctorielle `Just 5`, et qu'on souhaite sortir la fonction de `Just (3 *)`
 pour la mapper sur `Just 5` ? Avec des foncteurs normaux, on est bloqué, parce
 qu'ils ne supportent que la mappage de fonctions normales sur des foncteurs.
 Même lorsqu'on a mappé `\f -> f 9` sur un foncteur qui contenait une fonction,

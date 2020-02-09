@@ -6,7 +6,7 @@ nixpkgs.stdenv.mkDerivation {
     haskellPackages.hscolour
     haskellPackages.pandoc
     pdftk
-    python36Packages.weasyprint
+    python39Packages.weasyprint
   ]);
   nativeBuildInputs = (with nixpkgs; [
   ]);

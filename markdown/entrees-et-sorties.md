@@ -919,7 +919,7 @@ fonction qui transforme quelque chose comme `"elephant\nABCBA\nwhatever"` en
 > respondPalindromes contents = unlines (map (\xs -> if isPalindrome xs then "palindrome" else "not a palindrome") (lines contents))
 >     where   isPalindrome xs = xs == reverse xs
 
-Écrivons ça sans point.
+Écrivons ça sans argument.
 
 > respondPalindromes = unlines . map (\xs -> if isPalindrome xs then "palindrome" else "not a palindrome") . lines
 >     where   isPalindrome xs = xs == reverse xs
